@@ -1,0 +1,14 @@
+---
+import PageLayout from '@/layouts/Base';
+import BlogPostPreview from '@/components/BlogPostPreview'
+
+let allPosts = await Astro.glob('./*.md');
+allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
+---
+
+<PageLayout title="Posts" description="Astro Cactus posts page">
+  <h1 class="text-xl">Writings</h1>
+  <section aria-label="Blog post list" class="mt-4">
+		{allPosts.map((p) => <BlogPostPreview post={p} withDesc />)}
+	</section>
+</PageLayout>

@@ -1,0 +1,47 @@
+---
+import BaseHead from '@/components/BaseHead';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer'
+
+export interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props as Props;
+---
+
+<html lang="en">
+	<head>
+		<BaseHead {title} {description} />
+    <script is:inline>
+			const theme = (() => {
+				if (
+					typeof localStorage !== "undefined" &&
+					localStorage.getItem("theme")
+				) {
+					return localStorage.getItem("theme");
+				}
+				if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+					return "dark";
+				}
+				return "light";
+			})();
+			if (theme === "light") {
+				document.documentElement.classList.remove("dark");
+			} else {
+				document.documentElement.classList.add("dark");
+			}
+		</script>
+	</head>
+
+	<body>
+	  <slot name="header">
+			<Header />
+		</slot>
+		<main>
+			<slot />
+		</main>
+    <Footer />
+	</body>
+</html>

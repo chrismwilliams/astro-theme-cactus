@@ -16,7 +16,8 @@
     "astro": "^1.0.0-beta.28",
     "autoprefixer": "^10.4.7",
     "rehype-autolink-headings": "^6.1.1",
-    "rehype-slug": "^5.0.1"
+    "rehype-slug": "^5.0.1",
+    "rehype-toc": "^3.0.2"
   },
   "dependencies": {
     "preact": "^10.7.2"
