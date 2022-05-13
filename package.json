@@ -1,0 +1,24 @@
+{
+  "name": "astro-cactus",
+  "version": "0.0.1",
+  "private": false,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "@astrojs/preact": "^0.1.2",
+    "@astrojs/sitemap": "^0.1.0",
+    "@astrojs/tailwind": "^0.2.1",
+    "@tailwindcss/typography": "^0.5.2",
+    "astro": "^1.0.0-beta.28",
+    "autoprefixer": "^10.4.7",
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-slug": "^5.0.1"
+  },
+  "dependencies": {
+    "preact": "^10.7.2"
+  }
+}
