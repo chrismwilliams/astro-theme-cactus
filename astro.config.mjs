@@ -1,6 +1,4 @@
 import { defineConfig } from "astro/config";
-import preact from "@astrojs/preact";
-
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 
@@ -8,9 +6,10 @@ import sitemap from "@astrojs/sitemap";
 /** @type {import('astro').AstroUserConfig} */
 export default defineConfig({
   markdown: {
+    remarkPlugins: ["remark-code-titles"],
     rehypePlugins: [
       "rehype-slug",
-      ["rehype-autolink-headings", { behavior: "append" }],
+      ["rehype-autolink-headings", { behavior: "prepend" }],
       [
         "rehype-toc",
         {
@@ -18,7 +17,11 @@ export default defineConfig({
         },
       ],
     ],
+    shikiConfig: {
+      theme: "dracula",
+      wrap: true,
+    },
   },
-  site: "https://www.example.com",
-  integrations: [preact(), tailwind(), sitemap()],
+  site: "https://www.astro-cactus.netlify.app",
+  integrations: [tailwind(), sitemap()],
 });
