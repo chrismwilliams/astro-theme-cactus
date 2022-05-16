@@ -1,11 +1,11 @@
 ---
-import BaseHead from '@/components/BaseHead';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer'
+import BaseHead from "@/components/BaseHead";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export interface Props {
-  title: string;
-  description: string;
+	title: string;
+	description: string;
 }
 
 const { title, description } = Astro.props as Props;
@@ -14,7 +14,7 @@ const { title, description } = Astro.props as Props;
 <html lang="en">
 	<head>
 		<BaseHead {title} {description} />
-    <script is:inline>
+		<script is:inline>
 			const theme = (() => {
 				if (
 					typeof localStorage !== "undefined" &&
@@ -36,12 +36,12 @@ const { title, description } = Astro.props as Props;
 	</head>
 
 	<body>
-	  <slot name="header">
+		<slot name="header">
 			<Header />
 		</slot>
-		<main>
+		<main id="main" class="flex-1">
 			<slot />
 		</main>
-    <Footer />
+		<Footer />
 	</body>
 </html>

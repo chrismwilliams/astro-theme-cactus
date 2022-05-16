@@ -1,0 +1,24 @@
+:root {
+	color-scheme: light;
+	--theme-text: #363533;
+	--theme-bg: #e2e0de;
+	--theme-primary: #2bbc8a;
+	--theme-secondary: #ccffb6;
+	--theme-accent: #666;
+}
+
+:root.dark {
+	color-scheme: dark;
+	--theme-text: #c9cacc;
+	--theme-bg: #1d1f21;
+}
+
+html {
+	@apply h-full border-t-2 border-[#c9cacc];
+}
+
+html body {
+	background: var(--theme-bg);
+	color: var(--theme-text);
+	@apply h-full max-w-3xl mx-auto px-8 pt-16 font-mono font-normal antialiased text-sm flex flex-col;
+}
