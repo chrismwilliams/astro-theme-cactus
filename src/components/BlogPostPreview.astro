@@ -5,34 +5,13 @@ export interface Props {
 }
 
 const { post, withDesc = false } = Astro.props as Props;
+const datetime = new Date(post.frontmatter.publishDate).toISOString();
 ---
 
-<article class="post-preview">
-	<header class="flex space-x-2">
-		<p class="publish-date">{post.frontmatter.publishDate}</p>
-		<a href={post.url}><h1 class="title">{post.frontmatter.title}</h1></a>
-		{withDesc && <p>{post.frontmatter.description}</p>}
-	</header>
+<article>
+	<time {datetime} class="text-slate-500">{post.frontmatter.publishDate}</time>
+	<a href={post.url} class="mt-4 underline hover:decoration-double hover:decoration-secondary">
+		{post.frontmatter.title}
+	</a>
+	{withDesc && <q class="block mt-2 italic">{post.frontmatter.description}</q>}
 </article>
-
-<style>
-	.post-preview {
-		padding-bottom: 2rem;
-		margin-bottom: 2rem;
-		border-bottom: 4px solid var(--theme-divider);
-	}
-
-	.title,
-	.publish-date {
-		margin: 0;
-	}
-
-	.publish-date {
-		color: var(--theme-text-lighter);
-	}
-
-	.title {
-		font-weight: 700;
-		color: var(--theme-text);
-	}
-</style>

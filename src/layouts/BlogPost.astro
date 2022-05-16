@@ -1,15 +1,40 @@
 ---
-import BaseLayout from './Base.astro'
-import BlogHeader from '@/components/BlogHeader';
-import BlogPost from '@/components/BlogPost';
-
+import BaseLayout from "./Base.astro";
+import BlogHeader from "@/components/BlogHeader";
 
 const { content } = Astro.props;
-const { title, description, publishDate, author, heroImage, permalink, alt } = content;
+const { title, description, publishDate } = content;
+const datetime = new Date(publishDate).toISOString();
 ---
-<BaseLayout title={title} description={description}>
+
+<BaseLayout {title} {description}>
 	<BlogHeader slot="header" />
-	<BlogPost {title} {author} {heroImage} {publishDate} {alt}>
-		<slot />
-	</BlogPost>
+	<article>
+		<h1 class="text-xl font-semibold text-primary">{title}</h1>
+		<span class="flex items-center divide-x divide-accent space-x-2">
+			<time {datetime}>{publishDate}</time>
+			<div>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 24 24"
+					class="w-6 h-6"
+					stroke-width="1.5"
+					stroke="currentColor"
+					fill="none"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+					<circle cx="8.5" cy="8.5" r="1" fill="currentColor"></circle>
+					<path
+						d="M4 7v3.859c0 .537 .213 1.052 .593 1.432l8.116 8.116a2.025 2.025 0 0 0 2.864 0l4.834 -4.834a2.025 2.025 0 0 0 0 -2.864l-8.117 -8.116a2.025 2.025 0 0 0 -1.431 -.593h-3.859a3 3 0 0 0 -3 3z"
+					></path>
+				</svg>
+			</div>
+		</span>
+		<p class="mt-8">{description}</p>
+		<div class="mt-12 prose prose-sm prose-headings:font-semibold prose-cactus">
+			<slot />
+		</div>
+	</article>
 </BaseLayout>

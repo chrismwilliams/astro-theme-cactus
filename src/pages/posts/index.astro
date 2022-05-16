@@ -7,8 +7,8 @@ allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf()
 ---
 
 <PageLayout title="Posts" description="Astro Cactus posts page">
-  <h1 class="text-xl">Writings</h1>
-  <section aria-label="Blog post list" class="mt-4">
+  <h1 class="text-2xl font-semibold">Writings</h1>
+  <section aria-label="Blog post list" class="mt-6 space-y-8">
 		{allPosts.map((p) => <BlogPostPreview post={p} withDesc />)}
 	</section>
 </PageLayout>

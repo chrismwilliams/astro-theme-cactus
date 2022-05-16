@@ -1,6 +1,6 @@
 ---
 setup: |
-  import Layout from '../../layouts/BlogPost.astro'
+  import Layout from '@/layouts/BlogPost'
 title: Post 1!
 publishDate: 12 Sep 2021
 name: Nate Moore

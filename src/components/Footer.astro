@@ -2,11 +2,13 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="mt-auto flex flex-col items-center justify-center w-full mb-4 text-center align-top text-accent md:flex-row md:justify-between">
-  <div class="mr-0 md:mr-4">Copyright &copy; {year} | Astro Cactus</div>
-  <nav class="flex divide-x">
-    <a href="/" class="px-2">Home</a>
-    <a href="/about" class="px-2">About</a>
-    <a href="/posts" class="px-2">Writings</a>
+<footer class="flex flex-col items-center justify-center w-full mt-auto pt-16 pb-4 text-center align-top text-accent md:flex-row md:justify-between">
+  <div class="mr-0 md:mr-4">Copyright &copy; {year} 
+    <span aria-label="rocket emoji">🚀</span> 
+  Astro Cactus</div>
+  <nav class="flex divide-x divide-accent">
+    <a href="/" class="px-2 hover:underline">Home</a>
+    <a href="/about" class="px-2 hover:underline">About</a>
+    <a href="/posts" class="px-2 hover:underline">Writings</a>
   </nav>
 </footer>
