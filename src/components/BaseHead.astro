@@ -1,12 +1,12 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 
 export interface Props {
 	title: string;
 	description: string;
-	permalink: string;
 }
-const { title, description, permalink } = Astro.props;
+const { title, description } = Astro.props as Props;
+const canonicalURL = new URL(Astro.canonicalURL);
 ---
 
 <!-- Global Metadata -->
@@ -21,14 +21,13 @@ const { title, description, permalink } = Astro.props;
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content={permalink} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content="https://astro.build/social.png?v=1" />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={permalink} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content="https://astro.build/social.png?v=1" />
