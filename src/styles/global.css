@@ -3,7 +3,7 @@
 	--theme-text: #363533;
 	--theme-bg: #e2e0de;
 	--theme-primary: #2bbc8a;
-	--theme-secondary: #ccffb6;
+	--theme-secondary: theme("colors.pink.500");
 	--theme-accent: #666;
 }
 

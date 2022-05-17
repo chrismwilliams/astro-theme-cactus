@@ -1,9 +1,10 @@
 ---
 import PageLayout from '@/layouts/Base';
-import BlogPostPreview from '@/components/BlogPostPreview'
+import BlogPostPreview from '@/components/BlogPostPreview.astro'
+import { sortMDByDate } from 'src/util';
 
 let allPosts = await Astro.glob('./*.md');
-allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
+allPosts = sortMDByDate(allPosts);
 ---
 
 <PageLayout title="Posts" description="Astro Cactus posts page">
