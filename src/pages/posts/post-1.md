@@ -8,7 +8,7 @@ value: 128
 description: Post 1!
 ---
 
-This is so cool!
+## This is so cool!
 
 Do variables work {frontmatter.value \* 2}?
 
@@ -17,6 +17,6 @@ Do variables work {frontmatter.value \* 2}?
 
 const x = 7;
 function returnSeven() {
-  return x;
+	return x;
 }
 ```
