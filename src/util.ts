@@ -13,3 +13,14 @@ export function getPreviousAndNextSlugs(currentSlug: string, slugArr: string[]) 
     next: slugArr[index + 1] ?? null
   }
 }
+
+export function getInitialTheme() {
+  const isDark = getDocumentClassList().contains('dark')
+  const storageTheme = localStorage.getItem('theme')
+  if (storageTheme) return storageTheme
+  return isDark ? 'dark' : 'light'
+}
+
+export function getDocumentClassList() {
+  return document.documentElement.classList;
+}
