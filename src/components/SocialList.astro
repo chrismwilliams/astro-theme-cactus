@@ -1,4 +1,4 @@
-<div>
+<div class="social-list">
 	<p>Find me on</p>
 	<ul>
 		<li>
@@ -124,16 +124,16 @@
 </div>
 
 <style>
-	div {
+	.social-list {
 		@apply flex items-center space-x-4;
-	}
-	ul {
-		@apply flex space-x-4 items-center;
-	}
-	a {
-		@apply hover:text-secondary;
-	}
-	a svg {
-		@apply w-6 h-6;
+		ul {
+			@apply flex space-x-4 items-center;
+			a {
+				@apply hover:text-secondary;
+				svg {
+					@apply w-6 h-6;
+				}
+			}
+		}
 	}
 </style>
