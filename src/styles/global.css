@@ -1,20 +1,25 @@
 :root {
 	color-scheme: light;
-	--theme-text: #363533;
-	--theme-bg: #e2e0de;
-	--theme-primary: #2bbc8a;
-	--theme-secondary: theme("colors.pink.500");
-	--theme-accent: #666;
+	--theme-bg: #fafafa;
+	--theme-link: #567c77;
+	--theme-text: #22272a;
+	--theme-accent: #cc2a41;
+	--theme-accent-2: #111111;
+	--theme-quote: #cc2a41;
 }
 
 :root.dark {
 	color-scheme: dark;
-	--theme-text: #c9cacc;
 	--theme-bg: #1d1f21;
+	--theme-link: #d480aa;
+	--theme-text: #c9cacc;
+	--theme-accent: #2bbc8a;
+	--theme-accent-2: #eee;
+	--theme-quote: #ccffb6;
 }
 
 html {
-	@apply h-full border-t-2 border-[#c9cacc];
+	@apply h-full border-t-2 border-[color:var(--theme-text)];
 }
 
 html body {

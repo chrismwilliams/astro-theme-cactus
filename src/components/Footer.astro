@@ -1,5 +1,5 @@
 ---
-const year = new Date().getFullYear();
+	const year = new Date().getFullYear();
 ---
 
 <footer>
@@ -17,14 +17,17 @@ const year = new Date().getFullYear();
 
 <style>
 	footer {
-		@apply flex flex-col items-center justify-center w-full mt-auto pt-16 pb-4 text-xs text-center align-top text-accent md:flex-row md:justify-between;
-		> div {
+		@apply flex flex-col items-center justify-center w-full mt-auto pt-16 pb-4 text-xs text-center align-top text-gray-500 md:flex-row md:justify-between;
+
+		>div {
 			@apply mr-0 md:mr-4;
 		}
+
 		nav {
-			@apply flex divide-x divide-accent;
+			@apply flex divide-x divide-gray-500;
+
 			a {
-				@aaply flex divide-x divide-accent;
+				@apply px-2 hover:underline;
 			}
 		}
 	}

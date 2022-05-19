@@ -1,42 +1,49 @@
 ---
-import PageLayout from '@/layouts/Base';
-import BlogPostPreview from '@/components/BlogPostPreview.astro';
-import SocialList from '@/components/SocialList.astro';
+	import PageLayout from '@/layouts/Base';
+	import BlogPostPreview from '@/components/BlogPostPreview.astro';
+	import SocialList from '@/components/SocialList.astro';
 
-let title = 'Asto Cactus';
-let description = 'The perfect starter for your perfect blog.';
+	let title = 'Asto Cactus';
+	let description = 'The perfect starter for your perfect blog.';
 
-let allPosts = await Astro.glob('./posts/*.md');
-allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
+	let allPosts = await Astro.glob('./posts/*.md');
+	allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
 ---
+
 <PageLayout {title} {description}>
-	<section class="space-y-8">
-		<h1 class="text-2xl font-semibold">Hello World!</h1>
-		<p>Hi, I’m a starter blog for Astro, an example of how you can use this starter to create a personal blog. If you want to know more about how I was created, click on one of the social links which will take you to my repo. Further is a list of example blog posts created with markdown, and after that a list of technologies I use.</p>
+	<section>
+		<h1 class="mb-6 text-2xl font-bold text-accent-2">Hello World!</h1>
+		<p class="mb-4">Hi, I’m a starter blog for Astro, an example of how you can use this starter to create a personal
+			blog. If you
+			want to know more about how I was created, click on one of the social links which will take you to my repo.
+			Further is a list of example blog posts created with markdown, and after that a list of technologies I use.</p>
 		<SocialList />
 	</section>
-	<section aria-label="Blog post list" class="mt-16 space-y-4">
-		<h2 class="mb-2 text-xl text-primary">Writings</h2>
+	<section aria-label="Blog post list" class="mt-16">
+		<h2 class="mb-4 text-xl font-bold text-accent-2">Writings</h2>
 		<div class="space-y-2">
-			{allPosts.map((p) => <BlogPostPreview post={p} />)}
+			{allPosts.map((p) =>
+			<BlogPostPreview post={p} />)}
 		</div>
 	</section>
-	<section class="mt-16 space-y-4">
-		<h2 class="mb-2 text-xl text-primary">Technologies</h2>
+	<section class="mt-16">
+		<h2 class="mb-4 text-xl font-bold text-accent-2">Technologies</h2>
 		<ul class="space-y-2">
 			<li class="flex space-x-4">
-				<a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="underline hover:decoration-double hover:decoration-secondary">Astro</a>
+				<a href="https://astro.build" target="_blank" rel="noopener noreferrer"
+					class="underline hover:decoration-double hover:decoration-link">Astro:</a>
 				<p>Build fast websites, faster.</p>
 			</li>
 			<li class="flex space-x-4">
-				<a href="https://www.solidjs.com/" target="_blank" rel="noopener noreferrer" class="underline hover:decoration-double hover:decoration-secondary">SolidJS</a>
+				<a href="https://www.solidjs.com/" target="_blank" rel="noopener noreferrer"
+					class="underline hover:decoration-double hover:decoration-link">SolidJS:</a>
 				<p>Simple and performant reactivity for building user interfaces.</p>
 			</li>
 			<li class="flex space-x-4">
-				<a href="https://tailwindcss.com " target="_blank" rel="noopener noreferrer" class="underline hover:decoration-double hover:decoration-secondary">Tailwind CSS</a>
+				<a href="https://tailwindcss.com " target="_blank" rel="noopener noreferrer"
+					class="underline hover:decoration-double hover:decoration-link">Tailwind CSS:</a>
 				<p>Rapidly build modern websites without ever leaving your HTML</p>
 			</li>
 		</ul>
 	</section>
 </PageLayout>
-

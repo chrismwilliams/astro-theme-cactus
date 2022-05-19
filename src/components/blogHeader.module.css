@@ -7,7 +7,7 @@
 }
 
 .nav_pages {
-	@apply flex pr-7 font-thin divide-x divide-primary divide-dotted text-primary;
+	@apply flex pr-7 font-thin divide-x divide-accent divide-dotted text-accent;
 }
 
 .nav_pages__a {
@@ -19,7 +19,7 @@
 }
 
 .nav_blog__a {
-	@apply inline-block hover:text-secondary;
+	@apply inline-block hover:text-link;
 }
 
 .nav_blog__a::before {
@@ -42,9 +42,9 @@
 }
 
 .nav_toc__a {
-	@apply hover:text-secondary;
+	@apply hover:text-link;
 }
 
 .header__button {
-	@apply row-start-1 col-start-2 hover:text-primary outline-none;
+	@apply row-start-1 col-start-2 hover:text-accent outline-none;
 }
