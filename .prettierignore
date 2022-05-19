@@ -27,3 +27,6 @@ infrastructure
 
 # coverage
 coverage
+
+pnpm-lock.yaml
+dist

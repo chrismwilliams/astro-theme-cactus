@@ -7,7 +7,7 @@ import solid from "@astrojs/solid-js";
 /** @type {import('astro').AstroUserConfig} */
 export default defineConfig({
 	markdown: {
-		remarkPlugins: ["remark-code-titles"],
+		remarkPlugins: ["remark-gfm","remark-code-titles"],
 		rehypePlugins: [
 			"rehype-slug",
 			[
@@ -22,6 +22,6 @@ export default defineConfig({
 			wrap: true,
 		},
 	},
-	site: "https://www.astro-cactus.netlify.app",
+	site: "https://www.astro-theme-cactus.netlify.app",
 	integrations: [tailwind(), sitemap(), solid()],
 });

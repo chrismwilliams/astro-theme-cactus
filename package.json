@@ -20,6 +20,7 @@
 		"rehype-autolink-headings": "^6.1.1",
 		"rehype-slug": "^5.0.1",
 		"remark-code-titles": "^0.1.2",
+		"remark-gfm": "^3.0.1",
 		"solid-js": "^1.4.1"
 	}
 }
