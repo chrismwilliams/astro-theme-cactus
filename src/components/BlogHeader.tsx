@@ -2,7 +2,7 @@ import { createSignal } from "solid-js";
 import styles from "./blogHeader.module.css";
 
 export default function BlogHeader(props) {
-	const [open, setOpen] = createSignal(false);
+	const [open, setOpen] = createSignal(true);
 
 	const toggle = () => {
 		setOpen(!open());
@@ -86,7 +86,7 @@ export default function BlogHeader(props) {
 			<button
 				type="button"
 				onClick={toggle}
-				class={`${styles.header__button} ${open() && "text-primary"}`}
+				class={`${styles.header__button} ${open() && "text-accent"}`}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
