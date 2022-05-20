@@ -9,8 +9,8 @@
 ---
 
 <article>
-	<time {datetime} class="text-gray-500">{post.frontmatter.publishDate}</time>
-	<a href={post.url} class="mt-4 ml-4 underline hover:decoration-double hover:decoration-link">
+	<time {datetime} class="mr-4 text-gray-500">{post.frontmatter.publishDate}</time>
+	<a href={post.url} class="inline-block mt-4 cactus-link">
 		{post.frontmatter.title}
 	</a>
 	{withDesc && <q class="block mt-2 italic line-clamp-3">{post.frontmatter.description}</q>}

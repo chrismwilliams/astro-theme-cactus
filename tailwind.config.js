@@ -1,3 +1,5 @@
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
 	content: ["./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}"],
 	darkMode: "class",
@@ -7,6 +9,9 @@ module.exports = {
 				link: "var(--theme-link)",
 				accent: "var(--theme-accent)",
 				"accent-2": "var(--theme-accent-2)",
+			},
+			transitionProperty: {
+				height: "height",
 			},
 			typography: (theme) => ({
 				cactus: {
@@ -25,46 +30,63 @@ module.exports = {
 				DEFAULT: {
 					css: {
 						a: {
-							"&:hover": {
-								textDecorationColor: "var(--theme-link)",
-								textDecorationStyle: "double",
-							},
+							"@apply cactus-link": "",
 						},
 						strong: {
-							fontWeight: "700"
+							fontWeight: "700",
 						},
 						code: {
 							border: "1px dotted #666",
-							borderRadius: "2px"
+							borderRadius: "2px",
 						},
 						blockquote: {
-							borderLeftWidth: 'none'
+							borderLeftWidth: "none",
+						},
+						hr: {
+							borderTopStyle: "dashed",
 						},
 						thead: {
-							borderBottomWidth: 'none'
+							borderBottomWidth: "none",
 						},
-						'thead th': {
+						"thead th": {
 							fontWeight: "700",
-							borderBottom: "1px dashed #666"
+							borderBottom: "1px dashed #666",
 						},
-						'tbody tr': {
-							borderBottomWidth: 'none'
+						"tbody tr": {
+							borderBottomWidth: "none",
 						},
 						tfoot: {
-							borderTop: '1px dashed #666'
-						}
+							borderTop: "1px dashed #666",
+						},
 					},
 				},
 				sm: {
 					css: {
 						code: {
 							fontSize: theme("fontSize.sm")[0],
-							fontWeight: "400"
+							fontWeight: "400",
 						},
 					},
 				},
 			}),
 		},
 	},
-	plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp")],
+	plugins: [
+		require("@tailwindcss/typography"),
+		require("@tailwindcss/line-clamp"),
+		plugin(function ({ addComponents }) {
+			addComponents({
+				".cactus-link": {
+					"@apply relative no-underline": {},
+					"&:hover": {
+						"@apply after:h-0.5": {},
+					},
+					"&::after": {
+						"@apply absolute bottom-0 inset-x-0 block content-[''] h-[1px] bg-link motion-safe:transition-height ease-in-out":
+							{},
+					},
+				},
+			});
+		}),
+	],
 };
