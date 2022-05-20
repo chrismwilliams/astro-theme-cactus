@@ -4,29 +4,31 @@ specifiers:
   '@astrojs/sitemap': ^0.1.0
   '@astrojs/solid-js': ^0.1.2
   '@astrojs/tailwind': ^0.2.1
+  '@tailwindcss/line-clamp': ^0.4.0
   '@tailwindcss/typography': ^0.5.2
-  astro: 1.0.0-beta.29
+  astro: 1.0.0-beta.31
   autoprefixer: ^10.4.7
   prettier-plugin-astro: ^0.0.12
   rehype-autolink-headings: ^6.1.1
   rehype-slug: ^5.0.1
   remark-code-titles: ^0.1.2
   remark-gfm: ^3.0.1
-  solid-js: ^1.4.1
+  solid-js: ^1.4.2
 
 devDependencies:
   '@astrojs/sitemap': 0.1.0
-  '@astrojs/solid-js': 0.1.2_solid-js@1.4.1
+  '@astrojs/solid-js': 0.1.2_solid-js@1.4.2
   '@astrojs/tailwind': 0.2.1
+  '@tailwindcss/line-clamp': 0.4.0
   '@tailwindcss/typography': 0.5.2
-  astro: 1.0.0-beta.29
+  astro: 1.0.0-beta.31
   autoprefixer: 10.4.7
   prettier-plugin-astro: 0.0.12
   rehype-autolink-headings: 6.1.1
   rehype-slug: 5.0.1
   remark-code-titles: 0.1.2
   remark-gfm: 3.0.1
-  solid-js: 1.4.1
+  solid-js: 1.4.2
 
 packages:
 
@@ -110,14 +112,14 @@ packages:
       sitemap: 7.1.1
     dev: true
 
-  /@astrojs/solid-js/0.1.2_solid-js@1.4.1:
+  /@astrojs/solid-js/0.1.2_solid-js@1.4.2:
     resolution: {integrity: sha512-xXrKwWprjMkZMVSmqfPJOlrwr3WvuoZckSN/VE5WZf8JYJBZrmsEh5xJg+s3Q9dJQQ2ZdsNhTer5pm3Gp+YbOg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     peerDependencies:
       solid-js: ^1.3.6
     dependencies:
       babel-preset-solid: 1.4.0
-      solid-js: 1.4.1
+      solid-js: 1.4.2
     transitivePeerDependencies:
       - '@babel/core'
     dev: true
@@ -471,6 +473,12 @@ packages:
       tsm: 2.2.1
     dev: true
 
+  /@tailwindcss/line-clamp/0.4.0:
+    resolution: {integrity: sha512-HQZo6gfx1D0+DU3nWlNLD5iA6Ef4JAXh0LeD8lOGrJwEDBwwJNKQza6WoXhhY1uQrxOuU8ROxV7CqiQV4CoiLw==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
+    dev: true
+
   /@tailwindcss/typography/0.5.2:
     resolution: {integrity: sha512-coq8DBABRPFcVhVIk6IbKyyHUt7YTEC/C992tatFB+yEx5WGBQrCgsSFjxHUr8AWXphWckadVJbominEduYBqw==}
     peerDependencies:
@@ -705,8 +713,8 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /astro/1.0.0-beta.29:
-    resolution: {integrity: sha512-jXfZRkRhoeJTfaR8hR87zmwzYg9bxzd9idSpIDVZJSdGyMWvpsu5l87HuUYyxah1AqL9pT+K0aImKIB1+cWzqQ==}
+  /astro/1.0.0-beta.31:
+    resolution: {integrity: sha512-RRso08DemW56MYDyViDPwXAJ/KHOMAS2/QGkA8grx8uhdQCGQy/liCOk9CvYXr/olVWT2tpoabTtLgYuqp8wsA==}
     engines: {node: ^14.15.0 || >=16.0.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
@@ -753,7 +761,7 @@ packages:
       prompts: 2.4.2
       recast: 0.20.5
       resolve: 1.22.0
-      rollup: 2.73.0
+      rollup: 2.74.1
       semver: 7.3.7
       serialize-javascript: 6.0.0
       shiki: 0.10.1
@@ -3535,8 +3543,8 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rollup/2.73.0:
-    resolution: {integrity: sha512-h/UngC3S4Zt28mB3g0+2YCMegT5yoftnQplwzPqGZcKvlld5e+kT/QRmJiL+qxGyZKOYpgirWGdLyEO1b0dpLQ==}
+  /rollup/2.74.1:
+    resolution: {integrity: sha512-K2zW7kV8Voua5eGkbnBtWYfMIhYhT9Pel2uhBk2WO5eMee161nPze/XRfvEQPFYz7KgrCCnmh2Wy0AMFLGGmMA==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
@@ -3677,8 +3685,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /solid-js/1.4.1:
-    resolution: {integrity: sha512-ts480PccmUW9WAludSXET2dbBevjv+l6XMmN/OyG/a/xA8ZQoX4hNBN3gGhW785ZZv90fowbUSuSQUwOISm3YA==}
+  /solid-js/1.4.2:
+    resolution: {integrity: sha512-IU5yKuT8P/n5F5g8j1rTXqxUdPYmoZDk/074TG94AEYf/nyXAeG82BSge4/lLIbCfUcnGUJ6DRdebIjujOAYyg==}
     dev: true
 
   /source-map-js/1.0.2:
@@ -4188,7 +4196,7 @@ packages:
       esbuild: 0.14.39
       postcss: 8.4.14
       resolve: 1.22.0
-      rollup: 2.73.0
+      rollup: 2.74.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true

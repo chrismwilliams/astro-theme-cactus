@@ -13,5 +13,5 @@
 	<a href={post.url} class="mt-4 ml-4 underline hover:decoration-double hover:decoration-link">
 		{post.frontmatter.title}
 	</a>
-	{withDesc && <q class="block mt-2 italic">{post.frontmatter.description}</q>}
+	{withDesc && <q class="block mt-2 italic line-clamp-3">{post.frontmatter.description}</q>}
 </article>
