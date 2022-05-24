@@ -21,26 +21,29 @@
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
 		<h2 class="mb-4 text-xl font-bold text-accent-2">Writings</h2>
-		<div class="space-y-2">
+		<ul class="space-y-2">
 			{allPosts.map((p) =>
-			<BlogPostPreview post={p} />)}
-		</div>
+			<li>
+				<BlogPostPreview post={p} as="h2" />
+			</li>
+			)}
+		</ul>
 	</section>
 	<section class="mt-16">
 		<h2 class="mb-4 text-xl font-bold text-accent-2">Technologies</h2>
 		<ul class="space-y-2">
 			<li class="flex space-x-4">
 				<a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="cactus-link">Astro</a>:
-				<p>Build fast websites, faster.</p>
+				<p class="inline-block">Build fast websites, faster.</p>
 			</li>
-			<li class="flex space-x-4">
+			<li class="space-x-4">
 				<a href="https://www.solidjs.com/" target="_blank" rel="noopener noreferrer" class="cactus-link">SolidJS</a>:
-				<p>Simple and performant reactivity for building user interfaces.</p>
+				<p class="inline-block">Simple and performant reactivity for building user interfaces.</p>
 			</li>
-			<li class="flex space-x-4">
+			<li class="space-x-4">
 				<a href="https://tailwindcss.com " target="_blank" rel="noopener noreferrer" class="cactus-link">Tailwind
 					CSS</a>:
-				<p>Rapidly build modern websites without ever leaving your HTML</p>
+				<p class="inline-block">Rapidly build modern websites without ever leaving your HTML</p>
 			</li>
 		</ul>
 	</section>

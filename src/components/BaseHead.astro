@@ -1,12 +1,12 @@
 ---
-import "../styles/global.css";
+	import "../styles/global.css";
 
-export interface Props {
-	title: string;
-	description: string;
-}
-const { title, description } = Astro.props as Props;
-const canonicalURL = new URL(Astro.canonicalURL);
+	export interface Props {
+		title: string;
+		description: string;
+	}
+	const { title, description } = Astro.props as Props;
+	const canonicalURL = new URL(Astro.canonicalURL);
 ---
 
 <!-- Global Metadata -->
@@ -18,6 +18,9 @@ const canonicalURL = new URL(Astro.canonicalURL);
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+
+<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#1d1f21" media="(prefers-color-scheme: dark)" />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />

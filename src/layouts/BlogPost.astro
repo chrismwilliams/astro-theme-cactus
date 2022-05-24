@@ -39,3 +39,14 @@
 		</div>
 	</article>
 </BaseLayout>
+
+<style>
+	:global(.heading-wrapper) {
+		@apply relative;
+	}
+	:global(.heading-wrapper .anchor-link) {
+		@apply text-accent after:hidden absolute -left-5 top-1;
+	}
+	:global(.heading-wrapper .anchor-icon svg){
+	}
+</style>
