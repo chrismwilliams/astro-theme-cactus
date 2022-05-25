@@ -6,6 +6,8 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
+				bg_color: "var(--theme-bg)",
+				text_color: "var(--theme-text)",
 				link: "var(--theme-link)",
 				accent: "var(--theme-accent)",
 				"accent-2": "var(--theme-accent-2)",
@@ -74,6 +76,7 @@ module.exports = {
 	plugins: [
 		require("@tailwindcss/typography"),
 		require("@tailwindcss/line-clamp"),
+		require("@tailwindcss/aspect-ratio"),
 		plugin(function ({ addComponents }) {
 			addComponents({
 				".cactus-link": {

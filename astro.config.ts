@@ -62,7 +62,7 @@ const createSROnlyLabel = (text: string) => {
 // https://astro.build/config
 export default defineConfig({
 	markdown: {
-		remarkPlugins: ["remark-gfm", "remark-code-titles"],
+		remarkPlugins: ["remark-gfm", ["remark-smartypants", { dashes: false }]],
 		rehypePlugins: [
 			"rehype-slug",
 			[
