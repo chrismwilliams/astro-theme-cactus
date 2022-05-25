@@ -26,7 +26,7 @@ export default function ThemeToggle(props) {
 	return (
 		<button aria-label="Toggle dark mode" type="button" onClick={toggle}>
 			<svg
-				class="h-7 w-7"
+				class="h-7 w-7 mt-1"
 				stroke-width="1.5"
 				viewBox="0 0 24 24"
 				fill="none"
