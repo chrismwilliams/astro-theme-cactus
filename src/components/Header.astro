@@ -6,7 +6,8 @@
 <header class="flex items-center sm:justify-between sm:pl-20 mb-28">
 	<div class="link-wrapper">
 		<a href="/" class="inline-flex items-center sm:relative sm:inline-block grayscale hover:filter-none">
-			<svg class="w-10 h-10 sm:w-20 sm:h-20 sm:absolute sm:-left-20" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<svg class="w-10 h-10 sm:w-20 sm:h-20 sm:absolute sm:-left-20" viewBox="0 0 256 256" fill="none"
+				xmlns="http://www.w3.org/2000/svg">
 				<title>Logo</title>
 				<path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"
 					d="M163.008 18.929c1.944 2.413 2.935 5.67 4.917 12.181l43.309 142.27a180.277 180.277 0 00-51.778-17.53l-28.198-95.29a3.67 3.67 0 00-7.042.01l-27.857 95.232a180.225 180.225 0 00-52.01 17.557l43.52-142.281c1.99-6.502 2.983-9.752 4.927-12.16a15.999 15.999 0 016.484-4.798c2.872-1.154 6.271-1.154 13.07-1.154h31.085c6.807 0 10.211 0 13.086 1.157a16.004 16.004 0 016.487 4.806z">
@@ -37,4 +38,25 @@
 			}
 		}
 	}
+
+	@media (max-width: 640px) {
+		:global(body.mobile-toggle) header {
+			@apply relative z-50;
+	
+			.link-wrapper {
+				nav {
+					@apply p-4 flex items-end flex-col absolute top-14 h-[calc(100vh-9rem)] inset-x-0 space-y-6 divide-x-0 bg-[color:rgb(250_250_250/0.85)] shadow rounded-md backdrop-filter backdrop-blur;
+
+					:global(.dark) & {
+						@apply bg-[color:rgb(29_31_33/0.85)];
+					}
+	
+					a {
+						@apply py-2 text-lg;
+					}
+				}
+			}
+		}
+	}
+
 </style>

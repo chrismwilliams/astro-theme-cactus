@@ -19,23 +19,15 @@
 }
 
 html {
-	@apply h-full border-t-2 border-[color:var(--theme-text)];
+	@apply h-full border-t-2 border-text_color dark:border-b-8;
 }
 
 html body {
-	background: var(--theme-bg);
-	color: var(--theme-text);
-	@apply h-full max-w-3xl mx-auto px-8 pt-16 font-mono font-normal antialiased text-sm flex flex-col;
-	&.mobile-toggle {
-		@apply fixed top-0.5 w-full overflow-y-hidden;
-		> header {
-			@apply relative z-10;
-			nav[role="navigation"] {
-				@apply p-4 flex items-end flex-col absolute top-14 h-[calc(100vh-9rem)] inset-x-0 space-y-6 divide-x-0 bg-black shadow rounded-md bg-opacity-75 backdrop-filter backdrop-blur;
-				a {
-					@apply py-2 text-lg;
-				}
-			}
+	@apply h-full max-w-3xl mx-auto px-8 pt-16 font-mono font-normal antialiased text-sm flex flex-col text-text_color bg-bg_color;
+
+	@media (max-width: 640px) {
+		&.mobile-toggle {
+			@apply fixed top-0.5 w-full overflow-y-hidden;
 		}
 	}
 }

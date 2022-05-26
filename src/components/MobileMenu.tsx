@@ -1,10 +1,10 @@
 import { createSignal, createEffect } from "solid-js";
 
 export default function Header() {
-	const [menuOpen, setMenuOpen] = createSignal(true);
+	const [menuOpen, setMenuOpen] = createSignal(false);
 
 	createEffect(() => {
-		const body = document.getElementsByTagName("body")[0];
+		const body = document.body;
 		if (menuOpen()) {
 			body.classList.add("mobile-toggle");
 		} else {
