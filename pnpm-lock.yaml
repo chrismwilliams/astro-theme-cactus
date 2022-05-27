@@ -9,7 +9,7 @@ specifiers:
   '@tailwindcss/typography': ^0.5.2
   '@typescript-eslint/eslint-plugin': ^5.26.0
   '@typescript-eslint/parser': ^5.25.0
-  astro: 1.0.0-beta.31
+  astro: 1.0.0-beta.35
   astro-eslint-parser: ^0.2.0
   autoprefixer: ^10.4.7
   eslint: ^8.16.0
@@ -36,7 +36,7 @@ devDependencies:
   '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.24
   '@typescript-eslint/eslint-plugin': 5.26.0_grfei5yostfimvqdpf73rlhy3e
   '@typescript-eslint/parser': 5.26.0_eslint@8.16.0
-  astro: 1.0.0-beta.31
+  astro: 1.0.0-beta.35
   astro-eslint-parser: 0.2.0
   autoprefixer: 10.4.7_postcss@8.4.14
   eslint: 8.16.0
@@ -64,13 +64,6 @@ packages:
       '@jridgewell/trace-mapping': 0.3.13
     dev: true
 
-  /@astrojs/compiler/0.14.3:
-    resolution: {integrity: sha512-kG8E6rcy0rLJc24MrkoQ5THEPTVeVSTgOT/OmIK/K3UkywOWqs4D7w2MNvehR8pgLLzNVp0aen8+w57zVBFGew==}
-    dependencies:
-      tsm: 2.2.1
-      uvu: 0.5.3
-    dev: true
-
   /@astrojs/compiler/0.15.1:
     resolution: {integrity: sha512-4PcWD7lfX1c6J9GwaVVbQjrMQEtqx3jXRGj92TCIc0EQ6kRKxLymdzRS9eW8yCsgJp6Ym4nCzQ8ifTSVSphjDQ==}
     dependencies:
@@ -96,8 +89,8 @@ packages:
       vscode-uri: 3.0.3
     dev: true
 
-  /@astrojs/markdown-remark/0.9.4:
-    resolution: {integrity: sha512-i1VrZjHpZY8rqEnBurzA9/vHrqQAGE+xkkwrV9a+1ayJyJTeO6wOtOOrjAWkUj8qHYpz+gVL4dK+xPAUymCqOA==}
+  /@astrojs/markdown-remark/0.10.1:
+    resolution: {integrity: sha512-yFVvncPjy/WmLer4PwieEB7eWy7jNUhAKFp9ydgFsTnbyzVKBvV5agaoBdEl/FasftyHPXecyzf1M6p+x5lFWA==}
     dependencies:
       '@astrojs/prism': 0.4.1
       assert: 2.0.0
@@ -106,6 +99,7 @@ packages:
       mdast-util-mdx-jsx: 1.2.0
       mdast-util-to-string: 3.1.0
       micromark-extension-mdx-jsx: 1.0.3
+      micromark-extension-mdxjs: 1.0.0
       prismjs: 1.28.0
       rehype-raw: 6.1.1
       rehype-stringify: 9.0.3
@@ -117,6 +111,7 @@ packages:
       unified: 10.1.2
       unist-util-map: 3.1.1
       unist-util-visit: 4.1.0
+      vfile: 5.3.2
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -191,8 +186,10 @@ packages:
       - supports-color
     dev: true
 
-  /@astrojs/webapi/0.11.1:
-    resolution: {integrity: sha512-pZXhYWz1C4dOAznnO1Qst58O+iZfkzn5QypiH4xHVl5GU9gkbq/mAJ/wZ34127GayF4AnCZO37DMlTOLR4fBAQ==}
+  /@astrojs/webapi/0.12.0:
+    resolution: {integrity: sha512-rie5SYbvXVykKYBsNFnkUtDe7/0mGmrvj7Gg5pOKV34Cg/CrCJbvUSwH2oyCG2OLGtN2ttUOLvSgnVq3eipCsQ==}
+    dependencies:
+      node-fetch: 3.2.4
     dev: true
 
   /@babel/code-frame/7.16.7:
@@ -966,17 +963,17 @@ packages:
       - supports-color
     dev: true
 
-  /astro/1.0.0-beta.31:
-    resolution: {integrity: sha512-RRso08DemW56MYDyViDPwXAJ/KHOMAS2/QGkA8grx8uhdQCGQy/liCOk9CvYXr/olVWT2tpoabTtLgYuqp8wsA==}
+  /astro/1.0.0-beta.35:
+    resolution: {integrity: sha512-xbu3UxQ2wsNvWfsBha492rtGb/Megf2Ci5XrK1Pu84Ik9JuyBmRhyCBt+yntEBNVXIcgVY0FLw9uhQiUDSYL0Q==}
     engines: {node: ^14.15.0 || >=16.0.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
-      '@astrojs/compiler': 0.14.3
+      '@astrojs/compiler': 0.15.1
       '@astrojs/language-server': 0.13.4
-      '@astrojs/markdown-remark': 0.9.4
+      '@astrojs/markdown-remark': 0.10.1
       '@astrojs/prism': 0.4.1
       '@astrojs/telemetry': 0.1.2
-      '@astrojs/webapi': 0.11.1
+      '@astrojs/webapi': 0.12.0
       '@babel/core': 7.18.2
       '@babel/generator': 7.18.2
       '@babel/parser': 7.18.3
@@ -3193,6 +3190,18 @@ packages:
       micromark-util-types: 1.0.2
     dev: true
 
+  /micromark-extension-mdx-expression/1.0.3:
+    resolution: {integrity: sha512-TjYtjEMszWze51NJCZmhv7MEBcgYRgb3tJeMAJ+HQCAaZHHRBaDCccqQzGizR/H4ODefP44wRTgOn2vE5I6nZA==}
+    dependencies:
+      micromark-factory-mdx-expression: 1.0.6
+      micromark-factory-space: 1.0.0
+      micromark-util-character: 1.1.0
+      micromark-util-events-to-acorn: 1.1.0
+      micromark-util-symbol: 1.0.1
+      micromark-util-types: 1.0.2
+      uvu: 0.5.3
+    dev: true
+
   /micromark-extension-mdx-jsx/1.0.3:
     resolution: {integrity: sha512-VfA369RdqUISF0qGgv2FfV7gGjHDfn9+Qfiv5hEwpyr1xscRj/CiVRkU7rywGFCO7JwJ5L0e7CJz60lY52+qOA==}
     dependencies:
@@ -3205,6 +3214,38 @@ packages:
       micromark-util-types: 1.0.2
       uvu: 0.5.3
       vfile-message: 3.1.2
+    dev: true
+
+  /micromark-extension-mdx-md/1.0.0:
+    resolution: {integrity: sha512-xaRAMoSkKdqZXDAoSgp20Azm0aRQKGOl0RrS81yGu8Hr/JhMsBmfs4wR7m9kgVUIO36cMUQjNyiyDKPrsv8gOw==}
+    dependencies:
+      micromark-util-types: 1.0.2
+    dev: true
+
+  /micromark-extension-mdxjs-esm/1.0.3:
+    resolution: {integrity: sha512-2N13ol4KMoxb85rdDwTAC6uzs8lMX0zeqpcyx7FhS7PxXomOnLactu8WI8iBNXW8AVyea3KIJd/1CKnUmwrK9A==}
+    dependencies:
+      micromark-core-commonmark: 1.0.6
+      micromark-util-character: 1.1.0
+      micromark-util-events-to-acorn: 1.1.0
+      micromark-util-symbol: 1.0.1
+      micromark-util-types: 1.0.2
+      unist-util-position-from-estree: 1.1.1
+      uvu: 0.5.3
+      vfile-message: 3.1.2
+    dev: true
+
+  /micromark-extension-mdxjs/1.0.0:
+    resolution: {integrity: sha512-TZZRZgeHvtgm+IhtgC2+uDMR7h8eTKF0QUX9YsgoL9+bADBpBY6SiLvWqnBlLbCEevITmTqmEuY3FoxMKVs1rQ==}
+    dependencies:
+      acorn: 8.7.1
+      acorn-jsx: 5.3.2_acorn@8.7.1
+      micromark-extension-mdx-expression: 1.0.3
+      micromark-extension-mdx-jsx: 1.0.3
+      micromark-extension-mdx-md: 1.0.0
+      micromark-extension-mdxjs-esm: 1.0.3
+      micromark-util-combine-extensions: 1.0.0
+      micromark-util-types: 1.0.2
     dev: true
 
   /micromark-factory-destination/1.0.0:
