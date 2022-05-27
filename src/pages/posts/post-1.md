@@ -1,16 +1,16 @@
 ---
+layout:
 setup: |
   import Layout from '@/layouts/BlogPost'
 title: Post 1!
 publishDate: 12 Sep 2021
-name: Nate Moore
-value: 128
 description: Post 1!
+value: 128
 ---
 
 ## This is so cool!
 
-Do variables work {frontmatter.value \* 2}?
+Do variables work {frontmatter.value * 2}?
 
 ```javascript
 // Example JavaScript

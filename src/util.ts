@@ -6,18 +6,23 @@ export function sortMDByDate(files) {
 	);
 }
 
-export function slugsFromFrontmatter(files): string[] {
-	return files.map((file) => file.url);
+export function blogLinksFromFrontmatter(files): { title: string, url: string }[] {
+	return files.map((file) => {
+		return {
+			title: file.frontmatter.title,
+			url: file.url
+		}
+	});
 }
 
-export function getPreviousAndNextSlugs(
+export function getPreviousAndNextPosts(
 	currentSlug: string,
-	slugArr: string[]
+	postArr: { title: string, url: string }[]
 ) {
-	let index = slugArr.indexOf(currentSlug);
+	const index = postArr.findIndex(({ url }) => url === currentSlug)
 	return {
-		prev: slugArr[index - 1] ?? null,
-		next: slugArr[index + 1] ?? null,
+		prev: postArr[index - 1] ?? null,
+		next: postArr[index + 1] ?? null,
 	};
 }
 

@@ -1,10 +1,16 @@
 ---
-	import ThemeToggle from "./ThemeToggle";
-	import MobileMenu from './MobileMenu'
+import ThemeToggle from "./ThemeToggle";
+import MobileMenu from './MobileMenu'
+
+export interface Props {
+	isBlog?: boolean;
+}
+const { isBlog = false } = Astro.props as Props;
 ---
 
-<header class="flex items-center sm:justify-between sm:pl-20 mb-28">
-	<div class="link-wrapper">
+<header class:list={{'is-blog': isBlog}}>
+	<span>
+		{!isBlog && (
 		<a href="/" class="inline-flex items-center sm:relative sm:inline-block grayscale hover:filter-none">
 			<svg class="w-10 h-10 sm:w-20 sm:h-20 sm:absolute sm:-left-20" viewBox="0 0 256 256" fill="none"
 				xmlns="http://www.w3.org/2000/svg">
@@ -18,45 +24,79 @@
 			</svg>
 			<span class="text-xl font-bold sm:text-2xl">Astro Cactus</span>
 		</a>
-		<nav role="navigation" class="hidden mt-1 -ml-4 sm:flex divide-x divide-dashed divide-accent text-accent">
-			<a href="/" class="px-4 hover:underline">Home</a>
-			<a href="/about" class="px-4 hover:underline">About</a>
-			<a href="/posts" class="px-4 hover:underline">Writings</a>
+		)}
+		<nav role="navigation" class="text-accent">
+			<a href="/" class="hover:underline">Home</a>
+			<a href="/about" class="hover:underline">About</a>
+			<a href="/posts" class="hover:underline">Writings</a>
+			<slot name="blog-toc" />
 		</nav>
-	</div>
-	<div class="ml-auto">
+	</span>
+	<span class="ml-auto">
 		<ThemeToggle client:idle />
-	</div>
-	<MobileMenu client:idle />
+	</span>
+	<span class="ml-8">
+		<MobileMenu client:idle />
+	</span>
 </header>
 
 <style>
-	header a {
-		svg {
-			#flame {
-				fill: #ff5d01;
+	header {
+		@apply flex items-center relative z-50;
+
+		#flame {
+			fill: #ff5d01;
+		}
+
+		&:not(.is-blog) {
+			@apply sm:pl-20 mb-28;
+
+			nav {
+				@apply mt-1 -ml-4 hidden sm:flex divide-x divide-dashed divide-accent;
+
+				a {
+					@apply px-4;
+				}
+			}
+
+			.menu-wrapper {
+				@apply sm:hidden sm:invisible;
+			}
+
+			@media (max-width: 640px) {
+				:global(body.menu-open) & {
+					@apply relative z-50;
+
+					nav {
+						@apply py-4 flex items-end flex-col absolute top-14 h-[calc(100vh-9rem)] inset-x-0 space-y-6 divide-x-0 bg-[color:rgb(250_250_250/0.85)] shadow rounded-md backdrop-filter backdrop-blur;
+
+						:global(.dark) & {
+							@apply bg-[color:rgb(29_31_33/0.85)];
+						}
+
+						a {
+							@apply py-2 text-lg;
+						}
+					}
+				}
 			}
 		}
-	}
 
-	@media (max-width: 640px) {
-		:global(body.mobile-toggle) header {
-			@apply relative z-50;
-	
-			.link-wrapper {
+
+		&.is-blog {
+			nav {
+				@apply hidden;
+			}
+
+			:global(body.menu-open) & {
 				nav {
-					@apply p-4 flex items-end flex-col absolute top-14 h-[calc(100vh-9rem)] inset-x-0 space-y-6 divide-x-0 bg-[color:rgb(250_250_250/0.85)] shadow rounded-md backdrop-filter backdrop-blur;
+					@apply py-4 flex items-end flex-col absolute top-14 h-[calc(100vh-9rem)] inset-x-0 space-y-6 bg-[color:rgb(250_250_250/0.85)] shadow rounded-md backdrop-filter backdrop-blur;
 
 					:global(.dark) & {
 						@apply bg-[color:rgb(29_31_33/0.85)];
-					}
-	
-					a {
-						@apply py-2 text-lg;
 					}
 				}
 			}
 		}
 	}
-
 </style>

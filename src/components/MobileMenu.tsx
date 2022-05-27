@@ -6,9 +6,9 @@ export default function Header() {
 	createEffect(() => {
 		const body = document.body;
 		if (menuOpen()) {
-			body.classList.add("mobile-toggle");
+			body.classList.add("menu-open");
 		} else {
-			body.classList.remove("mobile-toggle");
+			body.classList.remove("menu-open");
 		}
 	});
 
@@ -16,7 +16,6 @@ export default function Header() {
 
 	return (
 		<button
-			class={`sm:hidden sm:invisible ml-6`}
 			classList={{ "text-accent": menuOpen() }}
 			aria-pressed={menuOpen() ? "true" : "false"}
 			onClick={toggle}

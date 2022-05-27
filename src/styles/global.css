@@ -25,9 +25,7 @@ html {
 html body {
 	@apply h-full max-w-3xl mx-auto px-8 pt-16 font-mono font-normal antialiased text-sm flex flex-col text-text_color bg-bg_color;
 
-	@media (max-width: 640px) {
-		&.mobile-toggle {
-			@apply fixed top-0.5 w-full overflow-y-hidden;
-		}
+	&.menu-open {
+		@apply fixed left-1/2 -translate-x-1/2 top-0.5 w-full overflow-y-hidden;
 	}
 }

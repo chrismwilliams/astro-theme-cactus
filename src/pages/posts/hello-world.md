@@ -26,6 +26,29 @@ This is styled by [Shiki](https://docs.astro.build/en/guides/markdown-content/#s
 
 You can choose your own theme from this library, currently set to Dracula, in the file `astro.config.mjs`.
 
+Here is a horizontal rule
+
+---
+
+Here is a list
+
+- Item number 1
+- Item number 2
+- Item number 3
+
+And an ordered list
+
+1. James Madison
+2. James Monroe
+3. John Quincy Adams
+
+Here is a table
+
+| Item         | Price | # In stock |
+| ------------ | :---: | ---------: |
+| Juicy Apples | 1.99  |        739 |
+| Bananas      | 1.89  |          6 |
+
 ## Tailwind CSS Prose styling
 
 > I'm a simple blockquote.
