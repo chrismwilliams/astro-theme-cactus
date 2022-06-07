@@ -1,12 +1,12 @@
 ---
-	import "../styles/global.css";
+import "../styles/global.css";
 
-	export interface Props {
-		title: string;
-		description: string;
-	}
-	const { title, description } = Astro.props as Props;
-	const canonicalURL = new URL(Astro.canonicalURL);
+export interface Props {
+	title: string;
+	description: string;
+}
+const { title, description } = Astro.props as Props;
+const canonicalURL = new URL(Astro.canonicalURL);
 ---
 
 <!-- Global Metadata -->

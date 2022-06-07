@@ -1,30 +1,11 @@
-import { createSignal, createEffect, onMount } from "solid-js";
-import { getDocumentClassList, getInitialTheme } from "@/util";
+import { useStore } from "@nanostores/solid";
+import { theme, toggleTheme } from "@/stores/theme";
 
 export default function ThemeToggle(props) {
-	const [theme, setTheme] = createSignal(undefined);
-
-	onMount(() => {
-		if (import.meta.env.SSR) {
-			return;
-		}
-		setTheme(getInitialTheme());
-	});
-
-	createEffect(() => {
-		const classList = getDocumentClassList();
-		localStorage.setItem("theme", theme());
-		if (theme() === "dark") {
-			classList.add("dark");
-		} else {
-			classList.remove("dark");
-		}
-	});
-
-	const toggle = () => setTheme(theme() === "light" ? "dark" : "light");
+	const appTheme = useStore(theme);
 
 	return (
-		<button aria-label="Toggle dark mode" type="button" onClick={toggle}>
+		<button aria-label="Toggle dark mode" type="button" onClick={toggleTheme}>
 			<svg
 				class="h-7 w-7 mt-1"
 				stroke-width="1.5"
@@ -32,8 +13,8 @@ export default function ThemeToggle(props) {
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"
 			>
-				{theme() ? (
-					theme() === "dark" ? (
+				{appTheme() ? (
+					appTheme() === "dark" ? (
 						<>
 							<path
 								d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18Z"

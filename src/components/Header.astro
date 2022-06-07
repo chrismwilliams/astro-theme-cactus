@@ -29,13 +29,13 @@ const { isBlog = false } = Astro.props as Props;
 			<a href="/" class="hover:underline">Home</a>
 			<a href="/about" class="hover:underline">About</a>
 			<a href="/posts" class="hover:underline">Writings</a>
-			<slot name="blog-toc" />
+			<slot name="blog" />
 		</nav>
 	</span>
 	<span class="ml-auto">
 		<ThemeToggle client:idle />
 	</span>
-	<span class="ml-8">
+	<span class="menu-wrapper">
 		<MobileMenu client:idle />
 	</span>
 </header>
@@ -46,6 +46,10 @@ const { isBlog = false } = Astro.props as Props;
 
 		#flame {
 			fill: #ff5d01;
+		}
+
+		.menu-wrapper {
+			@apply ml-8;
 		}
 
 		&:not(.is-blog) {
@@ -68,20 +72,15 @@ const { isBlog = false } = Astro.props as Props;
 					@apply relative z-50;
 
 					nav {
-						@apply py-4 flex items-end flex-col absolute top-14 h-[calc(100vh-9rem)] inset-x-0 space-y-6 divide-x-0 bg-[color:rgb(250_250_250/0.85)] shadow rounded-md backdrop-filter backdrop-blur;
-
-						:global(.dark) & {
-							@apply bg-[color:rgb(29_31_33/0.85)];
-						}
+						@apply m-0 p-4 pr-0 flex items-end flex-col absolute top-16 h-[calc(100vh-9rem)] inset-x-0 overflow-y-scroll space-y-6 divide-x-0 bg-[color:var(--theme-menu-bg)] shadow rounded-md backdrop-filter backdrop-blur;
 
 						a {
-							@apply py-2 text-lg;
+							@apply px-0 py-2;
 						}
 					}
 				}
 			}
 		}
-
 
 		&.is-blog {
 			nav {
@@ -90,11 +89,7 @@ const { isBlog = false } = Astro.props as Props;
 
 			:global(body.menu-open) & {
 				nav {
-					@apply py-4 flex items-end flex-col absolute top-14 h-[calc(100vh-9rem)] inset-x-0 space-y-6 bg-[color:rgb(250_250_250/0.85)] shadow rounded-md backdrop-filter backdrop-blur;
-
-					:global(.dark) & {
-						@apply bg-[color:rgb(29_31_33/0.85)];
-					}
+					@apply p-4 pr-0 flex items-end flex-col absolute top-16 h-[calc(100vh-9rem)] inset-x-0 overflow-y-scroll space-y-6 bg-[color:var(--theme-menu-bg)] shadow rounded-md backdrop-filter backdrop-blur;
 				}
 			}
 		}

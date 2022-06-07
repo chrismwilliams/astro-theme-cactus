@@ -1,12 +1,13 @@
 ---
-	export interface Props {
-		post: any;
-		as?: keyof HTMLElementTagNameMap;
-		withDesc?: boolean;
-	}
+export interface Props {
+	post: any;
+	withDesc?: boolean;
+	// eslint-disable-next-line no-undef
+	readonly as?: keyof HTMLElementTagNameMap;
+}
 
-	const { post, as: Element = 'div', withDesc = false } = Astro.props as Props;
-	const datetime = new Date(post.frontmatter.publishDate).toISOString();
+const { post, as: Element = 'div', withDesc = false } = Astro.props as Props;
+const datetime = new Date(post.frontmatter.publishDate).toISOString();
 ---
 
 <Element>

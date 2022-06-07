@@ -1,5 +1,6 @@
 ---
 import Header from './Header.astro';
+import TOCLink from './TOCLink'
 
 export interface Props {
   headers: any;
@@ -8,18 +9,17 @@ export interface Props {
 const { headers } = Astro.props as Props;
 ---
 
+
 <Header isBlog>
-  <Fragment slot="blog-toc">
+  <Fragment slot="blog">
     <span
       class="w-full mt-8 font-semibold text-right border-b border-dotted border-text_color md:w-1/2 text-text_color">On
       this
       page</span>
     <ul class="mt-4 text-xs text-right space-y-2">
-      {headers.map(({ depth, slug, text }) => (
+      {headers.map(({ slug, text }) => (
       <li>
-        <a href={`#${slug}`}>
-          &#35; {text}
-        </a>
+        <TOCLink client:idle {slug} {text} />
       </li>
       ))}
     </ul>

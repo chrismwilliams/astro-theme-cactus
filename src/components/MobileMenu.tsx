@@ -1,24 +1,14 @@
-import { createSignal, createEffect } from "solid-js";
+import { useStore } from "@nanostores/solid";
+import { menuOpen, toggleMenuOpen } from "@/stores/menu";
 
 export default function Header() {
-	const [menuOpen, setMenuOpen] = createSignal(false);
-
-	createEffect(() => {
-		const body = document.body;
-		if (menuOpen()) {
-			body.classList.add("menu-open");
-		} else {
-			body.classList.remove("menu-open");
-		}
-	});
-
-	const toggle = () => setMenuOpen(!menuOpen());
+	const menuIsOpen = useStore(menuOpen);
 
 	return (
 		<button
-			classList={{ "text-accent": menuOpen() }}
-			aria-pressed={menuOpen() ? "true" : "false"}
-			onClick={toggle}
+			classList={{ "text-accent": menuIsOpen() }}
+			aria-pressed={menuIsOpen()}
+			onClick={toggleMenuOpen}
 		>
 			<svg
 				class="w-6 h-6"
