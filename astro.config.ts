@@ -3,7 +3,7 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import solid from "@astrojs/solid-js";
-import { toString } from 'hast-util-to-string'
+import { toString } from "hast-util-to-string";
 import { h } from "hastscript";
 
 const AnchorLinkIcon = h(
@@ -19,14 +19,11 @@ const AnchorLinkIcon = h(
 		strokeLinecap: "round",
 		strokeLinejoin: "round",
 	},
-	h(
-		"path",
-		{
-			stroke: "none",
-			d: "M0 0h24v24H0z",
-			fill: "none",
-		}
-	),
+	h("path", {
+		stroke: "none",
+		d: "M0 0h24v24H0z",
+		fill: "none",
+	}),
 	h("line", {
 		x1: "5",
 		y1: "9",
@@ -54,10 +51,10 @@ const AnchorLinkIcon = h(
 );
 
 const createSROnlyLabel = (text: string) => {
-	const node = h(`span.sr-only`, `Section: ${text}`)
-	node.properties['is:raw'] = true;
+	const node = h(`span.sr-only`, `Section: ${text}`);
+	node.properties["is:raw"] = true;
 	return node;
-}
+};
 
 // https://astro.build/config
 export default defineConfig({
@@ -72,10 +69,8 @@ export default defineConfig({
 					properties: {
 						className: "anchor-link",
 					},
-					group: ({ tagName }) => h(
-						`div.heading-wrapper.level-${tagName}`,
-						{ tabIndex: -1 }
-					),
+					group: ({ tagName }) =>
+						h(`div.heading-wrapper.level-${tagName}`, { tabIndex: -1 }),
 					content: (heading) => [
 						h(
 							`span.anchor-icon`,
@@ -84,7 +79,7 @@ export default defineConfig({
 							},
 							AnchorLinkIcon
 						),
-						createSROnlyLabel(toString(heading))
+						createSROnlyLabel(toString(heading)),
 					],
 				},
 			],
