@@ -1,8 +1,11 @@
 const plugin = require("tailwindcss/plugin");
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ["./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}"],
 	darkMode: "class",
+	corePlugins: {
+		aspectRatio: false,
+	},
 	theme: {
 		extend: {
 			colors: {
@@ -82,10 +85,10 @@ module.exports = {
 				".cactus-link": {
 					"@apply relative no-underline": {},
 					"&:hover": {
-						"@apply after:h-0.5": {},
+						"@apply after:h-0.5 after:bg-link": {},
 					},
 					"&::after": {
-						"@apply absolute bottom-0 inset-x-0 block content-[''] h-[1px] bg-link motion-safe:transition-height ease-in-out":
+						"@apply absolute bottom-0 inset-x-0 block content-[''] h-[1px] bg-text_color motion-safe:transition-height ease-in-out":
 							{},
 					},
 				},

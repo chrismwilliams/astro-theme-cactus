@@ -1,10 +1,10 @@
 import { defineConfig } from "astro/config";
-// import astroImageTools from "astro-imagetools";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import solid from "@astrojs/solid-js";
 import { toString } from "hast-util-to-string";
 import { h } from "hastscript";
+import { astroImageTools } from "astro-imagetools";
 
 const AnchorLinkIcon = h(
 	`svg`,
@@ -50,13 +50,14 @@ const AnchorLinkIcon = h(
 	})
 );
 
-const createSROnlyLabel = (text: string) => {
+const createSROnlyLabel = (text) => {
 	const node = h(`span.sr-only`, `Section: ${text}`);
 	node.properties["is:raw"] = true;
 	return node;
 };
 
 // https://astro.build/config
+/** @type {import('astro').AstroUserConfig} */
 export default defineConfig({
 	markdown: {
 		remarkPlugins: ["remark-gfm", ["remark-smartypants", { dashes: false }]],
@@ -85,7 +86,7 @@ export default defineConfig({
 			],
 		],
 		shikiConfig: {
-			theme: "github-dark",
+			theme: "dracula",
 			wrap: true,
 		},
 	},
@@ -93,5 +94,10 @@ export default defineConfig({
 		integrations: true,
 	},
 	site: "https://www.astro-theme-cactus.netlify.app",
-	integrations: [tailwind({}), sitemap(), solid()],
+	integrations: [tailwind({}), sitemap(), solid(), astroImageTools],
+	vite: {
+		ssr: {
+			external: ["svgo"],
+		},
+	},
 });
