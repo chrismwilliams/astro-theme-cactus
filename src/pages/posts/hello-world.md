@@ -1,7 +1,7 @@
 ---
 setup: |
   import Layout from '@/layouts/BlogPost'
-title: Hello World!
+title: Testing testing 123!
 publishDate: 13 May 2022
 description: Hello world!!! This is an example blog post showcasing some of the cool stuff Astro Cactus theme can do.
 tags:
@@ -14,6 +14,8 @@ tags:
 
 Following is an example blog post written in an md file. You can find me @ src/pages/posts/hello-world.md. Here you can add/update/delete details and watch the changes live when running in develop mode.
 
+![A covered up pug in the woods](https://picsum.photos/id/1025/550/460)
+
 ## Using some markdown elements
 
 Here we have a simple js code block.
@@ -22,27 +24,27 @@ Here we have a simple js code block.
 let string = "JavaScript syntax highlighting";
 ```
 
-This is styled by [Shiki](https://docs.astro.build/en/guides/markdown-content/#syntax-highlighting)
+This is styled by Shiki, set via the [config](https://docs.astro.build/en/guides/markdown-content/#syntax-highlighting) for Astro.
 
-You can choose your own theme from this library, currently set to Dracula, in the file `astro.config.mjs`.
+You can choose your own theme from this [library](https://github.com/shikijs/shiki/blob/main/docs/themes.md#all-themes), which is currently set to Dracula, in the file `astro.config.mjs`.
 
-Here is a horizontal rule
+Here is a horizontal rule.
 
 ---
 
-Here is a list
+Here is a list:
 
 - Item number 1
 - Item number 2
 - Item number 3
 
-And an ordered list
+And an ordered list:
 
 1. James Madison
 2. James Monroe
 3. John Quincy Adams
 
-Here is a table
+Here is a table:
 
 | Item         | Price | # In stock |
 | ------------ | :---: | ---------: |

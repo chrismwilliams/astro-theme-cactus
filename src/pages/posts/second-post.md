@@ -2,14 +2,15 @@
 layout:
 setup: |
   import Layout from '@/layouts/BlogPost'
-title: Post 1!
-publishDate: 12 Sep 2021
-description: Post 1!
+title: My Second Post
+publishDate: 12 June 2022
+description: It's another post by me.
 value: 128
 ---
 
 ## This is so cool!
 
+<!-- prettier-ignore -->
 Do variables work {frontmatter.value * 2}?
 
 ```javascript

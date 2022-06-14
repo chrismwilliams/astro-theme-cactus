@@ -1,19 +1,20 @@
 ---
-export interface Props {
+import type { IElement } from "@/types";
+export interface Props extends IElement {
 	post: any;
 	withDesc?: boolean;
-	// eslint-disable-next-line no-undef
-	readonly as?: keyof HTMLElementTagNameMap;
 }
 
-const { post, as: Element = 'div', withDesc = false } = Astro.props as Props;
+const { post, as: Element = "div", withDesc = false } = Astro.props as Props;
 const datetime = new Date(post.frontmatter.publishDate).toISOString();
 ---
 
 <Element>
-	<time {datetime} class="mr-4 text-gray-500">{post.frontmatter.publishDate}</time>
-	<a href={post.url} class="inline-block mt-4 cactus-link">
+	<time {datetime} class="text-gray-500">{post.frontmatter.publishDate}</time>
+	<a href={post.url} class="inline-block cactus-link line-clamp-1">
 		{post.frontmatter.title}
 	</a>
-	{withDesc && <q class="block mt-2 italic line-clamp-3">{post.frontmatter.description}</q>}
+	{withDesc && (
+		<q class="block italic line-clamp-3">{post.frontmatter.description}</q>
+	)}
 </Element>

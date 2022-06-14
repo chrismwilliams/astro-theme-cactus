@@ -1,16 +1,18 @@
 ---
-  import PageLayout from '@/layouts/Base';
-  import BlogPostPreview from '@/components/BlogPostPreview.astro'
-  import { sortMDByDate } from 'src/util';
+import PageLayout from "@/layouts/Base";
+import BlogPostPreview from "@/components/BlogPostPreview.astro";
+import { sortMDByDate } from "src/util";
 
-  let allPosts = await Astro.glob('./*.md');
-  allPosts = sortMDByDate(allPosts);
+let allPosts = await Astro.glob("./*.md");
+allPosts = sortMDByDate(allPosts);
 ---
 
 <PageLayout title="Posts" description="Astro Cactus posts page">
-  <h1 class="text-2xl font-semibold">Writings</h1>
-  <section aria-label="Blog post list" class="mt-6 space-y-8">
-    {allPosts.map((p) =>
-    <BlogPostPreview post={p} as="h2" withDesc />)}
-  </section>
+	<h1 class="text-2xl font-semibold">Writings</h1>
+	<section
+		aria-label="Blog post list"
+		class="mt-6 space-y-8 text-left [&>h2]:flex [&>h2]:flex-wrap [&>h2]:gap-2 [&_time]:min-w-[120px] [&_q]:w-full"
+	>
+		{allPosts.map((p) => <BlogPostPreview post={p} as="h2" withDesc />)}
+	</section>
 </PageLayout>

@@ -1,11 +1,15 @@
 import { useStore } from "@nanostores/solid";
 import { theme, toggleTheme } from "@/stores/theme";
 
-export default function ThemeToggle(props) {
+export default function ThemeToggle() {
 	const appTheme = useStore(theme);
 
 	return (
-		<button aria-label="Toggle dark mode" type="button" onClick={toggleTheme}>
+		<button
+			type="button"
+			onClick={toggleTheme}
+			aria-pressed={appTheme() === "dark"}
+		>
 			<svg
 				class="h-7 w-7 mt-1"
 				stroke-width="1.5"
@@ -106,6 +110,7 @@ export default function ThemeToggle(props) {
 					)
 				) : null}
 			</svg>
+			<span class="sr-only">Dark Mode enabled</span>
 		</button>
 	);
 }
