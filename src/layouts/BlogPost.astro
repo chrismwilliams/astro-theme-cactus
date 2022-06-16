@@ -18,7 +18,7 @@ const { prev, next } = getPreviousAndNextPosts(currentPage, allPostLinks);
 const hasPrevOrNext = prev || next;
 ---
 
-<BaseLayout {title} {description}>
+<BaseLayout meta={{ title, description }}>
 	<BlogHeader slot="header" headers={astro.headers} />
 	<article class="max-w-[65ch]">
 		<h1 class="text-xl font-semibold text-accent">{title}</h1>

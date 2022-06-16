@@ -1,13 +1,15 @@
-<div class="social-list">
+<div class="flex items-center space-x-4">
 	<p>Find me on</p>
-	<ul>
+	<ul class="flex items-center space-x-4">
 		<li>
 			<a
+				class="hover:text-link"
 				href="https://github.com/chrismwilliams/astro-cactus"
 				target="_blank"
 				rel="noopener noreferrer"
 			>
 				<svg
+					class="w-6 h-6"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
@@ -27,11 +29,13 @@
 		</li>
 		<li>
 			<a
+				class="hover:text-link"
 				href="https://github.com/chrismwilliams/astro-cactus"
 				target="_blank"
 				rel="noopener noreferrer"
 			>
 				<svg
+					class="w-6 h-6"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
@@ -51,11 +55,13 @@
 		</li>
 		<li>
 			<a
+				class="hover:text-link"
 				href="https://github.com/chrismwilliams/astro-cactus"
 				target="_blank"
 				rel="noopener noreferrer"
 			>
 				<svg
+					class="w-6 h-6"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
@@ -77,11 +83,13 @@
 		</li>
 		<li>
 			<a
+				class="hover:text-link"
 				href="https://github.com/chrismwilliams/astro-cactus"
 				target="_blank"
 				rel="noopener noreferrer"
 			>
 				<svg
+					class="w-6 h-6"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
@@ -108,8 +116,9 @@
 			</a>
 		</li>
 		<li>
-			<a href="mailto:me@example.com">
+			<a class="hover:text-link" href="mailto:me@example.com">
 				<svg
+					class="w-6 h-6"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
@@ -127,21 +136,3 @@
 		</li>
 	</ul>
 </div>
-
-<style>
-	.social-list {
-		@apply flex items-center space-x-4;
-
-		ul {
-			@apply flex space-x-4 items-center;
-
-			a {
-				@apply hover:text-link;
-
-				svg {
-					@apply w-6 h-6;
-				}
-			}
-		}
-	}
-</style>

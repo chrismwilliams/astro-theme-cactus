@@ -1,9 +1,14 @@
 ---
 import { Picture } from "astro-imagetools/components";
 import PageLayout from "@/layouts/Base";
+
+const meta = {
+	title: "About",
+	description: "I'm a starter theme for Astro",
+};
 ---
 
-<PageLayout title="About" description="I'm a starter theme for Astro">
+<PageLayout {meta}>
 	<div class="space-y-6">
 		<h1 class="text-2xl font-semibold">About</h1>
 		<p>

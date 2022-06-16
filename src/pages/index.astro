@@ -3,8 +3,10 @@ import PageLayout from "@/layouts/Base";
 import BlogPostPreview from "@/components/BlogPostPreview.astro";
 import SocialList from "@/components/SocialList.astro";
 
-let title = "Asto Cactus";
-let description = "The perfect starter for your perfect blog.";
+const meta = {
+	title: "Asto Cactus",
+	description: "The perfect starter for your perfect blog.",
+};
 
 let allPosts = (await Astro.glob("./posts/*.md")) || [];
 allPosts = allPosts.sort(
@@ -14,7 +16,7 @@ allPosts = allPosts.sort(
 );
 ---
 
-<PageLayout {title} {description}>
+<PageLayout {meta}>
 	<section>
 		<h1 class="mb-6 text-2xl font-bold text-accent-2">Hello World!</h1>
 		<p class="mb-4">

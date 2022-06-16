@@ -6,9 +6,13 @@ import Footer from "@/components/Footer.astro";
 import SkipLink from "@/components/SkipLink.astro";
 import siteMeta from "src/site-meta.config";
 
-export type Props = SiteMeta;
+export type Props = {
+	meta: SiteMeta;
+};
 
-const { title, description, image } = Astro.props as Props;
+const {
+	meta: { title, description, image },
+} = Astro.props as Props;
 ---
 
 <html lang={siteMeta.lang}>
