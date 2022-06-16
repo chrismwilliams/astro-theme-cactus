@@ -15,7 +15,7 @@ const path = Astro.canonicalURL.pathname;
 			<a
 				href="/"
 				class="inline-flex items-center grayscale sm:inline-block sm:relative hover:filter-none"
-				aria-current={path === "/" ? "page" : false}
+				aria-current={path.endsWith("/") ? "page" : false}
 			>
 				<svg
 					class="mr-3 w-6 h-10 sm:absolute sm:left-[-4.5rem] sm:mr-0 sm:w-12 sm:h-20"
@@ -45,19 +45,19 @@ const path = Astro.canonicalURL.pathname;
 			<a
 				href="/"
 				class="hover:underline"
-				aria-current={path === "/" ? "page" : false}
+				aria-current={path.endsWith("/") ? "page" : false}
 				>Home
 			</a>
 			<a
 				href="/about"
 				class="hover:underline"
-				aria-current={path === "/about/" ? "page" : false}
+				aria-current={path.endsWith("about/") ? "page" : false}
 				>About
 			</a>
 			<a
 				href="/posts"
 				class="hover:underline"
-				aria-current={path === "/posts/" ? "page" : false}
+				aria-current={path.endsWith("posts/") ? "page" : false}
 				>Writings
 			</a>
 			<slot name="blog"></slot>

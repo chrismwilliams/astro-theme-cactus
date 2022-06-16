@@ -1,20 +1,19 @@
 ---
+import type { SiteMeta } from "@/types";
 import BaseHead from "@/components/BaseHead.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import SkipLink from "@/components/SkipLink.astro";
+import siteMeta from "src/site-meta.config";
 
-export interface Props {
-	title: string;
-	description: string;
-}
+export type Props = SiteMeta;
 
-const { title, description } = Astro.props as Props;
+const { title, description, image } = Astro.props as Props;
 ---
 
-<html lang="en">
+<html lang={siteMeta.lang}>
 	<head>
-		<BaseHead {title} {description} />
+		<BaseHead {title} {description} {image} />
 		<script is:inline>
 			const theme = (() => {
 				if (

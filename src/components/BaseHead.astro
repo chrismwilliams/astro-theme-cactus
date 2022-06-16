@@ -1,38 +1,59 @@
 ---
+import type { SiteMeta } from "@/types";
+import siteMeta from "src/site-meta.config";
 import "../styles/global.css";
 
-export interface Props {
-	title: string;
-	description: string;
-}
-const { title, description } = Astro.props as Props;
-const canonicalURL = new URL(Astro.canonicalURL);
+export type Props = SiteMeta;
+
+const {
+	title,
+	description = siteMeta.description,
+	image,
+} = Astro.props as Props;
+
+const titleSeparator = "•";
+const siteTitle = `${title} ${titleSeparator} ${siteMeta.title}`;
+const canonicalURL = Astro.canonicalURL.href;
 ---
 
-<!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width" />
-<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<meta httpequiv="X-UA-Compatible" content="IE=edge" />
 
 <!-- Primary Meta Tags -->
-<title>{title}</title>
-<meta name="title" content={title} />
+<title>{siteTitle}</title>
+<meta name="title" content={siteTitle} />
 <meta name="description" content={description} />
 
-<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)"
+<!-- Global Metadata -->
+<link rel="icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" href="/images/icon/192x192.png" />
+<link rel="manifest" href="manifest.json" />
+<meta
+	name="theme-color"
+	content={siteMeta.themeColorLight}
+	media="(prefers-color-scheme: light)"
 />
-<meta name="theme-color" content="#1d1f21" media="(prefers-color-scheme: dark)"
+<meta
+	name="theme-color"
+	content={siteMeta.themeColorDark}
+	media="(prefers-color-scheme: dark)"
 />
 
 <!-- Open Graph / Facebook -->
+<meta property="og:locale" content={siteMeta.ogLocale} />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalURL} />
+<link rel="canonical" href={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content="https://astro.build/social.png?v=1" />
+{image && <meta property="og:image" content={image} />}
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
+<meta
+	property="twitter:card"
+	content={image ? "summary_large_image" : "summary"}
+/>
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content="https://astro.build/social.png?v=1" />
+{image && <meta property="twitter:image" content={image} />}

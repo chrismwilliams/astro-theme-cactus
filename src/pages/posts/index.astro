@@ -7,7 +7,10 @@ let allPosts = await Astro.glob("./*.md");
 allPosts = sortMDByDate(allPosts);
 ---
 
-<PageLayout title="Posts" description="Astro Cactus posts page">
+<PageLayout
+	title="Posts"
+	description="A collection of posts by me for a starter Astro theme"
+>
 	<h1 class="text-2xl font-semibold">Writings</h1>
 	<section
 		aria-label="Blog post list"
