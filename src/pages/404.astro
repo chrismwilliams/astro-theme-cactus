@@ -1,0 +1,20 @@
+---
+import { Picture } from "astro-imagetools/components";
+import PageLayout from "@/layouts/Base";
+---
+
+<PageLayout
+	title="Oops! You found a missing page!"
+	description="Oops! It looks like this page is lost in space!"
+>
+	<h1 class="mb-6 text-2xl font-bold text-accent-2">
+		404 | Oops something went wrong
+	</h1>
+	<p class="mb-8">Please use the navigation to find your way back</p>
+	<div class="grid justify-center my-4 rotate-180">
+		<Picture
+			src="/src/assets/about-astro.png"
+			alt="A cartoon cactus looking at 'Astro.build' logo"
+		/>
+	</div>
+</PageLayout>
