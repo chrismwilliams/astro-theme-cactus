@@ -3,7 +3,7 @@ import { Picture } from "astro-imagetools/components";
 import PageLayout from "@/layouts/Base";
 ---
 
-<PageLayout title="About" description="Astro Cactus about page">
+<PageLayout title="About" description="I'm a starter theme for Astro">
 	<div class="space-y-6">
 		<h1 class="text-2xl font-semibold">About</h1>
 		<p>
@@ -11,7 +11,10 @@ import PageLayout from "@/layouts/Base";
 			with your own blogging website.
 		</p>
 		<div class="flex justify-center">
-			<Picture src="/src/assets/about-astro.png" alt="A random image" />
+			<Picture
+				src="/src/assets/about-astro.png"
+				alt="A cartoon cactus looking at 'Astro.build' logo"
+			/>
 		</div>
 		<p>Here are my some of my awesome built in features:</p>
 		<ul class="list-disc list-inside">
@@ -22,10 +25,10 @@ import PageLayout from "@/layouts/Base";
 			<li>I have Tailwind CSS styling</li>
 			<li>Shiki code syntax highlighting</li>
 		</ul>
-		<p class="flex items-center">
+		<p>
 			Clone or fork my
 			<a
-				class="mx-2 hover:text-link"
+				class="inline-block mx-2 align-middle hover:text-link"
 				href="https://github.com/chrismwilliams/astro-cactus"
 				target="_blank"
 				rel="noopener noreferrer"
