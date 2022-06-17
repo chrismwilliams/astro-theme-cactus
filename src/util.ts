@@ -40,3 +40,11 @@ export function getInitialTheme(): Theme {
 export function getDocumentClassList() {
 	return document.documentElement.classList;
 }
+
+export function getThemeColorMeta() {
+	return document.querySelector("meta[name='theme-color']");
+}
+
+export function setThemeColorMetaContent(color: string) {
+	getThemeColorMeta().setAttribute('content', color)
+}

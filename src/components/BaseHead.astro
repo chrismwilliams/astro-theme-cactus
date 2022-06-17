@@ -29,16 +29,8 @@ const canonicalURL = Astro.canonicalURL.href;
 <link rel="icon" href="/favicon.ico" />
 <link rel="apple-touch-icon" href="/images/icon/192x192.png" />
 <link rel="manifest" href="manifest.json" />
-<meta
-	name="theme-color"
-	content={siteMeta.themeColorLight}
-	media="(prefers-color-scheme: light)"
-/>
-<meta
-	name="theme-color"
-	content={siteMeta.themeColorDark}
-	media="(prefers-color-scheme: dark)"
-/>
+<!-- theme-color content will change on theme toggle -->
+<meta name="theme-color" content={siteMeta.themeColorLight} />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:locale" content={siteMeta.ogLocale} />

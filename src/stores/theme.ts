@@ -1,25 +1,34 @@
 import { onMount, atom, action } from 'nanostores'
-import { getDocumentClassList, getInitialTheme } from "@/util";
+import { getDocumentClassList, getInitialTheme, setThemeColorMetaContent } from "@/util";
 import type { Theme } from '@/types'
+import themeMeta from '../site-meta.config'
 
 const initialValue = null;
 
 const theme = atom<Theme>(initialValue);
 
+// set initial value to theme based on user preference
 onMount(theme, () => {
   if (import.meta.env.SSR) {
     return;
   }
-  theme.set(getInitialTheme());
-});
+  const initialValue = getInitialTheme()
+  theme.set(initialValue); // set the theme
+  setThemeColorMetaContent(initialValue === 'dark' ? themeMeta.themeColorDark : themeMeta.themeColorLight) // set the meta
+})
 
+// subscribe to theme toggle
+// 1. add / remove class 'dark' on html
+// 2. set the meta "theme-color" content
 theme.listen(value => {
   const classList = getDocumentClassList();
   localStorage.setItem("theme", value);
   if (value === "dark") {
     classList.add("dark");
+    setThemeColorMetaContent(themeMeta.themeColorDark)
   } else {
     classList.remove("dark");
+    setThemeColorMetaContent(themeMeta.themeColorLight)
   }
 })
 
