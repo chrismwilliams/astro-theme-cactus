@@ -19,14 +19,15 @@ export function blogLinksFromFrontmatter(
 	});
 }
 
+// This function expects the @arg postArr to be sorted by sortMDByDate()
 export function getPreviousAndNextPosts(
 	currentSlug: string,
 	postArr: { title: string; url: string }[]
 ) {
 	const index = postArr.findIndex(({ url }) => url === currentSlug);
 	return {
-		prev: postArr[index - 1] ?? null,
-		next: postArr[index + 1] ?? null,
+		prev: postArr[index + 1] ?? null,
+		next: postArr[index - 1] ?? null,
 	};
 }
 
