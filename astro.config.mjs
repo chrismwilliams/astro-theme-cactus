@@ -94,5 +94,12 @@ export default defineConfig({
 		integrations: true,
 	},
 	site: "https://www.astro-theme-cactus.netlify.app",
-	integrations: [tailwind(), sitemap(), solid(), astroImageTools],
+	integrations: [
+		tailwind({
+			config: { applyBaseStyles: false },
+		}),
+		sitemap(),
+		solid(),
+		astroImageTools,
+	],
 });

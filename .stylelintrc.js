@@ -23,7 +23,7 @@ module.exports = {
 		"declaration-block-trailing-semicolon": null,
 		"no-descending-specificity": null,
 		"custom-property-empty-line-before": "never",
-		"color-function-notation": "legacy",
+		"hue-degree-notation": "number",
 		"alpha-value-notation": "number",
 		"selector-pseudo-class-no-unknown": [
 			true,

@@ -9,11 +9,11 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				bg_color: "var(--theme-bg)",
-				text_color: "var(--theme-text)",
-				link: "var(--theme-link)",
-				accent: "var(--theme-accent)",
-				"accent-2": "var(--theme-accent-2)",
+				bgColor: "hsl(var(--theme-bg) / <alpha-value>)",
+				textColor: "hsl(var(--theme-text) / <alpha-value>)",
+				link: "hsl(var(--theme-link) / <alpha-value>)",
+				accent: "hsl(var(--theme-accent) / <alpha-value>)",
+				"accent-2": "hsl(var(--theme-accent-2) / <alpha-value>)",
 			},
 			transitionProperty: {
 				height: "height",
@@ -88,7 +88,7 @@ module.exports = {
 						"@apply after:h-0.5 after:bg-link": {},
 					},
 					"&::after": {
-						"@apply absolute bottom-0 inset-x-0 block content-[''] h-[1px] bg-text_color motion-safe:transition-height ease-in-out":
+						"@apply absolute bottom-0 inset-x-0 block content-[''] h-[1px] bg-textColor motion-safe:transition-height ease-in-out":
 							{},
 					},
 				},
