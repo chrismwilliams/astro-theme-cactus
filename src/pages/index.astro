@@ -31,7 +31,7 @@ allPosts = allPosts.sort(
 		<h2 class="mb-4 text-xl font-bold text-accent-2">Writings</h2>
 		<ul class="space-y-2">
 			{allPosts.map((p) => (
-				<li class="[&>h2]:grid [&>h2]:grid-cols-[130px_max-content] [&>h2]:justify-items-start [&>h2]:gap-2">
+				<li class="grid grid-cols-[130px_max-content] justify-items-start gap-2">
 					<BlogPostPreview post={p} as="h2" />
 				</li>
 			))}
