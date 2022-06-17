@@ -99,7 +99,7 @@ const path = Astro.canonicalURL.pathname;
 					@apply relative z-50;
 
 					nav {
-						@apply m-0 p-4 flex items-end flex-col absolute top-16 h-[calc(100vh-9rem)] -inset-x-4 overflow-y-scroll space-y-6 divide-x-0 bg-[color:var(--theme-menu-bg)] shadow rounded-md backdrop-filter backdrop-blur;
+						@apply m-0 p-4 flex items-end flex-col absolute top-16 min-h-[50vh] max-h-[alc(100vh-9rem)] overflow-y-scroll -inset-x-4 space-y-6 divide-x-0 bg-[color:var(--theme-menu-bg)] shadow rounded-md backdrop-filter backdrop-blur;
 
 						a {
 							@apply px-0 py-2;
@@ -116,7 +116,7 @@ const path = Astro.canonicalURL.pathname;
 
 			:global(body.menu-open) & {
 				nav {
-					@apply p-4 flex items-end flex-col absolute top-16 h-[calc(100vh-9rem)] -inset-x-4 overflow-y-scroll space-y-6 bg-[color:var(--theme-menu-bg)] shadow rounded-md backdrop-filter backdrop-blur;
+					@apply p-4 flex items-end flex-col absolute top-16 -inset-x-4 min-h-[50vh] max-h-[alc(100vh-9rem)] overflow-y-scroll space-y-6 bg-[color:var(--theme-menu-bg)] shadow rounded-md backdrop-filter backdrop-blur;
 				}
 			}
 		}
