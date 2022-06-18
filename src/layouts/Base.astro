@@ -18,23 +18,24 @@ const {
 <html lang={siteMeta.lang}>
 	<head>
 		<BaseHead {title} {description} {image} />
-		<script is:inline>
-			const theme = (() => {
-				if (
-					typeof localStorage !== "undefined" &&
-					localStorage.getItem("theme")
-				) {
-					return localStorage.getItem("theme");
-				}
-				if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-					return "dark";
-				}
-				return "light";
-			})();
-			if (theme === "light") {
-				document.documentElement.classList.remove("dark");
+		<script define:vars={{ siteMeta }}>
+			const root = document.documentElement;
+			const colorThemeMetaTag = document.querySelector(
+				"meta[name='theme-color']"
+			);
+			const theme =
+				typeof localStorage !== "undefined"
+					? localStorage.getItem("theme")
+					: null;
+			if (
+				theme === "dark" ||
+				(!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+			) {
+				root.classList.add("dark");
+				colorThemeMetaTag.setAttribute("content", siteMeta.themeColorDark);
 			} else {
-				document.documentElement.classList.add("dark");
+				root.classList.remove("dark");
+				colorThemeMetaTag.setAttribute("content", siteMeta.themeColorLight);
 			}
 		</script>
 	</head>

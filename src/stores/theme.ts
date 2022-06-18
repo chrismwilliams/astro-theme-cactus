@@ -14,7 +14,6 @@ onMount(theme, () => {
   }
   const initialValue = getInitialTheme()
   theme.set(initialValue); // set the theme
-  setThemeColorMetaContent(initialValue === 'dark' ? themeMeta.themeColorDark : themeMeta.themeColorLight) // set the meta
 })
 
 // subscribe to theme toggle
