@@ -1,0 +1,48 @@
+---
+import PageLayout from "@/layouts/Base";
+import BlogPostPreview from "@/components/BlogPostPreview.astro";
+import { sortMDByDate } from "@/util";
+
+export async function getStaticPaths({ paginate }) {
+	const allPosts = await Astro.glob("../../posts/*.md");
+	const allPostsByDate = sortMDByDate(allPosts);
+	const allTags = new Set();
+	allPostsByDate.map((post) => {
+		post.frontmatter.tags &&
+			post.frontmatter.tags?.map((tag) => allTags.add(tag.toLowerCase()));
+	});
+
+	return Array.from(allTags).map((tag) => {
+		const filterPosts = allPostsByDate.filter((post) =>
+			post.frontmatter.tags?.includes(tag)
+		);
+		return paginate(filterPosts, {
+			params: { tag },
+			pageSize: 10,
+		});
+	});
+}
+
+const { page } = Astro.props;
+const { tag } = Astro.params;
+
+const meta = {
+	title: `Tag:`,
+	description: "Tag description",
+};
+---
+
+<PageLayout {meta}>
+	<h1 class="flex items-center mb-6 title">
+		Tag: {tag}
+	</h1>
+	<section aria-label="Blog post list">
+		<ul class="text-left space-y-8">
+			{page.data.map((p) => (
+				<li class="flex flex-wrap gap-2 [&_time]:min-w-[120px] [&_q]:w-full">
+					<BlogPostPreview post={p} as="h2" withDesc />
+				</li>
+			))}
+		</ul>
+	</section>
+</PageLayout>

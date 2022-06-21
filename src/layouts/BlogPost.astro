@@ -6,6 +6,7 @@ import {
 	blogLinksFromFrontmatter,
 	sortMDByDate,
 } from "src/util";
+import Paginator from "@/components/Paginator.astro";
 
 const {
 	content: { title, description, publishDate, tags, astro },
@@ -15,13 +16,28 @@ const currentPage = new URL(Astro.request.url).pathname;
 const allPosts = await Astro.glob("../pages/posts/*.md");
 const allPostLinks = blogLinksFromFrontmatter(sortMDByDate(allPosts));
 const { prev, next } = getPreviousAndNextPosts(currentPage, allPostLinks);
-const hasPrevOrNext = prev || next;
+const paginationProps = {
+	...(prev && {
+		prevUrl: {
+			url: prev.url,
+			text: `← ${prev.title}`,
+			srLabel: " Previous Article:",
+		},
+	}),
+	...(next && {
+		nextUrl: {
+			url: next.url,
+			text: `${next.title} →`,
+			srLabel: "Next Article:",
+		},
+	}),
+};
 ---
 
 <BaseLayout meta={{ title, description }}>
 	<BlogHeader slot="header" headers={astro.headers} />
 	<article class="max-w-[65ch]">
-		<h1 class="text-xl font-semibold text-accent">{title}</h1>
+		<h1 class="title text-accent">{title}</h1>
 		<span
 			class="flex flex-col space-y-2 md:flex-row md:items-center md:space-y-0 md:divide-x md:divide-textColor"
 		>
@@ -29,6 +45,7 @@ const hasPrevOrNext = prev || next;
 			{tags?.length && (
 				<div class="flex items-center md:pl-2">
 					<svg
+						aria-hidden="true"
 						xmlns="http://www.w3.org/2000/svg"
 						class="w-6 h-6"
 						viewBox="0 0 24 24"
@@ -45,7 +62,15 @@ const hasPrevOrNext = prev || next;
 					</svg>
 					<ul class="flex items-center ml-1 space-x-2">
 						{tags.map((tag) => (
-							<li>&#35;{tag}</li>
+							<li>
+								<a
+									class="inline-block cactus-link"
+									aria-label={`View more blogs with the tag ${tag}`}
+									href={`/tags/${tag}`}
+								>
+									&#35;{tag}
+								</a>
+							</li>
 						))}
 					</ul>
 				</div>
@@ -55,21 +80,9 @@ const hasPrevOrNext = prev || next;
 		<div class="mt-12 prose-headings:font-semibold prose prose-sm prose-cactus">
 			<slot></slot>
 		</div>
-		{hasPrevOrNext && (
-			<nav class="flex items-center mt-24">
-				{prev && (
-					<a href={prev.url} class="mr-auto hover:text-accent">
-						<span class="sr-only">Previous Article:</span>← {prev.title}
-					</a>
-				)}
-				{next && (
-					<a href={next.url} class="ml-auto hover:text-accent">
-						<span class="sr-only">Next Article:</span>
-						{next.title} →
-					</a>
-				)}
-			</nav>
-		)}
+		<div class="mt-24">
+			<Paginator {...paginationProps} />
+		</div>
 	</article>
 </BaseLayout>
 

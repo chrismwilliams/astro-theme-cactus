@@ -5,6 +5,9 @@ setup: |
 title: My Second Post
 publishDate: 12 June 2022
 description: It's another post by me.
+tags:
+  - example
+  - blog
 value: 128
 ---
 

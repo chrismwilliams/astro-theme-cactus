@@ -31,6 +31,25 @@ export function getPreviousAndNextPosts(
 	};
 }
 
+export function getAllTagsFromPosts(posts, withCount = false) {
+	if (withCount) {
+		return posts.reduce((prev, post) => {
+			const currTags = { ...prev };
+			const postTags = post.frontmatter.tags;
+			postTags.forEach(function (tag) {
+				currTags[tag] = (currTags[tag] || 0) + 1;
+			});
+			return currTags;
+		}, {});
+	}
+	const allTags = new Set();
+	posts.forEach((post) => {
+		post.frontmatter.tags &&
+			post.frontmatter.tags.map((tag) => allTags.add(tag.toLowerCase()));
+	});
+	return [...allTags];
+}
+
 export function getInitialTheme(): Theme {
 	const isDark = getDocumentClassList().contains("dark");
 	const storageTheme = localStorage.getItem("theme");

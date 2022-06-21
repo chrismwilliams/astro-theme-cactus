@@ -1,0 +1,32 @@
+---
+import PageLayout from "@/layouts/Base";
+import { getAllTagsFromPosts } from "@/util";
+
+const allPosts = (await Astro.glob("../posts/*.md")) || [];
+const allTags = getAllTagsFromPosts(allPosts, true);
+
+const meta = {
+	title: "All Tags",
+	description: "All Tags from my blogs",
+};
+---
+
+<PageLayout {meta}>
+	<h1 class="mb-6 title">All Tags</h1>
+	<ul class="space-y-4">
+		{Object.keys(allTags).map((tag) => (
+			<li class="flex items-center space-x-2">
+				<a
+					class="inline-block cactus-link"
+					href={`/tags/${tag}`}
+					title={`View posts with the tag: ${tag}`}
+				>
+					&#35;{tag}
+				</a>
+				<span class="inline-block">
+					- {allTags[tag]} Post{allTags[tag] > 1 && "s"}
+				</span>
+			</li>
+		))}
+	</ul>
+</PageLayout>
