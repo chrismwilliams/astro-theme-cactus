@@ -2,23 +2,21 @@
 import PageLayout from "@/layouts/Base";
 import BlogPostPreview from "@/components/BlogPostPreview.astro";
 import SocialList from "@/components/SocialList.astro";
+import { sortMDByDate } from "@/util";
 
 const meta = {
 	title: "Asto Cactus",
 	description: "The perfect starter for your perfect blog.",
 };
 
-let allPosts = (await Astro.glob("./posts/*.md")) || [];
-allPosts = allPosts.sort(
-	(a, b) =>
-		new Date(b.frontmatter.publishDate).valueOf() -
-		new Date(a.frontmatter.publishDate).valueOf()
-);
+const MAX_POSTS = 10;
+const allPosts = (await Astro.glob("./posts/*.md")) || [];
+const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
 
 <PageLayout {meta}>
 	<section>
-		<h1 class="mb-6 text-2xl font-bold text-accent-2">Hello World!</h1>
+		<h1 class="mb-6 title">Hello World!</h1>
 		<p class="mb-4">
 			Hi, I’m a theme for Astro, an example of how you can use this starter to
 			create a personal blog. If you want to know more about how you can
@@ -28,9 +26,9 @@ allPosts = allPosts.sort(
 		<SocialList />
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="mb-4 text-xl font-bold text-accent-2">Writings</h2>
+		<h2 class="mb-4 text-xl title">Posts</h2>
 		<ul class="space-y-2">
-			{allPosts.map((p) => (
+			{allPostsByDate.map((p) => (
 				<li class="grid grid-cols-[130px_max-content] justify-items-start gap-2">
 					<BlogPostPreview post={p} as="h2" />
 				</li>
@@ -38,7 +36,7 @@ allPosts = allPosts.sort(
 		</ul>
 	</section>
 	<section class="mt-16">
-		<h2 class="mb-4 text-xl font-bold text-accent-2">Technologies</h2>
+		<h2 class="mb-4 text-xl title">Technologies</h2>
 		<ul>
 			<li>
 				<a
