@@ -1,0 +1,27 @@
+---
+import type { PaginationLink } from "@/types";
+
+export interface Props {
+	prevUrl?: PaginationLink;
+	nextUrl?: PaginationLink;
+}
+
+const { prevUrl, nextUrl } = Astro.props as Props;
+---
+
+{(prevUrl || nextUrl) && (
+	<nav class="flex items-center gap-x-4">
+		{prevUrl && (
+			<a class="mr-auto hover:text-accent" href={prevUrl.url}>
+				{prevUrl.srLabel && <span class="sr-only">{prevUrl.srLabel}</span>}
+				{prevUrl.text ? prevUrl.text : "Previous"}
+			</a>
+		)}
+		{nextUrl && (
+			<a class="ml-auto hover:text-accent" href={nextUrl.url}>
+				{nextUrl.srLabel && <span class="sr-only">{nextUrl.srLabel}</span>}
+				{nextUrl.text ? nextUrl.text : "Next"}
+			</a>
+		)}
+	</nav>
+)}
