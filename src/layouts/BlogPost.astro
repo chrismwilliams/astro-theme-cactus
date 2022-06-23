@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "./Base.astro";
-import BlogHeader from "@/components/BlogHeader.astro";
 import {
 	getPreviousAndNextPosts,
 	blogLinksFromFrontmatter,
@@ -32,10 +31,11 @@ const paginationProps = {
 		},
 	}),
 };
+
+const { headers } = astro;
 ---
 
 <BaseLayout meta={{ title, description }}>
-	<BlogHeader slot="header" headers={astro.headers} />
 	<article class="max-w-[65ch]">
 		<h1 class="title text-accent">{title}</h1>
 		<span
@@ -92,6 +92,6 @@ const paginationProps = {
 	}
 
 	:global(.heading-wrapper .anchor-link) {
-		@apply text-accent after:hidden absolute -left-5 top-1;
+		@apply absolute -left-5 top-1 text-accent after:hidden;
 	}
 </style>
