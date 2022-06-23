@@ -2,65 +2,45 @@
 import ThemeToggle from "./ThemeToggle";
 import MobileMenu from "./MobileMenu";
 
-export interface Props {
-	isBlog?: boolean;
-}
-const { isBlog = false } = Astro.props as Props;
 const path = Astro.canonicalURL.pathname;
 ---
 
-<header class:list={{ "is-blog": isBlog }}>
+<header>
 	<span>
-		{!isBlog && (
-			<a
-				href="/"
-				class="inline-flex items-center grayscale sm:inline-block sm:relative hover:filter-none"
-				aria-current={path.endsWith("/") ? "page" : false}
+		<a
+			href="/"
+			class="inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block"
+			aria-current={path.endsWith("/") ? "page" : false}
+		>
+			<svg
+				class="mr-3 h-10 w-6 sm:absolute sm:left-[-4.5rem] sm:mr-0 sm:h-20 sm:w-12"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 272 480"
 			>
-				<svg
-					class="mr-3 w-6 h-10 sm:absolute sm:left-[-4.5rem] sm:mr-0 sm:w-12 sm:h-20"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 272 480"
-				>
-					<title>Logo</title>
-					<path
-						d="M181.334 93.333v-40L226.667 80v40l-45.333-26.667ZM136.001 53.333 90.667 26.667v426.666L136.001 480V53.333Z"
-						fill="#B04304"
-					/>
-					<path
-						d="m136.001 119.944 45.333-26.667 45.333 26.667-45.333 26.667-45.333-26.667ZM90.667 26.667 136.001 0l45.333 26.667-45.333 26.666-45.334-26.666ZM181.334 53.277l45.333-26.666L272 53.277l-45.333 26.667-45.333-26.667ZM0 213.277l45.333-26.667 45.334 26.667-45.334 26.667L0 213.277ZM136 239.944l-45.333-26.667v53.333L136 239.944Z"
-						fill="#FF5D01"
-					/>
-					<path
-						d="m136 53.333 45.333-26.666v120L226.667 120V80L272 53.333V160l-90.667 53.333v240L136 480V306.667L45.334 360V240l45.333-26.667v53.334L136 240V53.333Z"
-						fill="#53C68C"
-					/>
-					<path d="M45.334 240 0 213.334v120L45.334 360V240Z" fill="#B04304" />
-				</svg>
-				<span class="text-xl font-bold sm:text-2xl">Astro Cactus</span>
-			</a>
-		)}
-		<nav class="text-accent" aria-label="Main">
-			<a
-				href="/"
-				class="hover:underline"
-				aria-current={path.endsWith("/") ? "page" : false}
-				>Home
-			</a>
-			<a
-				href="/about"
-				class="hover:underline"
-				aria-current={path.endsWith("about/") ? "page" : false}
+				<title>Logo</title>
+				<path
+					d="M181.334 93.333v-40L226.667 80v40l-45.333-26.667ZM136.001 53.333 90.667 26.667v426.666L136.001 480V53.333Z"
+					fill="#B04304"></path>
+				<path
+					d="m136.001 119.944 45.333-26.667 45.333 26.667-45.333 26.667-45.333-26.667ZM90.667 26.667 136.001 0l45.333 26.667-45.333 26.666-45.334-26.666ZM181.334 53.277l45.333-26.666L272 53.277l-45.333 26.667-45.333-26.667ZM0 213.277l45.333-26.667 45.334 26.667-45.334 26.667L0 213.277ZM136 239.944l-45.333-26.667v53.333L136 239.944Z"
+					fill="#FF5D01"></path>
+				<path
+					d="m136 53.333 45.333-26.666v120L226.667 120V80L272 53.333V160l-90.667 53.333v240L136 480V306.667L45.334 360V240l45.333-26.667v53.334L136 240V53.333Z"
+					fill="#53C68C"></path>
+				<path d="M45.334 240 0 213.334v120L45.334 360V240Z" fill="#B04304"
+				></path>
+			</svg>
+			<span class="text-xl font-bold sm:text-2xl">Astro Cactus</span>
+		</a>
+		<nav class="text-accent [&>a]:hover:underline" aria-label="Main">
+			<a href="/" aria-current={path.endsWith("/") ? "page" : false}>Home</a>
+			<a href="/about" aria-current={path.endsWith("about/") ? "page" : false}
 				>About
 			</a>
-			<a
-				href="/posts"
-				class="hover:underline"
-				aria-current={path.endsWith("posts/") ? "page" : false}
+			<a href="/posts" aria-current={path.endsWith("posts/") ? "page" : false}
 				>Blog
 			</a>
-			<slot name="blog"></slot>
 		</nav>
 	</span>
 	<span class="ml-auto">
@@ -73,50 +53,30 @@ const path = Astro.canonicalURL.pathname;
 
 <style>
 	header {
-		@apply flex items-center relative z-50;
+		@apply relative z-50 mb-28 flex items-center sm:pl-[4.5rem];
 
 		.menu-wrapper {
-			@apply ml-8;
+			@apply ml-8 sm:invisible sm:hidden;
 		}
 
-		&:not(.is-blog) {
-			@apply sm:pl-[4.5rem] mb-28;
+		nav {
+			@apply mt-1 -ml-4 hidden divide-x divide-dashed divide-accent sm:flex;
 
-			nav {
-				@apply mt-1 -ml-4 hidden sm:flex divide-x divide-dashed divide-accent;
-
-				a {
-					@apply px-4;
-				}
-			}
-
-			.menu-wrapper {
-				@apply sm:hidden sm:invisible;
-			}
-
-			@media (max-width: 640px) {
-				:global(body.menu-open) & {
-					@apply relative z-50;
-
-					nav {
-						@apply m-0 p-4 flex items-end flex-col absolute top-16 min-h-[50vh] max-h-[alc(100vh-9rem)] overflow-y-scroll -inset-x-4 space-y-6 divide-x-0 bg-[color:var(--theme-menu-bg)] shadow rounded-md backdrop-filter backdrop-blur;
-
-						a {
-							@apply px-0 py-2;
-						}
-					}
-				}
+			a {
+				@apply px-4;
 			}
 		}
 
-		&.is-blog {
-			nav {
-				@apply hidden;
-			}
-
+		@media (max-width: 640px) {
 			:global(body.menu-open) & {
+				@apply relative z-50;
+
 				nav {
-					@apply p-4 flex items-end flex-col absolute top-16 -inset-x-4 min-h-[50vh] max-h-[alc(100vh-9rem)] overflow-y-scroll space-y-6 bg-[color:var(--theme-menu-bg)] shadow rounded-md backdrop-filter backdrop-blur;
+					@apply absolute -inset-x-4 top-16 m-0 flex max-h-[alc(100vh-9rem)] min-h-[50vh] flex-col items-end space-y-6 divide-x-0 overflow-y-scroll rounded-md bg-[color:var(--theme-menu-bg)] p-4 shadow backdrop-blur backdrop-filter;
+
+					a {
+						@apply px-0 py-2;
+					}
 				}
 			}
 		}
