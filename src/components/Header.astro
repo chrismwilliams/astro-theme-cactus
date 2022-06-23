@@ -33,12 +33,23 @@ const path = Astro.canonicalURL.pathname;
 			</svg>
 			<span class="text-xl font-bold sm:text-2xl">Astro Cactus</span>
 		</a>
-		<nav class="text-accent [&>a]:hover:underline" aria-label="Main">
-			<a href="/" aria-current={path.endsWith("/") ? "page" : false}>Home</a>
-			<a href="/about" aria-current={path.endsWith("about/") ? "page" : false}
+		<nav class="text-accent" aria-label="Main">
+			<a
+				class="hover:underline"
+				href="/"
+				aria-current={path.endsWith("/") ? "page" : false}
+				>Home
+			</a>
+			<a
+				class="hover:underline"
+				href="/about"
+				aria-current={path.endsWith("about/") ? "page" : false}
 				>About
 			</a>
-			<a href="/posts" aria-current={path.endsWith("posts/") ? "page" : false}
+			<a
+				class="hover:underline"
+				href="/posts"
+				aria-current={path.endsWith("posts/") ? "page" : false}
 				>Blog
 			</a>
 		</nav>
