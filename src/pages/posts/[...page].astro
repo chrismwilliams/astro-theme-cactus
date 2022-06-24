@@ -36,11 +36,11 @@ const paginationProps = {
 
 <PageLayout {meta}>
 	<h1 class="mb-6 title">Posts</h1>
-	<div class="sm:grid sm:grid-cols-[3fr_1fr] sm:gap-x-8">
+	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
 		<section aria-label="Blog post list">
 			<ul class="text-left space-y-8">
 				{page.data.map((p) => (
-					<li class="flex flex-wrap gap-2 [&_time]:min-w-[120px] [&_q]:w-full">
+					<li class="[&_time]:min-w-[120px] [&_q]:w-full flex flex-wrap gap-2">
 						<BlogPostPreview post={p} as="h2" withDesc />
 					</li>
 				))}
@@ -48,7 +48,7 @@ const paginationProps = {
 			<Pagination {...paginationProps} />
 		</section>
 		{allTags.length && (
-			<aside class="invisible hidden sm:block sm:visible">
+			<aside>
 				<h2 class="flex items-center mb-4 text-lg font-semibold">
 					<svg
 						aria-hidden="true"
@@ -80,7 +80,7 @@ const paginationProps = {
 						</li>
 					))}
 				</ul>
-				<span class="block mt-4 text-right">
+				<span class="block mt-4 sm:text-right">
 					<a
 						class="hover:text-accent"
 						href="/tags"
