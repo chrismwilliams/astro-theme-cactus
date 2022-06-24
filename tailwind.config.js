@@ -83,13 +83,16 @@ module.exports = {
 		plugin(function ({ addComponents }) {
 			addComponents({
 				".cactus-link": {
-					"@apply relative no-underline": {},
-					"&:hover": {
-						"@apply after:h-0.5 after:bg-link": {},
-					},
-					"&::after": {
-						"@apply absolute bottom-0 inset-x-0 block content-[''] h-[1px] bg-textColor motion-safe:transition-height ease-in-out":
-							{},
+					"@apply relative py-2 underline underline-offset-4 decoration-2 decoration-link sm:no-underline sm:py-0":
+						{},
+					"@media (min-width: 640px)": {
+						"&:hover": {
+							"@apply sm:after:h-0.5 sm:after:bg-link": {},
+						},
+						"&::after": {
+							"@apply absolute bottom-0 inset-x-0 block content-[''] h-[1px] bg-textColor motion-safe:transition-height ease-in-out":
+								{},
+						},
 					},
 				},
 				".title": {

@@ -40,7 +40,7 @@ const paginationProps = {
 		<section aria-label="Blog post list">
 			<ul class="text-left space-y-8">
 				{page.data.map((p) => (
-					<li class="[&_time]:min-w-[120px] [&_q]:w-full flex flex-wrap gap-2">
+					<li class="[&_time]:min-w-[120px] [&_q]:w-full flex flex-wrap items-center gap-x-2">
 						<BlogPostPreview post={p} as="h2" withDesc />
 					</li>
 				))}
@@ -74,6 +74,7 @@ const paginationProps = {
 							<a
 								class="flex items-center justify-center p-1 rounded-lg bg-accent"
 								href={`/tags/${tag}`}
+								aria-label={`View all posts with the tag: ${tag}`}
 							>
 								{tag}
 							</a>
@@ -82,7 +83,7 @@ const paginationProps = {
 				</ul>
 				<span class="block mt-4 sm:text-right">
 					<a
-						class="hover:text-accent"
+						class="sm:hover:text-accent"
 						href="/tags"
 						aria-label="View all blog categories"
 					>

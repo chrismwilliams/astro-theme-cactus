@@ -34,22 +34,11 @@ const path = Astro.canonicalURL.pathname;
 			<span class="text-xl font-bold sm:text-2xl">Astro Cactus</span>
 		</a>
 		<nav class="text-accent" aria-label="Main">
-			<a
-				class="hover:underline"
-				href="/"
-				aria-current={path.endsWith("/") ? "page" : false}
-				>Home
-			</a>
-			<a
-				class="hover:underline"
-				href="/about"
-				aria-current={path.endsWith("about/") ? "page" : false}
+			<a href="/" aria-current={path.endsWith("/") ? "page" : false}>Home</a>
+			<a href="/about" aria-current={path.endsWith("about/") ? "page" : false}
 				>About
 			</a>
-			<a
-				class="hover:underline"
-				href="/posts"
-				aria-current={path.endsWith("posts/") ? "page" : false}
+			<a href="/posts" aria-current={path.endsWith("posts/") ? "page" : false}
 				>Blog
 			</a>
 		</nav>
@@ -71,10 +60,10 @@ const path = Astro.canonicalURL.pathname;
 		}
 
 		nav {
-			@apply mt-1 -ml-4 hidden divide-x divide-dashed divide-accent sm:flex;
+			@apply mt-1 -ml-4 hidden sm:flex sm:divide-x sm:divide-dashed sm:divide-accent;
 
 			a {
-				@apply px-4;
+				@apply px-4 sm:hover:underline;
 			}
 		}
 
@@ -83,10 +72,10 @@ const path = Astro.canonicalURL.pathname;
 				@apply relative z-50;
 
 				nav {
-					@apply absolute -inset-x-4 top-16 m-0 flex max-h-[alc(100vh-9rem)] min-h-[50vh] flex-col items-end space-y-6 divide-x-0 overflow-y-scroll rounded-md bg-[color:var(--theme-menu-bg)] p-4 shadow backdrop-blur backdrop-filter;
+					@apply absolute -inset-x-4 top-14 m-0 flex flex-col items-end gap-y-4 rounded-md bg-[color:var(--theme-menu-bg)] py-4 shadow backdrop-blur backdrop-filter;
 
 					a {
-						@apply px-0 py-2;
+						@apply p-4;
 					}
 				}
 			}

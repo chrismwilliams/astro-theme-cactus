@@ -12,10 +12,10 @@ const meta = {
 ---
 
 <PageLayout {meta}>
-	<h1 class="mb-6 title">All Tags</h1>
+	<h1 class="mb-6 title">Tags</h1>
 	<ul class="space-y-4">
 		{Object.keys(allTags).map((tag) => (
-			<li class="flex items-center space-x-2">
+			<li class="flex items-center gap-x-2">
 				<a
 					class="inline-block cactus-link"
 					href={`/tags/${tag}`}

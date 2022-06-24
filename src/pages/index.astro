@@ -27,9 +27,9 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
 		<h2 class="mb-4 text-xl title">Posts</h2>
-		<ul class="space-y-2">
+		<ul class="space-y-4 sm:space-y-2">
 			{allPostsByDate.map((p) => (
-				<li class="grid grid-cols-[130px_max-content] justify-items-start gap-2">
+				<li class="[&_time]:min-w-[120px] [&_q]:w-full flex flex-wrap items-center gap-x-2">
 					<BlogPostPreview post={p} as="h2" />
 				</li>
 			))}
@@ -37,7 +37,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 	</section>
 	<section class="mt-16">
 		<h2 class="mb-4 text-xl title">Technologies</h2>
-		<ul>
+		<ul class="space-y-4 sm:space-y-2">
 			<li>
 				<a
 					href="https://astro.build"
@@ -46,7 +46,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					class="inline-block cactus-link"
 					>Astro
 				</a>:
-				<p class="inline-block my-2">Build fast websites, faster.</p>
+				<p class="inline-block sm:mt-2">Build fast websites, faster.</p>
 			</li>
 			<li>
 				<a
@@ -56,7 +56,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					class="inline-block cactus-link"
 					>SolidJS
 				</a>:
-				<p class="inline-block my-2">
+				<p class="inline-block sm:mt-2">
 					Simple and performant reactivity for building user interfaces.
 				</p>
 			</li>
@@ -68,7 +68,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					class="inline-block cactus-link"
 					>Tailwind CSS
 				</a>:
-				<p class="inline-block my-2">
+				<p class="inline-block sm:mt-2">
 					Rapidly build modern websites without ever leaving your HTML
 				</p>
 			</li>
