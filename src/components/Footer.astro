@@ -17,17 +17,17 @@ const year = new Date().getFullYear();
 
 <style>
 	footer {
-		@apply flex flex-col space-y-2 items-center justify-center w-full mt-auto pt-16 pb-4 text-xs text-center align-top text-gray-500 sm:flex-row sm:justify-between;
+		@apply mt-auto flex w-full flex-col items-center justify-center gap-y-2 pt-20 pb-4 text-center align-top text-gray-500 sm:flex-row sm:justify-between sm:text-xs;
 
 		> div {
 			@apply mr-0 sm:mr-4;
 		}
 
 		nav {
-			@apply flex divide-x divide-gray-500;
+			@apply flex gap-x-2 sm:gap-x-0 sm:divide-x sm:divide-gray-500;
 
 			a {
-				@apply px-2 hover:underline;
+				@apply px-4 py-2 sm:py-0 sm:px-2 sm:hover:text-textColor sm:hover:underline;
 			}
 		}
 	}

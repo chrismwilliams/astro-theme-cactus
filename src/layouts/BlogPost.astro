@@ -38,7 +38,7 @@ const paginationProps = {
 		<article>
 			<h1 class="title">{title}</h1>
 			<span
-				class="flex flex-col space-y-2 md:flex-row md:items-center md:space-y-0 md:divide-x md:divide-textColor"
+				class="flex flex-col sm:gap-y-2 md:flex-row md:items-center md:gap-y-0 md:divide-x md:divide-textColor"
 			>
 				<time {datetime} class="pr-2">{publishDate}</time>
 				{tags?.length && (
@@ -59,7 +59,7 @@ const paginationProps = {
 							<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 							<path d="M6 9h-.01" />
 						</svg>
-						<ul class="flex items-center ml-1 space-x-2">
+						<ul class="flex items-center ml-1 gap-x-2">
 							{tags.map((tag) => (
 								<li>
 									<a
@@ -88,7 +88,7 @@ const paginationProps = {
 			<h2 class="font-semibold">Table of Contents</h2>
 			<ul class="mt-4 text-xs space-y-2">
 				{astro.headers.map(({ slug, text }) => (
-					<li class="hover:text-accent">
+					<li class="hover:text-accent line-clamp-2">
 						<a href={`#${slug}`} aria-label={`Scroll to section: ${text}`}>
 							&#35; {text}
 						</a>
@@ -107,6 +107,6 @@ const paginationProps = {
 	}
 
 	:global(.heading-wrapper .anchor-link) {
-		@apply absolute -left-5 top-1 text-accent after:hidden;
+		@apply absolute -left-5 top-1 p-0 text-accent after:hidden;
 	}
 </style>
