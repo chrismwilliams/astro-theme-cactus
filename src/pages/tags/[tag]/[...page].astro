@@ -39,7 +39,7 @@ const meta = {
 	<section aria-label="Blog post list">
 		<ul class="text-left space-y-8">
 			{page.data.map((p) => (
-				<li class="flex flex-wrap gap-2 [&_time]:min-w-[120px] [&_q]:w-full">
+				<li class="[&_time]:min-w-[120px] [&_q]:w-full flex flex-wrap gap-2">
 					<BlogPostPreview post={p} as="h2" withDesc />
 				</li>
 			))}
