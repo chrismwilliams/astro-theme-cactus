@@ -29,7 +29,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		<h2 class="mb-4 text-xl title">Posts</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{allPostsByDate.map((p) => (
-				<li class="[&_time]:min-w-[120px] [&_q]:w-full flex flex-wrap items-center gap-x-2">
+				<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
 					<BlogPostPreview post={p} as="h2" />
 				</li>
 			))}
