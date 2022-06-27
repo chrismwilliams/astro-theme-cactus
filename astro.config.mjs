@@ -5,6 +5,7 @@ import solid from "@astrojs/solid-js";
 import { toString } from "hast-util-to-string";
 import { h } from "hastscript";
 import { astroImageTools } from "astro-imagetools";
+import robotsTxt from "astro-robots-txt";
 
 const AnchorLinkIcon = h(
 	`svg`,
@@ -99,6 +100,7 @@ export default defineConfig({
 			config: { applyBaseStyles: false },
 		}),
 		sitemap(),
+		robotsTxt(),
 		solid(),
 		astroImageTools,
 	],
