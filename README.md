@@ -5,20 +5,24 @@
   Astro Theme Cactus 🚀🌵
 </h1>
 
-[Demo](https://astro-theme-cactus.netlify.app/) hosted on Netlify
+> Astro Theme Cactus is a simple opinionated starter built with the Astro framework. Use it to create an easy-to-use blog or website.
 
-A simple opinionated starter theme with [Astro](https://astro.build/)
+### 💻 [Live Demo](https://astro-theme-cactus.netlify.app/) hosted on Netlify
 
-- Fast, accessible, and SEO-friendly
-  - Sitemap, metadata
-  - Semantic HTML markup
-  - [Astro ImageTools](https://github.com/RafidMuhymin/astro-imagetools#readme) for optimised images
-  - Full 100 Lighthouse score
-- Example Markdown Blog posts
+## Features
+
+Made with Astro, Typescript, Tailwind CSS & SolidJS
+
+- Astro Fast 🚀
+- Accessible, semantic HTML markup
+- Responsive & SEO-friendly
+- [Astro ImageTools](https://github.com/RafidMuhymin/astro-imagetools#readme) for optimised images
+- Markdown posts
+- Pagination
 - Theming colour modes with Tailwind and CSS variables
 - Shiki code syntax styling
-- Auto-generated sitemap
-- Solid JS for client-side interactions
+- Auto-generated sitemap & robots.txt
+- Solid JS & nanostores for client-side interactions
 
 ## Quick start
 
@@ -32,19 +36,31 @@ Replace pnpm with your choice of npm / yarn
 
 | Command        | Action                                       |
 | :------------- | :------------------------------------------- |
-| `pnpm i`       | Installs dependencies                        |
+| `pnpm install` | Installs dependencies                        |
 | `pnpm dev`     | Starts local dev server at `localhost:3000`  |
 | `pnpm build`   | Build your production site to `./dist/`      |
 | `pnpm preview` | Preview your build locally, before deploying |
 
 ## Configure
 
+- Edit config file `src/site-meta.config.ts` for basic site meta data
+- Update file `astro.config.mjs` site property with your own domain
+- Replace & update files within the `/public` folder:
+  - favicon.ico
+  - manifest.webmanifest
+  - `public/images` folder
+- Modify file `src/styles/global.css` with your own light and dark styles
+
 ## Deploy
 
 [Astro docs](https://docs.astro.build/en/guides/deploy/) has a great section and breakdown of how to deploy your own Astro site on various platforms and their idiosyncrasies.
 
-By default the site will be built (see Commands section above) to a `dist` directory, for use on your hosting service.
+By default the site will be built (see Commands section above) to a `/dist` directory.
 
 ## Acknowledgment
 
 This theme is inspired by [Hexo Theme Cactus](https://github.com/probberechts/hexo-theme-cactus)
+
+## License
+
+Licensed under the MIT License, Copyright © 2022
