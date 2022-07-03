@@ -63,14 +63,5 @@ module.exports = {
 				"@typescript-eslint/no-non-null-assertion": "off",
 			},
 		},
-		{
-			files: ["**/*.tsx"],
-			plugins: ["@typescript-eslint"],
-			extends: ["eslint:recommended", "plugin:solid/typescript"],
-			parser: "@typescript-eslint/parser",
-			rules: {
-				"no-var": "error",
-			},
-		},
 	],
 };
