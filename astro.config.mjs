@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-import solid from "@astrojs/solid-js";
 import { toString } from "hast-util-to-string";
 import { h } from "hastscript";
 import { astroImageTools } from "astro-imagetools";
@@ -101,7 +100,6 @@ export default defineConfig({
 		}),
 		sitemap(),
 		robotsTxt(),
-		solid(),
 		astroImageTools,
 	],
 });
