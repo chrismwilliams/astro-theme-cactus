@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"@/components/*": ["src/components/*"],
+			"@/components/*": ["src/components/*.astro"],
 			"@/layouts/*": ["src/layouts/*.astro"],
 			"@/util": ["src/util.ts"],
 			"@/stores/*": ["src/stores/*"],

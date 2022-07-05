@@ -1,23 +1,34 @@
 ---
-import ThemeToggle from "./ThemeToggle";
-import MobileMenu from "./MobileMenu";
+import ThemeToggle from "./ThemeToggle.astro";
 
-const path = Astro.canonicalURL.pathname;
+const url = new URL(Astro.request.url);
 ---
+
+<script>
+	import { toggleClass } from "@/util";
+
+	document.addEventListener("DOMContentLoaded", () => {
+		const { body } = document;
+		const toggleMenuButton = document.getElementById("toggle-navigation-menu");
+		let menuOpen = false;
+
+		toggleMenuButton.addEventListener("click", () => {
+			toggleClass(body, "menu-open");
+			toggleClass(toggleMenuButton, "text-accent");
+			menuOpen = !menuOpen;
+			toggleMenuButton.setAttribute("aria-expanded", menuOpen.toString());
+		});
+	});
+</script>
 
 <header>
 	<span>
 		<a
 			href="/"
-			class="inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block"
-			aria-current={path.endsWith("/") ? "page" : false}
+			class="logo"
+			aria-current={url.pathname === "/" ? "page" : false}
 		>
-			<svg
-				class="mr-3 h-10 w-6 sm:absolute sm:left-[-4.5rem] sm:mr-0 sm:h-20 sm:w-12"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 272 480"
-			>
+			<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272 480">
 				<title>Logo</title>
 				<path
 					d="M181.334 93.333v-40L226.667 80v40l-45.333-26.667ZM136.001 53.333 90.667 26.667v426.666L136.001 480V53.333Z"
@@ -31,36 +42,64 @@ const path = Astro.canonicalURL.pathname;
 				<path d="M45.334 240 0 213.334v120L45.334 360V240Z" fill="#B04304"
 				></path>
 			</svg>
-			<span class="text-xl font-bold sm:text-2xl">Astro Cactus</span>
+			<span>Astro Cactus</span>
 		</a>
-		<nav class="text-accent" aria-label="Main">
-			<a href="/" aria-current={path.endsWith("/") ? "page" : false}>Home</a>
-			<a href="/about" aria-current={path.endsWith("about/") ? "page" : false}
+		<nav id="navigation-menu" aria-label="Main">
+			<a href="/" aria-current={url.pathname === "/" ? "page" : false}>Home</a>
+			<a href="/about" aria-current={url.pathname === "/about" ? "page" : false}
 				>About
 			</a>
-			<a href="/posts" aria-current={path.endsWith("posts/") ? "page" : false}
+			<a href="/posts" aria-current={url.pathname === "/posts" ? "page" : false}
 				>Blog
 			</a>
 		</nav>
 	</span>
-	<span class="ml-auto">
-		<ThemeToggle client:idle />
-	</span>
-	<span class="menu-wrapper">
-		<MobileMenu client:idle />
-	</span>
+	<ThemeToggle />
+	<button
+		id="toggle-navigation-menu"
+		type="button"
+		aria-label="primary navigation"
+		aria-expanded="false"
+	>
+		<svg
+			fill="currentColor"
+			viewBox="0 0 20 20"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<path
+				fill-rule="evenodd"
+				d="M3 7a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 13a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+				clip-rule="evenodd"></path>
+		</svg>
+	</button>
 </header>
 
 <style>
 	header {
 		@apply relative z-50 mb-28 flex items-center sm:pl-[4.5rem];
 
-		.menu-wrapper {
+		.logo {
+			@apply inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block;
+
+			svg {
+				@apply mr-3 h-10 w-6 sm:absolute sm:left-[-4.5rem] sm:mr-0 sm:h-20 sm:w-12;
+			}
+
+			> span {
+				@apply text-xl font-bold sm:text-2xl;
+			}
+		}
+
+		#toggle-navigation-menu {
 			@apply ml-8 sm:invisible sm:hidden;
+
+			svg {
+				@apply h-6 w-6;
+			}
 		}
 
 		nav {
-			@apply mt-1 -ml-4 hidden sm:flex sm:divide-x sm:divide-dashed sm:divide-accent;
+			@apply mt-1 -ml-4 hidden text-accent sm:flex sm:divide-x sm:divide-dashed sm:divide-accent;
 
 			a {
 				@apply px-4 sm:hover:underline;

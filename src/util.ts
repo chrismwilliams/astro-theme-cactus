@@ -1,5 +1,3 @@
-import type { Theme } from '@/types'
-
 export function sortMDByDate(files) {
 	return files.sort(
 		(a, b) =>
@@ -50,21 +48,10 @@ export function getAllTagsFromPosts(posts, withCount = false) {
 	return [...allTags];
 }
 
-export function getInitialTheme(): Theme {
-	const isDark = getDocumentClassList().contains("dark");
-	const storageTheme = localStorage.getItem("theme");
-	if (storageTheme) return storageTheme as Theme;
-	return isDark ? "dark" : "light";
+export function toggleClass(element: HTMLElement, className: string) {
+	element.classList.toggle(className);
 }
 
-export function getDocumentClassList() {
-	return document.documentElement.classList;
-}
-
-export function getThemeColorMeta() {
-	return document.querySelector("meta[name='theme-color']");
-}
-
-export function setThemeColorMetaContent(color: string) {
-	getThemeColorMeta().setAttribute('content', color)
+export function elementHasClass(element: HTMLElement, className: string) {
+	return element.classList.contains(className)
 }
