@@ -22,7 +22,6 @@ Made with Astro, Typescript, Tailwind CSS & SolidJS
 - Theming colour modes with Tailwind and CSS variables
 - Shiki code syntax styling
 - Auto-generated sitemap & robots.txt
-- Solid JS & nanostores for client-side interactions
 
 ## Quick start
 
@@ -50,6 +49,7 @@ Replace pnpm with your choice of npm / yarn
   - manifest.webmanifest
   - `public/images` folder
 - Modify file `src/styles/global.css` with your own light and dark styles
+- Create / edit posts for your blog within `src/pages/posts/` with .md file(s)
 
 ## Deploy
 
