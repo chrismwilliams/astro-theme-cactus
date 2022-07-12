@@ -1,5 +1,7 @@
-export function sortMDByDate(files) {
-	return files.sort(
+import type { IPost } from "./types";
+
+export function sortMDByDate(posts: IPost[] = []) {
+	return posts.sort(
 		(a, b) =>
 			new Date(b.frontmatter.publishDate).valueOf() -
 			new Date(a.frontmatter.publishDate).valueOf()
@@ -10,23 +12,13 @@ export function sortMDByDate(files) {
 export function getPreviousAndNextPosts(currentSlug: string, posts: IPost[]) {
 	const index = posts.findIndex(({ url }) => url === currentSlug);
 	return {
-		prev: postArr[index + 1] ?? null,
-		next: postArr[index - 1] ?? null,
+		prev: posts[index + 1] ?? null,
+		next: posts[index - 1] ?? null,
 	};
 }
 
-export function getAllTagsFromPosts(posts, withCount = false) {
-	if (withCount) {
-		return posts.reduce((prev, post) => {
-			const currTags = { ...prev };
-			const postTags = post.frontmatter.tags;
-			postTags.forEach(function (tag) {
-				currTags[tag] = (currTags[tag] || 0) + 1;
-			});
-			return currTags;
-		}, {});
-	}
-	const allTags = new Set();
+export function getAllTags(posts: IPost[] = []) {
+	const allTags = new Set<string>();
 	posts.forEach((post) => {
 		post.frontmatter.tags?.map((tag) => allTags.add(tag.toLowerCase()));
 	});
@@ -52,7 +44,6 @@ export function toggleClass(element: HTMLElement, className: string) {
 export function elementHasClass(element: HTMLElement, className: string) {
 	return element.classList.contains(className);
 }
-
 
 export function getLocaleTime(
 	date: number | Date,

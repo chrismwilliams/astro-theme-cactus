@@ -2,6 +2,7 @@
 import BaseLayout from "./Base.astro";
 import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
 import Paginator from "@/components/Paginator";
+import type { IPost } from "@/types";
 
 const {
 	content: { title, description, publishDate, tags, astro },
@@ -10,21 +11,21 @@ const date = new Date(publishDate);
 const datetime = date.toISOString();
 const postDate = getLocaleTime(date);
 const currentPage = new URL(Astro.request.url).pathname;
-const allPosts = await Astro.glob("../pages/posts/*.md");
-const allPostLinks = blogLinksFromFrontmatter(sortMDByDate(allPosts));
-const { prev, next } = getPreviousAndNextPosts(currentPage, allPostLinks);
+const allPosts = (await Astro.glob("../pages/posts/*.md")) as IPost[];
+const allSortedPosts = sortMDByDate(allPosts);
+const { prev, next } = getPreviousAndNextPosts(currentPage, allSortedPosts);
 const paginationProps = {
 	...(prev && {
 		prevUrl: {
 			url: prev.url,
-			text: `← ${prev.title}`,
+			text: `← ${prev.frontmatter.title}`,
 			srLabel: " Previous Article:",
 		},
 	}),
 	...(next && {
 		nextUrl: {
 			url: next.url,
-			text: `${next.title} →`,
+			text: `${next.frontmatter.title} →`,
 			srLabel: "Next Article:",
 		},
 	}),

@@ -1,9 +1,10 @@
 ---
 import PageLayout from "@/layouts/Base";
-import { getAllTagsFromPosts } from "@/util";
+import { getAllTagsWithCount } from "@/util";
+import type { IPost } from "@/types";
 
-const allPosts = (await Astro.glob("../posts/*.md")) || [];
-const allTags = getAllTagsFromPosts(allPosts, true);
+const allPosts = (await Astro.glob("../posts/*.md")) as IPost[];
+const allTags = getAllTagsWithCount(allPosts);
 
 const meta = {
 	title: "All Tags",
