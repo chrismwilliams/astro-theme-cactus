@@ -3,7 +3,6 @@ import PageLayout from "@/layouts/Base";
 import BlogPostPreview from "@/components/BlogPostPreview";
 import SocialList from "@/components/SocialList";
 import { sortMDByDate } from "@/util";
-import type { IPost } from "@/types";
 
 const meta = {
 	title: "Asto Cactus",
@@ -11,7 +10,7 @@ const meta = {
 };
 
 const MAX_POSTS = 10;
-const allPosts = (await Astro.glob("./posts/*.md")) as IPost[];
+const allPosts = (await Astro.glob("./posts/*.md")) || [];
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
 

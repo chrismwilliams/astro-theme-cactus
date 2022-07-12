@@ -1,29 +1,30 @@
 ---
 import BaseLayout from "./Base.astro";
-import { getPreviousAndNextPosts, sortMDByDate } from "src/util";
+import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
 import Paginator from "@/components/Paginator";
-import type { IPost } from "@/types";
 
 const {
 	content: { title, description, publishDate, tags, astro },
 } = Astro.props;
-const datetime = new Date(publishDate).toISOString();
+const date = new Date(publishDate);
+const datetime = date.toISOString();
+const postDate = getLocaleTime(date);
 const currentPage = new URL(Astro.request.url).pathname;
-const allPosts = (await Astro.glob("../pages/posts/*.md")) as IPost[];
-const allSortedPosts = sortMDByDate(allPosts);
-const { prev, next } = getPreviousAndNextPosts(currentPage, allSortedPosts);
+const allPosts = await Astro.glob("../pages/posts/*.md");
+const allPostLinks = blogLinksFromFrontmatter(sortMDByDate(allPosts));
+const { prev, next } = getPreviousAndNextPosts(currentPage, allPostLinks);
 const paginationProps = {
 	...(prev && {
 		prevUrl: {
 			url: prev.url,
-			text: `← ${prev.frontmatter.title}`,
+			text: `← ${prev.title}`,
 			srLabel: " Previous Article:",
 		},
 	}),
 	...(next && {
 		nextUrl: {
 			url: next.url,
-			text: `${next.frontmatter.title} →`,
+			text: `${next.title} →`,
 			srLabel: "Next Article:",
 		},
 	}),
@@ -37,7 +38,7 @@ const paginationProps = {
 			<span
 				class="flex flex-col sm:gap-y-2 md:flex-row md:items-center md:gap-y-0 md:divide-x md:divide-textColor"
 			>
-				<time {datetime} class="pr-2">{publishDate}</time>
+				<time {datetime} class="pr-2">{postDate}</time>
 				{tags?.length && (
 					<div class="flex items-center md:pl-2">
 						<svg
@@ -98,7 +99,6 @@ const paginationProps = {
 		<Paginator {...paginationProps} />
 	</div>
 </BaseLayout>
-
 <style>
 	:global(.heading-wrapper) {
 		@apply relative;

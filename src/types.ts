@@ -15,15 +15,3 @@ export type PaginationLink = {
   text?: string;
   srLabel?: string;
 }
-
-export interface IPostFrontmatter {
-  title: string;
-  description: string;
-  publishDate?: string;
-  tags?: string[];
-}
-
-export interface IPost {
-  frontmatter: IPostFrontmatter;
-  url: string;
-}
