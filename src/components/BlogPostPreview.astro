@@ -1,23 +1,16 @@
 ---
 import type { IElement } from "@/types";
+import { getLocaleTime } from "@/util";
 export interface Props extends IElement {
 	post: any;
 	withDesc?: boolean;
 }
 
 const { post, as: Element = "div", withDesc = false } = Astro.props as Props;
-const frontmatterDate = new Date(post.frontmatter.publishDate);
-const datetime = frontmatterDate.toISOString();
-// set your own preferred date settings. Note longer months will change the time elements' width
-const formatOptions: Intl.DateTimeFormatOptions = {
-	day: "numeric",
-	month: "short",
-	year: "numeric",
-};
-const locale = "en-GB";
-const postDate = new Intl.DateTimeFormat(locale, formatOptions).format(
-	frontmatterDate
-);
+const { publishDate } = post.frontmatter;
+const date = new Date(publishDate);
+const datetime = date.toISOString();
+const postDate = getLocaleTime(date, { month: "short" });
 ---
 
 <time {datetime} class="min-w-[120px] text-gray-500">{postDate}</time>
