@@ -2,10 +2,10 @@
 import PageLayout from "@/layouts/Base";
 import BlogPostPreview from "@/components/BlogPostPreview";
 import { getAllTags, sortMDByDate } from "@/util";
-import type { IPost } from "@/types";
+import type { MarkdownInstance, Page, Post } from "@/types";
 
 export async function getStaticPaths({ paginate }) {
-	const allPosts = (await Astro.glob("../../posts/*.md")) as IPost[];
+	const allPosts = await Astro.glob<Post>("../../posts/*.md");
 	const allPostsByDate = sortMDByDate(allPosts);
 	const allTags = getAllTags(allPostsByDate);
 
@@ -20,7 +20,11 @@ export async function getStaticPaths({ paginate }) {
 	});
 }
 
-const { page } = Astro.props;
+export interface Props {
+	page: Page<MarkdownInstance<Post>>;
+}
+
+const { page } = Astro.props as Props;
 const { tag } = Astro.params;
 
 const meta = {
@@ -36,7 +40,7 @@ const meta = {
 	<section aria-label="Blog post list">
 		<ul class="text-left space-y-8">
 			{page.data.map((p) => (
-				<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
+				<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
 					<BlogPostPreview post={p} as="h2" withDesc />
 				</li>
 			))}

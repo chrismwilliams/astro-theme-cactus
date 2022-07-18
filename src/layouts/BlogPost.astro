@@ -2,7 +2,7 @@
 import BaseLayout from "./Base.astro";
 import { getLocaleTime, getPreviousAndNextPosts, sortMDByDate } from "src/util";
 import Paginator from "@/components/Paginator";
-import type { IPost } from "@/types";
+import type { Post } from "@/types";
 
 const {
 	content: { title, description, publishDate, tags, astro },
@@ -11,7 +11,7 @@ const date = new Date(publishDate);
 const datetime = date.toISOString();
 const postDate = getLocaleTime(date);
 const currentPage = new URL(Astro.request.url).pathname;
-const allPosts = (await Astro.glob("../pages/posts/*.md")) as IPost[];
+const allPosts = await Astro.glob<Post>("../pages/posts/*.md");
 const allSortedPosts = sortMDByDate(allPosts);
 const { prev, next } = getPreviousAndNextPosts(currentPage, allSortedPosts);
 const paginationProps = {
@@ -87,7 +87,7 @@ const paginationProps = {
 			<h2 class="font-semibold">Table of Contents</h2>
 			<ul class="mt-4 text-xs space-y-2">
 				{astro.headers.map(({ slug, text }) => (
-					<li class="hover:text-accent line-clamp-2">
+					<li class="line-clamp-2 hover:text-accent">
 						<a href={`#${slug}`} aria-label={`Scroll to section: ${text}`}>
 							&#35; {text}
 						</a>

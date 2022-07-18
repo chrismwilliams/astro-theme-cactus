@@ -1,9 +1,9 @@
 ---
 import PageLayout from "@/layouts/Base";
 import { getAllTagsWithCount } from "@/util";
-import type { IPost } from "@/types";
+import type { Post } from "@/types";
 
-const allPosts = (await Astro.glob("../posts/*.md")) as IPost[];
+const allPosts = await Astro.glob<Post>("../posts/*.md");
 const allTags = getAllTagsWithCount(allPosts);
 
 const meta = {
