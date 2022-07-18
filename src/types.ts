@@ -1,29 +1,36 @@
-export type Theme = 'light' | 'dark';
+import type { MarkdownInstance, Page } from "astro";
 
-export interface IElement {
+type Theme = "light" | "dark";
+
+interface IElement {
   readonly as?: keyof HTMLElementTagNameMap;
 }
 
-export type SiteMeta = {
-  title: string,
-  description?: string,
-  image?: string
-}
+type SiteMeta = {
+  title: string;
+  description?: string;
+  image?: string;
+};
 
-export type PaginationLink = {
+type PaginationLink = {
   url: string;
   text?: string;
   srLabel?: string;
-}
+};
 
-export interface IPostFrontmatter {
+interface Post {
   title: string;
   description: string;
-  publishDate?: string;
+  publishDate?: Date;
   tags?: string[];
 }
 
-export interface IPost {
-  frontmatter: IPostFrontmatter;
-  url: string;
-}
+export type {
+  MarkdownInstance,
+  Page,
+  Theme,
+  IElement,
+  SiteMeta,
+  PaginationLink,
+  Post,
+};
