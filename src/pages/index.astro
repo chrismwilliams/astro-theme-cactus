@@ -3,7 +3,7 @@ import PageLayout from "@/layouts/Base";
 import BlogPostPreview from "@/components/BlogPostPreview";
 import SocialList from "@/components/SocialList";
 import { sortMDByDate } from "@/util";
-import type { IPost } from "@/types";
+import type { Post } from "@/types";
 
 const meta = {
 	title: "Asto Cactus",
@@ -11,7 +11,7 @@ const meta = {
 };
 
 const MAX_POSTS = 10;
-const allPosts = (await Astro.glob("./posts/*.md")) as IPost[];
+const allPosts = await Astro.glob<Post>("./posts/*.md");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
 
@@ -30,7 +30,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		<h2 class="mb-4 text-xl title">Posts</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{allPostsByDate.map((p) => (
-				<li class="[&_q]:w-full flex flex-wrap items-center gap-x-2">
+				<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
 					<BlogPostPreview post={p} as="h2" />
 				</li>
 			))}

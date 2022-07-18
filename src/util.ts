@@ -1,6 +1,6 @@
-import type { IPost } from "./types";
+import type { MarkdownInstance, Post } from "./types";
 
-export function sortMDByDate(posts: IPost[] = []) {
+export function sortMDByDate(posts: MarkdownInstance<Post>[] = []) {
 	return posts.sort(
 		(a, b) =>
 			new Date(b.frontmatter.publishDate).valueOf() -
@@ -9,7 +9,10 @@ export function sortMDByDate(posts: IPost[] = []) {
 }
 
 // This function expects the @arg posts to be sorted by sortMDByDate()
-export function getPreviousAndNextPosts(currentSlug: string, posts: IPost[]) {
+export function getPreviousAndNextPosts(
+	currentSlug: string,
+	posts: MarkdownInstance<Post>[] = []
+) {
 	const index = posts.findIndex(({ url }) => url === currentSlug);
 	return {
 		prev: posts[index + 1] ?? null,
@@ -17,7 +20,7 @@ export function getPreviousAndNextPosts(currentSlug: string, posts: IPost[]) {
 	};
 }
 
-export function getAllTags(posts: IPost[] = []) {
+export function getAllTags(posts: MarkdownInstance<Post>[] = []) {
 	const allTags = new Set<string>();
 	posts.forEach((post) => {
 		post.frontmatter.tags?.map((tag) => allTags.add(tag.toLowerCase()));
@@ -25,7 +28,7 @@ export function getAllTags(posts: IPost[] = []) {
 	return [...allTags];
 }
 
-export function getAllTagsWithCount(posts: IPost[] = []): {
+export function getAllTagsWithCount(posts: MarkdownInstance<Post>[] = []): {
 	[key: string]: number;
 } {
 	return posts.reduce((prev, post) => {
