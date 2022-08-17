@@ -1,36 +1,36 @@
-import type { MarkdownInstance, Page } from "astro";
+import type { MDXInstance, Page } from "astro";
 
 type Theme = "light" | "dark";
 
 interface IElement {
-  readonly as?: keyof HTMLElementTagNameMap;
+	readonly as?: keyof HTMLElementTagNameMap;
 }
 
 type SiteMeta = {
-  title: string;
-  description?: string;
-  image?: string;
+	title: string;
+	description?: string;
+	image?: string;
 };
 
 type PaginationLink = {
-  url: string;
-  text?: string;
-  srLabel?: string;
+	url: string;
+	text?: string;
+	srLabel?: string;
 };
 
 interface Post {
-  title: string;
-  description: string;
-  publishDate?: Date;
-  tags?: string[];
+	title: string;
+	description: string;
+	publishDate?: Date;
+	tags?: string[];
 }
 
 export type {
-  MarkdownInstance,
-  Page,
-  Theme,
-  IElement,
-  SiteMeta,
-  PaginationLink,
-  Post,
+	MDXInstance,
+	Page,
+	Theme,
+	IElement,
+	SiteMeta,
+	PaginationLink,
+	Post,
 };
