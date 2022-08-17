@@ -11,11 +11,11 @@ const meta = {
 };
 
 const MAX_POSTS = 10;
-const allPosts = await Astro.glob<Post>("./posts/*.md");
+const allPosts = await Astro.glob<Post>("./posts/*.mdx");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
 
-<PageLayout {meta}>
+<PageLayout meta={meta}>
 	<section>
 		<h1 class="mb-6 title">Hello World!</h1>
 		<p class="mb-4">
@@ -29,11 +29,13 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 	<section aria-label="Blog post list" class="mt-16">
 		<h2 class="mb-4 text-xl title">Posts</h2>
 		<ul class="space-y-4 sm:space-y-2">
-			{allPostsByDate.map((p) => (
-				<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
-					<BlogPostPreview post={p} as="h2" />
-				</li>
-			))}
+			{
+				allPostsByDate.map((p) => (
+					<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
+						<BlogPostPreview post={p} as="h2" />
+					</li>
+				))
+			}
 		</ul>
 	</section>
 	<section class="mt-16">
@@ -48,18 +50,6 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					>Astro
 				</a>:
 				<p class="inline-block sm:mt-2">Build fast websites, faster.</p>
-			</li>
-			<li>
-				<a
-					href="https://www.solidjs.com/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-block cactus-link"
-					>SolidJS
-				</a>:
-				<p class="inline-block sm:mt-2">
-					Simple and performant reactivity for building user interfaces.
-				</p>
 			</li>
 			<li>
 				<a

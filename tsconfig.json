@@ -8,7 +8,7 @@
 			"@/stores/*": ["src/stores/*"],
 			"@/types": ["src/types.ts"]
 		},
-		// Enable top-level await, and other modern ESM features.
+		// Enable top-level await and other modern ESM features.
 		"target": "ESNext",
 		"module": "ESNext",
 		// Enable node-style module resolution, for things like npm package imports.
@@ -17,9 +17,9 @@
 		"resolveJsonModule": true,
 		// Enable stricter transpilation for better output.
 		"isolatedModules": true,
+		// Astro will directly run your TypeScript code, no transpilation needed.
+		"noEmit": true,
 		// Add type definitions for our Vite runtime.
-		"types": ["vite/client"],
-		// Tell TypeScript where your build output is
-		"outDir": "./dist"
+		"types": ["@astrojs/image/client"]
 	}
 }

@@ -1,6 +1,7 @@
 ---
-import { Picture } from "astro-imagetools/components";
 import PageLayout from "@/layouts/Base";
+import { Image } from "@astrojs/image/components";
+import aboutImg from "../assets/about-astro.png";
 
 const meta = {
 	title: "About",
@@ -8,7 +9,7 @@ const meta = {
 };
 ---
 
-<PageLayout {meta}>
+<PageLayout meta={meta}>
 	<div class="space-y-6">
 		<h1 class="title">About</h1>
 		<p>
@@ -16,9 +17,7 @@ const meta = {
 			with your own blogging website.
 		</p>
 		<div class="flex justify-center">
-			<Picture
-				src="/src/assets/about-astro.png"
-				alt="A cartoon cactus looking at 'Astro.build' logo"
+			<Image src={aboutImg} alt="A cartoon cactus looking at 'Astro.build' logo"
 			/>
 		</div>
 		<p>Here are my some of my awesome built in features:</p>

@@ -3,17 +3,21 @@ layout: "@/layouts/BlogPost"
 title: Testing testing 123!
 publishDate: 13 May 2022
 description: Hello world!!! This is an example blog post showcasing some of the cool stuff Astro Cactus theme can do.
-tags:
-  - example
-  - blog
-  - cool
+tags: ["example", "blog", "cool"]
 ---
+
+import { Image } from "@astrojs/image/components";
 
 ## Hello World
 
 Following is an example blog post written in an md file. You can find me @ src/pages/posts/hello-world.md. Here you can add/update/delete details and watch the changes live when running in develop mode.
 
-![A covered up pug in the woods](https://picsum.photos/id/1025/550/460)
+<Image
+	src="https://picsum.photos/id/1025/550/460"
+	alt="A covered up pug in the woods"
+	width={550}
+	height={460}
+/>
 
 ## Using some markdown elements
 

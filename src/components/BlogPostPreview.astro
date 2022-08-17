@@ -1,8 +1,8 @@
 ---
-import type { IElement, MarkdownInstance, Post } from "@/types";
+import type { IElement, MDXInstance, Post } from "@/types";
 import { getLocaleTime } from "@/util";
 export interface Props extends IElement {
-	post: MarkdownInstance<Post>;
+	post: MDXInstance<Post>;
 	withDesc?: boolean;
 }
 
@@ -19,6 +19,8 @@ const postDate = getLocaleTime(date, { month: "short" });
 		{post.frontmatter.title}
 	</a>
 </Element>
-{withDesc && (
-	<q class="block italic line-clamp-3">{post.frontmatter.description}</q>
-)}
+{
+	withDesc && (
+		<q class="block italic line-clamp-3">{post.frontmatter.description}</q>
+	)
+}
