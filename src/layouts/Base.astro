@@ -17,7 +17,7 @@ const {
 
 <html lang={siteMeta.lang}>
 	<head>
-		<BaseHead {title} {description} {image} />
+		<BaseHead title={title} description={description} image={image} />
 		<script define:vars={{ siteMeta }}>
 			const root = document.documentElement;
 			const colorThemeMetaTag = document.querySelector(
@@ -43,7 +43,7 @@ const {
 		<SkipLink />
 		<Header />
 		<main id="main" class="flex-1">
-			<slot></slot>
+			<slot />
 		</main>
 		<Footer />
 	</body>

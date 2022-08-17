@@ -13,12 +13,12 @@ const {
 
 const titleSeparator = "•";
 const siteTitle = `${title} ${titleSeparator} ${siteMeta.title}`;
-const canonicalURL = Astro.canonicalURL.href;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width" />
-<meta httpequiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <!-- Primary Meta Tags -->
 <title>{siteTitle}</title>
