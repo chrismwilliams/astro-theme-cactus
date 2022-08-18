@@ -17,7 +17,7 @@ Made with Astro, Typescript, Tailwind CSS & SolidJS
 - Accessible, semantic HTML markup
 - Responsive & SEO-friendly
 - [Astro ImageTools](https://github.com/RafidMuhymin/astro-imagetools#readme) for optimised images
-- Markdown posts
+- MDX posts
 - Pagination
 - Theming colour modes with Tailwind and CSS variables
 - Shiki code syntax styling
@@ -53,7 +53,7 @@ Replace pnpm with your choice of npm / yarn
 
 ## Adding posts
 
-Adding a post is a simple as adding your .md file to the `src/pages/posts/` folder, the name of which will be used as the slug/url. The two posts included with this template can be modified, and give you an example of how to structure your posts. [Astro docs](https://docs.astro.build/en/guides/markdown-content/) also has a detailed section on markdown pages.
+Adding a post is a simple as adding your .mdx file(s) to the `src/pages/posts/` folder, the name of which will be used as the slug/url. The two posts included with this template can be modified, and give you an example of how to structure your posts. [Astro docs](https://docs.astro.build/en/guides/markdown-content/) also has a detailed section on markdown pages.
 
 ### Frontmatter
 
