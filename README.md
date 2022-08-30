@@ -16,7 +16,7 @@ Made with Astro, Typescript, and TailwindCSS
 - Astro Fast 🚀
 - Accessible, semantic HTML markup
 - Responsive & SEO-friendly
-- [Astro ImageTools](https://github.com/RafidMuhymin/astro-imagetools#readme) for optimised images
+- [Astro Image Integration](https://docs.astro.build/en/guides/integrations-guide/image/) for optimised images
 - MDX posts
 - Pagination
 - Theming colour modes with Tailwind and CSS variables
