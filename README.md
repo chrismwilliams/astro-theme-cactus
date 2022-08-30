@@ -11,7 +11,7 @@
 
 ## Features
 
-Made with Astro, Typescript, Tailwind CSS & SolidJS
+Made with Astro, Typescript, and TailwindCSS
 
 - Astro Fast 🚀
 - Accessible, semantic HTML markup
@@ -21,7 +21,7 @@ Made with Astro, Typescript, Tailwind CSS & SolidJS
 - Pagination
 - Theming colour modes with Tailwind and CSS variables
 - Shiki code syntax styling
-- Auto-generated sitemap & robots.txt
+- Auto-generated sitemap
 
 ## Quick start
 
@@ -46,8 +46,9 @@ Replace pnpm with your choice of npm / yarn
 - Update file `astro.config.mjs` site property with your own domain
 - Replace & update files within the `/public` folder:
   - favicon.ico
+  - `/images` folder - add your own icon
+  - robots.txt - update the Sitemap url to your own domain
   - manifest.webmanifest
-  - `public/images` folder
 - Modify file `src/styles/global.css` with your own light and dark styles
 - Create / edit posts for your blog within `src/pages/posts/` with .md file(s)
 - Optional:
