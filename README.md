@@ -50,6 +50,8 @@ Replace pnpm with your choice of npm / yarn
   - `public/images` folder
 - Modify file `src/styles/global.css` with your own light and dark styles
 - Create / edit posts for your blog within `src/pages/posts/` with .md file(s)
+- Optional:
+  - Fonts: This theme sets the body element to the font family `font-mono`, located in the global css file `src/styles/global.css`. You can change fonts by removing the variant `font-mono`, after which TailwindCSS will default to the `font-sans` [font family stack](https://tailwindcss.com/docs/font-family).
 
 ## Adding posts
 
