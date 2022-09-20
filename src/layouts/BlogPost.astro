@@ -79,7 +79,7 @@ const paginationProps = {
 			</span>
 			<p class="mt-8">{description}</p>
 			<div
-				class="mt-12 prose prose-sm prose-cactus prose-headings:font-semibold prose-headings:before:content-['#'] prose-headings:before:text-accent prose-headings:before:absolute prose-headings:before:-ml-4 prose-th:before:content-none"
+				class="mt-12 prose prose-sm prose-cactus prose-headings:font-semibold prose-headings:before:content-['#'] prose-headings:before:text-accent prose-headings:before:absolute prose-headings:before:-mr-4 prose-th:before:content-none"
 			>
 				<slot />
 			</div>
@@ -110,5 +110,11 @@ const paginationProps = {
 	/* Hide the weird code block adding the language */
 	:global(article pre .language-id) {
 		@apply hidden;
+	}
+	:global(code) {
+		unicode-bidi: plaintext !important;
+	}
+	:global(.astro-code){
+		direction: ltr;
 	}
 </style>

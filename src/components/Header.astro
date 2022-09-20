@@ -23,7 +23,7 @@ const url = new URL(Astro.request.url);
 
 <header>
 	<span>
-		<a
+		<!--<a
 			href="/"
 			class="logo"
 			aria-current={url.pathname === "/" ? "page" : false}
@@ -43,7 +43,7 @@ const url = new URL(Astro.request.url);
 				></path>
 			</svg>
 			<span>Astro Cactus</span>
-		</a>
+		</a>-->
 		<nav id="navigation-menu" aria-label="Main">
 			<a href="/" aria-current={url.pathname === "/" ? "page" : false}>Home</a>
 			<a href="/about" aria-current={url.pathname === "/about" ? "page" : false}
@@ -82,7 +82,7 @@ const url = new URL(Astro.request.url);
 			@apply inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block;
 
 			svg {
-				@apply mr-3 h-10 w-6 sm:absolute sm:left-[-4.5rem] sm:mr-0 sm:h-20 sm:w-12;
+				@apply mr-3 h-10 w-6 sm:absolute sm:mr-0 sm:h-20 sm:w-12;
 			}
 
 			> span {
@@ -99,7 +99,7 @@ const url = new URL(Astro.request.url);
 		}
 
 		nav {
-			@apply mt-1 -ml-4 hidden text-accent sm:flex sm:divide-x sm:divide-dashed sm:divide-accent;
+			@apply mt-1 -ml-4 hidden text-accent sm:flex sm:divide-dashed sm:divide-accent;
 
 			a {
 				@apply px-4 sm:hover:underline;

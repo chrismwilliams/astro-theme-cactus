@@ -15,7 +15,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<html lang={siteMeta.lang}>
+<html lang={siteMeta.lang} dir="rtl">
 	<head>
 		<BaseHead title={title} description={description} image={image} />
 		<script define:vars={{ siteMeta }}>
