@@ -1,9 +1,9 @@
 const siteMeta = {
-  title: "Astro Theme Cactus",
-  description: "An opinionated starter theme for Astro",
+  title: "نمط صبار فضائي",
+  description: "فكرة ابتدائية لنمط للفضاء",
   lang: "ar",
   ogLocale: "ar_SA",
-  githubUrl: "https://github.com/chrismwilliams/astro-theme-cactus",
+  githubUrl: "https://github.com/X7md/astro-theme-cactus-rtl",
   themeColorLight: "#fafafa",
   themeColorDark: "#1d1f21",
 }

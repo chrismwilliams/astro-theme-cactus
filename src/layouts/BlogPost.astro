@@ -10,7 +10,7 @@ const {
 } = Astro.props;
 const date = new Date(publishDate);
 const datetime = date.toISOString();
-const postDate = getLocaleTime(date);
+const postDate = getLocaleTime(date, {}, "ar-SA");
 const currentPage = new URL(Astro.request.url).pathname;
 const allPosts = await Astro.glob<Post>("../pages/posts/*.mdx");
 const allSortedPosts = sortMDByDate(allPosts);
@@ -38,12 +38,12 @@ const paginationProps = {
 		<article>
 			<h1 class="title">{title}</h1>
 			<span
-				class="flex flex-col sm:gap-y-2 md:flex-row md:items-center md:gap-y-0 md:divide-x md:divide-textColor"
+				class="flex flex-col pt-1 sm:gap-y-2 md:flex-row md:items-center md:gap-y-0 md:divide-x-reverse md:divide-x md:divide-textColor"
 			>
-				<time {datetime} class="pr-2">{postDate}</time>
+				<time {datetime} class="pl-2">{postDate}</time>
 				{
 					tags?.length && (
-						<div class="flex items-center md:pl-2">
+						<div class="flex items-center md:pl-2 pr-3">
 							<svg
 								aria-hidden="true"
 								xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ const paginationProps = {
 								<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 								<path d="M6 9h-.01" />
 							</svg>
-							<ul class="flex items-center ml-1 gap-x-2">
+							<ul class="flex items-center ml-1 pr-1 gap-x-2">
 								{tags.map((tag) => (
 									<li>
 										<a
@@ -87,7 +87,7 @@ const paginationProps = {
 		<aside
 			class="invisible hidden text-right sm:sticky sm:top-20 sm:block sm:visible"
 		>
-			<h2 class="font-semibold">المحتوى</h2>
+			<h2 class="font-semibold">الفهرس</h2>
 			<ul class="mt-4 text-xs space-y-2">
 				{
 					headings.map(({ slug, text }) => (

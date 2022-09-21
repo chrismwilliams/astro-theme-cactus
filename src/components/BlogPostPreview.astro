@@ -10,10 +10,10 @@ const { post, as: Element = "div", withDesc = false } = Astro.props as Props;
 const { publishDate } = post.frontmatter;
 const date = new Date(publishDate);
 const datetime = date.toISOString();
-const postDate = getLocaleTime(date, { month: "short" });
+const postDate = getLocaleTime(date, { month: "short" }, "ar-SA");
 ---
 
-<time {datetime} class="min-w-[120px] text-gray-500">{postDate}</time>
+<time {datetime} class="min-w-[170px] text-gray-500">{postDate}</time>
 <Element>
 	<a href={post.url} class="inline-block cactus-link line-clamp-1">
 		{post.frontmatter.title}

@@ -17,9 +17,9 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
 <PageLayout meta={meta}>
 	<section>
-		<h1 class="mb-6 title">Hello World!</h1>
+		<h1 class="mb-6 title">مرحبًا مرحبًا!</h1>
 		<p class="mb-4">
-			Hi, I’m a theme for Astro, an example of how you can use this starter to
+			أهلا، أنا نمط من أنماط فضاء، ومثال على كيفية استعمالك هذا النمط ابتداءً, I’m a theme for Astro, an example of how you can use this starter to
 			create a personal blog. If you want to know more about how you can
 			customise me, add more posts, and make it your own, click on one of the
 			social links which will take you to my repo.
@@ -27,7 +27,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		<SocialList />
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="mb-4 text-xl title">Posts</h2>
+		<h2 class="mb-4 text-xl title">المنشورات</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{
 				allPostsByDate.map((p) => (
@@ -39,7 +39,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		</ul>
 	</section>
 	<section class="mt-16">
-		<h2 class="mb-4 text-xl title">Technologies</h2>
+		<h2 class="mb-4 text-xl title">التقنيات</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			<li>
 				<a
@@ -47,9 +47,9 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					target="_blank"
 					rel="noopener noreferrer"
 					class="inline-block cactus-link"
-					>Astro
+					>فضاء
 				</a>:
-				<p class="inline-block sm:mt-2">Build fast websites, faster.</p>
+				<p class="inline-block sm:mt-2">ابنِ صفحات سريعة، بل الأسرع!</p>
 			</li>
 			<li>
 				<a
@@ -57,10 +57,10 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					target="_blank"
 					rel="noopener noreferrer"
 					class="inline-block cactus-link"
-					>@astro/image
+					>@فضاء/صور
 				</a>:
 				<p class="inline-block sm:mt-2">
-					An Astro integration for optimising images in Astro projects.
+					إضافة فضائية لدعم الصور.
 				</p>
 			</li>
 			<li>
@@ -69,10 +69,10 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					target="_blank"
 					rel="noopener noreferrer"
 					class="inline-block cactus-link"
-					>Tailwind CSS
+					>الرياح الخلفية CSS
 				</a>:
 				<p class="inline-block sm:mt-2">
-					Rapidly build modern websites without ever leaving your HTML.
+					صفحات وتصاميم حديثة.
 				</p>
 			</li>
 			<li>
@@ -81,9 +81,9 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					target="_blank"
 					rel="noopener noreferrer"
 					class="inline-block cactus-link"
-					>MDX
+					>إم دي إكس
 				</a>:
-				<p class="inline-block sm:mt-2">Markdown for the component era.</p>
+				<p class="inline-block sm:mt-2">مارك داونMarkdown for the component era.</p>
 			</li>
 		</ul>
 	</section>
