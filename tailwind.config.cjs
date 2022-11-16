@@ -1,10 +1,21 @@
+const { fontFamily } = require("tailwindcss/defaultTheme");
 const plugin = require("tailwindcss/plugin");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ["./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}"],
 	darkMode: "class",
 	corePlugins: {
+		// disable aspect ratio as per: @tailwindcss/aspect-ratio
 		aspectRatio: false,
+		// disable some core plugins as they are included in the css, even when unused
+		touchAction: false,
+		ringOffsetWidth: false,
+		ringOffsetColor: false,
+		scrollSnapType: false,
+		borderOpacity: false,
+		textOpacity: false,
+		fontVariantNumeric: false,
 	},
 	theme: {
 		extend: {
@@ -14,6 +25,11 @@ module.exports = {
 				link: "hsl(var(--theme-link) / <alpha-value>)",
 				accent: "hsl(var(--theme-accent) / <alpha-value>)",
 				"accent-2": "hsl(var(--theme-accent-2) / <alpha-value>)",
+			},
+			fontFamily: {
+				// Add any custom fonts here
+				sans: [...fontFamily.sans],
+				serif: [...fontFamily.serif],
 			},
 			transitionProperty: {
 				height: "height",
