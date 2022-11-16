@@ -5,19 +5,21 @@ import image from "@astrojs/image";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
+	site: "https://www.astro-theme-cactus.netlify.app",
 	markdown: {
 		shikiConfig: {
 			theme: "dracula",
 			wrap: true,
 		},
 	},
-	site: "https://www.astro-theme-cactus.netlify.app",
 	integrations: [
 		mdx({}),
 		tailwind({
 			config: { applyBaseStyles: false },
 		}),
-		image(),
+		image({
+			serviceEntryPoint: "@astrojs/image/sharp",
+		}),
 		sitemap(),
 	],
 });
