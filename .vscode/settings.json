@@ -1,37 +1,22 @@
 {
-	"files.exclude": {
-		"**/.git": true,
-		"**/.svn": true,
-		"**/.hg": true,
-		"**/CVS": true,
-		"**/.DS_Store": true,
-		"**/Thumbs.db": true,
-		"**/node_modules": true
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
 	},
+	"stylelint.validate": ["css", "less", "postcss", "astro"],
+	"stylelint.snippet": ["css", "less", "postcss", "astro"],
+	"[markdown]": {
+		"editor.wordWrap": "on",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.markdownlint": true
+		}
+	},
+	"prettier.documentSelectors": ["**/*.astro"],
 	"eslint.validate": [
 		"javascript",
 		"javascriptreact",
 		"astro", // Enable .astro
-		"typescript" // Enable .ts
-	],
-	"stylelint.validate": ["css", "less", "postcss", "astro"],
-	"stylelint.snippet": ["css", "less", "postcss", "astro"],
-	"prettier.documentSelectors": ["**/*.astro"],
-	"[astro]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"editor.formatOnSave": true
-	},
-	"[jsonc]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[javascript]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[json]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"[javascriptreact]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	},
-	"cSpell.words": ["stylelint"]
+		"typescript", // Enable .ts
+		"typescriptreact"
+	]
 }
