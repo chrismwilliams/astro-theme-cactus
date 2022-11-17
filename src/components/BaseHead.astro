@@ -5,11 +5,7 @@ import "../styles/global.css";
 
 export type Props = SiteMeta;
 
-const {
-	title,
-	description = siteMeta.description,
-	image,
-} = Astro.props as Props;
+const { title, description = siteMeta.description, image } = Astro.props;
 
 const titleSeparator = "•";
 const siteTitle = `${title} ${titleSeparator} ${siteMeta.title}`;
@@ -41,10 +37,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 {image && <meta property="og:image" content={image} />}
 
 <!-- Twitter -->
-<meta
-	property="twitter:card"
-	content={image ? "summary_large_image" : "summary"}
-/>
+<meta property="twitter:card" content={image ? "summary_large_image" : "summary"} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 {image && <meta property="twitter:image" content={image} />}

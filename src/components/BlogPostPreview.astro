@@ -6,7 +6,7 @@ export interface Props extends IElement {
 	withDesc?: boolean;
 }
 
-const { post, as: Element = "div", withDesc = false } = Astro.props as Props;
+const { post, as: Element = "div", withDesc = false } = Astro.props;
 const { publishDate } = post.frontmatter;
 const date = new Date(publishDate);
 const datetime = date.toISOString();
@@ -19,8 +19,4 @@ const postDate = getLocaleTime(date, { month: "short" });
 		{post.frontmatter.title}
 	</a>
 </Element>
-{
-	withDesc && (
-		<q class="block italic line-clamp-3">{post.frontmatter.description}</q>
-	)
-}
+{withDesc && <q class="block italic line-clamp-3">{post.frontmatter.description}</q>}

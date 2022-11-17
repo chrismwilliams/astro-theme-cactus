@@ -25,12 +25,4 @@ interface Post {
 	tags?: string[];
 }
 
-export type {
-	MDXInstance,
-	Page,
-	Theme,
-	IElement,
-	SiteMeta,
-	PaginationLink,
-	Post,
-};
+export type { MDXInstance, Page, Theme, IElement, SiteMeta, PaginationLink, Post };

@@ -10,9 +10,7 @@ export async function getStaticPaths({ paginate }) {
 	const allTags = getAllTags(allPostsByDate);
 
 	return allTags.map((tag) => {
-		const filterPosts = allPostsByDate.filter((post) =>
-			post.frontmatter.tags?.includes(tag)
-		);
+		const filterPosts = allPostsByDate.filter((post) => post.frontmatter.tags?.includes(tag));
 		return paginate(filterPosts, {
 			params: { tag },
 			pageSize: 10,
@@ -24,7 +22,7 @@ export interface Props {
 	page: Page<MDXInstance<Post>>;
 }
 
-const { page } = Astro.props as Props;
+const { page } = Astro.props;
 const { tag } = Astro.params;
 
 const meta = {

@@ -3,16 +3,12 @@ import type { MDXInstance, Post } from "./types";
 export function sortMDByDate(posts: MDXInstance<Post>[] = []) {
 	return posts.sort(
 		(a, b) =>
-			new Date(b.frontmatter.publishDate).valueOf() -
-			new Date(a.frontmatter.publishDate).valueOf()
+			new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf()
 	);
 }
 
 // This function expects the @arg posts to be sorted by sortMDByDate()
-export function getPreviousAndNextPosts(
-	currentSlug: string,
-	posts: MDXInstance<Post>[] = []
-) {
+export function getPreviousAndNextPosts(currentSlug: string, posts: MDXInstance<Post>[] = []) {
 	const index = posts.findIndex(({ url }) => url === currentSlug);
 	return {
 		prev: posts[index + 1] ?? null,
