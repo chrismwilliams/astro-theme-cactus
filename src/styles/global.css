@@ -8,7 +8,7 @@
 		--theme-accent: #cc2a42;
 		--theme-accent-2: #111;
 		--theme-quote: #cc2a42;
-		--theme-menu-bg: hsl(0 0% 98% / 0.85);
+		--theme-menu-bg: rgb(250 250 250 / 0.85);
 	}
 
 	:root.dark {
@@ -19,7 +19,7 @@
 		--theme-accent: #2bbc89;
 		--theme-accent-2: #eee;
 		--theme-quote: #ccffb6;
-		--theme-menu-bg: hsl(210 6.5% 12.2% / 0.85);
+		--theme-menu-bg: rgb(29 31 33 / 0.85);
 	}
 
 	html {
