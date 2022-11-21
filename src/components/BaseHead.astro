@@ -1,11 +1,11 @@
 ---
 import type { SiteMeta } from "@/types";
-import siteMeta from "src/site-meta.config";
+import siteMeta from "@/site-meta";
 import "../styles/global.css";
 
 export type Props = SiteMeta;
 
-const { title, description = siteMeta.description, image } = Astro.props;
+const { title, description, image } = Astro.props;
 
 const titleSeparator = "•";
 const siteTitle = `${title} ${titleSeparator} ${siteMeta.title}`;

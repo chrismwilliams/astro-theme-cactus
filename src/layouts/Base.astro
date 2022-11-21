@@ -4,14 +4,14 @@ import BaseHead from "@/components/BaseHead";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SkipLink from "@/components/SkipLink";
-import siteMeta from "src/site-meta.config";
+import siteMeta from "@/site-meta";
 
 export type Props = {
 	meta: SiteMeta;
 };
 
 const {
-	meta: { title, description, image },
+	meta: { title, description = siteMeta.description, image = "/social-card.png" },
 } = Astro.props;
 ---
 

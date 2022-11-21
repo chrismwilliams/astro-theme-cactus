@@ -7,7 +7,8 @@
 			"@/layouts/*": ["src/layouts/*.astro"],
 			"@/util": ["src/util.ts"],
 			"@/stores/*": ["src/stores/*"],
-			"@/types": ["src/types.ts"]
+			"@/types": ["src/types.ts"],
+			"@/site-meta": ["src/site-meta.config.ts"]
 		},
 		// Add type definitions for our Vite runtime.
 		"types": ["@astrojs/image/client"]
