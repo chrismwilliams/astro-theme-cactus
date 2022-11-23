@@ -5,7 +5,7 @@ import aboutImg from "../assets/about-astro.png";
 
 const meta = {
 	title: "About",
-	description: "I'm a starter theme for Astro",
+	description: "I'm a starter theme for Astro.build",
 };
 ---
 
@@ -13,11 +13,14 @@ const meta = {
 	<div class="space-y-6">
 		<h1 class="title">About</h1>
 		<p>
-			Hi, I’m a starter Astro. I’m particularly great for getting you started
-			with your own blogging website.
+			Hi, I’m a starter Astro. I’m particularly great for getting you started with your own blogging
+			website.
 		</p>
 		<div class="flex justify-center">
-			<Image src={aboutImg} alt="A cartoon cactus looking at 'Astro.build' logo"
+			<Image
+				src={aboutImg}
+				alt="A cartoon cactus looking at the 'Astro.build' logo"
+				loading="eager"
 			/>
 		</div>
 		<p>Here are my some of my awesome built in features:</p>

@@ -1,28 +1,22 @@
 ---
 import PageLayout from "@/layouts/Base";
-import BlogPostPreview from "@/components/BlogPostPreview";
+import PostPreview from "@/components/blog/PostPreview";
 import SocialList from "@/components/SocialList";
-import { sortMDByDate } from "@/util";
-import type { Post } from "@/types";
-
-const meta = {
-	title: "Astro Cactus",
-	description: "The perfect starter for your perfect blog.",
-};
+import { sortMDByDate } from "@/utils";
+import type { Post } from "@/data/posts";
 
 const MAX_POSTS = 10;
 const allPosts = await Astro.glob<Post>("./posts/*.mdx");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
 
-<PageLayout meta={meta}>
+<PageLayout meta={{ title: "Home" }}>
 	<section>
 		<h1 class="mb-6 title">Hello World!</h1>
 		<p class="mb-4">
-			Hi, I’m a theme for Astro, an example of how you can use this starter to
-			create a personal blog. If you want to know more about how you can
-			customise me, add more posts, and make it your own, click on one of the
-			social links which will take you to my repo.
+			Hi, I’m a theme for Astro, an example of how you can use this starter to create a personal
+			blog. If you want to know more about how you can customise me, add more posts, and make it
+			your own, click on one of the social links which will take you to my repo.
 		</p>
 		<SocialList />
 	</section>
@@ -32,7 +26,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 			{
 				allPostsByDate.map((p) => (
 					<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
-						<BlogPostPreview post={p} as="h2" />
+						<PostPreview post={p} as="h2" />
 					</li>
 				))
 			}
