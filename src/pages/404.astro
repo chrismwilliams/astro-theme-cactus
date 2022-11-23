@@ -12,8 +12,12 @@ const meta = {
 <PageLayout meta={meta}>
 	<h1 class="mb-6 title">404 | Oops something went wrong</h1>
 	<p class="mb-8">Please use the navigation to find your way back</p>
-	<div class="grid justify-center my-4 rotate-180">
-		<Image src={aboutImg} alt="A cartoon cactus looking at 'Astro.build' logo"
+	<div class="grid justify-center my-4">
+		<Image
+			class="rotate-180"
+			src={aboutImg}
+			alt="A cartoon cactus looking at the 'Astro.build' logo"
+			loading="eager"
 		/>
 	</div>
 </PageLayout>
