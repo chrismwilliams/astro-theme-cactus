@@ -1,76 +1,74 @@
 <script>
-	import siteMeta from "../site-meta.config";
-	import { elementHasClass } from "@/util";
+	import siteConfig from "@/site-config";
+	import { elementHasClass } from "@/utils";
 
 	document.addEventListener("DOMContentLoaded", () => {
 		const root = document.documentElement;
-		const oSColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
-		const colorThemeMetaTag = document.querySelector(
-			"meta[name='theme-color']"
-		);
-		const toggleThemeButton = document.getElementById("toggle-theme");
-		const darkSvgIcon = document.getElementById("toggle-theme-dark");
-		const lightSvgIcon = document.getElementById("toggle-theme-light");
+		const osColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+		const colorThemeMetaTag = document.querySelector("meta[name='theme-color']") as Element;
+		const toggleThemeButton = document.getElementById("toggle-theme") as HTMLButtonElement;
+		const darkSvgIcon = document.getElementById("dark-svg") as HTMLElement;
+		const lightSvgIcon = document.getElementById("light-svg") as HTMLElement;
 
-		const toggleDarkMode = (isDark) => {
-			const rootHasDark = elementHasClass(root, "dark");
-			const lightSvgHidden = elementHasClass(lightSvgIcon, "hidden");
-			const darkSvgHidden = elementHasClass(darkSvgIcon, "hidden");
-			// Toggle/change classes/aria/meta based on isDark:boolean
-			if (isDark) {
-				if (!rootHasDark) {
+		const rootHasDarkClass = () => {
+			return elementHasClass(root, "dark");
+		};
+
+		const toggleDarkMode = () => {
+			const rootIsDark = rootHasDarkClass();
+
+			// Toggle/change classes/aria/meta
+			if (isDarkState) {
+				lightSvgIcon.dataset.hide = "true";
+				darkSvgIcon.dataset.hide = "false";
+				if (!rootIsDark) {
 					root.classList.add("dark");
 				}
-				if (!lightSvgHidden) {
-					lightSvgIcon.classList.add("hidden");
-				}
-				if (darkSvgHidden) {
-					darkSvgIcon.classList.remove("hidden");
-				}
-				colorThemeMetaTag.setAttribute("content", siteMeta.themeColorDark);
-				toggleThemeButton.setAttribute("aria-label", "Activate Light Mode");
+				colorThemeMetaTag.setAttribute("content", siteConfig.themeColorDark);
 			} else {
-				if (rootHasDark) {
+				lightSvgIcon.dataset.hide = "false";
+				darkSvgIcon.dataset.hide = "true";
+				if (rootIsDark) {
 					root.classList.remove("dark");
 				}
-				if (lightSvgHidden) {
-					lightSvgIcon.classList.remove("hidden");
-				}
-				if (!darkSvgHidden) {
-					darkSvgIcon.classList.add("hidden");
-				}
-				colorThemeMetaTag.setAttribute("content", siteMeta.themeColorLight);
-				toggleThemeButton.setAttribute("aria-label", "Activate Dark Mode");
+				colorThemeMetaTag.setAttribute("content", siteConfig.themeColorLight);
 			}
 			// Keep localStore in sync
-			if (localStorage.getItem("theme") !== isDark) {
-				localStorage.setItem("theme", isDark ? "dark" : "light");
+			if (localStorage.getItem("theme") !== (isDarkState ? "dark" : "light")) {
+				localStorage.setItem("theme", isDarkState ? "dark" : "light");
 			}
 		};
 
 		// State from document.documentElement
-		let darkModeState = elementHasClass(root, "dark");
+		let isDarkState = rootHasDarkClass();
 
 		// Initial setting
-		toggleDarkMode(darkModeState);
+		toggleDarkMode();
 
-		// Listen to OS changes
-		oSColorScheme.addEventListener("change", (evnt) => {
-			toggleDarkMode(evnt.matches);
+		// Listen for OS changes
+		osColorScheme.addEventListener("change", (evnt) => {
+			isDarkState = evnt.matches;
+			toggleDarkMode();
 		});
 		// Theme Btn click
 		toggleThemeButton.addEventListener("click", () => {
-			darkModeState = !darkModeState;
-			toggleDarkMode(darkModeState);
+			isDarkState = !isDarkState;
+			toggleDarkMode();
 		});
 	});
 </script>
 
-<button type="button" id="toggle-theme" class="ml-auto">
+<button
+	type="button"
+	id="toggle-theme"
+	class="ml-auto relative h-9 w-9 p-2 bg-zinc-200 dark:bg-zinc-700 rounded-md hover:ring-2 ring-zinc-400 transition-all"
+	aria-label="Toggle Dark Mode"
+>
 	<svg
-		id="toggle-theme-dark"
+		id="dark-svg"
 		aria-hidden="true"
-		class="hidden mt-1 h-7 w-7"
+		data-hide="true"
+		focusable="false"
 		stroke-width="1.5"
 		viewBox="0 0 24 24"
 		fill="none"
@@ -81,58 +79,30 @@
 			stroke="currentColor"
 			stroke-linecap="round"
 			stroke-linejoin="round"></path>
-		<path
-			d="M22 12L23 12"
-			stroke="currentColor"
-			stroke-linecap="round"
-			stroke-linejoin="round"></path>
-		<path
-			d="M12 2V1"
-			stroke="currentColor"
-			stroke-linecap="round"
-			stroke-linejoin="round"></path>
-		<path
-			d="M12 23V22"
-			stroke="currentColor"
-			stroke-linecap="round"
-			stroke-linejoin="round"></path>
-		<path
-			d="M20 20L19 19"
-			stroke="currentColor"
-			stroke-linecap="round"
-			stroke-linejoin="round"></path>
-		<path
-			d="M20 4L19 5"
-			stroke="currentColor"
-			stroke-linecap="round"
-			stroke-linejoin="round"></path>
-		<path
-			d="M4 20L5 19"
-			stroke="currentColor"
-			stroke-linecap="round"
-			stroke-linejoin="round"></path>
-		<path
-			d="M4 4L5 5"
-			stroke="currentColor"
-			stroke-linecap="round"
-			stroke-linejoin="round"></path>
-		<path
-			d="M1 12L2 12"
-			stroke="currentColor"
-			stroke-linecap="round"
-			stroke-linejoin="round"></path>
+		<path d="M22 12L23 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+		></path>
+		<path d="M12 2V1" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+		<path d="M12 23V22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+		<path d="M20 20L19 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+		></path>
+		<path d="M20 4L19 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+		></path>
+		<path d="M4 20L5 19" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+		></path>
+		<path d="M4 4L5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+		<path d="M1 12L2 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+		></path>
 	</svg>
 	<svg
-		id="toggle-theme-light"
+		id="light-svg"
 		aria-hidden="true"
-		class="hidden mt-1 h-7 w-7"
+		data-hide="true"
 		stroke-width="1.5"
 		viewBox="0 0 24 24"
 		fill="none"
 		xmlns="http://www.w3.org/2000/svg"
 	>
-		<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"
-		></circle>
+		<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"></circle>
 		<path
 			d="M7.63262 3.06689C8.98567 3.35733 9.99999 4.56025 9.99999 6.00007C9.99999 7.65693 8.65685 9.00007 6.99999 9.00007C5.4512 9.00007 4.17653 7.82641 4.01685 6.31997"
 			stroke="currentColor"
@@ -153,3 +123,16 @@
 			stroke-linejoin="round"></path>
 	</svg>
 </button>
+
+<style>
+	svg {
+		@apply h-7 w-7 absolute top-1/2 left-1/2 opacity-100;
+		transform: translate(-50%, -50%) scale(1);
+		transition: opacity 0.25s ease, transform 0.25s ease;
+	}
+
+	svg[data-hide="true"] {
+		@apply opacity-0;
+		transform: translate(-50%, -50%) scale(0);
+	}
+</style>
