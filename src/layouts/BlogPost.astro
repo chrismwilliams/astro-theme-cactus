@@ -1,34 +1,12 @@
 ---
 import BaseLayout from "./Base.astro";
-import { getPreviousAndNextPosts, sortMDByDate } from "@/utils";
 import BlogHero from "@/components/blog/Hero";
-import Paginator from "@/components/Paginator";
 import type { Post } from "@/data/posts";
 import type { MDXLayoutProps } from "@/data/shared";
 
 type Props = MDXLayoutProps<Post>;
 
 const { frontmatter, headings } = Astro.props;
-const currentPage = new URL(Astro.request.url).pathname;
-const allPosts = await Astro.glob<Post>("../pages/posts/*.mdx");
-const allSortedPosts = sortMDByDate(allPosts);
-const { prev, next } = getPreviousAndNextPosts(currentPage, allSortedPosts);
-const paginationProps = {
-	...(prev?.url && {
-		prevUrl: {
-			url: prev.url,
-			text: `← ${prev.frontmatter.title}`,
-			srLabel: "Previous Post:",
-		},
-	}),
-	...(next?.url && {
-		nextUrl: {
-			url: next.url,
-			text: `${next.frontmatter.title} →`,
-			srLabel: "Next Post:",
-		},
-	}),
-};
 ---
 
 <BaseLayout meta={{ title: frontmatter.title, description: frontmatter.description }}>
@@ -41,7 +19,7 @@ const paginationProps = {
 				<slot />
 			</div>
 		</article>
-		<aside class="invisible hidden text-right sm:sticky sm:top-20 sm:block sm:visible">
+		<aside class="hidden text-right sm:sticky sm:top-20 sm:block">
 			<h2 class="font-semibold">Table of Contents</h2>
 			<ul class="mt-4 text-xs space-y-2">
 				{
@@ -55,8 +33,5 @@ const paginationProps = {
 				}
 			</ul>
 		</aside>
-	</div>
-	<div class="mt-24">
-		<Paginator {...paginationProps} />
 	</div>
 </BaseLayout>

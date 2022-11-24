@@ -8,15 +8,6 @@ export function sortMDByDate(posts: MDXInstance<Post>[] = []) {
 	);
 }
 
-// This function expects the @arg posts to be sorted by sortMDByDate()
-export function getPreviousAndNextPosts(currentSlug: string, posts: MDXInstance<Post>[] = []) {
-	const index = posts.findIndex(({ url }) => url === currentSlug);
-	return {
-		prev: posts[index + 1] ?? null,
-		next: posts[index - 1] ?? null,
-	};
-}
-
 export function getUniqueTags(posts: MDXInstance<Post>[] = []) {
 	const uniqueTags = new Set<string>();
 	posts.forEach((post) => {
