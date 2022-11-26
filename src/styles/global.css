@@ -23,11 +23,11 @@
 	}
 
 	html {
-		@apply h-full border-t-2 border-textColor scroll-smooth;
+		@apply h-full scroll-smooth border-t-2 border-textColor;
 	}
 
 	html body {
-		@apply h-full max-w-3xl mx-auto px-8 pt-16 font-mono font-normal antialiased text-sm flex flex-col text-textColor bg-bgColor;
+		@apply mx-auto flex h-full max-w-3xl flex-col bg-bgColor px-8 pt-16 font-mono text-sm font-normal text-textColor antialiased;
 	}
 }
 @tailwind components;

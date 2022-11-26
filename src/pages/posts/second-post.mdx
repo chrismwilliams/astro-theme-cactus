@@ -7,8 +7,6 @@ tags: ["example", "blog"]
 value: 128
 ---
 
-import { Code } from "astro/components";
-
 ## This is so cool!
 
 Do variables work {frontmatter.value * 2}?
@@ -21,13 +19,3 @@ function returnSeven() {
 	return x;
 }
 ```
-
-or
-
-<Code code={`// Example JavaScript
-
-const x = 7;
-function returnSeven() {
-return x;
-}
-`} lang="js" wrap theme="dracula" />

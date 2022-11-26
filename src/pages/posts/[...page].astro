@@ -42,10 +42,10 @@ const paginationProps = {
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="mb-6 title">Posts</h1>
+	<h1 class="title mb-6">Posts</h1>
 	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
 		<section aria-label="Blog post list">
-			<ul class="text-left space-y-8">
+			<ul class="space-y-8 text-left">
 				{
 					page.data.map((p) => (
 						<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
@@ -59,11 +59,11 @@ const paginationProps = {
 		{
 			uniqueTags.length && (
 				<aside>
-					<h2 class="flex items-center mb-4 text-lg font-semibold">
+					<h2 class="mb-4 flex items-center text-lg font-semibold">
 						<svg
 							aria-hidden="true"
 							xmlns="http://www.w3.org/2000/svg"
-							class="w-6 h-6"
+							class="h-6 w-6"
 							viewBox="0 0 24 24"
 							stroke-width="1.5"
 							stroke="currentColor"
@@ -82,7 +82,7 @@ const paginationProps = {
 						{uniqueTags.map((tag) => (
 							<li>
 								<a
-									class="flex items-center justify-center p-1 rounded-lg bg-accent"
+									class="flex items-center justify-center rounded-lg bg-accent p-1"
 									href={`/tags/${tag}`}
 									aria-label={`View all posts with the tag: ${tag}`}
 								>
@@ -91,7 +91,7 @@ const paginationProps = {
 							</li>
 						))}
 					</ul>
-					<span class="block mt-4 sm:text-right">
+					<span class="mt-4 block sm:text-right">
 						<a class="sm:hover:text-accent" href="/tags" aria-label="View all blog categories">
 							View all →
 						</a>

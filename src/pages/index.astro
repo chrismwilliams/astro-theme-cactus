@@ -12,7 +12,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<h1 class="mb-6 title">Hello World!</h1>
+		<h1 class="title mb-6">Hello World!</h1>
 		<p class="mb-4">
 			Hi, I’m a theme for Astro, an example of how you can use this starter to create a personal
 			blog. If you want to know more about how you can customise me, add more posts, and make it
@@ -21,7 +21,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		<SocialList />
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="mb-4 text-xl title">Posts</h2>
+		<h2 class="title mb-4 text-xl">Posts</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{
 				allPostsByDate.map((p) => (
@@ -33,14 +33,14 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		</ul>
 	</section>
 	<section class="mt-16">
-		<h2 class="mb-4 text-xl title">Technologies</h2>
+		<h2 class="title mb-4 text-xl">Technologies</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			<li>
 				<a
 					href="https://astro.build"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-block cactus-link"
+					class="cactus-link inline-block"
 					>Astro
 				</a>:
 				<p class="inline-block sm:mt-2">Build fast websites, faster.</p>
@@ -50,7 +50,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					href="https://docs.astro.build/en/guides/integrations-guide/image/"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-block cactus-link"
+					class="cactus-link inline-block"
 					>@astro/image
 				</a>:
 				<p class="inline-block sm:mt-2">
@@ -62,7 +62,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					href="https://tailwindcss.com"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-block cactus-link"
+					class="cactus-link inline-block"
 					>Tailwind CSS
 				</a>:
 				<p class="inline-block sm:mt-2">
@@ -74,7 +74,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					href="https://mdxjs.com/"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-block cactus-link"
+					class="cactus-link inline-block"
 					>MDX
 				</a>:
 				<p class="inline-block sm:mt-2">Markdown for the component era.</p>

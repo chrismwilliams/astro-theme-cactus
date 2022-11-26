@@ -14,6 +14,7 @@
 			return elementHasClass(root, "dark");
 		};
 
+		// ! could use data-attribute and get rid of using dark and light svgs
 		const toggleDarkMode = () => {
 			const rootIsDark = rootHasDarkClass();
 
@@ -61,7 +62,7 @@
 <button
 	type="button"
 	id="toggle-theme"
-	class="ml-auto relative h-9 w-9 p-2 bg-zinc-200 dark:bg-zinc-700 rounded-md hover:ring-2 ring-zinc-400 transition-all"
+	class="relative ml-auto h-9 w-9 rounded-md bg-zinc-200 p-2 ring-zinc-400 transition-all hover:ring-2 dark:bg-zinc-700"
 	aria-label="Toggle Dark Mode"
 >
 	<svg
@@ -126,7 +127,7 @@
 
 <style>
 	svg {
-		@apply h-7 w-7 absolute top-1/2 left-1/2 opacity-100;
+		@apply absolute top-1/2 left-1/2 h-7 w-7 opacity-100;
 		transform: translate(-50%, -50%) scale(1);
 		transition: opacity 0.25s ease, transform 0.25s ease;
 	}
