@@ -25,27 +25,18 @@ const menuLinks = [
 	document.addEventListener("DOMContentLoaded", () => {
 		const header = document.getElementById("main-header") as HTMLElement;
 		const toggleMenuButton = document.getElementById("toggle-navigation-menu") as HTMLButtonElement;
-		const lineSVG = document.getElementById("line-svg") as HTMLElement;
-		const crossSVG = document.getElementById("cross-svg") as HTMLElement;
 		let menuOpen = false;
 
 		toggleMenuButton.addEventListener("click", () => {
 			toggleClass(header, "menu-open");
 			menuOpen = !menuOpen;
 			toggleMenuButton.setAttribute("aria-expanded", menuOpen.toString());
-			if (menuOpen) {
-				lineSVG.dataset.hide = "true";
-				crossSVG.dataset.hide = "false";
-			} else {
-				crossSVG.dataset.hide = "true";
-				lineSVG.dataset.hide = "false";
-			}
 		});
 	});
 </script>
 
 <header id="main-header" class="group relative mb-28 flex items-center sm:pl-[4.5rem]">
-	<div>
+	<div class="flex sm:flex-col">
 		<a
 			href="/"
 			class="inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block"
@@ -95,7 +86,7 @@ const menuLinks = [
 	<ThemeToggle />
 	<button
 		id="toggle-navigation-menu"
-		class="relative ml-8 h-7 w-7 sm:invisible sm:hidden"
+		class="group relative ml-8 h-7 w-7 sm:invisible sm:hidden"
 		type="button"
 		aria-label="Open main menu"
 		aria-expanded="false"
@@ -103,6 +94,7 @@ const menuLinks = [
 	>
 		<svg
 			id="line-svg"
+			class="absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transition-all group-aria-expanded:scale-0 group-aria-expanded:opacity-0"
 			aria-hidden="true"
 			focusable="false"
 			xmlns="http://www.w3.org/2000/svg"
@@ -116,6 +108,7 @@ const menuLinks = [
 		</svg>
 		<svg
 			id="cross-svg"
+			class="absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 scale-0 text-accent opacity-0 transition-all group-aria-expanded:scale-100 group-aria-expanded:opacity-100"
 			class="text-accent"
 			aria-hidden="true"
 			focusable="false"
@@ -130,16 +123,3 @@ const menuLinks = [
 		</svg>
 	</button>
 </header>
-
-<style>
-	#toggle-navigation-menu svg {
-		@apply absolute top-1/2 left-1/2 h-full w-full opacity-100;
-		transform: translate(-50%, -50%) scale(1);
-		transition: opacity 0.3s ease, transform 0.3s ease;
-	}
-
-	#toggle-navigation-menu svg[data-hide="true"] {
-		@apply opacity-0;
-		transform: translate(-50%, -50%) scale(0);
-	}
-</style>

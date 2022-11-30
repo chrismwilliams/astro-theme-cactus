@@ -2,46 +2,50 @@
 	import siteConfig from "@/site-config";
 	import { elementHasClass } from "@/utils";
 
+	type ThemeState = "light" | "dark";
+
 	document.addEventListener("DOMContentLoaded", () => {
 		const root = document.documentElement;
 		const osColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
 		const colorThemeMetaTag = document.querySelector("meta[name='theme-color']") as Element;
 		const toggleThemeButton = document.getElementById("toggle-theme") as HTMLButtonElement;
-		const darkSvgIcon = document.getElementById("dark-svg") as HTMLElement;
-		const lightSvgIcon = document.getElementById("light-svg") as HTMLElement;
 
 		const rootHasDarkClass = () => {
 			return elementHasClass(root, "dark");
 		};
 
-		// ! could use data-attribute and get rid of using dark and light svgs
+		// State from document.documentElement
+		let isDarkState = rootHasDarkClass();
+
 		const toggleDarkMode = () => {
 			const rootIsDark = rootHasDarkClass();
+			let themeMode: ThemeState = isDarkState ? "dark" : "light";
 
 			// Toggle/change classes/aria/meta
 			if (isDarkState) {
-				lightSvgIcon.dataset.hide = "true";
-				darkSvgIcon.dataset.hide = "false";
 				if (!rootIsDark) {
 					root.classList.add("dark");
 				}
-				colorThemeMetaTag.setAttribute("content", siteConfig.themeColorDark);
 			} else {
-				lightSvgIcon.dataset.hide = "false";
-				darkSvgIcon.dataset.hide = "true";
 				if (rootIsDark) {
 					root.classList.remove("dark");
 				}
-				colorThemeMetaTag.setAttribute("content", siteConfig.themeColorLight);
 			}
-			// Keep localStore in sync
-			if (localStorage.getItem("theme") !== (isDarkState ? "dark" : "light")) {
-				localStorage.setItem("theme", isDarkState ? "dark" : "light");
-			}
-		};
 
-		// State from document.documentElement
-		let isDarkState = rootHasDarkClass();
+			// Keep localStore in sync
+			if (localStorage.getItem("theme") !== themeMode) {
+				localStorage.setItem("theme", themeMode);
+			}
+
+			// set the theme in head
+			colorThemeMetaTag.setAttribute(
+				"content",
+				siteConfig[isDarkState ? "themeColorDark" : "themeColorLight"]
+			);
+
+			// set data-theme on button
+			toggleThemeButton.dataset.theme = themeMode;
+		};
 
 		// Initial setting
 		toggleDarkMode();
@@ -62,13 +66,14 @@
 <button
 	type="button"
 	id="toggle-theme"
-	class="relative ml-auto h-9 w-9 rounded-md bg-zinc-200 p-2 ring-zinc-400 transition-all hover:ring-2 dark:bg-zinc-700"
+	class="group relative ml-auto h-9 w-9 rounded-md bg-zinc-200 p-2 ring-zinc-400 transition-all hover:ring-2 dark:bg-zinc-700"
 	aria-label="Toggle Dark Mode"
+	data-theme=""
 >
 	<svg
-		id="dark-svg"
+		id="sun-svg"
+		class="absolute top-1/2 left-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-0 opacity-0 transition-all group-data-[theme=dark]:scale-100 group-data-[theme=dark]:opacity-100"
 		aria-hidden="true"
-		data-hide="true"
 		focusable="false"
 		stroke-width="1.5"
 		viewBox="0 0 24 24"
@@ -95,9 +100,10 @@
 		></path>
 	</svg>
 	<svg
-		id="light-svg"
+		id="moon-svg"
+		class="absolute top-1/2 left-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-0 opacity-0 transition-all group-data-[theme=light]:scale-100 group-data-[theme=light]:opacity-100"
 		aria-hidden="true"
-		data-hide="true"
+		focusable="false"
 		stroke-width="1.5"
 		viewBox="0 0 24 24"
 		fill="none"
@@ -124,16 +130,3 @@
 			stroke-linejoin="round"></path>
 	</svg>
 </button>
-
-<style>
-	svg {
-		@apply absolute top-1/2 left-1/2 h-7 w-7 opacity-100;
-		transform: translate(-50%, -50%) scale(1);
-		transition: opacity 0.25s ease, transform 0.25s ease;
-	}
-
-	svg[data-hide="true"] {
-		@apply opacity-0;
-		transform: translate(-50%, -50%) scale(0);
-	}
-</style>
