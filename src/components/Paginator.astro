@@ -1,27 +1,29 @@
 ---
-import type { PaginationLink } from "@/types";
+import type { PaginationLink } from "@/data/shared";
 
-export interface Props {
+interface Props {
 	prevUrl?: PaginationLink;
 	nextUrl?: PaginationLink;
 }
 
-const { prevUrl, nextUrl } = Astro.props as Props;
+const { prevUrl, nextUrl } = Astro.props;
 ---
 
-{(prevUrl || nextUrl) && (
-	<nav class="flex items-center gap-x-4">
-		{prevUrl && (
-			<a class="mr-auto py-2 sm:hover:text-accent" href={prevUrl.url}>
-				{prevUrl.srLabel && <span class="sr-only">{prevUrl.srLabel}</span>}
-				{prevUrl.text ? prevUrl.text : "Previous"}
-			</a>
-		)}
-		{nextUrl && (
-			<a class="ml-auto py-2 sm:hover:text-accent" href={nextUrl.url}>
-				{nextUrl.srLabel && <span class="sr-only">{nextUrl.srLabel}</span>}
-				{nextUrl.text ? nextUrl.text : "Next"}
-			</a>
-		)}
-	</nav>
-)}
+{
+	(prevUrl || nextUrl) && (
+		<nav class="flex items-center gap-x-4">
+			{prevUrl && (
+				<a class="mr-auto py-2 sm:hover:text-accent" href={prevUrl.url} rel="prefetch">
+					{prevUrl.srLabel && <span class="sr-only">{prevUrl.srLabel}</span>}
+					{prevUrl.text ? prevUrl.text : "Previous"}
+				</a>
+			)}
+			{nextUrl && (
+				<a class="ml-auto py-2 sm:hover:text-accent" href={nextUrl.url} rel="prefetch">
+					{nextUrl.srLabel && <span class="sr-only">{nextUrl.srLabel}</span>}
+					{nextUrl.text ? nextUrl.text : "Next"}
+				</a>
+			)}
+		</nav>
+	)
+}

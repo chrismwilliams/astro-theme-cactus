@@ -1,0 +1,57 @@
+---
+import type { Post } from "@/data/posts";
+import { getFormattedDate } from "@/utils";
+
+interface Props {
+	content: Post;
+}
+
+const { content } = Astro.props;
+
+const date = new Date(content.publishDate);
+const datetime = date.toISOString();
+const postDate = getFormattedDate(date);
+---
+
+<h1 class="title">{content.title}</h1>
+<span
+	class="flex flex-col sm:gap-y-2 md:flex-row md:items-center md:gap-y-0 md:divide-x md:divide-textColor"
+>
+	<time datetime={datetime} class="pr-2">{postDate}</time>
+	{
+		content.tags?.length && (
+			<div class="flex items-center md:pl-2">
+				<svg
+					aria-hidden="true"
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-6 w-6"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					fill="none"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+					<path d="M7.859 6h-2.834a2.025 2.025 0 0 0 -2.025 2.025v2.834c0 .537 .213 1.052 .593 1.432l6.116 6.116a2.025 2.025 0 0 0 2.864 0l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-6.117 -6.116a2.025 2.025 0 0 0 -1.431 -.593z" />
+					<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
+					<path d="M6 9h-.01" />
+				</svg>
+				<ul class="ml-1 flex items-center gap-x-2">
+					{content.tags.map((tag) => (
+						<li>
+							<a
+								class="cactus-link inline-block"
+								aria-label={`View more blogs with the tag ${tag}`}
+								href={`/tags/${tag}`}
+							>
+								&#35;{tag}
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		)
+	}
+</span>
+<p class="mt-8">{content.description}</p>

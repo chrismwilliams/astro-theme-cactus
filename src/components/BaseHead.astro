@@ -1,50 +1,55 @@
 ---
-import type { SiteMeta } from "@/types";
-import siteMeta from "src/site-meta.config";
+import type { SiteMeta } from "@/data/siteMeta";
+import siteConfig from "@/site-config";
 import "../styles/global.css";
 
-export type Props = SiteMeta;
+type Props = SiteMeta;
 
-const {
-	title,
-	description = siteMeta.description,
-	image,
-} = Astro.props as Props;
+const { title, description, image } = Astro.props;
 
 const titleSeparator = "•";
-const siteTitle = `${title} ${titleSeparator} ${siteMeta.title}`;
+const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!-- Icons / Favicon -->
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
 
 <!-- Primary Meta Tags -->
 <title>{siteTitle}</title>
 <meta name="title" content={siteTitle} />
 <meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
 
-<!-- Global Metadata -->
-<link rel="icon" href="/favicon.ico" />
-<link rel="apple-touch-icon" href="/images/icon/192x192.png" />
-<link rel="manifest" href="/manifest.webmanifest" />
-<meta name="theme-color" content={siteMeta.themeColorLight} />
+<!-- Theme Colour -->
+<meta name="theme-color" content={siteConfig.themeColorLight} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:locale" content={siteMeta.ogLocale} />
 <meta property="og:type" content="website" />
-<meta property="og:url" content={canonicalURL} />
-<link rel="canonical" href={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-{image && <meta property="og:image" content={image} />}
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:site_name" content={siteConfig.title} />
+<meta property="og:locale" content={siteConfig.ogLocale} />
+{
+	image && (
+		<>
+			<meta property="og:image" content={image} />
+			<meta property="og:image:width" content="1200" />
+			<meta property="og:image:height" content="630" />
+		</>
+	)
+}
 
 <!-- Twitter -->
-<meta
-	property="twitter:card"
-	content={image ? "summary_large_image" : "summary"}
-/>
+<meta property="twitter:card" content={image ? "summary_large_image" : "summary"} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 {image && <meta property="twitter:image" content={image} />}

@@ -1,3 +1,4 @@
 User-agent: *
-Disallow:
+Allow: /
+
 Sitemap: https://www.astro-theme-cactus.netlify.app/sitemap-index.xml

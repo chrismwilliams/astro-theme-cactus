@@ -10,17 +10,12 @@ module.exports = {
 		"at-rule-no-unknown": [
 			true,
 			{
-				ignoreAtRules: [
-					"tailwind",
-					"apply",
-					"variants",
-					"responsive",
-					"screen",
-				],
+				ignoreAtRules: ["tailwind", "apply", "variants", "responsive", "screen"],
 			},
 		],
 		"function-no-unknown": [true, { ignoreFunctions: ["theme"] }],
 		"declaration-block-trailing-semicolon": null,
+		"declaration-empty-line-before": "never",
 		"no-descending-specificity": null,
 		"custom-property-empty-line-before": "never",
 		"hue-degree-notation": "number",

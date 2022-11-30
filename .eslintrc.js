@@ -1,27 +1,19 @@
 /** @type {import("@types/eslint").Linter.Config} */
 module.exports = {
-	settings: {
-		"import/resolver": {
-			typescript: {
-				alwaysTryTypes: true,
-				project: "./tsconfig.json",
-			},
-		},
-	},
+	ignorePatterns: ["node_modules", "dist"],
+	root: true,
 	env: {
 		node: true,
-		es2022: true,
-		browser: true,
 	},
+	parser: "@typescript-eslint/parser",
+	plugins: ["@typescript-eslint", "prettier"],
 	extends: [
 		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:prettier/recommended",
 		"plugin:astro/recommended",
 		"plugin:astro/jsx-a11y-recommended",
 	],
-	parserOptions: {
-		ecmaVersion: "latest",
-		sourceType: "module",
-	},
 	overrides: [
 		{
 			files: ["*.astro"],
@@ -31,13 +23,11 @@ module.exports = {
 				extraFileExtensions: [".astro"],
 			},
 			rules: {
+				"prettier/prettier": "off",
 				"import/no-named-as-default-member": "off",
 				"import/no-named-as-default": "off",
 				"@typescript-eslint/consistent-type-imports": "error",
 				"@typescript-eslint/no-unused-vars": "off",
-			},
-			globals: {
-				Astro: "readonly",
 			},
 		},
 		{
@@ -64,4 +54,7 @@ module.exports = {
 			},
 		},
 	],
+	rules: {
+		"@typescript-eslint/no-var-requires": "warn",
+	},
 };
