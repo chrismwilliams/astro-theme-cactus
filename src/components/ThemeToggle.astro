@@ -10,27 +10,14 @@
 		const colorThemeMetaTag = document.querySelector("meta[name='theme-color']") as Element;
 		const toggleThemeButton = document.getElementById("toggle-theme") as HTMLButtonElement;
 
-		const rootHasDarkClass = () => {
-			return elementHasClass(root, "dark");
-		};
-
-		// State from document.documentElement
-		let isDarkState = rootHasDarkClass();
+		// Initailise state from document.documentElement
+		let isDarkState = elementHasClass(root, "dark");
 
 		const toggleDarkMode = () => {
-			const rootIsDark = rootHasDarkClass();
 			let themeMode: ThemeState = isDarkState ? "dark" : "light";
 
-			// Toggle/change classes/aria/meta
-			if (isDarkState) {
-				if (!rootIsDark) {
-					root.classList.add("dark");
-				}
-			} else {
-				if (rootIsDark) {
-					root.classList.remove("dark");
-				}
-			}
+			// root add/retain dark class when isDarkState === true, remove/don't add if false
+			root.classList.toggle("dark", isDarkState);
 
 			// Keep localStore in sync
 			if (localStorage.getItem("theme") !== themeMode) {
