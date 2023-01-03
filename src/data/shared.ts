@@ -1,4 +1,4 @@
-import type { GetStaticPaths, MDXInstance, Page, MDXLayoutProps } from "astro";
+import type { GetStaticPaths, Page } from "astro";
 
 interface BaseFrontmatter {
 	slug: string;
@@ -15,12 +15,4 @@ interface PaginationLink {
 	srLabel?: string;
 }
 
-export type {
-	BaseFrontmatter,
-	Page,
-	GetStaticPaths,
-	MDXInstance,
-	MDXLayoutProps,
-	IElement,
-	PaginationLink,
-};
+export type { BaseFrontmatter, Page, GetStaticPaths, IElement, PaginationLink };

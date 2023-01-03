@@ -1,20 +1,21 @@
 ---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import type { Page, GetStaticPaths } from "@/data/shared";
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
 import Pagination from "@/components/Paginator";
 import { getUniqueTags, sortMDByDate } from "@/utils";
-import type { Page, MDXInstance, GetStaticPaths } from "@/data/shared";
-import type { Post } from "@/data/posts";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-	const allPosts = await Astro.glob<Post>("./*.mdx");
+	const allPosts = await getCollection("post");
 	const allPostsByDate = sortMDByDate(allPosts);
 	const uniqueTags = getUniqueTags(allPosts);
 	return paginate(allPostsByDate, { props: { uniqueTags }, pageSize: 10 });
 };
 
 interface Props {
-	page: Page<MDXInstance<Post>>;
+	page: Page<CollectionEntry<"post">>;
 	uniqueTags: string[];
 }
 
@@ -22,7 +23,7 @@ const { page, uniqueTags } = Astro.props;
 
 const meta = {
 	title: "Posts",
-	description: "A collection of posts by me for a starter Astro theme",
+	description: "A collection of posts by me for an Asto starter theme",
 };
 
 const paginationProps = {
@@ -78,11 +79,11 @@ const paginationProps = {
 						</svg>
 						Tags
 					</h2>
-					<ul class="flex flex-wrap gap-2 text-bgColor">
+					<ul class="text-bgColor flex flex-wrap gap-2">
 						{uniqueTags.map((tag) => (
 							<li>
 								<a
-									class="flex items-center justify-center rounded-lg bg-accent p-1"
+									class="bg-accent flex items-center justify-center rounded-lg p-1"
 									href={`/tags/${tag}`}
 									aria-label={`View all posts with the tag: ${tag}`}
 								>

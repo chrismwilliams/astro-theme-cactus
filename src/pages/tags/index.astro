@@ -1,9 +1,9 @@
 ---
 import PageLayout from "@/layouts/Base";
 import { getUniqueTagsWithCount } from "@/utils";
-import type { Post } from "@/data/posts";
+import { getCollection } from "astro:content";
 
-const allPosts = await Astro.glob<Post>("../posts/*.mdx");
+const allPosts = await getCollection("post");
 const allTags = getUniqueTagsWithCount(allPosts);
 
 const meta = {
