@@ -1,10 +1,5 @@
 import type { GetStaticPaths, Page } from "astro";
 
-interface BaseFrontmatter {
-	slug: string;
-	url: URL;
-}
-
 interface IElement {
 	readonly as?: keyof HTMLElementTagNameMap;
 }
@@ -15,4 +10,4 @@ interface PaginationLink {
 	srLabel?: string;
 }
 
-export type { BaseFrontmatter, Page, GetStaticPaths, IElement, PaginationLink };
+export type { Page, GetStaticPaths, IElement, PaginationLink };
