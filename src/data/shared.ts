@@ -1,5 +1,3 @@
-import type { GetStaticPaths, Page } from "astro";
-
 interface IElement {
 	readonly as?: keyof HTMLElementTagNameMap;
 }
@@ -10,4 +8,4 @@ interface PaginationLink {
 	srLabel?: string;
 }
 
-export type { Page, GetStaticPaths, IElement, PaginationLink };
+export type { IElement, PaginationLink };

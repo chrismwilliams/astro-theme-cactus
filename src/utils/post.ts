@@ -9,7 +9,7 @@ export function sortMDByDate(posts: CollectionEntry<"post">[] = []) {
 export function getUniqueTags(posts: CollectionEntry<"post">[] = []) {
 	const uniqueTags = new Set<string>();
 	posts.forEach((post) => {
-		post.data.tags?.map((tag) => uniqueTags.add(tag.toLowerCase()));
+		post.data.tags.map((tag) => uniqueTags.add(tag.toLowerCase()));
 	});
 	return [...uniqueTags];
 }
@@ -19,7 +19,7 @@ export function getUniqueTagsWithCount(posts: CollectionEntry<"post">[] = []): {
 } {
 	return posts.reduce((prev, post) => {
 		const runningTags: { [key: string]: number } = { ...prev };
-		post.data.tags?.forEach(function (tag) {
+		post.data.tags.forEach(function (tag) {
 			runningTags[tag] = (runningTags[tag] || 0) + 1;
 		});
 		return runningTags;
