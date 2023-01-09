@@ -1,20 +1,15 @@
 ---
 title: "My Second Post"
 publishDate: "12 June 2022"
-description: "It's another post by me."
+description: "Another example post for Astro Cactus, this time written in a plain markdown file"
 tags: ["example", "blog"]
-value: 128
 ---
 
-## This is so cool!
-
-Do variables work {frontmatter.value * 2}?
+## This is a post made with Markdown
 
 ```js
 // Example JavaScript
-
-const x = 7;
 function returnSeven() {
-	return x;
+	return 7;
 }
 ```
