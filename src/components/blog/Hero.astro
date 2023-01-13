@@ -1,25 +1,24 @@
 ---
-import type { Post } from "@/data/posts";
 import { getFormattedDate } from "@/utils";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-	content: Post;
+	content: CollectionEntry<"post">;
 }
 
 const { content } = Astro.props;
 
-const date = new Date(content.publishDate);
-const datetime = date.toISOString();
-const postDate = getFormattedDate(date);
+const datetime = content.data.publishDate.toISOString();
+const postDate = getFormattedDate(content.data.publishDate);
 ---
 
-<h1 class="title">{content.title}</h1>
+<h1 class="title">{content.data.title}</h1>
 <span
 	class="flex flex-col sm:gap-y-2 md:flex-row md:items-center md:gap-y-0 md:divide-x md:divide-textColor"
 >
 	<time datetime={datetime} class="pr-2">{postDate}</time>
 	{
-		content.tags?.length && (
+		content.data.tags?.length && (
 			<div class="flex items-center md:pl-2">
 				<svg
 					aria-hidden="true"
@@ -38,7 +37,7 @@ const postDate = getFormattedDate(date);
 					<path d="M6 9h-.01" />
 				</svg>
 				<ul class="ml-1 flex items-center gap-x-2">
-					{content.tags.map((tag) => (
+					{content.data.tags.map((tag) => (
 						<li>
 							<a
 								class="cactus-link inline-block"
@@ -54,4 +53,4 @@ const postDate = getFormattedDate(date);
 		)
 	}
 </span>
-<p class="mt-8">{content.description}</p>
+<p class="mt-8">{content.data.description}</p>

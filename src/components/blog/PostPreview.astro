@@ -1,24 +1,23 @@
 ---
-import type { IElement, MDXInstance } from "@/data/shared";
-import type { Post } from "@/data/posts";
+import type { CollectionEntry } from "astro:content";
+import type { IElement } from "@/data/shared";
 import { getFormattedDate } from "@/utils";
 
 interface Props extends IElement {
-	post: MDXInstance<Post>;
+	post: CollectionEntry<"post">;
 	withDesc?: boolean;
 }
 
 const { post, as: Element = "div", withDesc = false } = Astro.props;
-const { publishDate = "" } = post.frontmatter;
-const date = new Date(publishDate);
+const date = new Date(post.data.publishDate);
 const datetime = date.toISOString();
 const postDate = getFormattedDate(date, { month: "short" });
 ---
 
 <time datetime={datetime} class="min-w-[120px] text-gray-500">{postDate}</time>
 <Element>
-	<a href={post.url} class="cactus-link inline-block line-clamp-1" rel="prefetch">
-		{post.frontmatter.title}
+	<a href={`/posts/${post.slug}`} class="cactus-link inline-block line-clamp-1" rel="prefetch">
+		{post.data.title}
 	</a>
 </Element>
-{withDesc && <q class="block italic line-clamp-3">{post.frontmatter.description}</q>}
+{withDesc && <q class="mt-2 block italic line-clamp-3">{post.data.description}</q>}

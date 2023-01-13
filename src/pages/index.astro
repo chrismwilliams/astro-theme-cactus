@@ -1,12 +1,12 @@
 ---
+import { getCollection } from "astro:content";
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
 import SocialList from "@/components/SocialList";
 import { sortMDByDate } from "@/utils";
-import type { Post } from "@/data/posts";
 
 const MAX_POSTS = 10;
-const allPosts = await Astro.glob<Post>("./posts/*.mdx");
+const allPosts = await getCollection("post");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 ---
 
@@ -16,7 +16,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		<p class="mb-4">
 			Hi, I’m a theme for Astro, an example of how you can use this starter to create a personal
 			blog. If you want to know more about how you can customise me, add more posts, and make it
-			your own, click on one of the social links which will take you to my repo.
+			your own, click on one the github icon link below which will take you to my repo.
 		</p>
 		<SocialList />
 	</section>
@@ -68,6 +68,16 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 				<p class="inline-block sm:mt-2">
 					Rapidly build modern websites without ever leaving your HTML.
 				</p>
+			</li>
+			<li>
+				<a
+					href="https://www.markdownguide.org/"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="cactus-link inline-block"
+					>Markdown
+				</a>:
+				<p class="inline-block sm:mt-2">Simple and easy-to-use markup language.</p>
 			</li>
 			<li>
 				<a
