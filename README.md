@@ -17,6 +17,7 @@ Astro Theme Cactus is a simple opinionated starter built with the Astro framewor
 - [Astro Image Integration](https://docs.astro.build/en/guides/integrations-guide/image/) for optimised images
 - MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts
 - Pagination
+- [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
 - Shiki code syntax styling
 - Auto-generated [sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
 
@@ -47,8 +48,7 @@ Replace pnpm with your choice of npm / yarn
 - Edit the config file `src/site.config.ts` for basic site meta data
 - Update file `astro.config.ts` site property with your own domain
 - Replace & update files within the `/public` folder:
-  - favicon.ico
-  - `/images` folder - add your own icon
+  - favicon.ico & other social icons
   - robots.txt - update the Sitemap url to your own domain
   - manifest.webmanifest
 - Modify file `src/styles/global.css` with your own light and dark styles
