@@ -20,6 +20,7 @@ Astro Theme Cactus is a simple opinionated starter built with the Astro framewor
 - [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
 - Shiki code syntax styling
 - Auto-generated [sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
+- Google Analytics [Analytics](https://code.juliancataldo.com/component/astro-google-analytics/)
 
 ## Demo 💻
 
@@ -70,6 +71,27 @@ Adding a post is a simple as adding your .md(x) file(s) to the `src/content/post
 | description \*         | Similar to above, used as the seo description property. Has a min length of 50 and a max length of 160 chars, set in the post schema.                                             |
 | publishDate \*         | Again pretty simple. To change the date format/locale, currently **en-GB**, update/pass the **locale** arg to function **getFormattedDate**, found in `src/utils/date.ts`.        |
 | tags                   | Tags are optional with any created post. Any new tag(s) will be shown in `yourdomain.com/posts` + `yourdomain.com/tags`, and generate the page(s) `yourdomain.com/tags/[yourTag]` |
+
+## Google Analytics
+Astro has a nice and seamless integration with Google Analytics, the process is broken down into to steps:
+
+You need to install AStro Analytics Component
+```bash
+$ npm install astro-google-analytics
+```
+Edit the `src/components/BaseHead.astro`, and add:
+```js
+---
+import { GoogleAnalytics } from 'astro-google-analytics';
+...
+---
+...
+<head>
+<GoogleAnalytics id="G-XXXXXXXXXX" />
+</head>
+```
+the `id` must be replaced with your own Google Analytics ID.
+
 
 ## Deploy
 
