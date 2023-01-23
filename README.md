@@ -20,7 +20,6 @@ Astro Theme Cactus is a simple opinionated starter built with the Astro framewor
 - [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
 - Shiki code syntax styling
 - Auto-generated [sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
-- Google Analytics [Analytics](https://code.juliancataldo.com/component/astro-google-analytics/)
 
 ## Demo 💻
 
