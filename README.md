@@ -72,26 +72,33 @@ Adding a post is a simple as adding your .md(x) file(s) to the `src/content/post
 | publishDate \*         | Again pretty simple. To change the date format/locale, currently **en-GB**, update/pass the **locale** arg to function **getFormattedDate**, found in `src/utils/date.ts`.        |
 | tags                   | Tags are optional with any created post. Any new tag(s) will be shown in `yourdomain.com/posts` + `yourdomain.com/tags`, and generate the page(s) `yourdomain.com/tags/[yourTag]` |
 
-## Google Analytics
-Astro has a nice and seamless integration with Google Analytics, the process is broken down into to steps:
+## Analytics
 
-You need to install AStro Analytics Component
+You may want to track the number of visitors you receive to your blog/website in order to understand trends and popular posts/pages you've created. There are a number of providers out there one could use, including web hosts such as [vercel](https://vercel.com/analytics), [netlify](https://www.netlify.com/products/analytics/), and [cloudflare](https://www.cloudflare.com/web-analytics/).
+
+This theme/template doesn't include a specific solution due to there being a number of use cases and/or options which some people may or may not use.
+
+You may be asked to included a snippet inside the **HEAD** tag of your website when setting it up, which can be found in `src/layouts/Base.astro`. Alternatively, you could add the snippet in `src/components/BaseHead.astro`.
+
+Another popular provider is google analytics which you could integrate via the above method, or, for example adding [astro-google-analytics](https://www.npmjs.com/package/astro-google-analytics)
+
 ```bash
-$ npm install astro-google-analytics
+pnpm install astro-google-analytics
 ```
-Edit the `src/components/BaseHead.astro`, and add:
-```js
+
+Edit `src/layouts/Base.astro`, and add:
+
+```tsx
 ---
 import { GoogleAnalytics } from 'astro-google-analytics';
-...
+// ...other imports
 ---
-...
+
 <head>
-<GoogleAnalytics id="G-XXXXXXXXXX" />
+  <!-- Replace id with your own Google Analytics ID -->
+  <GoogleAnalytics id="G-XXXXXXXXXX" />
 </head>
 ```
-the `id` must be replaced with your own Google Analytics ID.
-
 
 ## Deploy
 
