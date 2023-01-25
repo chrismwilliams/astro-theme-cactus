@@ -1,4 +1,5 @@
 const siteMeta = {
+	author: "Chris Williams",
 	title: "Astro Theme Cactus",
 	description: "An opinionated starter theme for Astro",
 	lang: "en-GB",
