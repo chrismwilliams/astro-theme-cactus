@@ -20,7 +20,8 @@ const postDate = getFormattedDate(content.data.publishDate);
 	{
 		content.data.tags?.length && (
 			<div class="flex items-center md:pl-2">
-				<svg
+				<ul class="ml-1 flex-wrap flex items-center gap-x-2">
+					<svg
 					aria-hidden="true"
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-6 w-6"
@@ -36,7 +37,6 @@ const postDate = getFormattedDate(content.data.publishDate);
 					<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 					<path d="M6 9h-.01" />
 				</svg>
-				<ul class="ml-1 flex items-center gap-x-2">
 					{content.data.tags.map((tag) => (
 						<li>
 							<a
