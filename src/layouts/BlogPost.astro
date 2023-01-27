@@ -9,10 +9,16 @@ interface Props {
 }
 
 const { post } = Astro.props;
+const {
+	data: { title, description, ogImage, publishDate },
+	slug,
+} = post;
+const socialImage = ogImage ?? `/og-image/${slug}.png`;
+const articleDate = publishDate.toISOString();
 const { headings } = await post.render();
 ---
 
-<BaseLayout meta={{ title: post.data.title, description: post.data.description }}>
+<BaseLayout meta={{ title, description, articleDate, ogImage: socialImage }}>
 	<div class="sm:grid sm:grid-cols-[3fr_1fr] sm:items-start sm:gap-x-10">
 		<article>
 			<BlogHero content={post} />
