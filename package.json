@@ -1,6 +1,6 @@
 {
 	"name": "astro-cactus",
-	"version": "1.5.0",
+	"version": "1.5.2",
 	"private": false,
 	"scripts": {
 		"dev": "astro dev",
@@ -46,6 +46,7 @@
 	},
 	"dependencies": {
 		"@astrojs/prefetch": "^0.1.1",
+		"@astrojs/rss": "^2.0.0",
 		"astro": "2.0.2",
 		"satori": "0.1.2",
 		"satori-html": "^0.3.2",
