@@ -8,4 +8,5 @@ ogImage: "/social-card.png"
 
 ## Adding your own social image card to a post
 
-This post is an example of how to add a social image, also known as an og image, to a blog post.
+This post is an example of how to add a custom social image, also known as an OG image, to a blog post.
+By adding the optional ogImage property to the frontmatter of a post, [satori](https://github.com/vercel/satori) won't generate an image for this page.
