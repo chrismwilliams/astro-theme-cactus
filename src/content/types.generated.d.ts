@@ -57,6 +57,13 @@ declare module 'astro:content' {
   collection: "post",
   data: InferEntrySchema<"post">
 },
+"unique-tags.md": {
+  id: "unique-tags.md",
+  slug: "unique-tags",
+  body: string,
+  collection: "post",
+  data: InferEntrySchema<"post">
+},
 },
 
 	};
