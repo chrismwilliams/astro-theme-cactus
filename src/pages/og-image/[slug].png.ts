@@ -8,11 +8,11 @@ import { getFormattedDate } from "@/utils";
 
 const monoFontReg = await fetch(
 	"https://api.fontsource.org/v1/fonts/roboto-mono/latin-400-normal.ttf"
-).then((res) => res.arrayBuffer());
+);
 
 const monoFontBold = await fetch(
 	"https://api.fontsource.org/v1/fonts/roboto-mono/latin-700-normal.ttf"
-).then((res) => res.arrayBuffer());
+);
 
 const ogOptions: SatoriOptions = {
 	width: 1200,
@@ -22,13 +22,13 @@ const ogOptions: SatoriOptions = {
 	fonts: [
 		{
 			name: "Roboto Mono",
-			data: monoFontReg,
+			data: await monoFontReg.arrayBuffer(),
 			weight: 400,
 			style: "normal",
 		},
 		{
 			name: "Roboto Mono",
-			data: monoFontBold,
+			data: await monoFontBold.arrayBuffer(),
 			weight: 700,
 			style: "normal",
 		},
