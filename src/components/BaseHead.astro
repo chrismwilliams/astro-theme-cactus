@@ -5,11 +5,12 @@ import "../styles/global.css";
 
 type Props = SiteMeta;
 
-const { title, description, image } = Astro.props;
+const { title, description, ogImage, articleDate } = Astro.props;
 
 const titleSeparator = "•";
 const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url).href;
 ---
 
 <meta charset="utf-8" />
@@ -21,38 +22,42 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/manifest.webmanifest" />
+<link rel="canonical" href={canonicalURL} />
 
 <!-- Primary Meta Tags -->
 <title>{siteTitle}</title>
 <meta name="title" content={siteTitle} />
 <meta name="description" content={description} />
-<link rel="canonical" href={canonicalURL} />
+<meta name="author" content={siteConfig.author} />
 
 <!-- Theme Colour -->
 <meta name="theme-color" content={siteConfig.themeColorLight} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={articleDate ? "article" : "website"} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:site_name" content={siteConfig.title} />
 <meta property="og:locale" content={siteConfig.ogLocale} />
+<meta property="og:image" content={socialImageURL} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 {
-	image && (
+	articleDate && (
 		<>
-			<meta property="og:image" content={image} />
-			<meta property="og:image:width" content="1200" />
-			<meta property="og:image:height" content="630" />
+			<meta property="article:author" content={siteConfig.author} />
+			<meta property="article:published_time" content={articleDate} />
 		</>
 	)
 }
 
 <!-- Twitter -->
-<meta property="twitter:card" content={image ? "summary_large_image" : "summary"} />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-{image && <meta property="twitter:image" content={image} />}
+<meta property="twitter:image" content={socialImageURL} />
 
 <!-- RSS auto-discovery -->
 <link rel="alternate" type="application/rss+xml" title={siteConfig.title} href="/rss.xml" />

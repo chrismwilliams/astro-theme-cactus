@@ -16,6 +16,7 @@ Astro Theme Cactus is a simple opinionated starter built with the Astro framewor
 - Dark / Light mode, using Tailwind and CSS variables
 - [Astro Image Integration](https://docs.astro.build/en/guides/integrations-guide/image/) for optimised images
 - MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts
+- [Satori](https://github.com/vercel/satori) for creating open graph png images.
 - Pagination
 - [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
 - Shiki code syntax styling
@@ -52,9 +53,12 @@ Replace pnpm with your choice of npm / yarn
   - robots.txt - update the Sitemap url to your own domain
   - manifest.webmanifest
 - Modify file `src/styles/global.css` with your own light and dark styles
-- Create / edit posts for your blog within `src/content/post/` with .md/mdx file(s). See below for more details.
+- Create / edit posts for your blog within `src/content/post/` with .md/mdx file(s). See [below](#adding-posts) for more details.
 - Optional:
   - Fonts: This theme sets the body element to the font family `font-mono`, located in the global css file `src/styles/global.css`. You can change fonts by removing the variant `font-mono`, after which TailwindCSS will default to the `font-sans` [font family stack](https://tailwindcss.com/docs/font-family).
+  - OG Image:
+    - If you would like to change the style of the generated image the Satori library creates, open up `src/pages/og-image/[slug].png.ts` to the markup function where you can edit the html/tailwind-classes as necessary. You can also use the [playground](https://og-playground.vercel.app/) to aid your design.
+    - If you would like to generate svg og images rather than the default .png ones, you will need to remove the @resvg/resvg-js library, and return the svg within the body of the get function from the file `src/pages/og-image/[slug].png.ts`.
 
 ## Adding posts
 
@@ -64,12 +68,13 @@ Adding a post is a simple as adding your .md(x) file(s) to the `src/content/post
 
 ### Frontmatter
 
-| Property (\* required) | Description                                                                                                                                                                       |
-| :--------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| title \*               | Self explanatory. Used as the text link to the post, the h1 on the posts' page, and the pages title property. Has a max length of 60 chars, set in `src/content/config.ts`        |
-| description \*         | Similar to above, used as the seo description property. Has a min length of 50 and a max length of 160 chars, set in the post schema.                                             |
-| publishDate \*         | Again pretty simple. To change the date format/locale, currently **en-GB**, update/pass the **locale** arg to function **getFormattedDate**, found in `src/utils/date.ts`.        |
-| tags                   | Tags are optional with any created post. Any new tag(s) will be shown in `yourdomain.com/posts` + `yourdomain.com/tags`, and generate the page(s) `yourdomain.com/tags/[yourTag]` |
+| Property (\* required) | Description                                                                                                                                                                                                                                                                                      |
+| :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| title \*               | Self explanatory. Used as the text link to the post, the h1 on the posts' page, and the pages title property. Has a max length of 60 chars, set in `src/content/config.ts`                                                                                                                       |
+| description \*         | Similar to above, used as the seo description property. Has a min length of 50 and a max length of 160 chars, set in the post schema.                                                                                                                                                            |
+| publishDate \*         | Again pretty simple. To change the date format/locale, currently **en-GB**, update/pass the **locale** arg to function **getFormattedDate**, found in `src/utils/date.ts`.                                                                                                                       |
+| tags                   | Tags are optional with any created post. Any new tag(s) will be shown in `yourdomain.com/posts` + `yourdomain.com/tags`, and generate the page(s) `yourdomain.com/tags/[yourTag]`                                                                                                                |
+| ogImage                | This is an optional property. An OG Image will be generated automatically for every post where this property **isn't** provided. If you would like to create your own for a specific post, include this property and a link to your image, and the theme will skip automatically generating one. |
 
 ## Analytics
 
