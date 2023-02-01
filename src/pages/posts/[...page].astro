@@ -49,7 +49,7 @@ const paginationProps = {
 			<ul class="space-y-8 text-left">
 				{
 					page.data.map((p) => (
-						<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
+						<li class="flex flex-col flex-wrap gap-x-2 sm:flex-row [&_q]:w-full">
 							<PostPreview post={p} as="h2" withDesc />
 						</li>
 					))
