@@ -51,7 +51,7 @@ module.exports = {
 				DEFAULT: {
 					css: {
 						a: {
-							"@apply cactus-link": "",
+							"@apply cactus-link no-underline": "",
 						},
 						strong: {
 							fontWeight: "700",
