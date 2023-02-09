@@ -1,22 +1,8 @@
 ---
 import ThemeToggle from "../ThemeToggle.astro";
+import { MENU_LINKS } from "@/utils";
 
 const url = new URL(Astro.request.url);
-
-const menuLinks = [
-	{
-		title: "Home",
-		path: "/",
-	},
-	{
-		title: "About",
-		path: "/about",
-	},
-	{
-		title: "Blog",
-		path: "/posts",
-	},
-];
 ---
 
 <script>
@@ -70,7 +56,7 @@ const menuLinks = [
 			aria-label="Main menu"
 		>
 			{
-				menuLinks.map((link) => (
+				MENU_LINKS.map((link) => (
 					<a
 						href={link.path}
 						class="py-4 px-4 sm:py-0 sm:hover:underline"
