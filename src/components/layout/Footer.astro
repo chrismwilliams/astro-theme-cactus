@@ -1,5 +1,5 @@
 ---
-import { MENU_LINKS } from "@/utils";
+import { MENU_LINKS } from "@/data/constants";
 
 const year = new Date().getFullYear();
 ---
@@ -20,7 +20,7 @@ const year = new Date().getFullYear();
 			MENU_LINKS.map((link) => (
 				<a
 					href={link.path}
-					class="px-4 py-2 sm:py-0 sm:px-2 sm:hover:text-textColor sm:hover:underline"
+					class="sm:hover:text-textColor px-4 py-2 sm:py-0 sm:px-2 sm:hover:underline"
 				>
 					{link.title}
 				</a>
