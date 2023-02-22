@@ -1,10 +1,16 @@
+---
+import { SOCIAL_LINKS } from "@/data/constants";
+
+// *** SVG icons from https://tablericons.com/ ***
+---
+
 <div class="flex flex-wrap items-center gap-x-4 sm:items-center">
 	<p>Find me on</p>
 	<ul class="flex flex-1 items-center gap-x-4 sm:flex-initial">
 		<li>
 			<a
 				class="inline-block p-2 sm:hover:text-link"
-				href="https://github.com/chrismwilliams/astro-cactus"
+				href={SOCIAL_LINKS.github}
 				target="_blank"
 				rel="noopener noreferrer"
 			>
@@ -32,7 +38,7 @@
 		<li>
 			<a
 				class="inline-block p-2 sm:hover:text-link"
-				href="https://github.com/chrismwilliams/astro-cactus"
+				href={SOCIAL_LINKS.twitter}
 				target="_blank"
 				rel="noopener noreferrer"
 			>
@@ -60,7 +66,7 @@
 		<li>
 			<a
 				class="inline-block p-2 sm:hover:text-link"
-				href="https://github.com/chrismwilliams/astro-cactus"
+				href={SOCIAL_LINKS.discord}
 				target="_blank"
 				rel="noopener noreferrer"
 			>
@@ -94,7 +100,7 @@
 			</a>
 		</li>
 		<li>
-			<a class="inline-block p-2 sm:hover:text-link" href="mailto:me@example.com">
+			<a class="inline-block p-2 sm:hover:text-link" href={`mailto:${SOCIAL_LINKS.email}`}>
 				<svg
 					class="h-6 w-6"
 					aria-hidden="true"
