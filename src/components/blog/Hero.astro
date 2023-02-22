@@ -12,11 +12,11 @@ const datetime = content.data.publishDate.toISOString();
 const postDate = getFormattedDate(content.data.publishDate);
 ---
 
-<h1 class="title">{content.data.title}</h1>
+<h1 class="title mb-3 sm:mb-1">{content.data.title}</h1>
 <time datetime={datetime}>{postDate}</time>
 {
 	!!content.data.tags?.length && (
-		<div class="inline before:content-['|']">
+		<div class="mt-1 sm:mt-0 sm:inline sm:before:content-['|']">
 			<svg
 				aria-hidden="true"
 				focusable="false"
