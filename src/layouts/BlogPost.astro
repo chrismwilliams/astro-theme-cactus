@@ -38,8 +38,28 @@ const { headings } = await post.render();
 </script>
 
 <BaseLayout meta={{ title, description, articleDate, ogImage: socialImage }}>
-	<div class="sm:grid sm:grid-cols-[3fr_1fr] sm:items-start sm:gap-x-10">
-		<article class="break-words">
+	<div class="flex items-start gap-x-10">
+		{
+			!!headings.length && (
+				<aside class="sticky top-20 order-2 -mr-32 hidden basis-64 lg:block">
+					<h2 class="font-semibold">Table of Contents</h2>
+					<ul class="mt-4 text-xs">
+						{headings.map(({ depth, slug, text }) => (
+							<li class="line-clamp-2 hover:text-accent">
+								<a
+									class={`block ${depth <= 2 ? "mt-3" : "mt-2 pl-3 text-[0.6875rem]"}`}
+									href={`#${slug}`}
+									aria-label={`Scroll to section: ${text}`}
+								>
+									<span>{"#".repeat(depth)}</span> {text}
+								</a>
+							</li>
+						))}
+					</ul>
+				</aside>
+			)
+		}
+		<article class="flex-grow break-words">
 			<div id="blog-hero"><BlogHero content={post} /></div>
 			<div
 				class="prose prose-sm prose-cactus mt-12 prose-headings:font-semibold prose-headings:before:absolute prose-headings:before:-ml-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
@@ -47,20 +67,6 @@ const { headings } = await post.render();
 				<slot />
 			</div>
 		</article>
-		<aside class="hidden text-right sm:sticky sm:top-20 sm:block">
-			<h2 class="font-semibold">Table of Contents</h2>
-			<ul class="mt-4 space-y-2 text-xs">
-				{
-					headings.map(({ slug, text }) => (
-						<li class="line-clamp-2 hover:text-accent">
-							<a href={`#${slug}`} aria-label={`Scroll to section: ${text}`}>
-								<span>&#35;</span> {text}
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</aside>
 	</div>
 	<button
 		id="to-top-btn"
