@@ -51,7 +51,7 @@ module.exports = {
 				DEFAULT: {
 					css: {
 						a: {
-							"@apply cactus-link": "",
+							"@apply cactus-link no-underline": "",
 						},
 						strong: {
 							fontWeight: "700",
@@ -99,16 +99,12 @@ module.exports = {
 		plugin(function ({ addComponents }) {
 			addComponents({
 				".cactus-link": {
-					"@apply relative py-2 underline underline-offset-4 decoration-2 decoration-link sm:no-underline sm:py-0":
-						{},
-					"@media (min-width: 640px)": {
-						"&:hover": {
-							"@apply sm:after:h-0.5 sm:after:bg-link": {},
-						},
-						"&::after": {
-							"@apply absolute bottom-0 inset-x-0 block content-[''] h-[1px] bg-textColor motion-safe:transition-height ease-in-out":
-								{},
-						},
+					"@apply bg-[size:100%_6px] bg-bottom bg-repeat-x": {},
+					backgroundImage:
+						"linear-gradient(transparent,transparent 5px,var(--theme-text) 5px,var(--theme-text))",
+					"&:hover": {
+						backgroundImage:
+							"linear-gradient(transparent,transparent 4px,var(--theme-link) 4px,var(--theme-link))",
 					},
 				},
 				".title": {

@@ -1,7 +1,8 @@
 type SiteMeta = {
 	title: string;
 	description?: string;
-	image?: string;
+	ogImage?: string | undefined;
+	articleDate?: string | undefined;
 };
 
 export type { SiteMeta };

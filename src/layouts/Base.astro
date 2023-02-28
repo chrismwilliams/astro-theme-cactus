@@ -11,27 +11,44 @@ interface Props {
 }
 
 const {
-	meta: { title, description = siteConfig.description, image = "/social-card.png" },
+	meta: { title, description = siteConfig.description, ogImage, articleDate },
 } = Astro.props;
 ---
 
 <html lang={siteConfig.lang}>
 	<head>
-		<BaseHead title={title} description={description} image={image} />
+		<BaseHead title={title} description={description} ogImage={ogImage} articleDate={articleDate} />
 		<script define:vars={{ siteConfig }}>
 			const root = document.documentElement;
 			const colorThemeMetaTag = document.querySelector("meta[name='theme-color']");
-			const theme = typeof localStorage !== "undefined" ? localStorage.getItem("theme") : null;
-			if (
-				theme === "dark" ||
-				(!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
-			) {
-				root.classList.add("dark");
-				colorThemeMetaTag.setAttribute("content", siteConfig.themeColorDark);
-			} else {
-				root.classList.remove("dark");
-				colorThemeMetaTag.setAttribute("content", siteConfig.themeColorLight);
+
+			// get user preference of dark mode, 1st local storage, 2nd browser
+			function getThemePreference() {
+				if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+					return localStorage.getItem("theme");
+				}
+				return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 			}
+
+			const isDark = getThemePreference() === "dark";
+
+			// watch document element class attribute and update user preference when it changes.
+			const observer = new MutationObserver(() => {
+				const rootIsDark = root.classList.contains("dark");
+				// set the meta attribute
+				colorThemeMetaTag.setAttribute(
+					"content",
+					siteConfig[rootIsDark ? "themeColorDark" : "themeColorLight"]
+				);
+				// store user preference
+				if (typeof localStorage !== "undefined") {
+					localStorage.setItem("theme", rootIsDark ? "dark" : "light");
+				}
+			});
+			observer.observe(root, { attributeFilter: ["class"] });
+
+			// initailse root class attribute
+			root.classList.toggle("dark", isDark);
 		</script>
 	</head>
 	<body>

@@ -25,8 +25,8 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		<ul class="space-y-4 sm:space-y-2">
 			{
 				allPostsByDate.map((p) => (
-					<li class="flex flex-wrap items-center gap-x-2 [&_q]:w-full">
-						<PostPreview post={p} as="h2" />
+					<li class="flex flex-col gap-x-2 sm:flex-row">
+						<PostPreview post={p} />
 					</li>
 				))
 			}
@@ -88,6 +88,16 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					>MDX
 				</a>:
 				<p class="inline-block sm:mt-2">Markdown for the component era.</p>
+			</li>
+			<li>
+				<a
+					href="https://github.com/vercel/satori"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="cactus-link inline-block"
+					>Satori
+				</a>:
+				<p class="inline-block sm:mt-2">Generating png Open Graph images for blog posts</p>
 			</li>
 		</ul>
 	</section>

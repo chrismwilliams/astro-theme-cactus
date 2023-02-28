@@ -9,9 +9,7 @@
 			"@/stores/*": ["src/stores/*"],
 			"@/data/*": ["src/data/*"],
 			"@/site-config": ["src/site.config.ts"]
-		},
-		// Add type definitions for our Vite runtime.
-		"types": ["@astrojs/image/client"]
+		}
 	},
 	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
 }
