@@ -1,5 +1,5 @@
 module.exports = {
-	extends: ["stylelint-config-standard", "stylelint-config-prettier"],
+	extends: ["stylelint-config-standard"],
 	overrides: [
 		{
 			files: ["*.astro", "**/*.astro"],
@@ -14,7 +14,6 @@ module.exports = {
 			},
 		],
 		"function-no-unknown": [true, { ignoreFunctions: ["theme"] }],
-		"declaration-block-trailing-semicolon": null,
 		"declaration-empty-line-before": "never",
 		"no-descending-specificity": null,
 		"custom-property-empty-line-before": "never",
