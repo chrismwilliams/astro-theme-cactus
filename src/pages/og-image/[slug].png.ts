@@ -3,7 +3,7 @@ import { getCollection, getEntryBySlug } from "astro:content";
 import satori, { SatoriOptions } from "satori";
 import { html } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
-import siteConfig from "@/site-config";
+import { siteConfig } from "@/site-config";
 import { getFormattedDate } from "@/utils";
 
 const monoFontReg = await fetch(
@@ -70,6 +70,7 @@ export async function get({ params: { slug } }: APIContext) {
 	const title = post?.data.title ?? siteConfig.title;
 	const postDate = getFormattedDate(post?.data.publishDate ?? Date.now(), {
 		weekday: "long",
+		month: "long",
 	});
 	const svg = await satori(markup(title, postDate), ogOptions);
 	const png = new Resvg(svg).render().asPng();
