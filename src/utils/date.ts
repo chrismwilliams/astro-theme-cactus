@@ -1,13 +1,17 @@
+import { siteConfig } from "@/site-config";
+
+const dateFormat = new Intl.DateTimeFormat(siteConfig.date.locale, siteConfig.date.options);
+
 export function getFormattedDate(
 	date: string | number | Date,
-	options: Intl.DateTimeFormatOptions = {},
-	locale: Intl.LocalesArgument = "en-GB"
+	options?: Intl.DateTimeFormatOptions
 ) {
-	const formatOptions: Intl.DateTimeFormatOptions = {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-		...options,
-	};
-	return new Date(date).toLocaleDateString(locale, formatOptions);
+	if (typeof options !== "undefined") {
+		return new Date(date).toLocaleDateString(siteConfig.date.locale, {
+			...(siteConfig.date.options as Intl.DateTimeFormatOptions),
+			...options,
+		});
+	}
+
+	return dateFormat.format(new Date(date));
 }
