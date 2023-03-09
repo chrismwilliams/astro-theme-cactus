@@ -3,8 +3,6 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true
 	},
-	"stylelint.validate": ["css", "less", "postcss", "astro"],
-	"stylelint.snippet": ["css", "less", "postcss", "astro"],
 	"[markdown]": {
 		"editor.wordWrap": "on",
 		"editor.codeActionsOnSave": {
