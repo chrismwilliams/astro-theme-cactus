@@ -38,7 +38,7 @@ const { headings } = await post.render();
 </script>
 
 <BaseLayout meta={{ title, description, articleDate, ogImage: socialImage }}>
-	<div class="flex items-start gap-x-10">
+	<div class="gap-x-10 lg:flex lg:items-start">
 		{
 			!!headings.length && (
 				<aside class="sticky top-20 order-2 -mr-32 hidden basis-64 lg:block">
