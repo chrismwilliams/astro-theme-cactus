@@ -1,8 +1,8 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
-const plugin = require("tailwindcss/plugin");
+import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
+import plugin from "tailwindcss/plugin";
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
 	content: ["./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}"],
 	darkMode: "class",
 	corePlugins: {
@@ -34,6 +34,9 @@ module.exports = {
 			transitionProperty: {
 				height: "height",
 			},
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			// Remove above once tailwindcss exposes theme type
 			typography: (theme) => ({
 				cactus: {
 					css: {
@@ -94,7 +97,6 @@ module.exports = {
 	},
 	plugins: [
 		require("@tailwindcss/typography"),
-		require("@tailwindcss/line-clamp"),
 		require("@tailwindcss/aspect-ratio"),
 		plugin(function ({ addComponents }) {
 			addComponents({
@@ -113,4 +115,4 @@ module.exports = {
 			});
 		}),
 	],
-};
+} satisfies Config;
