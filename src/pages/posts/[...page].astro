@@ -46,10 +46,10 @@ const paginationProps = {
 	<h1 class="title mb-6">Posts</h1>
 	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
 		<section aria-label="Blog post list">
-			<ul class="space-y-8 text-left">
+			<ul class="space-y-8 text-start">
 				{
 					page.data.map((p) => (
-						<li class="flex flex-col flex-wrap gap-x-2 sm:flex-row [&_q]:w-full">
+						<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
 							<PostPreview post={p} as="h2" withDesc />
 						</li>
 					))
@@ -79,11 +79,11 @@ const paginationProps = {
 						</svg>
 						Tags
 					</h2>
-					<ul class="flex flex-wrap gap-2 text-bgColor">
+					<ul class="text-bgColor flex flex-wrap gap-2">
 						{uniqueTags.map((tag) => (
 							<li>
 								<a
-									class="flex items-center justify-center rounded-lg bg-accent p-1"
+									class="bg-accent flex items-center justify-center rounded-lg p-1"
 									href={`/tags/${tag}`}
 									aria-label={`View all posts with the tag: ${tag}`}
 								>
@@ -92,7 +92,7 @@ const paginationProps = {
 							</li>
 						))}
 					</ul>
-					<span class="mt-4 block sm:text-right">
+					<span class="mt-4 block sm:text-end">
 						<a class="sm:hover:text-accent" href="/tags" aria-label="View all blog categories">
 							View all →
 						</a>
