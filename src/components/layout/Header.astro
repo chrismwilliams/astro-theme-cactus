@@ -21,7 +21,7 @@ const url = new URL(Astro.request.url);
 	});
 </script>
 
-<header id="main-header" class="group relative mb-28 flex items-center sm:pl-[4.5rem]">
+<header id="main-header" class="group relative mb-28 flex items-center sm:ps-[4.5rem]">
 	<div class="flex sm:flex-col">
 		<a
 			href="/"
@@ -29,7 +29,7 @@ const url = new URL(Astro.request.url);
 			aria-current={url.pathname === "/" ? "page" : false}
 		>
 			<svg
-				class="mr-3 h-10 w-6 sm:absolute sm:left-[-4.5rem] sm:mr-0 sm:h-20 sm:w-12"
+				class="me-3 h-10 w-6 sm:absolute sm:start-[-4.5rem] sm:me-0 sm:h-20 sm:w-12"
 				aria-hidden="true"
 				focusable="false"
 				fill="none"
@@ -52,14 +52,14 @@ const url = new URL(Astro.request.url);
 		</a>
 		<nav
 			id="navigation-menu"
-			class="absolute -inset-x-4 top-14 hidden flex-col items-end gap-y-4 rounded-md bg-[color:var(--theme-menu-bg)] py-4 text-accent shadow backdrop-blur group-[.menu-open]:z-50 group-[.menu-open]:flex sm:static sm:z-auto sm:mt-1 sm:-ml-4 sm:flex sm:flex-row sm:items-center sm:divide-x sm:divide-dashed sm:divide-accent sm:rounded-none sm:bg-transparent sm:py-0 sm:shadow-none sm:backdrop-blur-none"
+			class="absolute -inset-x-4 top-14 hidden flex-col items-end gap-y-4 rounded-md bg-[color:var(--theme-menu-bg)] py-4 text-accent shadow backdrop-blur group-[.menu-open]:z-50 group-[.menu-open]:flex sm:static sm:z-auto sm:-ms-4 sm:mt-1 sm:flex sm:flex-row sm:items-center sm:divide-x sm:divide-dashed sm:divide-accent sm:rounded-none sm:bg-transparent sm:py-0 sm:shadow-none sm:backdrop-blur-none"
 			aria-label="Main menu"
 		>
 			{
 				MENU_LINKS.map((link) => (
 					<a
 						href={link.path}
-						class="py-4 px-4 sm:py-0 sm:hover:underline"
+						class="px-4 py-4 sm:py-0 sm:hover:underline"
 						aria-current={url.pathname === link.path ? "page" : false}
 						rel="prefetch"
 					>
@@ -72,7 +72,7 @@ const url = new URL(Astro.request.url);
 	<ThemeToggle />
 	<button
 		id="toggle-navigation-menu"
-		class="group relative ml-8 h-7 w-7 sm:invisible sm:hidden"
+		class="group relative ms-8 h-7 w-7 sm:invisible sm:hidden"
 		type="button"
 		aria-label="Open main menu"
 		aria-expanded="false"
@@ -80,7 +80,7 @@ const url = new URL(Astro.request.url);
 	>
 		<svg
 			id="line-svg"
-			class="absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transition-all group-aria-expanded:scale-0 group-aria-expanded:opacity-0"
+			class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transition-all group-aria-expanded:scale-0 group-aria-expanded:opacity-0"
 			aria-hidden="true"
 			focusable="false"
 			xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,7 @@ const url = new URL(Astro.request.url);
 		</svg>
 		<svg
 			id="cross-svg"
-			class="absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 scale-0 text-accent opacity-0 transition-all group-aria-expanded:scale-100 group-aria-expanded:opacity-100"
+			class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 scale-0 text-accent opacity-0 transition-all group-aria-expanded:scale-100 group-aria-expanded:opacity-100"
 			class="text-accent"
 			aria-hidden="true"
 			focusable="false"
