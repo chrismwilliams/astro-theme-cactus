@@ -19,7 +19,6 @@ const ogOptions: SatoriOptions = {
 	width: 1200,
 	height: 630,
 	// debug: true,
-	// embedFont: true,
 	fonts: [
 		{
 			name: "Roboto Mono",
