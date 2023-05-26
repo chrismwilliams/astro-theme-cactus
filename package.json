@@ -45,7 +45,7 @@
 		"@astrojs/prefetch": "^0.2.1",
 		"@astrojs/rss": "^2.3.2",
 		"astro": "2.3.0",
-		"satori": "0.4.11",
+		"satori": "0.9.1",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.31.3"
 	}
