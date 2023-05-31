@@ -1,2 +1,2 @@
 [build]
-  command = 'pnpm run build'
+  command = 'pnpm build'
