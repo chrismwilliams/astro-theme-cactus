@@ -1,4 +1,4 @@
-import type { APIContext, GetStaticPathsResult } from "astro";
+import type { APIContext, GetStaticPaths } from "astro";
 import { getCollection, getEntryBySlug } from "astro:content";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -80,7 +80,7 @@ export async function get({ params: { slug } }: APIContext) {
 	};
 }
 
-export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+export const getStaticPaths = (async () => {
 	const posts = await getCollection("post");
 	return posts.filter(({ data }) => !data.ogImage).map(({ slug }) => ({ params: { slug } }));
-}
+}) satisfies GetStaticPaths;
