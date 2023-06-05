@@ -9,7 +9,7 @@ const year = new Date().getFullYear();
 >
 	<div class="me-0 sm:me-4">
 		Copyright &copy; {year}
-		<span aria-label="rocket emoji">🚀</span>
+		<span class="ml-2" aria-label="rocket emoji">🚀</span>
 		Astro Cactus
 	</div>
 	<nav
@@ -20,7 +20,7 @@ const year = new Date().getFullYear();
 			MENU_LINKS.map((link) => (
 				<a
 					href={link.path}
-					class="sm:hover:text-textColor px-4 py-2 sm:px-2 sm:py-0 sm:hover:underline"
+					class="px-4 py-2 sm:px-2 sm:py-0 sm:hover:text-textColor sm:hover:underline"
 				>
 					{link.title}
 				</a>
