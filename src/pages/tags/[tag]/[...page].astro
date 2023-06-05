@@ -1,5 +1,5 @@
 ---
-import type { GetStaticPathsOptions, Page } from "astro";
+import type { Page, GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import PageLayout from "@/layouts/Base";
@@ -7,7 +7,7 @@ import PostPreview from "@/components/blog/PostPreview";
 import Pagination from "@/components/Paginator";
 import { getUniqueTags, sortMDByDate } from "@/utils";
 
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+export const getStaticPaths = (async ({ paginate }) => {
 	const allPosts = await getCollection("post");
 	const allPostsByDate = sortMDByDate(allPosts);
 	const uniqueTags = getUniqueTags(allPostsByDate);
@@ -19,7 +19,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 			pageSize: 10,
 		});
 	});
-}
+}) satisfies GetStaticPaths;
 
 interface Props {
 	page: Page<CollectionEntry<"post">>;

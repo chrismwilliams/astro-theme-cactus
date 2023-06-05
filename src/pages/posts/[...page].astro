@@ -1,5 +1,5 @@
 ---
-import type { Page, GetStaticPathsOptions } from "astro";
+import type { Page, GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import PageLayout from "@/layouts/Base";
@@ -7,12 +7,12 @@ import PostPreview from "@/components/blog/PostPreview";
 import Pagination from "@/components/Paginator";
 import { getUniqueTags, sortMDByDate } from "@/utils";
 
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+export const getStaticPaths = (async ({ paginate }) => {
 	const allPosts = await getCollection("post");
 	const allPostsByDate = sortMDByDate(allPosts);
 	const uniqueTags = getUniqueTags(allPosts);
 	return paginate(allPostsByDate, { props: { uniqueTags }, pageSize: 10 });
-}
+}) satisfies GetStaticPaths;
 
 interface Props {
 	page: Page<CollectionEntry<"post">>;
@@ -79,11 +79,11 @@ const paginationProps = {
 						</svg>
 						Tags
 					</h2>
-					<ul class="text-bgColor flex flex-wrap gap-2">
+					<ul class="flex flex-wrap gap-2 text-bgColor">
 						{uniqueTags.map((tag) => (
 							<li>
 								<a
-									class="bg-accent flex items-center justify-center rounded-lg p-1"
+									class="flex items-center justify-center rounded-lg bg-accent p-1"
 									href={`/tags/${tag}/`}
 									aria-label={`View all posts with the tag: ${tag}`}
 								>
