@@ -18,9 +18,7 @@ export default defineConfig({
 	integrations: [
 		mdx({}),
 		tailwind({
-			config: {
-				applyBaseStyles: false,
-			},
+			applyBaseStyles: false,
 		}),
 		image({
 			serviceEntryPoint: "@astrojs/image/sharp",
