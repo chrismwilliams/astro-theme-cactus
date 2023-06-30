@@ -1,7 +1,7 @@
 ---
 import PageLayout from "@/layouts/Base";
-import { Image } from "@astrojs/image/components";
-import aboutImg from "../assets/about-astro.png";
+import { Image } from "astro:assets";
+import aboutImg from "@/assets/about-astro.png";
 
 const meta = {
 	title: "About",
@@ -21,6 +21,7 @@ const meta = {
 				src={aboutImg}
 				alt="A cartoon cactus looking at the 'Astro.build' logo"
 				loading="eager"
+				fetchpriority="high"
 			/>
 		</div>
 		<p>Here are my some of my awesome built in features:</p>
