@@ -14,7 +14,7 @@ Astro Theme Cactus is a simple opinionated starter built with the Astro framewor
 - Accessible, semantic HTML markup
 - Responsive & SEO-friendly
 - Dark / Light mode, using Tailwind and CSS variables
-- [Astro Image Integration](https://docs.astro.build/en/guides/integrations-guide/image/) for optimised images
+- [Astro Assets Integration](https://docs.astro.build/en/guides/assets/) for optimised images
 - MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts
 - [Satori](https://github.com/vercel/satori) for creating open graph png images.
 - Pagination
