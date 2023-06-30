@@ -9,6 +9,7 @@
 			"@/utils": ["src/utils/index.ts"],
 			"@/stores/*": ["src/stores/*"],
 			"@/data/*": ["src/data/*"],
+			"@/assets/*": ["src/assets/*"],
 			"@/site-config": ["src/site.config.ts"]
 		}
 	},
