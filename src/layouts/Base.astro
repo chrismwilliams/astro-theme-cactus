@@ -1,6 +1,7 @@
 ---
 import type { SiteMeta } from "@/data/siteMeta";
 import BaseHead from "@/components/BaseHead";
+import ThemeProvider from "@/components/ThemeProvider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SkipLink from "@/components/SkipLink";
@@ -18,40 +19,9 @@ const {
 <html lang={siteConfig.lang}>
 	<head>
 		<BaseHead title={title} description={description} ogImage={ogImage} articleDate={articleDate} />
-		<script define:vars={{ siteConfig }}>
-			const root = document.documentElement;
-			const colorThemeMetaTag = document.querySelector("meta[name='theme-color']");
-
-			// get user preference of dark mode, 1st local storage, 2nd browser
-			function getThemePreference() {
-				if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-					return localStorage.getItem("theme");
-				}
-				return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-			}
-
-			const isDark = getThemePreference() === "dark";
-
-			// watch document element class attribute and update user preference when it changes.
-			const observer = new MutationObserver(() => {
-				const rootIsDark = root.classList.contains("dark");
-				// set the meta attribute
-				colorThemeMetaTag.setAttribute(
-					"content",
-					siteConfig[rootIsDark ? "themeColorDark" : "themeColorLight"]
-				);
-				// store user preference
-				if (typeof localStorage !== "undefined") {
-					localStorage.setItem("theme", rootIsDark ? "dark" : "light");
-				}
-			});
-			observer.observe(root, { attributeFilter: ["class"] });
-
-			// initailse root class attribute
-			root.classList.toggle("dark", isDark);
-		</script>
 	</head>
 	<body>
+		<ThemeProvider />
 		<SkipLink />
 		<Header />
 		<main id="main" class="flex-1">

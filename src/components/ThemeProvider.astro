@@ -1,0 +1,30 @@
+---
+import { siteConfig } from "@/site-config";
+
+const { themeColorDark, themeColorLight } = siteConfig;
+---
+
+<script define:vars={{ themeColorDark, themeColorLight }}>
+	const root = document.documentElement;
+	const colorThemeMetaTag = document.querySelector("meta[name='theme-color']");
+
+	// get user preference of dark mode, 1st local storage, 2nd browser
+	const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("theme");
+	const theme =
+		storedTheme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+
+	// watch document element class attribute and update user preference when it changes.
+	const observer = new MutationObserver(() => {
+		const rootIsDark = root.classList.contains("dark");
+		// set the meta attribute
+		colorThemeMetaTag.setAttribute("content", rootIsDark ? themeColorDark : themeColorLight);
+		// store user preference
+		if (typeof localStorage !== "undefined") {
+			localStorage.setItem("theme", rootIsDark ? "dark" : "light");
+		}
+	});
+	observer.observe(root, { attributeFilter: ["class"] });
+
+	// initailse root class attribute
+	root.classList.toggle("dark", theme === "dark");
+</script>
