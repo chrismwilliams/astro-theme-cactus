@@ -1,7 +1,6 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, sharpImageService } from "astro/config";
 import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
-import image from "@astrojs/image";
 import sitemap from "@astrojs/sitemap";
 import prefetch from "@astrojs/prefetch";
 
@@ -15,13 +14,17 @@ export default defineConfig({
 			wrap: true,
 		},
 	},
+	experimental: {
+		assets: true,
+	},
+	image: {
+		// https://docs.astro.build/en/guides/assets/#using-sharp
+		service: sharpImageService(),
+	},
 	integrations: [
 		mdx({}),
 		tailwind({
 			applyBaseStyles: false,
-		}),
-		image({
-			serviceEntryPoint: "@astrojs/image/sharp",
 		}),
 		sitemap(),
 		prefetch(),
