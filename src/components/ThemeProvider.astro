@@ -4,27 +4,22 @@ import { siteConfig } from "@/site-config";
 const { themeColorDark, themeColorLight } = siteConfig;
 ---
 
+{/* Inlined to avoid FOUC. */}
 <script define:vars={{ themeColorDark, themeColorLight }}>
 	const root = document.documentElement;
 	const colorThemeMetaTag = document.querySelector("meta[name='theme-color']");
-
-	// get user preference of dark mode, 1st local storage, 2nd browser
 	const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("theme");
-	const theme =
+	const userTheme =
 		storedTheme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-
-	// watch document element class attribute and update user preference when it changes.
-	const observer = new MutationObserver(() => {
-		const rootIsDark = root.classList.contains("dark");
-		// set the meta attribute
-		colorThemeMetaTag.setAttribute("content", rootIsDark ? themeColorDark : themeColorLight);
-		// store user preference
+	function setTheme(theme) {
+		root.classList.toggle("dark", theme === "dark");
+		colorThemeMetaTag.setAttribute("content", theme === "dark" ? themeColorDark : themeColorLight);
 		if (typeof localStorage !== "undefined") {
-			localStorage.setItem("theme", rootIsDark ? "dark" : "light");
+			localStorage.setItem("theme", theme);
 		}
+	}
+	setTheme(userTheme);
+	root.addEventListener("theme-change", (e) => {
+		setTheme(e.detail.theme);
 	});
-	observer.observe(root, { attributeFilter: ["class"] });
-
-	// initailse root class attribute
-	root.classList.toggle("dark", theme === "dark");
 </script>
