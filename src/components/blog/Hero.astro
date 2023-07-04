@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { getFormattedDate } from "@/utils";
 import type { CollectionEntry } from "astro:content";
 
@@ -6,16 +7,31 @@ interface Props {
 	content: CollectionEntry<"post">;
 }
 
-const { content } = Astro.props;
+const {
+	content: { data },
+} = Astro.props;
 
-const datetime = content.data.publishDate.toISOString();
-const postDate = getFormattedDate(content.data.publishDate, { month: "long" });
+const datetime = data.publishDate.toISOString();
+const postDate = getFormattedDate(data.publishDate, { month: "long" });
 ---
 
-<h1 class="title mb-3 sm:mb-1">{content.data.title}</h1>
+{
+	data.coverImage && (
+		<div class="aspect-h-9 aspect-w-16 mb-6">
+			<Image
+				src={data.coverImage.src}
+				alt={data.coverImage.alt}
+				class="object-cover"
+				loading="eager"
+				fetchpriority="high"
+			/>
+		</div>
+	)
+}
+<h1 class="title mb-3 sm:mb-1">{data.title}</h1>
 <time datetime={datetime}>{postDate}</time>
 {
-	!!content.data.tags?.length && (
+	!!data.tags?.length && (
 		<div class="mt-1 sm:mt-0 sm:inline sm:before:mx-2 sm:before:content-['|']">
 			<svg
 				aria-hidden="true"
@@ -34,7 +50,7 @@ const postDate = getFormattedDate(content.data.publishDate, { month: "long" });
 				<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 				<path d="M6 9h-.01" />
 			</svg>
-			{content.data.tags.map((tag, i) => (
+			{data.tags.map((tag, i) => (
 				<>
 					<a
 						class="cactus-link inline-block before:content-['#']"
@@ -43,10 +59,10 @@ const postDate = getFormattedDate(content.data.publishDate, { month: "long" });
 					>
 						{tag}
 					</a>
-					{i < content.data.tags.length - 1 && ", "}
+					{i < data.tags.length - 1 && ", "}
 				</>
 			))}
 		</div>
 	)
 }
-<p class="mt-8">{content.data.description}</p>
+<p class="mt-8">{data.description}</p>
