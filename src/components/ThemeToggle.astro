@@ -4,23 +4,26 @@
 			super();
 			const button = this.querySelector("button") as HTMLButtonElement;
 
-			function setTheme(dark: boolean) {
-				// This could/should be a CustomEvent()
-				document.documentElement.classList.toggle("dark", dark);
-				// set the aria-pressed attribute, dark mode === aria-pressed=true
-				button.setAttribute("aria-pressed", String(dark));
+			if (button) {
+				// button clicked, fire event
+				button.addEventListener("click", (e) => {
+					if (e.currentTarget instanceof HTMLButtonElement) {
+						// isPressed === dark mode current on
+						let isPressed = e.currentTarget.getAttribute("aria-pressed") === "true";
+
+						// invert isPressed
+						let themeChangeEvent = new CustomEvent("theme-change", {
+							detail: {
+								theme: isPressed ? "light" : "dark",
+							},
+						});
+						// dispatch event -> ThemeProvider.astro
+						document.documentElement.dispatchEvent(themeChangeEvent);
+						// toggle the aria-pressed attribute
+						button.setAttribute("aria-pressed", String(!isPressed));
+					}
+				});
 			}
-
-			// button clicked, toggle dark mode
-			button.addEventListener("click", () => setTheme(!this.isDark()));
-
-			// Initalise button state
-			setTheme(this.isDark());
-		}
-
-		// returns if the root element contains the dark class
-		isDark() {
-			return document.documentElement.classList.contains("dark");
 		}
 	}
 
@@ -97,3 +100,10 @@
 		</svg>
 	</button>
 </theme-toggle>
+
+{/* Inlined to avoid FOUC. */}
+<script is:inline>
+	const bodyThemeIsDark = document.documentElement.classList.contains("dark");
+	const button = document.getElementById("toggle-theme");
+	button.setAttribute("aria-pressed", String(bodyThemeIsDark));
+</script>
