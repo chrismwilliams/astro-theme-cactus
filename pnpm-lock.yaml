@@ -103,6 +103,9 @@ devDependencies:
   prettier-plugin-tailwindcss:
     specifier: ^0.3.0
     version: 0.3.0(prettier-plugin-astro@0.10.0)(prettier@2.8.8)
+  remark-unwrap-images:
+    specifier: ^3.0.1
+    version: 3.0.1
   tailwindcss:
     specifier: ^3.3.2
     version: 3.3.2
@@ -4683,6 +4686,15 @@ packages:
       retext: 8.1.0
       retext-smartypants: 5.2.0
       unist-util-visit: 4.1.2
+
+  /remark-unwrap-images@3.0.1:
+    resolution: {integrity: sha512-5VUY0n+J9lPTPfkct5S3/SbutryBjp8J/4mbgtlkDrOk3h8jde0hyqdYUJOoJKherZezS08tjd6i4+nnQ+wl5w==}
+    dependencies:
+      '@types/mdast': 3.0.11
+      hast-util-whitespace: 2.0.1
+      unified: 10.1.2
+      unist-util-visit: 4.1.2
+    dev: true
 
   /resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
