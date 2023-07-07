@@ -1,0 +1,131 @@
+---
+import "@pagefind/default-ui/css/ui.css";
+---
+
+<site-search id="search" class="ms-auto">
+	<button
+		data-open-modal
+		disabled
+		class="flex h-9 w-9 items-center justify-center rounded-md ring-zinc-400 transition-all hover:ring-2"
+	>
+		<svg
+			aria-label="search"
+			class="h-6 w-6"
+			xmlns="http://www.w3.org/2000/svg"
+			width="16"
+			height="16"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="1.5"
+		>
+			<path stroke="none" d="M0 0h24v24H0z"></path>
+			<path d="M3 10a7 7 0 1 0 14 0 7 7 0 1 0-14 0M21 21l-6-6"></path>
+		</svg>
+	</button>
+	<dialog
+		aria-label="search"
+		class="h-full max-h-full w-full max-w-full border border-zinc-400 bg-[--theme-menu-bg] shadow backdrop:bg-[--theme-menu-bg] backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:mt-16 sm:h-max sm:max-h-[calc(100%-8rem)] sm:w-5/6 sm:max-w-[40rem] sm:rounded-md"
+	>
+		<div class="dialog-frame flex flex-col gap-4 p-6">
+			<button data-close-modal class="flex p-1 md:hidden">Cancel</button>
+			{
+				import.meta.env.DEV ? (
+					<div class="mx-auto whitespace-pre-line text-center">
+						<p>
+							Search is only available in production builds. <br />
+							Try building and previewing the site to test it out locally.
+						</p>
+					</div>
+				) : (
+					<div class="search-container">
+						<div id="cactus__search" />
+					</div>
+				)
+			}
+		</div>
+	</dialog>
+</site-search>
+
+<script>
+	// new PagefindUI({ element: "#search", resetStyles: false });
+	class SiteSearch extends HTMLElement {
+		constructor() {
+			super();
+			const openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
+			const closeBtn = this.querySelector<HTMLButtonElement>("button[data-close-modal]")!;
+			const dialog = this.querySelector("dialog")!;
+			const dialogFrame = this.querySelector(".dialog-frame")!;
+
+			const onWindowClick = (event: MouseEvent) => {
+				// make sure the click is outside the of the dialog
+				if (
+					document.body.contains(event.target as Node) &&
+					!dialogFrame.contains(event.target as Node)
+				)
+					closeModal();
+			};
+
+			const openModal = (event?: MouseEvent) => {
+				dialog.showModal();
+				this.querySelector("input")?.focus();
+				event?.stopPropagation();
+				window.addEventListener("click", onWindowClick);
+			};
+
+			const closeModal = () => {
+				dialog.close();
+				window.removeEventListener("click", onWindowClick);
+			};
+
+			openBtn.addEventListener("click", openModal);
+			openBtn.disabled = false;
+			closeBtn.addEventListener("click", closeModal);
+
+			// Listen for `/` keyboard shortcuts.
+			window.addEventListener("keydown", (e) => {
+				if (e.key === "/" && !dialog.open) {
+					openModal();
+					e.preventDefault();
+				}
+			});
+
+			window.addEventListener("DOMContentLoaded", () => {
+				if (import.meta.env.DEV) return;
+				const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+				onIdle(async () => {
+					const { PagefindUI } = await import("@pagefind/default-ui");
+					new PagefindUI({
+						element: "#cactus__search",
+						baseUrl: import.meta.env.BASE_URL,
+						bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/_pagefind/",
+						showImages: false,
+					});
+				});
+			});
+		}
+	}
+
+	customElements.define("site-search", SiteSearch);
+</script>
+
+<style is:global>
+	:root {
+		--pagefind-ui-font: inherit;
+	}
+	:root.dark {
+		--pagefind-ui-primary: #3f3f46;
+	}
+</style>
+
+<style>
+	#cactus__search {
+		--pagefind-ui-primary: #e4e4e7;
+		--pagefind-ui-text: var(--theme-text);
+		--pagefind-ui-background: var(--theme-bg);
+		--pagefind-ui-border: #a1a1aa;
+		--pagefind-ui-border-width: 1px;
+	}
+</style>
