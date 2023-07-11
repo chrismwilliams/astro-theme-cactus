@@ -8,6 +8,44 @@ import { sortMDByDate } from "@/utils";
 const MAX_POSTS = 10;
 const allPosts = await getCollection("post");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+
+const cactusTech: Array<{ title: string; desc: string; href: string }> = [
+	{
+		title: "Astro",
+		desc: "Build fast websites, faster.",
+		href: "https://astro.build",
+	},
+	{
+		title: "Astro Assets",
+		desc: "Built-in optimized asset support.",
+		href: "https://docs.astro.build/en/guides/assets/",
+	},
+	{
+		title: "Tailwind CSS",
+		desc: "Rapidly build modern websites without ever leaving your HTML.",
+		href: "https://tailwindcss.com",
+	},
+	{
+		title: "Markdown",
+		desc: "Simple and easy-to-use markup language.",
+		href: "https://www.markdownguide.org/",
+	},
+	{
+		title: "MDX",
+		desc: "Markdown for the component era.",
+		href: "https://mdxjs.com/",
+	},
+	{
+		title: "Satori",
+		desc: "Generating png Open Graph images for blog posts.",
+		href: "https://github.com/vercel/satori",
+	},
+	{
+		title: "Pagefind",
+		desc: "A fully static search library.",
+		href: "https://pagefind.app/",
+	},
+];
 ---
 
 <PageLayout meta={{ title: "Home" }}>
@@ -35,70 +73,21 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 	<section class="mt-16">
 		<h2 class="title mb-4 text-xl">Technologies</h2>
 		<ul class="space-y-4 sm:space-y-2">
-			<li>
-				<a
-					href="https://astro.build"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>Astro
-				</a>:
-				<p class="inline-block sm:mt-2">Build fast websites, faster.</p>
-			</li>
-			<li>
-				<a
-					href="https://docs.astro.build/en/guides/integrations-guide/image/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>@astro/image
-				</a>:
-				<p class="inline-block sm:mt-2">
-					An Astro integration for optimising images in Astro projects.
-				</p>
-			</li>
-			<li>
-				<a
-					href="https://tailwindcss.com"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>Tailwind CSS
-				</a>:
-				<p class="inline-block sm:mt-2">
-					Rapidly build modern websites without ever leaving your HTML.
-				</p>
-			</li>
-			<li>
-				<a
-					href="https://www.markdownguide.org/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>Markdown
-				</a>:
-				<p class="inline-block sm:mt-2">Simple and easy-to-use markup language.</p>
-			</li>
-			<li>
-				<a
-					href="https://mdxjs.com/"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>MDX
-				</a>:
-				<p class="inline-block sm:mt-2">Markdown for the component era.</p>
-			</li>
-			<li>
-				<a
-					href="https://github.com/vercel/satori"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="cactus-link inline-block"
-					>Satori
-				</a>:
-				<p class="inline-block sm:mt-2">Generating png Open Graph images for blog posts</p>
-			</li>
+			{
+				cactusTech.map(({ href, title, desc }) => (
+					<li>
+						<a
+							href={href}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="cactus-link inline-block"
+						>
+							{title}
+						</a>:
+						<p class="inline-block sm:mt-2">{desc}</p>
+					</li>
+				))
+			}
 		</ul>
 	</section>
 </PageLayout>
