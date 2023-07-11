@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from "../ThemeToggle.astro";
+import Search from "../Search.astro";
 import { MENU_LINKS } from "@/data/constants";
 
 const url = new URL(Astro.request.url);
@@ -69,10 +70,11 @@ const url = new URL(Astro.request.url);
 			}
 		</nav>
 	</div>
+	<Search />
 	<ThemeToggle />
 	<button
 		id="toggle-navigation-menu"
-		class="group relative ms-8 h-7 w-7 sm:invisible sm:hidden"
+		class="group relative ms-4 h-7 w-7 sm:invisible sm:hidden"
 		type="button"
 		aria-label="Open main menu"
 		aria-expanded="false"

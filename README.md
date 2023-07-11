@@ -16,11 +16,12 @@ Astro Theme Cactus is a simple opinionated starter built with the Astro framewor
 - Dark / Light mode, using Tailwind and CSS variables
 - [Astro Assets Integration](https://docs.astro.build/en/guides/assets/) for optimised images
 - MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts
-- [Satori](https://github.com/vercel/satori) for creating open graph png images.
+- [Satori](https://github.com/vercel/satori) for creating open graph png images
 - Pagination
 - [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
 - Shiki code syntax styling
 - Auto-generated [sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
+- [Pagefind](https://pagefind.app/) static search library integration
 
 ## Demo 💻
 
@@ -36,13 +37,14 @@ Check out the [Demo](https://astro-theme-cactus.netlify.app/), hosted on Netlify
 
 Replace pnpm with your choice of npm / yarn
 
-| Command        | Action                                                         |
-| :------------- | :------------------------------------------------------------- |
-| `pnpm install` | Installs dependencies                                          |
-| `pnpm dev`     | Starts local dev server at `localhost:3000`                    |
-| `pnpm build`   | Build your production site to `./dist/`                        |
-| `pnpm preview` | Preview your build locally, before deploying                   |
-| `pnpm sync`    | Generate types based on your config in `src/content/config.ts` |
+| Command          | Action                                                         |
+| :--------------- | :------------------------------------------------------------- |
+| `pnpm install`   | Installs dependencies                                          |
+| `pnpm dev`       | Starts local dev server at `localhost:3000`                    |
+| `pnpm build`     | Build your production site to `./dist/`                        |
+| `pnpm postbuild` | Pagefind script to build the static search of your blog posts  |
+| `pnpm preview`   | Preview your build locally, before deploying                   |
+| `pnpm sync`      | Generate types based on your config in `src/content/config.ts` |
 
 ## Configure
 
@@ -78,6 +80,18 @@ Adding a post is a simple as adding your .md(x) file(s) to the `src/content/post
 | tags                   | Tags are optional with any created post. Any new tag(s) will be shown in `yourdomain.com/posts` + `yourdomain.com/tags`, and generate the page(s) `yourdomain.com/tags/[yourTag]`                                                                                                                 |
 | coverImage             | This is an optional object that will add a cover image to the top of a post. Include both a `src`: "_path-to-image_" and `alt`: "_image alt_". You can view an example in `src/content/post/cover-image.md`                                                                                       |
 | ogImage                | This is an optional property. An OG Image will be generated automatically for every post where this property **isn't** provided. If you would like to create your own for a specific post, include this property and a link to your image, the theme will then skip automatically generating one. |
+
+## Pagefind search
+
+This integration brings a static search feature for searching blog posts. In its current form, pagefind only works once the site has been built. This theme adds a postbuild script that should be run after Astro has built the site. You can preview locally by running both build && postbuild.
+
+Search results only includes blog posts. If you would like to include other/all your pages, remove/re-locate the attribute `data-pagefind-body` to the article tag found in `src/layouts/BlogPost.astro`.
+
+It also allows you to filter posts by tags added in the frontmatter of blog posts. If you would rather remove this, remove the data attribute `data-pagefind-filter="tag"` from the link in `src/components/blog/Hero.astro`.
+
+Note the current build will display a warning in the console, you can follow this issue [here](https://github.com/CloudCannon/pagefind/issues/290)
+
+If you would rather not include this integration, simply remove the component `src/components/Search.astro`, and uninstall both `@pagefind/default-ui` & `pagefind` from package.json. You will also need to remove the postbuild script from here as well.
 
 ## Analytics
 

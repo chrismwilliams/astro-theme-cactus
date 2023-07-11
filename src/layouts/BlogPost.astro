@@ -51,7 +51,7 @@ const { headings } = await post.render();
 									href={`#${slug}`}
 									aria-label={`Scroll to section: ${text}`}
 								>
-									<span class="mr-1">{"#".repeat(depth)}</span>
+									<span class="me-1">{"#".repeat(depth)}</span>
 									{text}
 								</a>
 							</li>
@@ -60,7 +60,7 @@ const { headings } = await post.render();
 				</aside>
 			)
 		}
-		<article class="flex-grow break-words">
+		<article class="flex-grow break-words" data-pagefind-body>
 			<div id="blog-hero"><BlogHero content={post} /></div>
 			<div
 				class="prose prose-sm prose-cactus mt-12 prose-headings:font-semibold prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"

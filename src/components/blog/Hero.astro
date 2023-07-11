@@ -37,7 +37,7 @@ const postDate = getFormattedDate(data.publishDate, { month: "long" });
 				aria-hidden="true"
 				focusable="false"
 				xmlns="http://www.w3.org/2000/svg"
-				class="mr-1 inline-block h-6 w-6"
+				class="me-1 inline-block h-6 w-6"
 				viewBox="0 0 24 24"
 				stroke-width="1.5"
 				stroke="currentColor"
@@ -56,6 +56,7 @@ const postDate = getFormattedDate(data.publishDate, { month: "long" });
 						class="cactus-link inline-block before:content-['#']"
 						aria-label={`View more blogs with the tag ${tag}`}
 						href={`/tags/${tag}/`}
+						data-pagefind-filter="tag"
 					>
 						{tag}
 					</a>
