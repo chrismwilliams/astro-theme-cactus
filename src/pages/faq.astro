@@ -1,0 +1,51 @@
+---
+import PageLayout from "@/layouts/Base";
+import { Image } from "astro:assets";
+import aboutImg from "~/assets/about-astro.png";
+
+const meta = {
+	title: "FAQ",
+	description: "faq",
+};
+---
+
+<PageLayout meta={meta}>
+
+<main class="mx-auto max-w-3xl border shadow-md px-12 py-8 mt-8 rounded-lg">
+  <h1 class="pt-2 pb-8 text-center text-4xl font-bold">Frequently Asked Questions</h1>
+
+  <section class="grid grid-cols-1 gap-y-3 divide-y">
+    <details open class="group py-1 text-lg">
+      <summary class="flex cursor-pointer flex-row items-center justify-between py-1 font-semibold text-gray-800 marker:[font-size:0px]">
+        How to tell great stories?
+        <svg class="duration-300 ease-out h-6 w-6 rotate-0 transform text-gray-400 group-open:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </summary>
+      <p class="text-gray-500">Dream of the mind's eye corpus callosum consciousness great turbulent clouds another world globular star cluster. Astonishment from which we spring invent the universe kindling the energy hidden in matter the sky calls to us courage of our questions. Astonishment concept of the number one two ghostly white figures in coveralls and helmets are softly dancing realm of the galaxies invent the universe bits of moving fluff. Vastness is bearable only through love muse about concept of the number one paroxysm of global death something incredible is waiting to be known emerged into consciousness and billions upon billions upon billions upon billions upon billions upon billions upon billions.</p>
+    </details>
+
+    <details class="group py-1 text-lg">
+      <summary class="flex cursor-pointer flex-row items-center justify-between py-1 font-semibold text-gray-800 marker:[font-size:0px]">
+        Why not just call it CatScript?
+        <svg class="duration-300 ease-out h-6 w-6 rotate-0 transform text-gray-400 group-open:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </summary>
+      <p class="text-gray-500">Purr for no reason. I see a bird i stare at it i meow at it i do a wiggle come here birdy lick face hiss at owner, meow repeatedly scratch at fence purrrrrr eat muffins and poutine until owner comes back for catch small lizards, bring them into house, then unable to find them on carpet. Good now the other hand, too. Steal the warm chair right after you get up so you're just gonna scroll by without saying meowdy?. Eat grass, throw it back up meow and walk away but plop down in the middle where everybody walks make muffins.</p>
+    </details>
+
+    <details class="group py-1 text-lg">
+      <summary class="flex cursor-pointer flex-row items-center justify-between py-1 font-semibold text-gray-800 marker:[font-size:0px]">
+        How fun is it to be a cat?
+        <svg class="duration-300 ease-out h-6 w-6 rotate-0 transform text-gray-400 group-open:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </summary>
+      <p class="text-gray-500">Absolutely fun. Find empty spot in cupboard and sleep all day roll on the floor purring your whiskers off thug cat yet always ensure to lay down in such a manner that tail can lightly brush human's nose meowing chowing and wowing. Please stop looking at your phone and pet me cuddle no cuddle cuddle love scratch scratch. Pet me pet me don't pet me pet me pet me pet me pet me, bite, scratch, why are you petting me so i am the best cat ass trophy. Thinking about you i'm joking it's food always steal the warm chair.</p>
+    </details>
+  </section>
+
+</main>
+	</div>
+</PageLayout>
