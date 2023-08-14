@@ -13,6 +13,12 @@ const {
 
 const datetime = data.publishDate.toISOString();
 const postDate = getFormattedDate(data.publishDate, { month: "long" });
+
+const hasBeenUpdated = typeof data.updatedDate !== "undefined";
+const updatedDatetime = data.updatedDate?.toISOString();
+const updatedPostDate = hasBeenUpdated
+	? getFormattedDate(data.updatedDate as Date, { month: "long" })
+	: null;
 ---
 
 {
@@ -31,8 +37,18 @@ const postDate = getFormattedDate(data.publishDate, { month: "long" });
 <h1 class="title mb-3 sm:mb-1">{data.title}</h1>
 <time datetime={datetime}>{postDate}</time>
 {
+	hasBeenUpdated && (
+		<span class="ms-2 rounded-lg bg-[rgb(43_188_137_/_0.1)] p-1 text-accent">
+			Last Updated:
+			<time class="ms-1" datetime={updatedDatetime}>
+				{updatedPostDate}
+			</time>
+		</span>
+	)
+}
+{
 	!!data.tags?.length && (
-		<div class="mt-1 sm:mt-0 sm:inline sm:before:mx-2 sm:before:content-['|']">
+		<div class="mt-2">
 			<svg
 				aria-hidden="true"
 				focusable="false"
@@ -66,4 +82,4 @@ const postDate = getFormattedDate(data.publishDate, { month: "long" });
 		</div>
 	)
 }
-<p class="mt-8">{data.description}</p>
+<p class="mt-12">{data.description}</p>
