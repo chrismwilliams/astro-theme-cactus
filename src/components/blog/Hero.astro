@@ -26,12 +26,12 @@ const {
 	)
 }
 <h1 class="title mb-3 sm:mb-1">{data.title}</h1>
-<FormattedDate date={data.publishDate} />
+<FormattedDate date={data.publishDate} dateTimeOptions={{ month: "long" }} />
 {
 	data.updatedDate && (
-		<span class="ms-2 rounded-lg bg-[rgb(43_188_137_/_0.1)] p-1 text-accent">
+		<span class="ms-2 rounded-lg bg-quote/10 p-1 text-quote">
 			Last Updated:
-			<FormattedDate className="ms-1" date={data.updatedDate} />
+			<FormattedDate class="ms-1" date={data.updatedDate} dateTimeOptions={{ month: "long" }} />
 		</span>
 	)
 }
