@@ -2,16 +2,16 @@
 import type { HTMLAttributes } from "astro/types";
 import { getFormattedDate } from "@/utils";
 
-interface Props {
+type Props = HTMLAttributes<"time"> & {
 	date: Date;
-	className?: HTMLAttributes<"time">["class"];
-}
+	dateTimeOptions?: Intl.DateTimeFormatOptions;
+};
 
-const { date, className = null } = Astro.props;
+const { date, dateTimeOptions, ...attrs } = Astro.props;
 
-const postDate = getFormattedDate(date, { month: "long" });
+const postDate = getFormattedDate(date, dateTimeOptions);
 ---
 
-<time class={className} datetime={date.toISOString()}>
+<time datetime={date.toISOString()} {...attrs}>
 	{postDate}
 </time>
