@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { getFormattedDate } from "@/utils";
+
+type Props = HTMLAttributes<"time"> & {
+	date: Date;
+	dateTimeOptions?: Intl.DateTimeFormatOptions;
+};
+
+const { date, dateTimeOptions, ...attrs } = Astro.props;
+
+const postDate = getFormattedDate(date, dateTimeOptions);
+---
+
+<time datetime={date.toISOString()} {...attrs}>
+	{postDate}
+</time>

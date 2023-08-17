@@ -1,23 +1,21 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import type { IElement } from "@/data/shared";
-import { getFormattedDate } from "@/utils";
+import type { HTMLTag, Polymorphic } from "astro/types";
+import FormattedDate from "../FormattedDate.astro";
 
-interface Props extends IElement {
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 	post: CollectionEntry<"post">;
 	withDesc?: boolean;
-}
+};
 
-const { post, as: Element = "div", withDesc = false } = Astro.props;
-const date = new Date(post.data.publishDate);
-const datetime = date.toISOString();
-const postDate = getFormattedDate(date);
+const { post, as: Tag = "div", withDesc = false } = Astro.props;
+const postDate = post.data.updatedDate ?? post.data.publishDate;
 ---
 
-<time datetime={datetime} class="min-w-[120px] text-gray-500">{postDate}</time>
-<Element>
+<FormattedDate date={postDate} class="min-w-[120px] text-gray-500" />
+<Tag>
 	<a href={`/posts/${post.slug}/`} class="cactus-link" rel="prefetch">
 		{post.data.title}
 	</a>
-</Element>
+</Tag>
 {withDesc && <q class="line-clamp-3 block italic">{post.data.description}</q>}
