@@ -1,18 +1,21 @@
 ---
 import { Image } from "astro:assets";
-import { getFormattedDate } from "@/utils";
 import type { CollectionEntry } from "astro:content";
+import FormattedDate from "../FormattedDate.astro";
 
 interface Props {
 	content: CollectionEntry<"post">;
 }
 
 const {
-	content: { data },
+	content: { data, render },
 } = Astro.props;
 
-const datetime = data.publishDate.toISOString();
-const postDate = getFormattedDate(data.publishDate, { month: "long" });
+const { remarkPluginFrontmatter } = await render();
+
+const dateTimeOptions: Intl.DateTimeFormatOptions = {
+	month: "long",
+};
 ---
 
 {
@@ -29,10 +32,23 @@ const postDate = getFormattedDate(data.publishDate, { month: "long" });
 	)
 }
 <h1 class="title mb-3 sm:mb-1">{data.title}</h1>
-<time datetime={datetime}>{postDate}</time>
+<div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+	<p class="font-semibold">
+		<FormattedDate date={data.publishDate} dateTimeOptions={dateTimeOptions} /> /{" "}
+		{remarkPluginFrontmatter.minutesRead}
+	</p>
+	{
+		data.updatedDate && (
+			<span class="rounded-lg bg-quote/10 p-1 text-quote">
+				Last Updated:
+				<FormattedDate class="ms-1" date={data.updatedDate} dateTimeOptions={dateTimeOptions} />
+			</span>
+		)
+	}
+</div>
 {
 	!!data.tags?.length && (
-		<div class="mt-1 sm:mt-0 sm:inline sm:before:mx-2 sm:before:content-['|']">
+		<div class="mt-3">
 			<svg
 				aria-hidden="true"
 				focusable="false"
@@ -66,4 +82,4 @@ const postDate = getFormattedDate(data.publishDate, { month: "long" });
 		</div>
 	)
 }
-<p class="mt-8">{data.description}</p>
+<p class="mt-12">{data.description}</p>
