@@ -50,6 +50,7 @@
 		"@astrojs/prefetch": "^0.2.3",
 		"@astrojs/rss": "^2.4.3",
 		"astro": "2.7.1",
+		"astro-icon": "^0.8.1",
 		"satori": "0.10.1",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.32.0"
