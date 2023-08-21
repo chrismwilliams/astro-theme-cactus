@@ -36,6 +36,10 @@ Check out the [Demo](https://astro-theme-cactus.netlify.app/), hosted on Netlify
 
 ## Preview
 
+![Astro Theme Cactus in a light theme mode](https://github.com/chrismwilliams/astro-theme-cactus/assets/12715988/84c89d42-4525-4674-b10c-6d6ebdc06382)
+
+![Astro Theme Cactus in a dark theme mode](https://github.com/chrismwilliams/astro-theme-cactus/assets/12715988/e0e575e2-445f-4c2d-a812-b5b53d2d9031)
+
 ## Commands
 
 Replace pnpm with your choice of npm / yarn
