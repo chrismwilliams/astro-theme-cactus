@@ -83,6 +83,9 @@ export default {
 						tfoot: {
 							borderTop: "1px dashed #666",
 						},
+						sup: {
+							"@apply ms-0.5": "",
+						},
 					},
 				},
 				sm: {

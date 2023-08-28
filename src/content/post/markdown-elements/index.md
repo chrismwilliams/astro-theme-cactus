@@ -31,6 +31,10 @@ _This is italic text_
 
 ~~Strikethrough~~
 
+## Quotes
+
+"Double quotes" and 'single quotes'
+
 ## Blockquotes
 
 > Blockquotes can also be nested...
@@ -38,6 +42,12 @@ _This is italic text_
 > > ...by using additional greater-than signs right next to each other...
 > >
 > > > ...or with spaces between arrows.
+
+## References
+
+An example containing a note[^1] with a link to the source.
+
+Second example containing a note[^2] with a link to the source.
 
 ## Lists
 
@@ -122,6 +132,5 @@ Image in the aliased assets folder: `src/assets/about-astro.png`
 
 [Content from markdown-it](https://markdown-it.github.io/)
 
-## Quotes
-
-"Double quotes" and 'single quotes'
+[^1]: Reference first footnote with a return to content link.
+[^2]: Second reference footnote with a return to content link.
