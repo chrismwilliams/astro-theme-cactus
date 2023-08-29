@@ -45,9 +45,14 @@ _This is italic text_
 
 ## References
 
-An example containing a note[^1] with a link to the source.
+An example containing a clickable reference[^1] with a link to the source.
 
-Second example containing a note[^2] with a link to the source.
+Second example containing a reference[^2] with a link to the source.
+
+[^1]: Reference first footnote with a return to content link.
+[^2]: Second reference with a link.
+
+If you check out this example in `src/content/post/markdown-elements/index.md`, you'll notice that the references and the heading "Footnotes" are added to the bottom of the page via the [remark-rehype](https://github.com/remarkjs/remark-rehype#options) plugin.
 
 ## Lists
 
@@ -131,6 +136,3 @@ Image in the aliased assets folder: `src/assets/about-astro.png`
 ## Links
 
 [Content from markdown-it](https://markdown-it.github.io/)
-
-[^1]: Reference first footnote with a return to content link.
-[^2]: Second reference footnote with a return to content link.
