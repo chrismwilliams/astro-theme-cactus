@@ -85,6 +85,18 @@ export default {
 						},
 						sup: {
 							"@apply ms-0.5": "",
+							a: {
+								"@apply bg-none": "",
+								"&:hover": {
+									"@apply text-link no-underline bg-none": "",
+								},
+								"&:before": {
+									content: "'['",
+								},
+								"&:after": {
+									content: "']'",
+								},
+							},
 						},
 					},
 				},
