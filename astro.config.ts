@@ -12,6 +12,7 @@ export default defineConfig({
 	site: "https://astro-theme-cactus.netlify.app/",
 	markdown: {
 		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
+		remarkRehype: { footnoteLabelProperties: { className: [""] } },
 		shikiConfig: {
 			theme: "dracula",
 			wrap: true,
