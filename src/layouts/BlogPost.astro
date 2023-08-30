@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 
 import BaseLayout from "./Base.astro";
 import BlogHero from "@/components/blog/Hero";
+import TOC from "@/components/blog/TOC";
 
 interface Props {
 	post: CollectionEntry<"post">;
@@ -39,31 +40,11 @@ const { headings } = await post.render();
 
 <BaseLayout meta={{ title, description, articleDate, ogImage: socialImage }}>
 	<div class="gap-x-10 lg:flex lg:items-start">
-		{
-			!!headings.length && (
-				<aside class="sticky top-20 order-2 -me-32 hidden basis-64 lg:block">
-					<h2 class="font-semibold">Table of Contents</h2>
-					<ul class="mt-4 text-xs">
-						{headings.map(({ depth, slug, text }) => (
-							<li class="line-clamp-2 hover:text-accent">
-								<a
-									class={`block ${depth <= 2 ? "mt-3" : "mt-2 ps-3 text-[0.6875rem]"}`}
-									href={`#${slug}`}
-									aria-label={`Scroll to section: ${text}`}
-								>
-									<span class="me-1">{"#".repeat(depth)}</span>
-									{text}
-								</a>
-							</li>
-						))}
-					</ul>
-				</aside>
-			)
-		}
+		{!!headings.length && <TOC headings={headings} />}
 		<article class="flex-grow break-words" data-pagefind-body>
 			<div id="blog-hero"><BlogHero content={post} /></div>
 			<div
-				class="prose prose-sm prose-cactus mt-12 prose-headings:font-semibold prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
+				class="prose prose-sm prose-cactus mt-12 prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
 			>
 				<slot />
 			</div>
