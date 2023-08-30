@@ -1,0 +1,28 @@
+---
+import type { TocItem } from "@/utils";
+
+interface Props {
+	heading: TocItem;
+}
+
+const {
+	heading: { slug, text, depth, subheadings },
+} = Astro.props;
+---
+
+<li class={`${depth > 2 ? "ms-2" : ""}`}>
+	<a
+		class={`block line-clamp-2 hover:text-accent ${depth <= 2 ? "mt-3" : "mt-2 text-[0.6875rem]"}`}
+		href={`#${slug}`}
+		aria-label={`Scroll to section: ${text}`}><span class="me-0.5">#</span>{text}</a
+	>
+	{
+		!!subheadings.length && (
+			<ul>
+				{subheadings.map((subheading) => (
+					<Astro.self heading={subheading} />
+				))}
+			</ul>
+		)
+	}
+</li>
