@@ -5,12 +5,10 @@
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
-		"sync": "astro sync",
-		"check": "astro check",
 		"build": "astro build",
 		"postbuild": "pagefind --source dist",
 		"preview": "astro preview",
-		"format": "prettier -w --plugin-search-dir=. --cache ."
+		"format": "prettier -w --cache ."
 	},
 	"devDependencies": {
 		"@pagefind/default-ui": "^0.12.0",
