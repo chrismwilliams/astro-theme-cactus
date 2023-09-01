@@ -1,19 +1,13 @@
 import type { APIContext, GetStaticPaths } from "astro";
 import { getCollection, getEntryBySlug } from "astro:content";
-import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
 import satori, { type SatoriOptions } from "satori";
 import { html } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
 import { siteConfig } from "@/site-config";
 import { getFormattedDate } from "@/utils";
 
-const AssetDir = resolve("src", "assets");
-const RobotoMonoPath = join(AssetDir, "roboto-mono-regular.ttf");
-const RobotoMonoBoldPath = join(AssetDir, "roboto-mono-700.ttf");
-
-const RobotoMonoReg = readFileSync(RobotoMonoPath);
-const RobotoMonoBold = readFileSync(RobotoMonoBoldPath);
+import RobotoMono from "@/assets/roboto-mono-regular.ttf";
+import RobotoMonoBold from "@/assets/roboto-mono-700.ttf";
 
 const ogOptions: SatoriOptions = {
 	width: 1200,
@@ -22,13 +16,13 @@ const ogOptions: SatoriOptions = {
 	fonts: [
 		{
 			name: "Roboto Mono",
-			data: RobotoMonoReg,
+			data: Buffer.from(RobotoMono),
 			weight: 400,
 			style: "normal",
 		},
 		{
 			name: "Roboto Mono",
-			data: RobotoMonoBold,
+			data: Buffer.from(RobotoMonoBold),
 			weight: 700,
 			style: "normal",
 		},
@@ -80,6 +74,7 @@ export async function GET({ params: { slug } }: APIContext) {
 	return new Response(png, {
 		headers: {
 			"Content-Type": "image/png",
+			'Cache-Control': 'public, max-age=31536000, immutable'
 		},
 	});
 }
