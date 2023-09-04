@@ -8,7 +8,7 @@ const allTags = getUniqueTagsWithCount(allPosts);
 
 const meta = {
 	title: "All Tags",
-	description: "All Tags from my blogs",
+	description: "A list of all the topics I've written about in my posts",
 };
 ---
 
@@ -16,7 +16,7 @@ const meta = {
 	<h1 class="title mb-6">Tags</h1>
 	<ul class="space-y-4">
 		{
-			Object.entries(allTags).map(([tag, val]) => (
+			allTags.map(([tag, val]) => (
 				<li class="flex items-center gap-x-2">
 					<a
 						class="cactus-link inline-block"
