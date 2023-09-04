@@ -1,4 +1,5 @@
 export type SiteConfig = {
+	domain: string;
 	author: string;
 	title: string;
 	description: string;

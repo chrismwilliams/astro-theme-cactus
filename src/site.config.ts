@@ -1,6 +1,8 @@
 import type { SiteConfig } from "@/data/types";
 
 export const siteConfig: SiteConfig = {
+	// This is your domain name for your website
+	domain: "https://astro-theme-cactus.netlify.app/",
 	// Used as both a meta property (src/components/BaseHead.astro L:31 + L:49) & the generated satori png (src/pages/og-image/[slug].png.ts)
 	author: "Chris Williams",
 	// Meta property used to construct the meta title property, found in src/components/BaseHead.astro L:11
