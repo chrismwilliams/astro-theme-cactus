@@ -5,22 +5,23 @@
 @layer base {
 	:root {
 		color-scheme: light;
-		--theme-bg: 250 250 250;
-		--theme-link: 86 124 119;
-		--theme-text: 34 39 42;
-		--theme-accent: 204 42 66;
-		--theme-accent-2: 17 17 17;
-		--theme-quote: 204 42 66;
+		/* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
+		--theme-bg: 0deg 0% 98%;
+		--theme-link: 172deg 18% 41%;
+		--theme-text: 203deg 11% 15%;
+		--theme-accent: 351deg 66% 48%;
+		--theme-accent-2: 0deg 0% 7%;
+		--theme-quote: 351deg 66% 48%;
 	}
 
 	:root.dark {
 		color-scheme: dark;
-		--theme-bg: 29 31 33;
-		--theme-link: 212 128 170;
-		--theme-text: 201 202 204;
-		--theme-accent: 43 188 137;
-		--theme-accent-2: 238 238 238;
-		--theme-quote: 204 255 182;
+		--theme-bg: 210deg 6% 12%;
+		--theme-link: 330deg 49% 67%;
+		--theme-text: 220deg 3% 79%;
+		--theme-accent: 159deg 64% 45%;
+		--theme-accent-2: 0deg 0% 93%;
+		--theme-quote: 102deg 100% 86%;
 	}
 
 	html {

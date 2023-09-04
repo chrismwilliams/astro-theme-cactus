@@ -20,12 +20,12 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				bgColor: "rgb(var(--theme-bg) / <alpha-value>)",
-				textColor: "rgb(var(--theme-text) / <alpha-value>)",
-				link: "rgb(var(--theme-link) / <alpha-value>)",
-				accent: "rgb(var(--theme-accent) / <alpha-value>)",
-				"accent-2": "rgb(var(--theme-accent-2) / <alpha-value>)",
-				quote: "rgb(var(--theme-quote) / <alpha-value>)",
+				bgColor: "hsl(var(--theme-bg) / <alpha-value>)",
+				textColor: "hsl(var(--theme-text) / <alpha-value>)",
+				link: "hsl(var(--theme-link) / <alpha-value>)",
+				accent: "hsl(var(--theme-accent) / <alpha-value>)",
+				"accent-2": "hsl(var(--theme-accent-2) / <alpha-value>)",
+				quote: "hsl(var(--theme-quote) / <alpha-value>)",
 			},
 			fontFamily: {
 				// Add any custom fonts here
@@ -119,10 +119,10 @@ export default {
 				".cactus-link": {
 					"@apply bg-[size:100%_6px] bg-bottom bg-repeat-x": {},
 					backgroundImage:
-						"linear-gradient(transparent,transparent 5px,rgb(var(--theme-text)) 5px,rgb(var(--theme-text)))",
+						"linear-gradient(transparent,transparent 5px,hsl(var(--theme-text)) 5px,hsl(var(--theme-text)))",
 					"&:hover": {
 						backgroundImage:
-							"linear-gradient(transparent,transparent 4px,rgb(var(--theme-link)) 4px,rgb(var(--theme-link)))",
+							"linear-gradient(transparent,transparent 4px,hsl(var(--theme-link)) 4px,hsl(var(--theme-link)))",
 					},
 				},
 				".title": {
