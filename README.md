@@ -7,9 +7,26 @@
 
 Astro Theme Cactus is a simple opinionated starter built with the Astro framework. Use it to create an easy-to-use blog or website.
 
+## Table Of Contents
+
+1. [Key Features](#key-features)
+2. [Demo](#demo-💻)
+3. [Quick start](#quick-start)
+4. [Preview](#preview)
+5. [Commands](#commands)
+6. [Configure](#configure)
+7. [Adding Posts](#adding-posts)
+   7.1 [Frontmatter](#frontmatter)
+8. [Pagefind search](#pagefind-search)
+9. [Analytics](#analytics)
+10. [View Transitions](#view-transitions)
+11. [Deploy](#deploy)
+12. [Acknowledgment](#acknowledgment)
+
 ## Key Features
 
 - Astro v3.0 Fast 🚀
+- View Transitions from [Astro](https://docs.astro.build/en/guides/view-transitions/)
 - TailwindCSS Utility classes
 - Accessible, semantic HTML markup
 - Responsive & SEO-friendly
@@ -124,10 +141,14 @@ import { GoogleAnalytics } from "astro-google-analytics";
 ---
 
 <head>
- <!-- Replace id with your own Google Analytics ID -->
- <GoogleAnalytics id="G-XXXXXXXXXX" />
+	<!-- Replace id with your own Google Analytics ID -->
+	<GoogleAnalytics id="G-XXXXXXXXXX" />
 </head>
 ```
+
+## View Transitions
+
+This theme implements a default transition between routes with a fallback for unsupported browsers, visit Astro's [docs](https://docs.astro.build/en/guides/view-transitions/) to learn more. To remove it completely, go to `src/layouts/Base.astro` and remove the `<ViewTransitions>` component.
 
 ## Deploy
 
@@ -137,7 +158,7 @@ By default the site will be built (see [Commands](#commands) section above) to a
 
 ## Acknowledgment
 
-This theme is inspired by [Hexo Theme Cactus](https://github.com/probberechts/hexo-theme-cactus)
+This theme was inspired by [Hexo Theme Cactus](https://github.com/probberechts/hexo-theme-cactus)
 
 ## License
 
