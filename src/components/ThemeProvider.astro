@@ -1,8 +1,5 @@
 {/* Inlined to avoid FOUC. */}
 <script is:inline>
-	const root = document.documentElement;
-	const colorThemeMetaTag = document.querySelector("meta[name='theme-color']");
-
 	function getUserPref() {
 		const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("theme");
 		return (
@@ -11,18 +8,24 @@
 	}
 
 	function setTheme(theme) {
-		root.classList.toggle("dark", theme === "dark");
+		const colorThemeMetaTag = document.querySelector("meta[name='theme-color']");
+		document.documentElement.classList.toggle("dark", theme === "dark");
 		const bgColour = getComputedStyle(document.body).getPropertyValue("--theme-bg");
 
-		colorThemeMetaTag.setAttribute("content", `rgb(${bgColour})`);
+		colorThemeMetaTag.setAttribute("content", `hsl(${bgColour})`);
 		if (typeof localStorage !== "undefined") {
 			localStorage.setItem("theme", theme);
 		}
 	}
 
+	// initial setup
 	setTheme(getUserPref());
 
-	root.addEventListener("theme-change", (e) => {
+	// View Transitions hook to restore theme mode
+	document.addEventListener("astro:after-swap", () => setTheme(getUserPref()));
+
+	// listen for theme-change custom event, fired in src/components/ThemeToggle.astro
+	document.addEventListener("theme-change", (e) => {
 		setTheme(e.detail.theme);
 	});
 </script>

@@ -18,7 +18,7 @@
 							},
 						});
 						// dispatch event -> ThemeProvider.astro
-						document.documentElement.dispatchEvent(themeChangeEvent);
+						document.dispatchEvent(themeChangeEvent);
 						// toggle the aria-pressed attribute
 						button.setAttribute("aria-pressed", String(!isPressed));
 					}
@@ -101,9 +101,13 @@
 	</button>
 </theme-toggle>
 
-{/* Inlined to avoid FOUC. */}
+{/* Inlined to avoid FOUC on full page load, runs once to set initial attribute */}
 <script is:inline>
-	const bodyThemeIsDark = document.documentElement.classList.contains("dark");
 	const button = document.getElementById("toggle-theme");
-	button.setAttribute("aria-pressed", String(bodyThemeIsDark));
+
+	function setButtonPresssed() {
+		const bodyThemeIsDark = document.documentElement.classList.contains("dark");
+		button.setAttribute("aria-pressed", String(bodyThemeIsDark));
+	}
+	setButtonPresssed();
 </script>
