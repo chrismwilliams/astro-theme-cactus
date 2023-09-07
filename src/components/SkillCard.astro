@@ -1,0 +1,10 @@
+---
+const { name, url, img, title, alt } = Astro.props;
+---
+
+<div class="flex flex-col items-center rounded-lg p-4 transition-transform hover:scale-105">
+	<a href={url} target="_blank" rel="noopener noreferrer">
+		<img src={img} title={title} alt={alt} class="h-11 w-11 rounded-lg md:h-12 md:w-12" />
+	</a>
+	<p class="pt-1 text-xs md:text-base">{name}</p>
+</div>

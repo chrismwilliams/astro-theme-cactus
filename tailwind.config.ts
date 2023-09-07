@@ -114,6 +114,7 @@ export default {
 	plugins: [
 		require("@tailwindcss/typography"),
 		require("@tailwindcss/aspect-ratio"),
+		require("flowbite/plugin"),
 		plugin(function ({ addComponents }) {
 			addComponents({
 				".cactus-link": {

@@ -1,0 +1,22 @@
+---
+const { title, subtitle, time } = Astro.props;
+---
+
+<div class="relative flex border-l border-gray-400 dark:border-gray-800">
+	<!-- <div class="">
+		<span class="w-4 h-4 bg-primary block rounded-full mt-1"></span>
+		<span class="bg-primary block h-full w-[2px] translate-x-[7px]"></span>
+	</div> -->
+	<div
+		class="absolute -left-1.5 h-3 w-3 rounded-full border border-white bg-gray-400 dark:border-gray-600 dark:bg-gray-600"
+	>
+	</div>
+	<div class="bd-grid mb-6 px-6 md:mb-4">
+		<h4 class="title text-lg md:text-xl">{title}</h4>
+		<span class="text-sm font-medium md:text-lg">{subtitle}</span> |
+		<time class="text-sm font-medium md:text-lg" datetime="">{time}</time>
+		<p class="my-2 text-justify">
+			<slot />
+		</p>
+	</div>
+</div>

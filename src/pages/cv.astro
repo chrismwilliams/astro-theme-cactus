@@ -1,0 +1,156 @@
+---
+import PageLayout from "@/layouts/Base";
+import TimeLineElement from "@/components/cv/TimeLine";
+import SocialList from "@/components/cv/SocialListCv";
+const meta = {
+	title: "CV",
+	description: "Curriculum Vitae",
+};
+---
+
+<PageLayout meta={meta}>
+	<section class="mt-12">
+		<div class="title w-full text-xl font-bold md:text-2xl">Perfil</div>
+
+		<div class="border-b-1 light:border-gray-400 mb-4 border dark:border-gray-700"></div>
+
+		<div class="mb-10 text-sm md:text-base">
+			Soy un desarrollador FullStack con 1 años de experiencia en el desarrollo de aplicaciones web.
+			Tengo habilidades sólidas en JavaScript, ReactJS, NodeJS, SQL y otras tecnologías clave. He
+			trabajado en una variedad de proyectos, incluyendo el desarrollo de aplicaciones para empresas
+			de todos los tamaños. Soy una persona orientada a resultados y con capacidad de aprendizaje
+			rápido. También tengo habilidades de trabajo en equipo y comunicación efectivas.
+		</div>
+	</section>
+
+	<section>
+		<div class="title w-full text-base font-bold md:text-2xl">Experiencia</div>
+
+		<div class="border-b-1 light:border-gray-400 mb-4 border dark:border-gray-700"></div>
+
+		<div class="time-line-container mb-10">
+			<TimeLineElement
+				title="Software Developer"
+				subtitle="Ataway [Buenos Aires, Argentina]"
+				time="Diciembre 2022 - Actualidad"
+			>
+				<li class="text-sm md:text-base">
+					Diseñar y desarrollar aplicaciones y procesos empresariales utilizando la plataforma Dell
+					Boomi y UKG Dimensions.
+				</li>
+				<li class="text-sm md:text-base">
+					Implementar y administrar aplicaciones y procesos empresariales en entornos de producción
+				</li>
+			</TimeLineElement>
+
+			<TimeLineElement
+				title="Tutor de Programación"
+				subtitle="Coder House [Buenos Aires, Argentina]"
+				time="Abril 2021 - Actualidad"
+			>
+				<li class="text-sm md:text-base">
+					Realizar un seguimiento a los estudiantes: acompañarlos en su proceso de aprendizaje a lo
+					largo del curso, motivarlos para realizar los desafíos y ofrecer apoyo en las dificultades
+					que puedan atravesar
+				</li>
+				<li class="text-sm md:text-base">
+					Mantener el registro de los estudiantes. Esto implica mantener registros de las
+					asistencias, calificaciones y progreso de los estudiantes.
+				</li>
+			</TimeLineElement>
+		</div>
+	</section>
+
+	<section>
+		<div class="">
+			<div class="title w-full text-xl font-bold md:text-2xl">Educación</div>
+		</div>
+
+		<div class="border-b-1 light:border-gray-400 mb-4 border dark:border-gray-700"></div>
+
+		<div class="time-line-container mb-10">
+			<TimeLineElement
+				title="Licenciatura En Informatica"
+				subtitle="Universiada Nacional De La Plata [La Plata, Argentina]"
+				time="En curso"
+			/>
+
+			<TimeLineElement
+				title="Tecnología en Desarrollo de Software"
+				subtitle="[Universidad del Valle, [Buga, [Colombia]"
+				time="Enero 2014 - Abandonada"
+			/>
+		</div>
+	</section>
+
+	<section>
+		<div class="title w-full text-xl font-bold md:text-2xl">Certificaciones</div>
+
+		<div class="border-b-1 light:border-gray-400 mb-4 border dark:border-gray-700"></div>
+		<TimeLineElement
+			title="Full Stack Web Developer/ 700 horas teórico-practico"
+			subtitle="Certificado por [Henry Bootcamp], [Buenos Aires], [Argentina]"
+			time="Junio 2022 - Enero 2023"
+		>
+			<li>
+				Entrenamiento intensivo, donde te proporcionan los conocimientos necesarios para empezar a
+				programar, desde los conceptos básicos hasta un nivel avanzado en tecnologías como
+				JavaScript, ReactJs, NodeJs, SQL
+			</li>
+		</TimeLineElement>
+
+		<TimeLineElement
+			title="Front End Developer"
+			subtitle="Certificado por [Coder House], [Buenos Aires], [Argentina]"
+			time="Marzo 2020 - Enero 2021"
+		>
+			<li>
+				Aprendí a crear un sitio web utilizando las mejores prácticas del diseño web, trabajando con
+				HTML y CSS. Además, utilice lenguajes de programación con Javascript y React Js.
+			</li>
+		</TimeLineElement>
+	</section>
+
+	<section>
+		<div class="title mt-6 w-full text-xl font-bold md:text-2xl">Skills</div>
+
+		<div class="border-b-1 light:border-gray-400 mb-4 border dark:border-gray-700"></div>
+
+		<ul class="title mx-6 list-disc columns-2 text-sm md:columns-5 md:text-base">
+			<li>TypeScript</li>
+			<li>JavaScript</li>
+			<li>Python</li>
+			<li>ReactJs</li>
+			<li>NextJs</li>
+			<li>NodeJs</li>
+			<li>ExpressJs</li>
+			<li>SQL</li>
+			<li>PostgreSQL</li>
+			<li>MongoDB</li>
+			<li>RESTful API</li>
+			<li>JWT</li>
+			<li>Redux Toolkit</li>
+			<li>TailwindCSS</li>
+			<li>MaterialUI</li>
+			<li>SASS</li>
+			<li>Docker</li>
+			<li>Git</li>
+		</ul>
+	</section>
+
+	<div class="mt-28 flex items-center justify-center text-bgColor">
+		<a
+			href="https://drive.google.com/file/d/1lfjnaJm566vo93twDdT4kR08DJpuM-68/view?usp=sharing"
+			download="CV - Juan Narvaez"
+			target="_blank"
+		>
+			<button
+				class="title flex items-center justify-center rounded-lg bg-accent p-2 px-3 text-base transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-lg"
+				>Descarga CV
+			</button>
+		</a>
+	</div>
+	<div class="flex justify-center">
+		<SocialList />
+	</div>
+</PageLayout>

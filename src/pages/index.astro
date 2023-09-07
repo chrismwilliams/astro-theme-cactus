@@ -1,68 +1,82 @@
 ---
+import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
 import SocialList from "@/components/SocialList";
 import { sortMDByDate } from "@/utils";
+import Avatar from "../assets/perfil.jpg";
+import ProjectsIndex from "@/components/ProjectsIndex";
+import Skills from "@/components/Skills";
+import Tools from "@/components/Tools";
 
 const MAX_POSTS = 10;
 const allPosts = await getCollection("post");
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
-
-const cactusTech: Array<{ title: string; desc: string; href: string }> = [
-	{
-		title: "Astro",
-		desc: "Build fast websites, faster.",
-		href: "https://astro.build",
-	},
-	{
-		title: "Astro Assets",
-		desc: "Built-in optimized asset support.",
-		href: "https://docs.astro.build/en/guides/assets/",
-	},
-	{
-		title: "Tailwind CSS",
-		desc: "Rapidly build modern websites without ever leaving your HTML.",
-		href: "https://tailwindcss.com",
-	},
-	{
-		title: "Markdown",
-		desc: "Simple and easy-to-use markup language.",
-		href: "https://www.markdownguide.org/",
-	},
-	{
-		title: "MDX",
-		desc: "Markdown for the component era.",
-		href: "https://mdxjs.com/",
-	},
-	{
-		title: "Satori",
-		desc: "Generating png Open Graph images for blog posts.",
-		href: "https://github.com/vercel/satori",
-	},
-	{
-		title: "Pagefind",
-		desc: "A fully static search library.",
-		href: "https://pagefind.app/",
-	},
-	{
-		title: "Astro Icon",
-		desc: "An easy to use Icon component for Astro.",
-		href: "https://github.com/natemoo-re/astro-icon#readme",
-	},
-];
 ---
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<h1 class="title mb-6">Hello World!</h1>
-		<p class="mb-4">
-			Hi, I’m a theme for Astro, an example of how you can use this starter to create a personal
-			blog. If you want to know more about how you can customise me, add more posts, and make it
-			your own, click on one the github icon link below which will take you to my repo.
-		</p>
-		<SocialList />
+		<div
+			class="ms:items-end flex h-auto flex-col-reverse justify-between sm:h-[calc(100vh-3rem)] sm:flex-row md:h-[calc(100vh-18rem)] md:items-center"
+		>
+			<div class="flex flex-col">
+				<h2
+					class="mb-1 flex items-center text-lg font-semibold text-gray-700 dark:text-gray-200 md:mb-2 md:text-2xl"
+				>
+					Hola,
+					<img
+						class="mx-3 mb-3"
+						src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif"
+						alt="hi"
+						width="10%"
+					/>
+					 Soy
+				</h2>
+
+				<h1 class="mb-1 text-2xl font-bold tracking-tight text-black dark:text-white md:text-4xl">
+					Juan David Narváez
+				</h1>
+				<h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200 md:text-2xl">
+					Full Stack Web Developer
+				</h2>
+				<SocialList />
+			</div>
+			<div class="relative mb-6 w-[120px] sm:mb-0 sm:w-[190px]">
+				<Image
+					alt="Juan Narvaez"
+					height={0}
+					width={0}
+					src={Avatar}
+					sizes="50vw"
+					class="rounded-full grayscale filter"
+				/>
+			</div>
+		</div>
 	</section>
+
+	<section class="mt-16">
+		<h2 class="title mb-4 text-xl md:text-2xl">Proyectos</h2>
+		<ProjectsIndex />
+		<p class="mt-5 text-right text-sm">
+			<a class="text-primary text-base" href="/works"> ...& mas &rarr;</a>
+		</p>
+	</section>
+
+	<section class="mt-16">
+		<h2 class="title mb-4 text-xl">Technologies</h2>
+		<div class="mt-10 flex flex-wrap justify-center">
+			<Skills />
+		</div>
+	</section>
+
+	<section class="mt-12">
+		<h2 class="title mb-4 text-xl">Herramientas</h2>
+		<div class="mt-10 flex flex-wrap justify-center">
+			<Tools />
+		</div>
+	</section>
+
 	<section aria-label="Blog post list" class="mt-16">
 		<h2 class="title mb-4 text-xl">Posts</h2>
 		<ul class="space-y-4 sm:space-y-2">
@@ -70,26 +84,6 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 				allPostsByDate.map((p) => (
 					<li class="flex flex-col gap-x-2 sm:flex-row">
 						<PostPreview post={p} />
-					</li>
-				))
-			}
-		</ul>
-	</section>
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">Technologies</h2>
-		<ul class="space-y-4 sm:space-y-2">
-			{
-				cactusTech.map(({ href, title, desc }) => (
-					<li>
-						<a
-							href={href}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="cactus-link inline-block"
-						>
-							{title}
-						</a>: 
-						<p class="inline-block sm:mt-2">{desc}</p>
 					</li>
 				))
 			}

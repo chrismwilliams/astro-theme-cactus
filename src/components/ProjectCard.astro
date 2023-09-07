@@ -1,0 +1,53 @@
+---
+const { title, img, desc, url, badge, tags, target = "_blank" } = Astro.props;
+import { Image } from "astro:assets";
+---
+
+<div
+	class="bg-base-100 mt-8 flex rounded-lg transition ease-in-out hover:scale-[102%] hover:shadow-xl"
+>
+	<a href={url} target={target}>
+		<div class="hero-content flex flex-col md:flex-row">
+			{
+				img && (
+					<Image
+						src={img}
+						width={750}
+						height={600}
+						format="webp"
+						alt={title}
+						class="max-w-full rounded-lg md:max-w-[13rem]"
+					/>
+				)
+			}
+			<div class=": unknowngrow mt-5 md:ml-4 md:mt-0">
+				<h1 class="flex text-xl font-bold">
+					{title}
+					{badge && <div class="badge badge-secondary mx-2">{badge}</div>}
+				</h1>
+				<p class="text-1xl py-1">{desc}</p>
+				<div class="card-actions flex flex-wrap md:justify-start">
+					{
+						tags &&
+							tags.map((tag) => (
+								<div class="badge badge-outline">
+									<div
+										data-te-chip-init
+										data-te-ripple-init
+										class="[word-wrap: break-word] ms:text-[10] ligth:text-neutral-900 my-[4px] mr-2 flex h-[25px] cursor-pointer items-center justify-between rounded-[16px] border bg-[transparent] px-[10px] py-0 text-link transition-all duration-200 ease-in-out hover:bg-[#e0e0e0] dark:border-green-400 dark:text-neutral-200  dark:hover:border-neutral-100 dark:hover:bg-[#3a3a3a] dark:hover:text-neutral-100 md:text-[9] "
+										data-te-ripple-color="dark"
+									>
+										{tag}
+										<span
+											data-te-chip-close
+											class="text-[16px] text-[#afafaf] opacity-[.53] transition-all duration-200 ease-in-out hover:text-[#8b8b8b] dark:text-neutral-400 dark:hover:text-neutral-100"
+										/>
+									</div>
+								</div>
+							))
+					}
+				</div>
+			</div>
+		</div>
+	</a>
+</div>
