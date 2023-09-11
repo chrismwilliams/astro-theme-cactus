@@ -9,7 +9,7 @@
 			"@/layouts/*": ["src/layouts/*.astro"],
 			"@/utils": ["src/utils/index.ts"],
 			"@/stores/*": ["src/stores/*"],
-			"@/data/*": ["src/data/*"],
+			"@/types": ["src/types.ts"],
 			"@/site-config": ["src/site.config.ts"]
 		}
 	},
