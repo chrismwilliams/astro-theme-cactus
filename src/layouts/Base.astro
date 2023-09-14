@@ -1,5 +1,7 @@
 ---
-import type { SiteMeta } from "@/data/types";
+import { ViewTransitions } from "astro:transitions";
+
+import type { SiteMeta } from "@/types";
 import BaseHead from "@/components/BaseHead";
 import ThemeProvider from "@/components/ThemeProvider";
 import Header from "@/components/layout/Header";
@@ -19,6 +21,7 @@ const {
 <html lang={siteConfig.lang}>
 	<head>
 		<BaseHead title={title} description={description} ogImage={ogImage} articleDate={articleDate} />
+		<ViewTransitions />
 	</head>
 	<body>
 		<ThemeProvider />

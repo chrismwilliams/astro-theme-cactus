@@ -81,8 +81,10 @@ import "@pagefind/default-ui/css/ui.css";
 			};
 
 			const closeModal = () => {
-				dialog.close();
-				window.removeEventListener("click", onWindowClick);
+				if (dialog.open) {
+					dialog.close();
+					window.removeEventListener("click", onWindowClick);
+				}
 			};
 
 			openBtn.addEventListener("click", openModal);
@@ -109,6 +111,14 @@ import "@pagefind/default-ui/css/ui.css";
 						showImages: false,
 					});
 				});
+			});
+
+			// close modal and clear input on view-transtion
+			document.addEventListener("astro:after-swap", () => {
+				// clear the search field
+				(document.querySelector(".pagefind-ui__search-clear") as HTMLButtonElement)?.click();
+				// close the modal & remove event listener on body
+				closeModal();
 			});
 		}
 	}

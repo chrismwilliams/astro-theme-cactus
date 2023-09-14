@@ -7,9 +7,26 @@
 
 Astro Theme Cactus is a simple opinionated starter built with the Astro framework. Use it to create an easy-to-use blog or website.
 
+## Table Of Contents
+
+1. [Key Features](#key-features)
+2. [Demo](#demo-💻)
+3. [Quick start](#quick-start)
+4. [Preview](#preview)
+5. [Commands](#commands)
+6. [Configure](#configure)
+7. [Adding Posts](#adding-posts)
+   - [Frontmatter](#frontmatter)
+8. [Pagefind search](#pagefind-search)
+9. [Analytics](#analytics)
+10. [View Transitions](#view-transitions)
+11. [Deploy](#deploy)
+12. [Acknowledgment](#acknowledgment)
+
 ## Key Features
 
 - Astro v3.0 Fast 🚀
+- View Transitions from [Astro](https://docs.astro.build/en/guides/view-transitions/)
 - TailwindCSS Utility classes
 - Accessible, semantic HTML markup
 - Responsive & SEO-friendly
@@ -79,15 +96,16 @@ Adding a post is as simple as adding your .md(x) files to the `src/content/post`
 
 ### Frontmatter
 
-| Property (\* required) | Description                                                                                                                                                                                                                                                                                       |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| title \*               | Self explanatory. Used as the text link to the post, the h1 on the posts' page, and the pages title property. Has a max length of 60 chars, set in `src/content/config.ts`                                                                                                                        |
-| description \*         | Similar to above, used as the seo description property. Has a min length of 50 and a max length of 160 chars, set in the post schema.                                                                                                                                                             |
-| publishDate \*         | Again pretty simple. To change the date format/locale, currently **en-GB**, update the date option in `src/site.config.ts`. Note you can also pass additional options to the component `<FormattedDate>` if required.                                                                             |
-| updatedDate            | This is an optional date representing when a post has been updated, in the same format as the publishDate. Note that by providing this field, the sorting function, found in `src/utils/post.ts`, `sortMDByDate` will order by this field rather than its published date.                         |
-| tags                   | Tags are optional with any created post. Any new tag(s) will be shown in `yourdomain.com/posts` & `yourdomain.com/tags`, and generate the page(s) `yourdomain.com/tags/[yourTag]`                                                                                                                 |
-| coverImage             | This is an optional object that will add a cover image to the top of a post. Include both a `src`: "_path-to-image_" and `alt`: "_image alt_". You can view an example in `src/content/post/cover-image.md`.                                                                                      |
-| ogImage                | This is an optional property. An OG Image will be generated automatically for every post where this property **isn't** provided. If you would like to create your own for a specific post, include this property and a link to your image, the theme will then skip automatically generating one. |
+| Property (\* required) | Description                                                                                                                                                                                                                                                                                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| title \*               | Self explanatory. Used as the text link to the post, the h1 on the posts' page, and the pages title property. Has a max length of 60 chars, set in `src/content/config.ts`                                                                                                                                   |
+| description \*         | Similar to above, used as the seo description property. Has a min length of 50 and a max length of 160 chars, set in the post schema.                                                                                                                                                                        |
+| publishDate \*         | Again pretty simple. To change the date format/locale, currently **en-GB**, update the date option in `src/site.config.ts`. Note you can also pass additional options to the component `<FormattedDate>` if required.                                                                                        |
+| updatedDate            | This is an optional date representing when a post has been updated, in the same format as the publishDate. Note that by providing this field, the sorting function, found in `src/utils/post.ts`, `sortMDByDate` will order by this field rather than its published date.                                    |
+| tags                   | Tags are optional with any created post. Any new tag(s) will be shown in `yourdomain.com/posts` & `yourdomain.com/tags`, and generate the page(s) `yourdomain.com/tags/[yourTag]`                                                                                                                            |
+| coverImage             | This is an optional object that will add a cover image to the top of a post. Include both a `src`: "_path-to-image_" and `alt`: "_image alt_". You can view an example in `src/content/post/cover-image.md`.                                                                                                 |
+| ogImage                | This is an optional property. An OG Image will be generated automatically for every post where this property **isn't** provided. If you would like to create your own for a specific post, include this property and a link to your image, the theme will then skip automatically generating one.            |
+| draft                  | This is an optional property as it is set to false by default in the schema. By adding true, the post will be filtered out of the production build in a number of places, inc. getAllPosts() calls, og-images, rss feeds, and generated page[s]. You can view an example in `src/content/post/draft-post.md` |
 
 ## Pagefind search
 
@@ -124,10 +142,14 @@ import { GoogleAnalytics } from "astro-google-analytics";
 ---
 
 <head>
- <!-- Replace id with your own Google Analytics ID -->
- <GoogleAnalytics id="G-XXXXXXXXXX" />
+	<!-- Replace id with your own Google Analytics ID -->
+	<GoogleAnalytics id="G-XXXXXXXXXX" />
 </head>
 ```
+
+## View Transitions
+
+This theme implements a default transition between routes with a fallback for unsupported browsers, visit Astro's [docs](https://docs.astro.build/en/guides/view-transitions/) to learn more. To remove it completely, go to `src/layouts/Base.astro` and remove the `<ViewTransitions>` component.
 
 ## Deploy
 
@@ -137,7 +159,7 @@ By default the site will be built (see [Commands](#commands) section above) to a
 
 ## Acknowledgment
 
-This theme is inspired by [Hexo Theme Cactus](https://github.com/probberechts/hexo-theme-cactus)
+This theme was inspired by [Hexo Theme Cactus](https://github.com/probberechts/hexo-theme-cactus)
 
 ## License
 

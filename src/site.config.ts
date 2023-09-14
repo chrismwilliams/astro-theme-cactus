@@ -1,4 +1,4 @@
-import type { SiteConfig } from "@/data/types";
+import type { SiteConfig } from "@/types";
 
 export const siteConfig: SiteConfig = {
 	// This is your domain name for your website
