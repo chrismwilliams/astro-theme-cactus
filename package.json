@@ -1,6 +1,6 @@
 {
 	"name": "astro-cactus",
-	"version": "3.2.0",
+	"version": "3.2.1",
 	"private": false,
 	"scripts": {
 		"dev": "astro dev",
@@ -11,16 +11,16 @@
 		"format": "prettier -w --cache ."
 	},
 	"devDependencies": {
-		"@pagefind/default-ui": "^0.12.0",
+		"@pagefind/default-ui": "^1.0.3",
 		"@resvg/resvg-js": "^2.4.1",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
-		"@tailwindcss/typography": "^0.5.8",
+		"@tailwindcss/typography": "^0.5.1",
 		"@types/eslint": "^8.44.2",
 		"@typescript-eslint/eslint-plugin": "^6.5.0",
 		"@typescript-eslint/parser": "^6.5.0",
 		"astro-eslint-parser": "^0.15.0",
 		"autoprefixer": "^10.4.15",
-		"eslint": "^8.48.0",
+		"eslint": "^8.49.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-import-resolver-typescript": "^3.6.0",
 		"eslint-plugin-astro": "^0.29.0",
@@ -28,7 +28,7 @@
 		"eslint-plugin-jsx-a11y": "^6.7.1",
 		"eslint-plugin-prettier": "^5.0.0",
 		"mdast-util-to-string": "^4.0.0",
-		"pagefind": "^0.12.0",
+		"pagefind": "^1.0.3",
 		"postcss": "^8.4.29",
 		"postcss-html": "^1.5.0",
 		"postcss-import": "^15.1.0",
@@ -41,14 +41,14 @@
 		"typescript": "^5.2.2"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "^1.0.0",
+		"@astrojs/mdx": "^1.1.0",
 		"@astrojs/prefetch": "^0.4.0",
 		"@astrojs/rss": "^3.0.0",
 		"@astrojs/sitemap": "^3.0.0",
 		"@astrojs/tailwind": "^5.0.0",
-		"astro": "3.0.8",
+		"astro": "3.1.1",
 		"astro-icon": "^0.8.1",
-		"satori": "0.10.4",
+		"satori": "0.10.7",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.32.5"
 	},
