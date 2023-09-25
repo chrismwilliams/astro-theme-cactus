@@ -107,8 +107,9 @@ import "@pagefind/default-ui/css/ui.css";
 					new PagefindUI({
 						element: "#cactus__search",
 						baseUrl: import.meta.env.BASE_URL,
-						bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/_pagefind/",
+						bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
 						showImages: false,
+						showSubResults: true,
 					});
 				});
 			});
