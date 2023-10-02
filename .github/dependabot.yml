@@ -11,3 +11,4 @@ updates:
       interval: "monthly"
     allow:
       - dependency-type: "direct"
+    open-pull-requests-limit: 20

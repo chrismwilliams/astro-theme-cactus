@@ -65,10 +65,13 @@ import "@pagefind/default-ui/css/ui.css";
 			const dialogFrame = this.querySelector(".dialog-frame")!;
 
 			const onWindowClick = (event: MouseEvent) => {
-				// make sure the click is outside the of the dialog
+				// check if it's a link
+				const isLink = "href" in (event.target || {});
+				// make sure the click is either a link or outside of the dialog
 				if (
-					document.body.contains(event.target as Node) &&
-					!dialogFrame.contains(event.target as Node)
+					isLink ||
+					(document.body.contains(event.target as Node) &&
+						!dialogFrame.contains(event.target as Node))
 				)
 					closeModal();
 			};
@@ -107,8 +110,9 @@ import "@pagefind/default-ui/css/ui.css";
 					new PagefindUI({
 						element: "#cactus__search",
 						baseUrl: import.meta.env.BASE_URL,
-						bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/_pagefind/",
+						bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
 						showImages: false,
+						showSubResults: true,
 					});
 				});
 			});
