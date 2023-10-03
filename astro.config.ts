@@ -5,15 +5,12 @@ import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import prefetch from "@astrojs/prefetch";
 import remarkUnwrapImages from "remark-unwrap-images";
-// @ts-ignore:next-line
-import { remarkReadingTime } from "./src/utils/remark-reading-time.mjs";
-
-import { siteConfig } from "@/site-config";
+import { remarkReadingTime } from "./src/utils/remark-reading-time";
 
 // https://astro.build/config
 export default defineConfig({
 	// ! Please set this to your own domain in src/site.config.ts
-	site: siteConfig.domain,
+	site: "https://astro-theme-cactus.netlify.app/",
 	markdown: {
 		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
 		remarkRehype: { footnoteLabelProperties: { className: [""] } },
@@ -41,6 +38,7 @@ export default defineConfig({
 function rawFonts(ext: Array<string>) {
 	return {
 		name: "vite-plugin-raw-fonts",
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore:next-line
 		transform(_, id) {
 			if (ext.some((e) => id.endsWith(e))) {
