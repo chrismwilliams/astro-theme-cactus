@@ -149,7 +149,9 @@ import { GoogleAnalytics } from "astro-google-analytics";
 
 ## View Transitions
 
-This theme implements a default transition between routes with a fallback for unsupported browsers, visit Astro's [docs](https://docs.astro.build/en/guides/view-transitions/) to learn more. To remove it completely, go to `src/layouts/Base.astro` and remove the `<ViewTransitions>` component.
+This theme implements an optional transition between routes with a fallback of [none](https://docs.astro.build/en/guides/view-transitions/#fallback-control) for unsupported browsers, visit Astro's [docs](https://docs.astro.build/en/guides/view-transitions/) to learn more. You'll find in both `src/components/blog/PostPreview.astro` and `src/components/blog/Hero.astro` the attribute `transition:name={title-property-here}`, which will animate the elements between pages, regardless of it's position in the DOM.
+
+If you'd prefer not to use view-transitions there are 2 ways to remove it. The easiest is by setting the property `includeViewTransitions` in `src/site.config.ts` to false, or go to `src/layouts/Base.astro` and remove the condition around, and including, `<ViewTransitions>` component.
 
 ## Deploy
 
