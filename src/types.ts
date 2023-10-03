@@ -9,6 +9,10 @@ export type SiteConfig = {
 		options: Intl.DateTimeFormatOptions;
 	};
 	includeViewTransitions: boolean;
+	webmentions?: {
+		link: string;
+		pingback?: string;
+	};
 };
 
 export type PaginationLink = {
