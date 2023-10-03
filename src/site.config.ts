@@ -20,6 +20,8 @@ export const siteConfig: SiteConfig = {
 			year: "numeric",
 		},
 	},
+	// Include view-transitions: https://docs.astro.build/en/guides/view-transitions/
+	includeViewTransitions: true,
 };
 
 // Used to generate links in both the Header & Footer.
