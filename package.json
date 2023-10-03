@@ -43,7 +43,7 @@
 		"eslint-plugin-prettier": "^5.0.0",
 		"mdast-util-to-string": "^4.0.0",
 		"pagefind": "^1.0.3",
-		"postcss": "^8.4.30",
+		"postcss": "^8.4.31",
 		"postcss-html": "^1.5.0",
 		"postcss-import": "^15.1.0",
 		"prettier": "^3.0.3",
