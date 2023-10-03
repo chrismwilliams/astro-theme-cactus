@@ -1,5 +1,4 @@
 export type SiteConfig = {
-	domain: string;
 	author: string;
 	title: string;
 	description: string;
@@ -8,6 +7,10 @@ export type SiteConfig = {
 	date: {
 		locale: string | string[] | undefined;
 		options: Intl.DateTimeFormatOptions;
+	};
+	webmentions?: {
+		link: string;
+		pingback?: string;
 	};
 };
 

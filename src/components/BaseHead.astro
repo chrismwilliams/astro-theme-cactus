@@ -18,22 +18,22 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>{siteTitle}</title>
 
-<!-- Icons / Favicon -->
+{/* Icons / Favicon */}
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/manifest.webmanifest" />
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Primary Meta Tags -->
+{/* Primary Meta Tags */}
 <meta name="title" content={siteTitle} />
 <meta name="description" content={description} />
 <meta name="author" content={siteConfig.author} />
 
-<!-- Theme Colour -->
+{/* Theme Colour */}
 <meta name="theme-color" content="" />
 
-<!-- Open Graph / Facebook -->
+{/* Open Graph / Facebook */}
 <meta property="og:type" content={articleDate ? "article" : "website"} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
@@ -52,19 +52,27 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 	)
 }
 
-<!-- Twitter -->
+{/* Twitter */}
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={socialImageURL} />
 
-<!-- Sitemap -->
+{/* Sitemap */}
 <link rel="sitemap" href="/sitemap-index.xml" />
 
-<!-- RSS auto-discovery -->
+{/* RSS auto-discovery */}
 <link rel="alternate" type="application/rss+xml" title={siteConfig.title} href="/rss.xml" />
 
-<!-- webmentions -->
-<link rel="webmention" href="https://webmention.io/astro-theme-cactus.netlify.app/webmention" />
-<link rel="pingback" href="https://webmention.io/astro-theme-cactus.netlify.app/xmlrpc" />
+{/* Webmentions */}
+{
+	siteConfig.webmentions && (
+		<>
+			<link rel="webmention" href={siteConfig.webmentions.link} />
+			{siteConfig.webmentions.pingback && (
+				<link rel="pingback" href={siteConfig.webmentions.pingback} />
+			)}
+		</>
+	)
+}
