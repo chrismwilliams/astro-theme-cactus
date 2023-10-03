@@ -31,7 +31,7 @@
 		"@tailwindcss/typography": "^0.5.10",
 		"@types/eslint": "^8.44.3",
 		"@typescript-eslint/eslint-plugin": "^6.7.2",
-		"@typescript-eslint/parser": "^6.7.2",
+		"@typescript-eslint/parser": "^6.7.4",
 		"astro-eslint-parser": "^0.15.0",
 		"autoprefixer": "^10.4.16",
 		"eslint": "^8.50.0",
