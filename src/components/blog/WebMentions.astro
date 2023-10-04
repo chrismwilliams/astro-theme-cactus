@@ -1,0 +1,27 @@
+---
+import { getWebmentionsForUrl } from "@/utils";
+
+const url = new URL(Astro.url.pathname, Astro.site);
+
+const postWebmention = await getWebmentionsForUrl(`${url}`);
+
+console.log({ postWebmention });
+
+if (!postWebmention) return;
+---
+
+{
+	/* 
+    TODO: This is a stub 
+  */
+	postWebmention.length > 0 && (
+		<div class="mt-12">
+			<p>
+				Responses powered by{" "}
+				<a class="cactus-link" href="https://webmention.io">
+					Webmentions
+				</a>
+			</p>
+		</div>
+	)
+}
