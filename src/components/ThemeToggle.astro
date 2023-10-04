@@ -34,12 +34,12 @@
 	<button
 		type="button"
 		id="toggle-theme"
-		class="group relative h-9 w-9 rounded-md p-2 ring-zinc-400 transition-all hover:ring-2"
+		class="relative h-9 w-9 rounded-md p-2 ring-zinc-400 transition-all hover:ring-2"
 		aria-label="Toggle Dark Mode"
 	>
 		<svg
 			id="sun-svg"
-			class="absolute start-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-0 opacity-0 transition-all group-aria-pressed:scale-100 group-aria-pressed:opacity-100"
+			class="absolute start-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-0 opacity-0 transition-all dark:scale-100 dark:opacity-100"
 			aria-hidden="true"
 			focusable="false"
 			stroke-width="1.5"
@@ -70,7 +70,7 @@
 		</svg>
 		<svg
 			id="moon-svg"
-			class="absolute start-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-0 opacity-0 transition-all group-aria-[pressed=false]:scale-100 group-aria-[pressed=false]:opacity-100"
+			class="absolute start-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-100 opacity-100 transition-all dark:scale-0 dark:opacity-0"
 			aria-hidden="true"
 			focusable="false"
 			stroke-width="1.5"
@@ -101,13 +101,17 @@
 	</button>
 </theme-toggle>
 
-{/* Inlined to avoid FOUC on full page load, runs once to set initial attribute */}
+{/* Inlined to avoid FOUC on full page load */}
 <script is:inline>
-	const button = document.getElementById("toggle-theme");
+function setButtonPresssed() {
+    const button = document.getElementById("toggle-theme");
+    const bodyThemeIsDark = document.documentElement.classList.contains("dark");
+    button.setAttribute("aria-pressed", String(bodyThemeIsDark));
+}
 
-	function setButtonPresssed() {
-		const bodyThemeIsDark = document.documentElement.classList.contains("dark");
-		button.setAttribute("aria-pressed", String(bodyThemeIsDark));
-	}
-	setButtonPresssed();
+// Initial navigation
+setButtonPresssed();
+
+// Runs on view transition navigation to restore `aria-pressed`
+document.addEventListener("astro:after-swap", () => setButtonPresssed());
 </script>
