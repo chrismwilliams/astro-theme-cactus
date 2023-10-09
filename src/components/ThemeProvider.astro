@@ -7,21 +7,37 @@
 		);
 	}
 
-	function setTheme(theme) {
+	function setTheme(newTheme) {
+		if (!newTheme || (newTheme !== "light" && newTheme !== "dark")) {
+			return console.warn(
+				`Incorrect theme value received. Expected 'light' or 'dark', received ${newTheme}`,
+			);
+		}
+
+		const root = document.documentElement;
+
+		// class already set to newTheme, exit early
+		if (
+			(newTheme === "dark" && root.classList.contains("dark")) ||
+			(newTheme === "light" && !root.classList.contains("dark"))
+		) {
+			return;
+		}
+
 		const colorThemeMetaTag = document.querySelector("meta[name='theme-color']");
-		document.documentElement.classList.toggle("dark", theme === "dark");
+		document.documentElement.classList.toggle("dark", newTheme === "dark");
 		const bgColour = getComputedStyle(document.body).getPropertyValue("--theme-bg");
 
 		colorThemeMetaTag.setAttribute("content", `hsl(${bgColour})`);
 		if (typeof localStorage !== "undefined") {
-			localStorage.setItem("theme", theme);
+			localStorage.setItem("theme", newTheme);
 		}
 	}
 
 	// initial setup
 	setTheme(getUserPref());
 
-	// View Transitions hook to restore theme mode
+	// View Transitions hook to restore theme
 	document.addEventListener("astro:after-swap", () => setTheme(getUserPref()));
 
 	// listen for theme-change custom event, fired in src/components/ThemeToggle.astro
