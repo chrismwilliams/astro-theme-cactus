@@ -42,7 +42,7 @@ export type WebmentionsCache = {
 
 export type WebmentionsChildren = {
 	type: string;
-	author: Author;
+	author: Author | null;
 	url: string;
 	published?: string | null;
 	"wm-received": string;
