@@ -31,6 +31,12 @@ module.exports = {
 			},
 			rules: {
 				"prettier/prettier": "off",
+				"astro/jsx-a11y/no-redundant-roles": [
+					"error",
+					{
+						ul: ["list"],
+					},
+				],
 			},
 		},
 	],

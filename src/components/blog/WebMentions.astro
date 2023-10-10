@@ -1,27 +1,116 @@
 ---
+import { Image } from "astro:assets";
 import { getWebmentionsForUrl } from "@/utils";
 
 const url = new URL(Astro.url.pathname, Astro.site);
+const MAX_LIKES = 10;
 
-const postWebmention = await getWebmentionsForUrl(`${url}`);
+const webMentions = await getWebmentionsForUrl(`${url}`);
+if (!webMentions.length) return;
 
-console.log({ postWebmention });
+const likes = webMentions.filter((mention) => mention["wm-property"] == "like-of");
+const likesToShow = likes
+	.filter((like) => like.author?.photo && like.author.photo !== "")
+	.slice(0, MAX_LIKES);
+const mentions = webMentions.filter(
+	(mention) =>
+		(mention["wm-property"] === "mention-of" || mention["wm-property"] === "in-reply-to") &&
+		mention.content?.text,
+);
 
-if (!postWebmention) return;
+// console.log({ likes, mentions });
 ---
 
 {
-	/* 
-    TODO: This is a stub 
-  */
-	postWebmention.length > 0 && (
-		<div class="mt-12">
-			<p>
+	!!webMentions.length && (
+		<>
+			<hr class="border-solid" />
+			<h2 class="mb-8 before:hidden">Webmentions for this post</h2>
+			<div class="space-y-10">
+				{!!likes.length && (
+					<div>
+						<p class="mb-0 text-accent-2">
+							<strong>{likes.length}</strong>
+							{likes.length > 1 ? " People" : " Person"} liked this
+						</p>
+						{!!likesToShow.length && (
+							<ul class="flex list-none flex-wrap overflow-hidden ps-2" role="list">
+								{likesToShow.map((like) => (
+									<li class="-ms-2">
+										<a
+											href={like.author?.url}
+											class="not-prose"
+											target="_blank"
+											rel="noopener noreferrer"
+											title={like.author?.name}
+										>
+											<Image
+												class="my-0 inline-block h-12 w-12 rounded-full ring-2 ring-textColor"
+												src={like.author!.photo}
+												alt={like.author!.name}
+												width={48}
+												height={48}
+											/>
+										</a>
+									</li>
+								))}
+							</ul>
+						)}
+					</div>
+				)}
+				{!!mentions.length && (
+					<div>
+						<p class="mb-0 text-accent-2">
+							<strong>{mentions.length}</strong> Mention{mentions.length > 1 ? "s" : ""}
+						</p>
+						<ul class="mt-0 divide-y divide-textColor/20 ps-0" role="list">
+							{mentions.map((mention) => (
+								<li class="my-0 flex items-start gap-x-5 py-5">
+									{mention.author?.photo && mention.author.photo !== "" ? (
+										mention.author.url && mention.author.url !== "" ? (
+											<a
+												href={mention.author.url}
+												class="not-prose shrink-0"
+												target="_blank"
+												rel="noopener noreferrer"
+												title={mention.author.name}
+											>
+												<Image
+													class="my-0 h-12 w-12 rounded-full"
+													src={mention.author?.photo}
+													alt={mention.author?.name}
+													width={48}
+													height={48}
+												/>
+											</a>
+										) : (
+											<Image
+												class="my-0 h-12 w-12 rounded-full"
+												src={mention.author?.photo}
+												alt={mention.author?.name}
+												width={48}
+												height={48}
+											/>
+										)
+									) : null}
+									<div class="flex-auto">
+										<p class="my-0 line-clamp-1 font-semibold text-accent-2">
+											{mention.author?.name}
+										</p>
+										<p class="mb-0 mt-1">{mention.content?.text}</p>
+									</div>
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
+			</div>
+			<p class="mt-8">
 				Responses powered by{" "}
-				<a class="cactus-link" href="https://webmention.io">
+				<a href="https://webmention.io" target="_blank" rel="noopener noreferrer">
 					Webmentions
 				</a>
 			</p>
-		</div>
+		</>
 	)
 }
