@@ -27,6 +27,9 @@ export default defineConfig({
 		sitemap(),
 		prefetch(),
 	],
+	image: {
+		domains: ["webmention.io"],
+	},
 	vite: {
 		plugins: [rawFonts([".ttf"])],
 		optimizeDeps: {
