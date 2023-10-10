@@ -5,6 +5,7 @@ const DOMAIN = import.meta.env.SITE;
 const API_TOKEN = import.meta.env.WEBMENTION_API_KEY;
 const CACHE_DIR = ".data";
 const filePath = `${CACHE_DIR}/webmentions.json`;
+const validWebmentionTypes = ["like-of", "mention-of", "in-reply-to"];
 
 const hostName = new URL(DOMAIN).hostname;
 
@@ -35,10 +36,26 @@ async function fetchWebmentions(timeFrom: string | null, perPage = 1000) {
 }
 
 // Merge cached entries [a] with fresh webmentions [b], merge by wm-id
-function mergeWebmentions(a: WebmentionsChildren[], b: WebmentionsChildren[]) {
+function mergeWebmentions(a: WebmentionsCache, b: WebmentionsFeed): WebmentionsChildren[] {
 	return Array.from(
-		[...a, ...b].reduce((map, obj) => map.set(obj["wm-id"], obj), new Map()).values(),
+		[...a.children, ...b.children]
+			.reduce((map, obj) => map.set(obj["wm-id"], obj), new Map())
+			.values(),
 	);
+}
+
+// filter out WebmentionChildren
+export function filterWebmentions(webmentions: WebmentionsChildren[]) {
+	return webmentions.filter((webmention) => {
+		if (!validWebmentionTypes.includes(webmention["wm-property"])) return false;
+
+		// make sure 'mention-of' or 'in-reply-to' has text content.
+		if (webmention["wm-property"] === "mention-of" || webmention["wm-property"] === "in-reply-to") {
+			return webmention.content && webmention.content.text !== "";
+		}
+
+		return true;
+	});
 }
 
 // save combined webmentions in cache file
@@ -74,10 +91,11 @@ async function getAndCacheWebmentions() {
 	const mentions = await fetchWebmentions(cache.lastFetched);
 
 	if (mentions) {
+		mentions.children = filterWebmentions(mentions.children);
 		const webmentions: WebmentionsCache = {
 			lastFetched: new Date().toISOString(),
 			// Make sure the first arg is the cache
-			children: mergeWebmentions(cache.children, mentions.children),
+			children: mergeWebmentions(cache, mentions),
 		};
 
 		writeToCache(webmentions);
