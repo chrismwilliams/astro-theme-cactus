@@ -47,6 +47,7 @@ function mergeWebmentions(a: WebmentionsCache, b: WebmentionsFeed): WebmentionsC
 // filter out WebmentionChildren
 export function filterWebmentions(webmentions: WebmentionsChildren[]) {
 	return webmentions.filter((webmention) => {
+		// make sure the mention has a property so we can sort them later
 		if (!validWebmentionTypes.includes(webmention["wm-property"])) return false;
 
 		// make sure 'mention-of' or 'in-reply-to' has text content.

@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+import type { WebmentionsChildren } from "@/types";
+
+interface Props {
+	mentions: WebmentionsChildren[];
+}
+
+const { mentions } = Astro.props;
+const MAX_LIKES = 10;
+
+const likes = mentions.filter((mention) => mention["wm-property"] == "like-of");
+const likesToShow = likes
+	.filter((like) => like.author?.photo && like.author.photo !== "")
+	.slice(0, MAX_LIKES);
+---
+
+{
+	!!likes.length && (
+		<div>
+			<p class="mb-0 text-accent-2">
+				<strong>{likes.length}</strong>
+				{likes.length > 1 ? " People" : " Person"} liked this
+			</p>
+			{!!likesToShow.length && (
+				<ul class="flex list-none flex-wrap overflow-hidden ps-2" role="list">
+					{likesToShow.map((like) => (
+						<li class="-ms-2">
+							<a
+								href={like.author?.url}
+								class="not-prose relative inline-block overflow-hidden rounded-full outline-none ring-2 ring-textColor hover:z-10 hover:ring-4 hover:ring-link focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-link"
+								target="_blank"
+								rel="noopener noreferrer"
+								title={like.author?.name}
+							>
+								<Image
+									class="my-0 inline-block h-12 w-12"
+									src={like.author!.photo}
+									alt={like.author!.name}
+									width={48}
+									height={48}
+								/>
+							</a>
+						</li>
+					))}
+				</ul>
+			)}
+		</div>
+	)
+}

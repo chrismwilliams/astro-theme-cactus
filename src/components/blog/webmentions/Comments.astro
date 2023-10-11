@@ -1,0 +1,85 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon";
+import type { WebmentionsChildren } from "@/types";
+
+interface Props {
+	mentions: WebmentionsChildren[];
+}
+
+const { mentions } = Astro.props;
+
+const validComments = ["mention-of", "in-reply-to"];
+
+const comments = mentions.filter(
+	(mention) => validComments.includes(mention["wm-property"]) && mention.content?.text,
+);
+
+/**
+ ! show a link to the mention 
+
+ */
+---
+
+{
+	!!comments.length && (
+		<div>
+			<p class="mb-0 text-accent-2">
+				<strong>{comments.length}</strong> Mention{comments.length > 1 ? "s" : ""}
+			</p>
+			<ul class="mt-0 divide-y divide-textColor/20 ps-0" role="list">
+				{comments.map((mention) => (
+					<li class="my-0 flex items-start gap-x-5 py-5">
+						{mention.author?.photo && mention.author.photo !== "" ? (
+							mention.author.url && mention.author.url !== "" ? (
+								<a
+									href={mention.author.url}
+									class="not-prose shrink-0 overflow-hidden rounded-full outline-none ring-2 ring-textColor hover:ring-4 hover:ring-link focus-visible:ring-4 focus-visible:ring-link"
+									target="_blank"
+									rel="noopener noreferrer"
+									title={mention.author.name}
+								>
+									<Image
+										class="my-0 h-12 w-12"
+										src={mention.author?.photo}
+										alt={mention.author?.name}
+										width={48}
+										height={48}
+									/>
+								</a>
+							) : (
+								<Image
+									class="my-0 h-12 w-12 rounded-full"
+									src={mention.author?.photo}
+									alt={mention.author?.name}
+									width={48}
+									height={48}
+								/>
+							)
+						) : null}
+						<div class="flex-auto">
+							<div class="flex items-center justify-between gap-x-2">
+								<p class="my-0 line-clamp-1 font-semibold text-accent-2">{mention.author?.name}</p>
+								<a
+									href={mention.url}
+									class="not-prose hover:text-link"
+									target="_blank"
+									rel="noopener noreferrer"
+									title="Vist the source of this mention"
+								>
+									<Icon
+										class="h-5 w-5"
+										name="mdi:open-in-new"
+										aria-hidden="true"
+										focusable="false"
+									/>
+								</a>
+							</div>
+							<p class="mb-0 mt-1 break-words [word-break:break-word]">{mention.content?.text}</p>
+						</div>
+					</li>
+				))}
+			</ul>
+		</div>
+	)
+}
