@@ -24,7 +24,6 @@ export const siteConfig: SiteConfig = {
 	includeViewTransitions: false,
 	webmentions: {
 		link: "https://webmention.io/astro-theme-cactus.netlify.app/webmention",
-		pingback: "https://webmention.io/astro-theme-cactus.netlify.app/xmlrpc",
 	},
 };
 
