@@ -9,7 +9,7 @@ import { remarkReadingTime } from "./src/utils/remark-reading-time";
 
 // https://astro.build/config
 export default defineConfig({
-	// ! Please set this to your own domain in src/site.config.ts
+	// ! Please remember to replace the following site property with your own domain
 	site: "https://astro-theme-cactus.netlify.app/",
 	markdown: {
 		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
