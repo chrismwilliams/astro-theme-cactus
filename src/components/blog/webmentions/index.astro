@@ -1,0 +1,30 @@
+---
+import { getWebmentionsForUrl } from "@/utils";
+
+import Likes from "./Likes.astro";
+import Comments from "./Comments.astro";
+
+const url = new URL(Astro.url.pathname, Astro.site);
+
+const webMentions = await getWebmentionsForUrl(`${url}`);
+if (!webMentions.length) return;
+---
+
+{
+	!!webMentions.length && (
+		<>
+			<hr class="border-solid" />
+			<h2 class="mb-8 before:hidden">Webmentions for this post</h2>
+			<div class="space-y-10">
+				<Likes mentions={webMentions} />
+				<Comments mentions={webMentions} />
+			</div>
+			<p class="mt-8">
+				Responses powered by{" "}
+				<a href="https://webmention.io" target="_blank" rel="noopener noreferrer">
+					Webmentions
+				</a>
+			</p>
+		</>
+	)
+}

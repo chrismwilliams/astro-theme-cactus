@@ -5,7 +5,12 @@ import { Icon } from "astro-icon";
 	Uses https://github.com/natemoo-re/astro-icon#readme
 	Find icons @ https://icones.js.org/
 */
-const socialLinks = [
+const socialLinks: Array<{
+	name: string;
+	friendlyName: string;
+	link: string;
+	isWebmention?: boolean;
+}> = [
 	{
 		name: "mdi:github",
 		friendlyName: "Github",
@@ -25,6 +30,7 @@ const socialLinks = [
 		name: "mdi:email",
 		friendlyName: "email",
 		link: "mailto:astro-cactus@chriswilliams.dev",
+		isWebmention: true,
 	},
 ];
 ---
@@ -33,22 +39,19 @@ const socialLinks = [
 	<p>Find me on</p>
 	<ul class="flex flex-1 items-center gap-x-2 sm:flex-initial">
 		{
-			socialLinks.map(({ link, name, friendlyName }) => {
-				const isEmail = name.includes("email") || friendlyName.toLowerCase().includes("email");
-				return (
-					<li class="flex">
-						<a
-							class="inline-block p-1 sm:hover:text-link"
-							href={link}
-							target="_blank"
-							rel={`noopener noreferrer me ${isEmail ? "authn" : ""}`}
-						>
-							<Icon class="h-6 w-6" name={name} aria-hidden="true" focusable="false" />
-							<span class="sr-only">{friendlyName}</span>
-						</a>
-					</li>
-				);
-			})
+			socialLinks.map(({ link, name, friendlyName, isWebmention }) => (
+				<li class="flex">
+					<a
+						class="inline-block p-1 sm:hover:text-link"
+						href={link}
+						target="_blank"
+						rel={`noopener noreferrer ${isWebmention ? "me authn" : ""}`}
+					>
+						<Icon class="h-6 w-6" name={name} aria-hidden="true" focusable="false" />
+						<span class="sr-only">{friendlyName}</span>
+					</a>
+				</li>
+			))
 		}
 	</ul>
 </div>

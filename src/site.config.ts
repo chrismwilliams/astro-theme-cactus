@@ -23,8 +23,7 @@ export const siteConfig: SiteConfig = {
 	// Include view-transitions: https://docs.astro.build/en/guides/view-transitions/
 	includeViewTransitions: false,
 	webmentions: {
-		link: "https://webmention.io/astro-theme-cactus.netlify.app/webmention",
-		pingback: "https://webmention.io/astro-theme-cactus.netlify.app/xmlrpc",
+		link: "https://webmention.io/astro-cactus.chriswilliams.dev/webmention",
 	},
 };
 
