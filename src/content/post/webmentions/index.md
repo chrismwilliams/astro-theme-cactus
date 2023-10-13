@@ -27,7 +27,7 @@ Your going to have to create a couple of accounts to get things up-and-running. 
 
 - Head over to `src/components/SocialList.astro` and enter your details into the `socialLinks` array. By default, the most important is your email address as this has the `isWebmention` property. This just adds the `rel="me authn"` value to the social link. You don't have to include an email, you can just delete it and any others, just make sure that at least one social link has the `isWebmention` property, or set the `rel` property yourself. See [IndieLogin.com](https://indielogin.com/setup) for more information on how to authenticate your domain via links.
 
-- Next up, head over to [Webmention.io](https://webmention.io/) and setup an account by Signing in with your domain name, e.g. `https://astro-theme-cactus.netlify.app/`. Please note that .app TLD's don't function correctly. Once in, it will give you a couple of links for your domain to accept webmentions. Make a note of these and head over to `src/site.config.ts` and add them to `siteConfig.webmentions`.
+- Next up, head over to [Webmention.io](https://webmention.io/) and setup an account by Signing in with your domain name, e.g. `https://astro-cactus.chriswilliams.dev/`. Please note that .app TLD's don't function correctly. Once in, it will give you a couple of links for your domain to accept webmentions. Make a note of these and head over to `src/site.config.ts` and add them to `siteConfig.webmentions`.
 
 Quick note: You don't have to include the pingback link. Maybe coincidentally, but after adding it I started to receive a higher frequency of spam in my mailbox, informing me that my website could be better. Tbh they're not wrong. I've now removed it, but it's up to you.
 
@@ -39,7 +39,7 @@ With everything set, it's now time to build and publish your website. _REMEMBER_
 
 ## Testing everything works
 
-With everything setup and live, you can check to see if everything is working by sending a test webmention via [webmentions.rocks](https://webmention.rocks/receive/1). Log in with your domain, enter the auth code, and then the url of the page you want to test. For example, to test this page I would add `https://astro-theme-cactus.netlify.app/posts/webmentions/`. To view it on your website, rebuild or [re]start dev mode locally, and you should see the result at the bottom of your page.
+With everything setup and live, you can check to see if everything is working by sending a test webmention via [webmentions.rocks](https://webmention.rocks/receive/1). Log in with your domain, enter the auth code, and then the url of the page you want to test. For example, to test this page I would add `https://astro-cactus.chriswilliams.dev/posts/webmentions/`. To view it on your website, rebuild or [re]start dev mode locally, and you should see the result at the bottom of your page.
 
 You can also view any test mentions in the browser via the [api](https://github.com/aaronpk/webmention.io#api).
 
