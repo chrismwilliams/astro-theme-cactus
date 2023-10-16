@@ -25,7 +25,7 @@ Astro Cactus is a simple opinionated starter built with the Astro framework. Use
 
 ## Key Features
 
-- Astro v3.0 Fast 🚀
+- Astro v3 Fast 🚀
 - TailwindCSS Utility classes
 - Accessible, semantic HTML markup
 - Responsive & SEO-friendly
@@ -48,6 +48,14 @@ Check out the [Demo](https://astro-cactus.chriswilliams.dev/), hosted on Netlify
 ## Quick start
 
 [Create a new repo](https://github.com/chrismwilliams/astro-theme-cactus/generate) from this template.
+
+```bash
+# npm 7+
+npx create astro@latest -- --template chrismwilliams/astro-theme-cactus
+
+# pnpm
+pnpm dlx create-astro --template chrismwilliams/astro-theme-cactus
+```
 
 [![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/chrismwilliams/astro-theme-cactus) [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fchrismwilliams%2Fastro-theme-cactus&project-name=astro-theme-cactus)
 
@@ -150,9 +158,7 @@ import { GoogleAnalytics } from "astro-google-analytics";
 
 ## View Transitions
 
-This theme implements optional support for view transitions. Visit `src/site.config.ts` and set `includeViewTransitions` to `true` to include it. By setting it to true, a fallback of [none](https://docs.astro.build/en/guides/view-transitions/#fallback-control) is set for unsupported browsers, visit Astro's [docs](https://docs.astro.build/en/guides/view-transitions/) to learn more, view the implementation in `src/layouts/Base.astro`.
-
-Note: If you set a [named](https://docs.astro.build/en/guides/view-transitions/#naming-a-transition) transition, you may notice an issue with the theme switching button icon disappearing, this is due to an Astro bug with maintaining persistence. For a temporary solution this please see [this](https://github.com/chrismwilliams/astro-theme-cactus/pull/139/files) request.
+This theme implements optional support for view transitions. Visit `src/site.config.ts` and set `includeViewTransitions` to `true` to include it. View the implementation in `src/layouts/Base.astro`.
 
 ## Deploy
 

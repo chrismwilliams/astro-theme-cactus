@@ -1,7 +1,6 @@
 # build output
 dist/
 .output/
-.data
 
 # dependencies
 node_modules/
