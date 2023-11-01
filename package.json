@@ -19,7 +19,7 @@
 		"@astrojs/tailwind": "^5.0.1",
 		"astro": "3.2.3",
 		"astro-icon": "^0.8.1",
-		"satori": "0.10.8",
+		"satori": "0.10.9",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.32.6"
 	},
