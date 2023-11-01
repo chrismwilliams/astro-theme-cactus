@@ -24,7 +24,7 @@
 		"sharp": "^0.32.6"
 	},
 	"devDependencies": {
-		"@astrojs/check": "^0.2.0",
+		"@astrojs/check": "^0.3.0",
 		"@pagefind/default-ui": "^1.0.3",
 		"@resvg/resvg-js": "^2.4.1",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
