@@ -10,7 +10,7 @@ tags: ["webmentions", "astro", "social"]
 1. Ensure your social media links are added in `src/components/SocialList.astro`, most importantly the email address
 2. Create an account @ [Webmention.io](https://webmention.io/).
 3. Add the link feed to `siteConfig.webmentions`, found in `src/site.config.ts`.
-4. Created an `.env` file, or rename the included `.example.env`, and add the key `WEBMENTION_API_KEY` and set the api key as the value.
+4. Create a `.env` file, or rename the included `.example.env`, and add the key `WEBMENTION_API_KEY` and set the api key as the value.
 5. Go to [brid.gy](https://brid.gy/) and sign-in to each social account[s] you wish to link.
 6. Publish and build your website, remember to add the api key, and it should now be ready to receive webmentions!
 7. That's it, maybe give this post a like!
