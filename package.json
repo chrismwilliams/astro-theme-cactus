@@ -15,7 +15,7 @@
 		"@astrojs/mdx": "^1.1.1",
 		"@astrojs/prefetch": "^0.4.1",
 		"@astrojs/rss": "^3.0.0",
-		"@astrojs/sitemap": "^3.0.1",
+		"@astrojs/sitemap": "^3.0.3",
 		"@astrojs/tailwind": "^5.0.1",
 		"astro": "3.2.3",
 		"astro-icon": "^0.8.1",
