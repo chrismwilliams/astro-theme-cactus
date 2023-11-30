@@ -26,6 +26,9 @@ dependencies:
   astro-icon:
     specifier: ^0.8.1
     version: 0.8.1
+  rehype-external-links:
+    specifier: ^3.0.0
+    version: 3.0.0
   satori:
     specifier: 0.10.8
     version: 0.10.8
@@ -1377,7 +1380,6 @@ packages:
     resolution: {integrity: sha512-hs/iBJx2aydugBQx5ETV3ZgeSS0oIreQrFJ4bjBl0XvM4wAmDjFEALY7p0rTSLt2eL+ibjRAAs9dTPiCLtmbqQ==}
     dependencies:
       '@types/unist': 3.0.0
-    dev: true
 
   /@types/json-schema@7.0.13:
     resolution: {integrity: sha512-RbSSoHliUbnXj3ny0CNFOoxrIDV6SUGyStHsvDqosw6CkdPV8TtWGlfecuK4ToyMEAql6pzNxgCFKanovUzlgQ==}
@@ -1603,6 +1605,10 @@ packages:
       '@typescript-eslint/types': 6.7.4
       eslint-visitor-keys: 3.4.3
     dev: true
+
+  /@ungap/structured-clone@1.2.0:
+    resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
+    dev: false
 
   /@volar/kit@1.10.1(typescript@5.2.2):
     resolution: {integrity: sha512-+aR3rvgER14VfjFflhD6k161uLdshpuK1tQUrnl8phpKtSGJDXHkTl/WkNk2xCEuE4goShS9nTvruTyrI9gGBw==}
@@ -3573,6 +3579,12 @@ packages:
       web-namespaces: 2.0.1
     dev: false
 
+  /hast-util-is-element@3.0.0:
+    resolution: {integrity: sha512-Val9mnv2IWpLbNPqc/pUem+a7Ipj2aHacCwgNfTiK0vJKl0LF+4Ba4+v1oPHFpf3bLYmreq0/l3Gud9S5OH42g==}
+    dependencies:
+      '@types/hast': 3.0.1
+    dev: false
+
   /hast-util-parse-selector@3.1.1:
     resolution: {integrity: sha512-jdlwBjEexy1oGz0aJ2f4GKMaVKkA9jwjr4MjAAI22E5fM/TXVZHuS5OpONtdeIkRKqAaryQ2E9xNQxijoThSZA==}
     dependencies:
@@ -3772,6 +3784,11 @@ packages:
       has: 1.0.3
       side-channel: 1.0.4
     dev: true
+
+  /is-absolute-url@4.0.1:
+    resolution: {integrity: sha512-/51/TKE88Lmm7Gc4/8btclNXWS+g50wXhYJq8HWIBAGUBnoAdRu1aXeh364t/O7wXDAcTJDP8PNuNKWUDWie+A==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: false
 
   /is-alphabetical@2.0.1:
     resolution: {integrity: sha512-FWyyY60MeTNyeSRpkM2Iry0G9hpr7/9kD40mD/cGQEuilcZYS4okz8SN2Q6rLCJ8gbCt6fN+rC+6tMGS99LaxQ==}
@@ -5528,6 +5545,17 @@ packages:
       define-properties: 1.2.0
       functions-have-names: 1.2.3
     dev: true
+
+  /rehype-external-links@3.0.0:
+    resolution: {integrity: sha512-yp+e5N9V3C6bwBeAC4n796kc86M4gJCdlVhiMTxIrJG5UHDMh+PJANf9heqORJbt1nrCbDwIlAZKjANIaVBbvw==}
+    dependencies:
+      '@types/hast': 3.0.1
+      '@ungap/structured-clone': 1.2.0
+      hast-util-is-element: 3.0.0
+      is-absolute-url: 4.0.1
+      space-separated-tokens: 2.0.2
+      unist-util-visit: 5.0.0
+    dev: false
 
   /rehype-parse@8.0.5:
     resolution: {integrity: sha512-Ds3RglaY/+clEX2U2mHflt7NlMA72KspZ0JLUJgBBLpRddBcEw3H8uYZQliQriku22NZpYMfjDdSgHcjxue24A==}
