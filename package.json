@@ -27,7 +27,7 @@
 	"devDependencies": {
 		"@astrojs/check": "^0.2.0",
 		"@pagefind/default-ui": "^1.0.3",
-		"@resvg/resvg-js": "^2.4.1",
+		"@resvg/resvg-js": "^2.6.0",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/typography": "^0.5.10",
 		"@types/eslint": "^8.44.3",
