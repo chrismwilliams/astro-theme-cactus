@@ -12,12 +12,12 @@
 		"check": "astro check"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "^1.1.5",
-		"@astrojs/prefetch": "^0.4.1",
-		"@astrojs/rss": "^3.0.0",
-		"@astrojs/sitemap": "^3.0.3",
-		"@astrojs/tailwind": "^5.0.2",
-		"astro": "3.6.4",
+		"@astrojs/mdx": "2.0.0-beta.0",
+		"@astrojs/prefetch": "0.4.0-beta.0",
+		"@astrojs/rss": "4.0.0-beta.0",
+		"@astrojs/sitemap": "3.0.0-beta.0",
+		"@astrojs/tailwind": "6.0.0-beta.0",
+		"astro": "4.0.0-beta.4",
 		"astro-icon": "^0.8.1",
 		"rehype-external-links": "^3.0.0",
 		"satori": "0.10.11",
