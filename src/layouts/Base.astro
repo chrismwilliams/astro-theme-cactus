@@ -21,13 +21,8 @@ const {
 <html lang={siteConfig.lang}>
 	<head>
 		<BaseHead title={title} description={description} ogImage={ogImage} articleDate={articleDate} />
-		{
-			/* 
-			Set a fallback set -> https://docs.astro.build/en/guides/view-transitions/#fallback-control
-			This is set to false by default in src/site.config.ts 
-			*/
-		}
-		{siteConfig.includeViewTransitions && <ViewTransitions />}
+		
+		<ViewTransitions />
 	</head>
 	<body>
 		<ThemeProvider />
