@@ -2,43 +2,43 @@
 	import { rootHasDarkClass } from "@/utils";
 
 	class ThemeToggle extends HTMLElement {
+		private button: HTMLButtonElement;
+
 		constructor() {
 			super();
-			const button = this.querySelector("button") as HTMLButtonElement;
+			this.button = this.querySelector("button") as HTMLButtonElement;
 			const root = document.documentElement;
 
-			if (button) {
-				// set inital aria-pressed value
-				button.setAttribute("aria-pressed", String(rootHasDarkClass()));
+			// set inital aria-pressed value
+			this.button.setAttribute("aria-pressed", String(rootHasDarkClass()));
 
-				// MutationObserver for html class changes, as the theme could be changed elsewhere
-				const observer = new MutationObserver((mutationsList) => {
-					for (const mutation of mutationsList) {
-						if (mutation.type === "attributes" && mutation.attributeName === "class") {
-							const rootIsDark = (mutation.target as Element).classList.contains("dark");
-							button.setAttribute("aria-pressed", String(rootIsDark));
-						}
+			// MutationObserver for html class changes, as the theme could be changed elsewhere
+			const observer = new MutationObserver((mutationsList) => {
+				for (const mutation of mutationsList) {
+					if (mutation.type === "attributes" && mutation.attributeName === "class") {
+						const rootIsDark = (mutation.target as Element).classList.contains("dark");
+						this.button.setAttribute("aria-pressed", String(rootIsDark));
 					}
-				});
-				observer.observe(root, { attributeFilter: ["class"] });
+				}
+			});
+			observer.observe(root, { attributeFilter: ["class"] });
 
-				// button clicked, fire event
-				button.addEventListener("click", (e) => {
-					if (e.currentTarget instanceof HTMLButtonElement) {
-						let isDark = rootHasDarkClass();
-
-						// invert theme
-						let themeChangeEvent = new CustomEvent("theme-change", {
-							detail: {
-								theme: isDark ? "light" : "dark",
-							},
-						});
-						// dispatch event -> ThemeProvider.astro
-						document.dispatchEvent(themeChangeEvent);
-					}
-				});
-			}
+			// button clicked, fire event
+			this.button.addEventListener("click", this.handleThemeBtnClick);
 		}
+
+		handleThemeBtnClick = () => {
+			let isDark = rootHasDarkClass();
+
+			// invert theme
+			let themeChangeEvent = new CustomEvent("theme-change", {
+				detail: {
+					theme: isDark ? "light" : "dark",
+				},
+			});
+			// dispatch event -> ThemeProvider.astro
+			document.dispatchEvent(themeChangeEvent);
+		};
 	}
 
 	customElements.define("theme-toggle", ThemeToggle);
