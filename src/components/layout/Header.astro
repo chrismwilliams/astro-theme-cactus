@@ -10,24 +10,24 @@ const url = new URL(Astro.request.url);
 	import { toggleClass } from "@/utils";
 
 	class MobileNavBtn extends HTMLElement {
+		private headerEl: HTMLElement;
+		private mobileButtonEl: HTMLButtonElement;
+		private menuOpen: boolean;
+
 		constructor() {
 			super();
-			const headerEl = document.getElementById("main-header")!;
-			const mobileButtonEl = document.getElementById("toggle-navigation-menu") as HTMLButtonElement;
-			let menuOpen = false;
+			this.headerEl = document.getElementById("main-header")!;
+			this.mobileButtonEl = document.getElementById("toggle-navigation-menu") as HTMLButtonElement;
+			this.menuOpen = false;
 
-			function toggleMobileMenu() {
-				toggleClass(headerEl, "menu-open");
-				menuOpen = !menuOpen;
-				mobileButtonEl.setAttribute("aria-expanded", menuOpen.toString());
-			}
-
-			mobileButtonEl.addEventListener("click", toggleMobileMenu);
-
-			document.addEventListener("astro:after-swap", () => {
-				if (menuOpen) toggleMobileMenu();
-			});
+			this.mobileButtonEl.addEventListener("click", this.toggleMobileMenu);
 		}
+
+		toggleMobileMenu = () => {
+			toggleClass(this.headerEl, "menu-open");
+			this.menuOpen = !this.menuOpen;
+			this.mobileButtonEl.setAttribute("aria-expanded", this.menuOpen.toString());
+		};
 	}
 
 	customElements.define("mobile-button", MobileNavBtn);
