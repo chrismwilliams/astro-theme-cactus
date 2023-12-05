@@ -61,17 +61,25 @@
 
 	class ThemeToggle extends HTMLElement {
 		private button: HTMLButtonElement;
+		private observer: MutationObserver | null;
 
 		constructor() {
 			super();
 			this.button = this.querySelector("button") as HTMLButtonElement;
-			const root = document.documentElement;
+			this.observer = null;
 
 			// set inital aria-pressed value
 			this.button.setAttribute("aria-pressed", String(rootHasDarkClass()));
 
+			// button clicked, fire event
+			this.button.addEventListener("click", this.handleThemeBtnClick);
+		}
+
+		connectedCallback() {
+			const root = document.documentElement;
+
 			// MutationObserver for html class changes, as the theme could be changed elsewhere
-			const observer = new MutationObserver((mutationsList) => {
+			this.observer = new MutationObserver((mutationsList) => {
 				for (const mutation of mutationsList) {
 					if (mutation.type === "attributes" && mutation.attributeName === "class") {
 						const rootIsDark = (mutation.target as Element).classList.contains("dark");
@@ -79,10 +87,11 @@
 					}
 				}
 			});
-			observer.observe(root, { attributeFilter: ["class"] });
+			this.observer.observe(root, { attributeFilter: ["class"] });
+		}
 
-			// button clicked, fire event
-			this.button.addEventListener("click", this.handleThemeBtnClick);
+		disconnectedCallback() {
+			this.observer?.disconnect();
 		}
 
 		handleThemeBtnClick = () => {
