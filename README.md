@@ -19,9 +19,8 @@ Astro Cactus is a simple opinionated starter built with the Astro framework. Use
    - [Frontmatter](#frontmatter)
 8. [Pagefind search](#pagefind-search)
 9. [Analytics](#analytics)
-10. [View Transitions](#view-transitions)
-11. [Deploy](#deploy)
-12. [Acknowledgment](#acknowledgment)
+10. [Deploy](#deploy)
+11. [Acknowledgment](#acknowledgment)
 
 ## Key Features
 
@@ -151,14 +150,10 @@ import { GoogleAnalytics } from "astro-google-analytics";
 ---
 
 <head>
- <!-- Replace id with your own Google Analytics ID -->
- <GoogleAnalytics id="G-XXXXXXXXXX" />
+	<!-- Replace id with your own Google Analytics ID -->
+	<GoogleAnalytics id="G-XXXXXXXXXX" />
 </head>
 ```
-
-## View Transitions
-
-This theme implements optional support for view transitions. Visit `src/site.config.ts` and set `includeViewTransitions` to `true` to include it. View the implementation in `src/layouts/Base.astro`.
 
 ## Deploy
 
