@@ -12,7 +12,7 @@ import "@pagefind/default-ui/css/ui.css";
 	>
 		<svg
 			aria-label="search"
-			class="h-6 w-6"
+			class="h-7 w-7"
 			xmlns="http://www.w3.org/2000/svg"
 			width="16"
 			height="16"
@@ -57,74 +57,79 @@ import "@pagefind/default-ui/css/ui.css";
 
 <script>
 	class SiteSearch extends HTMLElement {
+		private openBtn: HTMLButtonElement;
+		private closeBtn: HTMLButtonElement;
+		private dialog: HTMLDialogElement;
+		private dialogFrame: HTMLDivElement;
+
 		constructor() {
 			super();
-			const openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
-			const closeBtn = this.querySelector<HTMLButtonElement>("button[data-close-modal]")!;
-			const dialog = this.querySelector("dialog")!;
-			const dialogFrame = this.querySelector(".dialog-frame")!;
+			this.openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
+			this.closeBtn = this.querySelector<HTMLButtonElement>("button[data-close-modal]")!;
+			this.dialog = this.querySelector("dialog")!;
+			this.dialogFrame = this.querySelector(".dialog-frame")!;
 
-			const onWindowClick = (event: MouseEvent) => {
-				// check if it's a link
-				const isLink = "href" in (event.target || {});
-				// make sure the click is either a link or outside of the dialog
-				if (
-					isLink ||
-					(document.body.contains(event.target as Node) &&
-						!dialogFrame.contains(event.target as Node))
-				)
-					closeModal();
-			};
+			this.openBtn.addEventListener("click", this.openModal);
+			this.openBtn.disabled = false;
+			this.closeBtn.addEventListener("click", this.closeModal);
+		}
 
-			const openModal = (event?: MouseEvent) => {
-				dialog.showModal();
-				this.querySelector("input")?.focus();
-				event?.stopPropagation();
-				window.addEventListener("click", onWindowClick);
-			};
+		connectedCallback() {
+			// Listen for keyboard shortcut
+			window.addEventListener("keydown", this.onWindowKeydown);
 
-			const closeModal = () => {
-				if (dialog.open) {
-					dialog.close();
-					window.removeEventListener("click", onWindowClick);
-				}
-			};
-
-			openBtn.addEventListener("click", openModal);
-			openBtn.disabled = false;
-			closeBtn.addEventListener("click", closeModal);
-
-			// Listen for `/` keyboard shortcut
-			window.addEventListener("keydown", (e) => {
-				if (e.key === "/" && !dialog.open) {
-					openModal();
-					e.preventDefault();
-				}
-			});
-
-			window.addEventListener("DOMContentLoaded", () => {
-				if (import.meta.env.DEV) return;
-				const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
-				onIdle(async () => {
-					const { PagefindUI } = await import("@pagefind/default-ui");
-					new PagefindUI({
-						element: "#cactus__search",
-						baseUrl: import.meta.env.BASE_URL,
-						bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
-						showImages: false,
-						showSubResults: true,
-					});
+			// only add pagefind in production
+			if (import.meta.env.DEV) return;
+			const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+			onIdle(async () => {
+				const { PagefindUI } = await import("@pagefind/default-ui");
+				new PagefindUI({
+					element: "#cactus__search",
+					baseUrl: import.meta.env.BASE_URL,
+					bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
+					showImages: false,
+					showSubResults: true,
 				});
 			});
-
-			// close modal and clear input on view-transtion
-			document.addEventListener("astro:after-swap", () => {
-				// clear the search field
-				(document.querySelector(".pagefind-ui__search-clear") as HTMLButtonElement)?.click();
-				// close the modal & remove event listener on body
-				closeModal();
-			});
 		}
+
+		disconnectedCallback() {
+			window.removeEventListener("keydown", this.onWindowKeydown);
+		}
+
+		onWindowClick = (event: MouseEvent) => {
+			// check if it's a link
+			const isLink = "href" in (event.target || {});
+			// make sure the click is either a link or outside of the dialog
+			if (
+				isLink ||
+				(document.body.contains(event.target as Node) &&
+					!this.dialogFrame.contains(event.target as Node))
+			)
+				this.closeModal();
+		};
+
+		onWindowKeydown = (e: KeyboardEvent) => {
+			// check if it's the / key
+			if (e.key === "/" && !this.dialog.open) {
+				this.openModal();
+				e.preventDefault();
+			}
+		};
+
+		openModal = (event?: MouseEvent) => {
+			this.dialog.showModal();
+			this.querySelector("input")?.focus();
+			event?.stopPropagation();
+			window.addEventListener("click", this.onWindowClick);
+		};
+
+		closeModal = () => {
+			if (this.dialog.open) {
+				this.dialog.close();
+				window.removeEventListener("click", this.onWindowClick);
+			}
+		};
 	}
 
 	customElements.define("site-search", SiteSearch);

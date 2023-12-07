@@ -3,7 +3,6 @@ import fs from "fs";
 import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-import prefetch from "@astrojs/prefetch";
 import remarkUnwrapImages from "remark-unwrap-images";
 import rehypeExternalLinks from "rehype-external-links";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
@@ -29,7 +28,6 @@ export default defineConfig({
 			applyBaseStyles: false,
 		}),
 		sitemap(),
-		prefetch(),
 	],
 	image: {
 		domains: ["webmention.io"],
