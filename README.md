@@ -24,7 +24,7 @@ Astro Cactus is a simple opinionated starter built with the Astro framework. Use
 
 ## Key Features
 
-- Astro v3 Fast 🚀
+- Astro v4 Fast 🚀
 - TailwindCSS Utility classes
 - Accessible, semantic HTML markup
 - Responsive & SEO-friendly
