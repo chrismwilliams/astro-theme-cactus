@@ -1,6 +1,6 @@
 {
 	"name": "astro-cactus",
-	"version": "3.5.1",
+	"version": "3.6.0",
 	"private": false,
 	"scripts": {
 		"dev": "astro dev",
