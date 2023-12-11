@@ -14,7 +14,7 @@ const postDate = post.data.updatedDate ?? post.data.publishDate;
 
 <FormattedDate date={postDate} class="min-w-[120px] text-gray-600 dark:text-gray-400" />
 <Tag>
-  {post.data.draft && <span class="text-red-500">(Draft) </span>}
+	{post.data.draft && <span class="text-red-500">(Draft) </span>}
 	<a href={`/posts/${post.slug}/`} class="cactus-link" data-astro-prefetch>
 		{post.data.title}
 	</a>
