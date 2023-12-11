@@ -53,7 +53,7 @@ const postDate = project.data.updatedDate ?? project.data.publishDate;
 					<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 					<path d="M6 9h-.01" />
 				</svg>
-				{project.data.tags.map((tag, i) => (
+				{project.data.tags.map((tag: string, i: number) => (
 					<>
 						<a
 							class="cactus-link inline-block before:content-['#']"
