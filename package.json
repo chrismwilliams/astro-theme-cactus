@@ -8,7 +8,7 @@
 		"build": "astro build",
 		"postbuild": "pagefind --site dist",
 		"preview": "astro preview",
-		"format": "prettier -w --cache .",
+		"format": "prettier -w --cache . && prettier -w --cache **/*.astro",
 		"check": "astro check"
 	},
 	"dependencies": {
