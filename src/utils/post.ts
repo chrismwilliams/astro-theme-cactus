@@ -8,7 +8,7 @@ export async function getAllPosts() {
 	});
 }
 
-export function sortMDByDate(posts: Array<CollectionEntry<"post">>) {
+export function sortPostsByDate(posts: Array<CollectionEntry<"post">>) {
 	return posts.sort((a, b) => {
 		const aDate = new Date(a.data.updatedDate ?? a.data.publishDate).valueOf();
 		const bDate = new Date(b.data.updatedDate ?? b.data.publishDate).valueOf();
@@ -22,12 +22,12 @@ export function getAllTags(posts: Array<CollectionEntry<"post">>) {
 }
 
 /** Note: This function doesn't filter draft posts, pass it the result of getAllPosts above to do so. */
-export function getUniqueTags(posts: Array<CollectionEntry<"post">>) {
+export function getUniquePostTags(posts: Array<CollectionEntry<"post">>) {
 	return [...new Set(getAllTags(posts))];
 }
 
 /** Note: This function doesn't filter draft posts, pass it the result of getAllPosts above to do so. */
-export function getUniqueTagsWithCount(
+export function getUniquePostTagsWithCount(
 	posts: Array<CollectionEntry<"post">>,
 ): Array<[string, number]> {
 	return [

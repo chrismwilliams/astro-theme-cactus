@@ -1,0 +1,84 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import FormattedDate from "../FormattedDate.astro";
+
+interface Props {
+	content: CollectionEntry<"project">;
+}
+
+const {
+	content: { data, render },
+} = Astro.props;
+
+const { remarkPluginFrontmatter } = await render();
+
+const dateTimeOptions: Intl.DateTimeFormatOptions = {
+	month: "long",
+};
+---
+
+{
+	data.coverImage && (
+		<div class="aspect-h-9 aspect-w-16 mb-6">
+			<Image
+				src={data.coverImage.src}
+				alt={data.coverImage.alt}
+				class="object-cover"
+				loading="eager"
+				fetchpriority="high"
+			/>
+		</div>
+	)
+}
+<h1 class="title mb-3 sm:mb-1">{data.title}</h1>
+<div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+	<p class="font-semibold">
+		<FormattedDate date={data.publishDate} dateTimeOptions={dateTimeOptions} /> /{" "}
+		{remarkPluginFrontmatter.minutesRead}
+	</p>
+	{
+		data.updatedDate && (
+			<span class="rounded-lg bg-quote/10 p-1 text-quote">
+				Last Updated:
+				<FormattedDate class="ms-1" date={data.updatedDate} dateTimeOptions={dateTimeOptions} />
+			</span>
+		)
+	}
+</div>
+{
+	!!data.tags?.length && (
+		<div class="mt-3">
+			<svg
+				aria-hidden="true"
+				focusable="false"
+				xmlns="http://www.w3.org/2000/svg"
+				class="me-1 inline-block h-6 w-6"
+				viewBox="0 0 24 24"
+				stroke-width="1.5"
+				stroke="currentColor"
+				fill="none"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			>
+				<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+				<path d="M7.859 6h-2.834a2.025 2.025 0 0 0 -2.025 2.025v2.834c0 .537 .213 1.052 .593 1.432l6.116 6.116a2.025 2.025 0 0 0 2.864 0l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-6.117 -6.116a2.025 2.025 0 0 0 -1.431 -.593z" />
+				<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
+				<path d="M6 9h-.01" />
+			</svg>
+			{data.tags.map((tag, i) => (
+				<>
+					<a
+						class="cactus-link inline-block before:content-['#']"
+						aria-label={`View more blogs with the tag ${tag}`}
+						href={`/tags/${tag}/`}
+						data-pagefind-filter="tag"
+					>
+						{tag}
+					</a>
+					{i < data.tags.length - 1 && ", "}
+				</>
+			))}
+		</div>
+	)
+}

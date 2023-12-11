@@ -2,11 +2,11 @@
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
 import SocialList from "@/components/SocialList";
-import { getAllPosts, sortMDByDate } from "@/utils";
+import { getAllPosts, sortPostsByDate } from "@/utils";
 
-const MAX_POSTS = 10;
+const MAX_POSTS = 5;
 const allPosts = await getAllPosts();
-const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+const allPostsByDate = sortPostsByDate(allPosts).slice(0, MAX_POSTS);
 
 const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 	{
@@ -54,16 +54,23 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<h1 class="title mb-6">Hello World!</h1>
+		<h1 class="title mb-6">Howdy, stranger!</h1>
 		<p class="mb-4">
-			Hi, I’m a theme for Astro, an example of how you can use this starter to create a personal
-			blog. If you want to know more about how you can customise me, add more posts, and make it
-			your own, click on the github icon link below and it will take you to my repo.
+			This site houses some of my <a href="/posts" class="cactus-link">learnings</a> and <a
+				href="/projects"
+				class="cactus-link">projects</a
+			> surrounding games development.<br />Or toilet thoughts. Like my own digital garden.
+		</p>
+		<p class="mb-4">
+			If you would like to know a bit more about what I do, please click <a
+				href="/about/"
+				class="cactus-link">here</a
+			>.
 		</p>
 		<SocialList />
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="title mb-4 text-xl">Posts</h2>
+		<h2 class="title mb-4 text-xl">Recent Posts</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{
 				allPostsByDate.map((p) => (
@@ -75,7 +82,7 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		</ul>
 	</section>
 	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">Technologies</h2>
+		<h2 class="title mb-4 text-xl">technologies</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{
 				cactusTech.map(({ href, title, desc }) => (
@@ -87,8 +94,8 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 							class="cactus-link inline-block"
 						>
 							{title}
-						</a>: 
-						<p class="inline-block sm:mt-2">{desc}</p>
+						</a>
+						:<p class="inline-block sm:mt-2">{desc}</p>
 					</li>
 				))
 			}

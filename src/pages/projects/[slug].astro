@@ -1,0 +1,22 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import ProjectLayout from "@/layouts/ProjectPost";
+import { getAllProjects } from "@/utils";
+
+export const getStaticPaths = (async () => {
+	const blogEntries = await getAllProjects();
+	return blogEntries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<ProjectLayout project={entry}>
+	<Content />
+</ProjectLayout>
