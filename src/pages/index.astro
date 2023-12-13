@@ -7,54 +7,11 @@ import { getAllPosts, sortPostsByDate } from "@/utils";
 const MAX_POSTS = 5;
 const allPosts = await getAllPosts();
 const allPostsByDate = sortPostsByDate(allPosts).slice(0, MAX_POSTS);
-
-const cactusTech: Array<{ title: string; desc: string; href: string }> = [
-	{
-		title: "Astro",
-		desc: "Build fast websites, faster.",
-		href: "https://astro.build",
-	},
-	{
-		title: "Astro Assets",
-		desc: "Built-in optimized asset support.",
-		href: "https://docs.astro.build/en/guides/assets/",
-	},
-	{
-		title: "Tailwind CSS",
-		desc: "Rapidly build modern websites without ever leaving your HTML.",
-		href: "https://tailwindcss.com",
-	},
-	{
-		title: "Markdown",
-		desc: "Simple and easy-to-use markup language.",
-		href: "https://www.markdownguide.org/",
-	},
-	{
-		title: "MDX",
-		desc: "Markdown for the component era.",
-		href: "https://mdxjs.com/",
-	},
-	{
-		title: "Satori",
-		desc: "Generating png Open Graph images for blog posts.",
-		href: "https://github.com/vercel/satori",
-	},
-	{
-		title: "Pagefind",
-		desc: "A fully static search library.",
-		href: "https://pagefind.app/",
-	},
-	{
-		title: "Astro Icon",
-		desc: "An easy to use Icon component for Astro.",
-		href: "https://github.com/natemoo-re/astro-icon#readme",
-	},
-];
 ---
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<h1 class="title mb-6">Howdy, stranger!</h1>
+		<h1 class="title mb-6">Ahoy, stranger</h1>
 		<p class="mb-4">
 			This site houses some of my <a href="/posts" class="cactus-link">learnings</a> and <a
 				href="/projects"
@@ -67,6 +24,10 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 				class="cactus-link">here</a
 			>.
 		</p>
+		<p class="mb-4">
+			Just a notice -- this website is WIP at the moment, so it is a little empty. 🌚
+		</p>
+
 		<SocialList />
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
@@ -76,26 +37,6 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 				allPostsByDate.map((p) => (
 					<li class="flex flex-col gap-x-2 sm:flex-row">
 						<PostPreview post={p} />
-					</li>
-				))
-			}
-		</ul>
-	</section>
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">technologies</h2>
-		<ul class="space-y-4 sm:space-y-2">
-			{
-				cactusTech.map(({ href, title, desc }) => (
-					<li>
-						<a
-							href={href}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="cactus-link inline-block"
-						>
-							{title}
-						</a>
-						:<p class="inline-block sm:mt-2">{desc}</p>
 					</li>
 				))
 			}
