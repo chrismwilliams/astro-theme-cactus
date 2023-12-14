@@ -1,0 +1,24 @@
+---
+import PostPreview from "@/components/blog/PostPreview";
+import { type CollectionEntry, getEntries } from "astro:content";
+
+type Props = {
+	project: CollectionEntry<"project">;
+};
+
+const { project } = Astro.props;
+const relatedPosts = project.data.relatedPosts ? await getEntries(project.data.relatedPosts) : [];
+---
+
+<section aria-label="Blog post list" class="mt-4">
+	<ul class="space-y-4 sm:space-y-2">
+		{
+			relatedPosts.length > 0 &&
+				relatedPosts.map((p) => (
+					<li class="flex flex-col gap-x-2 sm:flex-row">
+						<PostPreview post={p} />
+					</li>
+				))
+		}
+	</ul>
+</section>

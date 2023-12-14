@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection, reference } from "astro:content";
 
 function removeDupsAndLowerCase(array: string[]) {
 	if (!array.length) return array;
@@ -56,6 +56,7 @@ const project = defineCollection({
 			draft: z.boolean().default(false),
 			tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
 			ogImage: z.string().optional(),
+			relatedPosts: z.array(reference("post")).optional(),
 		}),
 });
 

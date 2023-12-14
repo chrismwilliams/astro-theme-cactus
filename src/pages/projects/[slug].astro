@@ -2,6 +2,7 @@
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import ProjectLayout from "@/layouts/ProjectPost";
 import { getAllProjects } from "@/utils";
+import RelatedPosts from "@/components/projects/RelatedPosts";
 
 export const getStaticPaths = (async () => {
 	const blogEntries = await getAllProjects();
@@ -19,4 +20,5 @@ const { Content } = await entry.render();
 
 <ProjectLayout project={entry}>
 	<Content />
+	<RelatedPosts project={entry} />
 </ProjectLayout>
