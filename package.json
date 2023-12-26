@@ -19,6 +19,8 @@
 		"astro": "4.0.3",
 		"astro-icon": "^0.8.2",
 		"rehype-external-links": "^3.0.0",
+		"rehype-katex": "^7.0.0",
+		"remark-math": "^6.0.0",
 		"satori": "0.10.11",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.33.0"

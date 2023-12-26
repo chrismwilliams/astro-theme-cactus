@@ -3,6 +3,8 @@ import fs from "fs";
 import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import remarkUnwrapImages from "remark-unwrap-images";
 import rehypeExternalLinks from "rehype-external-links";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
@@ -12,9 +14,14 @@ export default defineConfig({
 	// ! Please remember to replace the following site property with your own domain
 	site: "https://astro-cactus.chriswilliams.dev/",
 	markdown: {
-		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
+		remarkPlugins: [
+			remarkUnwrapImages,
+			remarkReadingTime,
+			[remarkMath, { singleDollarTextMath: false }],
+		],
 		rehypePlugins: [
 			[rehypeExternalLinks, { target: "_blank", rel: ["nofollow, noopener, noreferrer"] }],
+			rehypeKatex,
 		],
 		remarkRehype: { footnoteLabelProperties: { className: [""] } },
 		shikiConfig: {
