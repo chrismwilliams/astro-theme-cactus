@@ -35,6 +35,11 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		href: "https://mdxjs.com/",
 	},
 	{
+		title: "KaTeX",
+		desc: "The fastest math typesetting library for the web.",
+		href: "https://katex.org/",
+	},
+	{
 		title: "Satori",
 		desc: "Generating png Open Graph images for blog posts.",
 		href: "https://github.com/vercel/satori",
@@ -87,8 +92,8 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 							class="cactus-link inline-block"
 						>
 							{title}
-						</a>: 
-						<p class="inline-block sm:mt-2">{desc}</p>
+						</a>
+						:<p class="inline-block sm:mt-2">{desc}</p>
 					</li>
 				))
 			}
