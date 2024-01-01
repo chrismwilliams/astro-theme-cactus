@@ -15,7 +15,7 @@
 		"@astrojs/mdx": "2.0.0",
 		"@astrojs/rss": "4.0.1",
 		"@astrojs/sitemap": "3.0.3",
-		"@astrojs/tailwind": "5.0.3",
+		"@astrojs/tailwind": "5.1.0",
 		"astro": "4.0.3",
 		"astro-icon": "^0.8.2",
 		"rehype-external-links": "^3.0.0",
