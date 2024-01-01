@@ -1,4 +1,4 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
 
 settings:
   autoInstallPeers: true
@@ -110,8 +110,8 @@ devDependencies:
     specifier: 0.12.2
     version: 0.12.2
   prettier-plugin-tailwindcss:
-    specifier: ^0.5.9
-    version: 0.5.9(prettier-plugin-astro@0.12.2)(prettier@3.1.0)
+    specifier: ^0.5.10
+    version: 0.5.10(prettier-plugin-astro@0.12.2)(prettier@3.1.0)
   reading-time:
     specifier: ^1.5.0
     version: 1.5.0
@@ -5492,8 +5492,8 @@ packages:
       sass-formatter: 0.7.8
     dev: true
 
-  /prettier-plugin-tailwindcss@0.5.9(prettier-plugin-astro@0.12.2)(prettier@3.1.0):
-    resolution: {integrity: sha512-9x3t1s2Cjbut2QiP+O0mDqV3gLXTe2CgRlQDgucopVkUdw26sQi53p/q4qvGxMLBDfk/dcTV57Aa/zYwz9l8Ew==}
+  /prettier-plugin-tailwindcss@0.5.10(prettier-plugin-astro@0.12.2)(prettier@3.1.0):
+    resolution: {integrity: sha512-9UGSejqFxGG6brYjFfTYlJ8zs4L/lvZg1AngFfaC5Fs1otSskASv5IWKmjPu5MlABQUtTKtMArKyYr/hWpXSUg==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
