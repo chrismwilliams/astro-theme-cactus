@@ -46,7 +46,7 @@
 		"postcss": "^8.4.32",
 		"postcss-html": "^1.5.0",
 		"postcss-import": "^15.1.0",
-		"prettier": "^3.1.0",
+		"prettier": "^3.1.1",
 		"prettier-plugin-astro": "0.12.2",
 		"prettier-plugin-tailwindcss": "^0.5.9",
 		"reading-time": "^1.5.0",
