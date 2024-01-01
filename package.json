@@ -40,7 +40,7 @@
 		"eslint-plugin-astro": "^0.30.0",
 		"eslint-plugin-import": "^2.29.0",
 		"eslint-plugin-jsx-a11y": "^6.8.0",
-		"eslint-plugin-prettier": "^5.0.1",
+		"eslint-plugin-prettier": "^5.1.2",
 		"mdast-util-to-string": "^4.0.0",
 		"pagefind": "^1.0.4",
 		"postcss": "^8.4.32",
