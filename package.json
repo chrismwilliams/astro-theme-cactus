@@ -38,7 +38,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-import-resolver-typescript": "^3.6.1",
 		"eslint-plugin-astro": "^0.30.0",
-		"eslint-plugin-import": "^2.29.0",
+		"eslint-plugin-import": "^2.29.1",
 		"eslint-plugin-jsx-a11y": "^6.8.0",
 		"eslint-plugin-prettier": "^5.0.1",
 		"mdast-util-to-string": "^4.0.0",
