@@ -62,11 +62,14 @@ const comments = mentions.filter(
 								<p class="my-0 line-clamp-1 font-semibold text-accent-2">{mention.author?.name}</p>
 								<a
 									href={mention.url}
+									aria-labelledby="cmt-source"
 									class="not-prose hover:text-link"
 									target="_blank"
 									rel="noopener noreferrer"
-									title="Vist the source of this mention"
 								>
+									<span id="cmt-source" class="hidden">
+										Vist the source of this webmention
+									</span>
 									<Icon
 										class="h-5 w-5"
 										name="mdi:open-in-new"
