@@ -76,10 +76,7 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 						aria-label={`View more blogs with the tag ${tag}`}
 						href={`/tags/${tag}/`}
 						data-pagefind-filter="tag"
-					>
-						{tag}
-					</a>
-					{i < data.tags.length - 1 && ", "}
+					>{tag}</a>{i < data.tags.length - 1 && ", "}
 				</>
 			))}
 		</div>

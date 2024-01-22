@@ -35,10 +35,10 @@ Astro Cactus is a simple opinionated starter built with the Astro framework. Use
 - Pagination
 - [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
 - [Webmentions](https://webmention.io/)
-- Shiki code syntax styling
 - Auto-generated [sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
 - [Pagefind](https://pagefind.app/) static search library integration
 - [Astro Icon](https://github.com/natemoo-re/astro-icon) svg icon component
+- [Expressive Code](https://expressive-code.com/) source code and syntax highlighter
 
 ## Demo 💻
 

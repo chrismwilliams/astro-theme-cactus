@@ -2,6 +2,7 @@
 title: "A post of Markdown elements"
 description: "This post is for testing and listing a number of different markdown elements"
 publishDate: "22 Feb 2023"
+updatedDate: 22 Jan 2024
 tags: ["test", "markdown"]
 ---
 
@@ -104,6 +105,34 @@ var foo = function (bar) {
 
 console.log(foo(5));
 ```
+
+### Expressive code examples
+
+Adding a title
+
+```js title="file.js"
+console.log("Title example");
+```
+
+A bash terminal
+
+```bash
+echo "A base terminal example"
+```
+
+Highlighting code lines
+
+```js title="line-markers.js" del={2} ins={3-4} {6}
+function demo() {
+	console.log("this line is marked as deleted");
+	// This line and the next one are marked as inserted
+	console.log("this is the second inserted line");
+
+	return "this line uses the neutral default marker type";
+}
+```
+
+[Expressive Code](https://expressive-code.com/) can do a ton more than shown here, and includes a lot of [customisation](https://expressive-code.com/reference/configuration/).
 
 ## Tables
 
