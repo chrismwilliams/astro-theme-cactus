@@ -6,7 +6,26 @@ import sitemap from "@astrojs/sitemap";
 import remarkUnwrapImages from "remark-unwrap-images";
 import rehypeExternalLinks from "rehype-external-links";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
-import icon from "astro-icon"
+import icon from "astro-icon";
+import expressiveCode, { type AstroExpressiveCodeOptions } from "astro-expressive-code";
+
+// https://expressive-code.com/reference/configuration/
+const expressiveCodeOptions: AstroExpressiveCodeOptions = {
+	themes: ["dracula"],
+	useThemedScrollbars: false,
+	styleOverrides: {
+		frames: {
+			frameBoxShadowCssValue: "none",
+		},
+		uiLineHeight: "inherit",
+		codeFontSize: "0.875rem",
+		codeLineHeight: "1.7142857rem",
+		borderRadius: "4px",
+		codePaddingInline: "1rem",
+		codeFontFamily:
+			'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+	},
+};
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,21 +34,28 @@ export default defineConfig({
 	markdown: {
 		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
 		rehypePlugins: [
-			[rehypeExternalLinks, { target: "_blank", rel: ["nofollow, noopener, noreferrer"] }],
+			[
+				rehypeExternalLinks,
+				{
+					target: "_blank",
+					rel: ["nofollow, noopener, noreferrer"],
+				},
+			],
 		],
-		remarkRehype: { footnoteLabelProperties: { className: [""] } },
-		shikiConfig: {
-			theme: "dracula",
-			wrap: true,
+		remarkRehype: {
+			footnoteLabelProperties: {
+				className: [""],
+			},
 		},
 	},
 	integrations: [
-		mdx({}),
+		expressiveCode(expressiveCodeOptions),
+		icon(),
 		tailwind({
 			applyBaseStyles: false,
 		}),
 		sitemap(),
-		icon(),
+		mdx({}),
 	],
 	image: {
 		domains: ["webmention.io"],
@@ -43,7 +69,6 @@ export default defineConfig({
 		},
 	},
 });
-
 function rawFonts(ext: Array<string>) {
 	return {
 		name: "vite-plugin-raw-fonts",
