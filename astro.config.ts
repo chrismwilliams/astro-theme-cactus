@@ -6,7 +6,7 @@ import sitemap from "@astrojs/sitemap";
 import remarkUnwrapImages from "remark-unwrap-images";
 import rehypeExternalLinks from "rehype-external-links";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
-import icon from "astro-icon"
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,10 +18,6 @@ export default defineConfig({
 			[rehypeExternalLinks, { target: "_blank", rel: ["nofollow, noopener, noreferrer"] }],
 		],
 		remarkRehype: { footnoteLabelProperties: { className: [""] } },
-		shikiConfig: {
-			theme: "dracula",
-			wrap: true,
-		},
 		shikiConfig: {
 			theme: "dracula",
 			wrap: true,
