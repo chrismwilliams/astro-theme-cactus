@@ -10,7 +10,8 @@
 			"@/utils": ["src/utils/index.ts"],
 			"@/stores/*": ["src/stores/*"],
 			"@/types": ["src/types.ts"],
-			"@/site-config": ["src/site.config.ts"]
+			"@/site-config": ["src/site.config.ts"],
+			"@/katex": ["node_modules/.pnpm/rehype-katex@7.0.0/node_modules/katex/dist/katex.min.css"]
 		}
 	},
 	"include": ["src", "*.ts"],

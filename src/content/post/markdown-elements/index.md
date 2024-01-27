@@ -78,6 +78,16 @@ Start numbering with offset:
 57. foo
 1. bar
 
+## Math
+
+An example in display mode:
+
+$$
+\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}
+$$
+
+An example of $$\LaTeX$$ inline with text $$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$
+
 ## Code
 
 Inline `code`

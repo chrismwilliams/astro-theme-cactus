@@ -39,6 +39,7 @@ Astro Cactus is a simple opinionated starter built with the Astro framework. Use
 - Auto-generated [sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
 - [Pagefind](https://pagefind.app/) static search library integration
 - [Astro Icon](https://github.com/natemoo-re/astro-icon) svg icon component
+- [KaTeX](https://katex.org/) integration for math rendering
 
 ## Demo 💻
 
