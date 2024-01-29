@@ -1,10 +1,9 @@
 <theme-toggle class="ms-2 sm:ms-4">
 	<button
 		type="button"
-		id="toggle-theme"
 		class="relative h-9 w-9 rounded-md p-2 ring-zinc-400 transition-all hover:ring-2"
-		aria-label="Toggle Dark Mode"
 	>
+		<span class="sr-only">Dark Theme</span>
 		<svg
 			id="sun-svg"
 			class="absolute start-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-100 opacity-100 transition-all dark:scale-0 dark:opacity-0"
@@ -57,55 +56,43 @@
 </theme-toggle>
 
 <script>
-	import { rootHasDarkClass } from "@/utils";
+	// Note that if you fire the theme-change event outside of this component, it will not be reflected in the button's aria-checked attribute
+	import { rootInDarkMode } from "@/utils";
 
 	class ThemeToggle extends HTMLElement {
-		private button: HTMLButtonElement;
-		private observer: MutationObserver | null;
-
-		constructor() {
-			super();
-			this.button = this.querySelector("button") as HTMLButtonElement;
-			this.observer = null;
-
-			// set inital aria-pressed value
-			this.button.setAttribute("aria-pressed", String(rootHasDarkClass()));
-
-			// button clicked, fire event
-			this.button.addEventListener("click", this.handleThemeBtnClick);
-		}
+		#controller: AbortController | undefined;
 
 		connectedCallback() {
-			const root = document.documentElement;
+			const button = this.querySelector("button")!;
+			// set aria role value
+			button.setAttribute("role", "switch");
+			button.setAttribute("aria-checked", String(rootInDarkMode()));
+			// Abort signal
+			const { signal } = (this.#controller = new AbortController());
 
-			// MutationObserver for html class changes, as the theme could be changed elsewhere
-			this.observer = new MutationObserver((mutationsList) => {
-				for (const mutation of mutationsList) {
-					if (mutation.type === "attributes" && mutation.attributeName === "class") {
-						const rootIsDark = (mutation.target as Element).classList.contains("dark");
-						this.button.setAttribute("aria-pressed", String(rootIsDark));
-					}
-				}
-			});
-			this.observer.observe(root, { attributeFilter: ["class"] });
+			// button event
+			button.addEventListener(
+				"click",
+				() => {
+					// invert theme
+					let themeChangeEvent = new CustomEvent("theme-change", {
+						detail: {
+							theme: rootInDarkMode() ? "light" : "dark",
+						},
+					});
+					// dispatch event -> ThemeProvider.astro
+					document.dispatchEvent(themeChangeEvent);
+
+					// set the aria-checked attribute
+					button.setAttribute("aria-checked", String(rootInDarkMode()));
+				},
+				{ signal },
+			);
 		}
 
 		disconnectedCallback() {
-			this.observer?.disconnect();
+			this.#controller?.abort();
 		}
-
-		handleThemeBtnClick = () => {
-			let isDark = rootHasDarkClass();
-
-			// invert theme
-			let themeChangeEvent = new CustomEvent("theme-change", {
-				detail: {
-					theme: isDark ? "light" : "dark",
-				},
-			});
-			// dispatch event -> ThemeProvider.astro
-			document.dispatchEvent(themeChangeEvent);
-		};
 	}
 
 	customElements.define("theme-toggle", ThemeToggle);

@@ -15,11 +15,6 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		href: "https://astro.build",
 	},
 	{
-		title: "Astro Assets",
-		desc: "Built-in optimized asset support.",
-		href: "https://docs.astro.build/en/guides/assets/",
-	},
-	{
 		title: "Tailwind CSS",
 		desc: "Rapidly build modern websites without ever leaving your HTML.",
 		href: "https://tailwindcss.com",
@@ -49,6 +44,11 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		desc: "An easy to use Icon component for Astro.",
 		href: "https://github.com/natemoo-re/astro-icon#readme",
 	},
+	{
+		title: "Expressive Code",
+		desc: "Highly customisable source code & syntax highlighter",
+		href: "https://expressive-code.com/",
+	},
 ];
 ---
 
@@ -64,7 +64,7 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
 		<h2 class="title mb-4 text-xl">Posts</h2>
-		<ul class="space-y-4 sm:space-y-2">
+		<ul class="space-y-4">
 			{
 				allPostsByDate.map((p) => (
 					<li class="flex flex-col gap-x-2 sm:flex-row">
@@ -76,22 +76,23 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 	</section>
 	<section class="mt-16">
 		<h2 class="title mb-4 text-xl">Technologies</h2>
-		<ul class="space-y-4 sm:space-y-2">
+		<dl class="space-y-4">
 			{
 				cactusTech.map(({ href, title, desc }) => (
-					<li>
-						<a
-							href={href}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="cactus-link inline-block"
-						>
-							{title}
-						</a>: 
-						<p class="inline-block sm:mt-2">{desc}</p>
-					</li>
+					<div class="flex gap-2">
+						<dt class="inline-block">
+							<a
+								href={href}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="cactus-link inline-block"
+							>
+								{title}
+							</a>:</dt>
+						<dd>{desc}</dd>
+					</div>
 				))
 			}
-		</ul>
+		</dl>
 	</section>
 </PageLayout>
