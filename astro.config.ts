@@ -7,25 +7,8 @@ import remarkUnwrapImages from "remark-unwrap-images";
 import rehypeExternalLinks from "rehype-external-links";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
 import icon from "astro-icon";
-import expressiveCode, { type AstroExpressiveCodeOptions } from "astro-expressive-code";
-
-// https://expressive-code.com/reference/configuration/
-const expressiveCodeOptions: AstroExpressiveCodeOptions = {
-	themes: ["dracula"],
-	useThemedScrollbars: false,
-	styleOverrides: {
-		frames: {
-			frameBoxShadowCssValue: "none",
-		},
-		uiLineHeight: "inherit",
-		codeFontSize: "0.875rem",
-		codeLineHeight: "1.7142857rem",
-		borderRadius: "4px",
-		codePaddingInline: "1rem",
-		codeFontFamily:
-			'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
-	},
-};
+import expressiveCode from "astro-expressive-code";
+import { expressiveCodeOptions } from "./src/site.config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -55,7 +38,7 @@ export default defineConfig({
 			applyBaseStyles: false,
 		}),
 		sitemap(),
-		mdx({}),
+		mdx(),
 	],
 	image: {
 		domains: ["webmention.io"],
@@ -69,6 +52,7 @@ export default defineConfig({
 		},
 	},
 });
+
 function rawFonts(ext: Array<string>) {
 	return {
 		name: "vite-plugin-raw-fonts",
