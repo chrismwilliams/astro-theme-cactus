@@ -15,7 +15,6 @@
 		--theme-quote: 351deg 66% 48%;
 	}
 
-	:root.dark,
 	:root[data-theme="dark"] {
 		color-scheme: dark;
 		--theme-bg: 210deg 6% 12%;
