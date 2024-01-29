@@ -15,11 +15,6 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		href: "https://astro.build",
 	},
 	{
-		title: "Astro Assets",
-		desc: "Built-in optimized asset support.",
-		href: "https://docs.astro.build/en/guides/assets/",
-	},
-	{
 		title: "Tailwind CSS",
 		desc: "Rapidly build modern websites without ever leaving your HTML.",
 		href: "https://tailwindcss.com",
@@ -93,9 +88,8 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 								class="cactus-link inline-block"
 							>
 								{title}
-							</a>:
-						</dt>
-						<dd class="">{desc}</dd>
+							</a>:</dt>
+						<dd>{desc}</dd>
 					</div>
 				))
 			}
