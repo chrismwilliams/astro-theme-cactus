@@ -79,16 +79,15 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		<dl class="space-y-4">
 			{
 				cactusTech.map(({ href, title, desc }) => (
-					<div class="flex gap-2">
-						<dt class="inline-block">
-							<a
-								href={href}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="cactus-link inline-block"
-							>
-								{title}
-							</a>:</dt>
+					<div class="flex flex-col gap-2 md:flex-row">
+						<dt>
+							<span class="flex">
+								<a href={href} target="_blank" rel="noopener noreferrer" class="cactus-link">
+									{title}
+								</a>
+								:
+							</span>
+						</dt>
 						<dd>{desc}</dd>
 					</div>
 				))
