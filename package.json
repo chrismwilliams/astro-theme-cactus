@@ -1,6 +1,6 @@
 {
 	"name": "astro-cactus",
-	"version": "3.6.0",
+	"version": "3.6.1",
 	"private": false,
 	"scripts": {
 		"dev": "astro dev",
@@ -8,7 +8,7 @@
 		"build": "astro build",
 		"postbuild": "pagefind --site dist",
 		"preview": "astro preview",
-		"format": "prettier -w --cache .",
+		"format": "prettier -w --cache . && prettier -w --cache **/*.astro",
 		"check": "astro check"
 	},
 	"dependencies": {

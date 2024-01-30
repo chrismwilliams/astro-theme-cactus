@@ -50,7 +50,7 @@ Check out the [Demo](https://astro-cactus.chriswilliams.dev/), hosted on Netlify
 
 ```bash
 # npm 7+
-npx create astro@latest -- --template chrismwilliams/astro-theme-cactus
+npm create astro@latest -- --template chrismwilliams/astro-theme-cactus
 
 # pnpm
 pnpm dlx create-astro --template chrismwilliams/astro-theme-cactus

@@ -1,15 +1,14 @@
 {
 	"editor.formatOnSave": true,
-	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": "explicit"
-	},
 	"[markdown]": {
 		"editor.wordWrap": "on",
 		"editor.codeActionsOnSave": {
 			"source.fixAll.markdownlint": "explicit"
 		}
 	},
-	"prettier.documentSelectors": ["**/*.astro"],
+	"prettier.documentSelectors": [
+		"**/*.astro"
+	],
 	"eslint.validate": [
 		"javascript",
 		"javascriptreact",
