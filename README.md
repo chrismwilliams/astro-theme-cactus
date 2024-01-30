@@ -17,6 +17,7 @@ Astro Cactus is a simple opinionated starter built with the Astro framework. Use
 6. [Configure](#configure)
 7. [Adding Posts](#adding-posts)
    - [Frontmatter](#frontmatter)
+   - [Frontmatter Snippet](#frontmatter-snippet)
 8. [Pagefind search](#pagefind-search)
 9. [Analytics](#analytics)
 10. [Deploy](#deploy)
@@ -115,6 +116,10 @@ Adding a post is as simple as adding your .md(x) files to the `src/content/post`
 | coverImage             | This is an optional object that will add a cover image to the top of a post. Include both a `src`: "_path-to-image_" and `alt`: "_image alt_". You can view an example in `src/content/post/cover-image.md`.                                                                                                 |
 | ogImage                | This is an optional property. An OG Image will be generated automatically for every post where this property **isn't** provided. If you would like to create your own for a specific post, include this property and a link to your image, the theme will then skip automatically generating one.            |
 | draft                  | This is an optional property as it is set to false by default in the schema. By adding true, the post will be filtered out of the production build in a number of places, inc. getAllPosts() calls, og-images, rss feeds, and generated page[s]. You can view an example in `src/content/post/draft-post.md` |
+
+### Frontmatter snippet
+
+Astro Cactus includes a helpful VSCode snippet which creates a frontmatter 'stub' for a blog post, found here -> `.vscode/post.code-snippets`. Start typing the word `frontmatter` on your newly created .md(x) file to trigger it. Visual Studio Code snippets appear in IntelliSense via (⌃Space) on mac, (Ctrl+Space) on windows.
 
 ## Pagefind search
 
