@@ -4,7 +4,7 @@ export const siteConfig: SiteConfig = {
 	// Used as both a meta property (src/components/BaseHead.astro L:31 + L:49) & the generated satori png (src/pages/og-image/[slug].png.ts)
 	author: "Henry Ha",
 	// Meta property used to construct the meta title property, found in src/components/BaseHead.astro L:11
-	title: "Hapitan",
+	title: "Heny",
 	// Meta property used as the default description meta property
 	description: "My personal website for games development and ramblings.",
 	// HTML lang property, found in src/layouts/Base.astro L:18
@@ -21,7 +21,7 @@ export const siteConfig: SiteConfig = {
 		},
 	},
 	webmentions: {
-		link: "https://webmention.io/astro-cactus.chriswilliams.dev/webmention",
+		link: "",
 	},
 };
 
@@ -36,7 +36,7 @@ export const menuLinks: Array<{ title: string; path: string }> = [
 		path: "/about/",
 	},
 	{
-		title: "Blog",
+		title: "Posts",
 		path: "/posts/",
 	},
 	{

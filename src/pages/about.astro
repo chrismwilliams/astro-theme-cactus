@@ -15,7 +15,7 @@ const meta = {
 	<Image
 		class="aspect-thumbnail mb-4 rounded-2xl object-cover shadow-xl"
 		src={ProfileImage}
-		alt="A cartoon cactus looking at the 'Astro.build' logo"
+		alt="A man under a bridge smiling. It's me!"
 		loading="eager"
 		fetchpriority="high"
 	/>
@@ -25,9 +25,34 @@ const meta = {
 		<p class="mb-4 font-bold">Games Programmer</p>
 		<p class="mb-4 mr-6">
 			I am a games programmer with practical experience in Unity and Unreal Engine. Needless to say,
-			I love video games and developing novel experiences. Below, you check out some of my
-			favourites, alongside my CV.
+			I love playing (and developing) novel experiences. If you're curious, you can see some of my
+			favourite stuff below.
 		</p>
+		<p class="mb-4 mr-6">You can contact me or check out my CV below!</p>
 	</div>
 	<SocialList />
+
+	<section class="mt-16">
+		<h2 class="title mb-4 text-xl">Favourite Games</h2>
+		<p class="mb-4">Here are some games I am crazy about.</p>
+		<ul class="space-y-4 sm:space-y-2">
+			<li>What Remains of Edith Finch</li>
+			<li>The Last of Us 2</li>
+			<li>Everyone's Gone to the Rapture</li>
+			<li>Before Your Eyes</li>
+			<li>Gone Home</li>
+			<li>Sunless Sea</li>
+			<li>Terraria</li>
+		</ul>
+
+		<section class="mt-16">
+			<h2 class="title mb-4 text-xl">Website Credits</h2>
+			<p class="mb-4">
+				This site is an extension of Chris William's <a
+					href="https://github.com/chrismwilliams/astro-theme-cactus/tree/main"
+					class="cactus-link">Astro Cactus</a
+				>!
+			</p>
+		</section>
+	</section>
 </PageLayout>

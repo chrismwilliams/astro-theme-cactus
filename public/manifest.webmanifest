@@ -1,7 +1,7 @@
 {
-	"name": "Astro Theme Cactus Demo",
-	"short_name": "Astro_Cactus",
-	"description": "Starter blog site for Astro",
+	"name": "Henry Ha Portfolio Site",
+	"short_name": "Heny",
+	"description": "Personal portfolio website",
 	"icons": [
 		{
 			"src": "/192x192.png",
