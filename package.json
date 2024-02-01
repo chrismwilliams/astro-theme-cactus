@@ -16,7 +16,7 @@
 		"@astrojs/rss": "4.0.2",
 		"@astrojs/sitemap": "3.0.5",
 		"@astrojs/tailwind": "5.1.0",
-		"astro": "4.2.1",
+		"astro": "4.3.0",
 		"astro-expressive-code": "^0.31.0",
 		"astro-icon": "^1.0.2",
 		"rehype-external-links": "^3.0.0",
