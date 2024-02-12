@@ -1,13 +1,13 @@
 ---
-import PageLayout from "@/layouts/Base";
+import PageLayout from "@/layouts/Base.astro";
 import { getAllPosts, getUniqueTagsWithCount } from "@/utils";
 
 const allPosts = await getAllPosts();
 const allTags = getUniqueTagsWithCount(allPosts);
 
 const meta = {
-	title: "All Tags",
 	description: "A list of all the topics I've written about in my posts",
+	title: "All Tags",
 };
 ---
 
@@ -19,9 +19,9 @@ const meta = {
 				<li class="flex items-center gap-x-2">
 					<a
 						class="cactus-link inline-block"
+						data-astro-prefetch
 						href={`/tags/${tag}/`}
 						title={`View posts with the tag: ${tag}`}
-						data-astro-prefetch
 					>
 						&#35;{tag}
 					</a>

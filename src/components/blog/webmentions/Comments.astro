@@ -1,7 +1,8 @@
 ---
+import type { WebmentionsChildren } from "@/types";
+
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
-import type { WebmentionsChildren } from "@/types";
 
 interface Props {
 	mentions: WebmentionsChildren[];
@@ -33,27 +34,27 @@ const comments = mentions.filter(
 						{mention.author?.photo && mention.author.photo !== "" ? (
 							mention.author.url && mention.author.url !== "" ? (
 								<a
-									href={mention.author.url}
 									class="not-prose shrink-0 overflow-hidden rounded-full outline-none ring-2 ring-textColor hover:ring-4 hover:ring-link focus-visible:ring-4 focus-visible:ring-link"
-									target="_blank"
+									href={mention.author.url}
 									rel="noopener noreferrer"
+									target="_blank"
 									title={mention.author.name}
 								>
 									<Image
-										class="my-0 h-12 w-12"
-										src={mention.author?.photo}
 										alt={mention.author?.name}
-										width={48}
+										class="my-0 h-12 w-12"
 										height={48}
+										src={mention.author?.photo}
+										width={48}
 									/>
 								</a>
 							) : (
 								<Image
-									class="my-0 h-12 w-12 rounded-full"
-									src={mention.author?.photo}
 									alt={mention.author?.name}
-									width={48}
+									class="my-0 h-12 w-12 rounded-full"
 									height={48}
+									src={mention.author?.photo}
+									width={48}
 								/>
 							)
 						) : null}
@@ -61,20 +62,20 @@ const comments = mentions.filter(
 							<div class="flex items-center justify-between gap-x-2">
 								<p class="my-0 line-clamp-1 font-semibold text-accent-2">{mention.author?.name}</p>
 								<a
-									href={mention.url}
 									aria-labelledby="cmt-source"
 									class="not-prose hover:text-link"
-									target="_blank"
+									href={mention.url}
 									rel="noopener noreferrer"
+									target="_blank"
 								>
-									<span id="cmt-source" class="hidden">
+									<span class="hidden" id="cmt-source">
 										Vist the source of this webmention
 									</span>
 									<Icon
-										class="h-5 w-5"
-										name="mdi:open-in-new"
 										aria-hidden="true"
+										class="h-5 w-5"
 										focusable="false"
+										name="mdi:open-in-new"
 									/>
 								</a>
 							</div>

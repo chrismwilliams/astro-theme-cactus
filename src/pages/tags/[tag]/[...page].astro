@@ -1,9 +1,10 @@
 ---
-import type { Page, GetStaticPaths } from "astro";
+import type { GetStaticPaths, Page } from "astro";
 import type { CollectionEntry } from "astro:content";
-import PageLayout from "@/layouts/Base";
-import PostPreview from "@/components/blog/PostPreview";
-import Pagination from "@/components/Paginator";
+
+import Pagination from "@/components/Paginator.astro";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import PageLayout from "@/layouts/Base.astro";
 import { getAllPosts, getUniqueTags, sortMDByDate } from "@/utils";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
@@ -14,8 +15,8 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 	return uniqueTags.flatMap((tag) => {
 		const filterPosts = allPostsByDate.filter((post) => post.data.tags.includes(tag));
 		return paginate(filterPosts, {
-			params: { tag },
 			pageSize: 10,
+			params: { tag },
 		});
 	});
 };
@@ -28,21 +29,21 @@ const { page } = Astro.props;
 const { tag } = Astro.params;
 
 const meta = {
-	title: `Tag: ${tag}`,
 	description: `View all posts with the tag - ${tag}`,
+	title: `Tag: ${tag}`,
 };
 
 const paginationProps = {
 	...(page.url.prev && {
 		prevUrl: {
-			url: page.url.prev,
 			text: `← Previous Tags`,
+			url: page.url.prev,
 		},
 	}),
 	...(page.url.next && {
 		nextUrl: {
-			url: page.url.next,
 			text: `Next Tags →`,
+			url: page.url.next,
 		},
 	}),
 };
@@ -50,7 +51,7 @@ const paginationProps = {
 
 <PageLayout meta={meta}>
 	<h1 class="title mb-6 flex items-center">
-		<a href="/tags/" class="text-accent sm:hover:underline">Tags</a>
+		<a class="text-accent sm:hover:underline" href="/tags/">Tags</a>
 		<span class="me-3 ms-2">→</span>
 		<span class="text-xl">#{tag}</span>
 	</h1>
@@ -59,7 +60,7 @@ const paginationProps = {
 			{
 				page.data.map((p) => (
 					<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
-						<PostPreview post={p} as="h2" withDesc />
+						<PostPreview as="h2" post={p} withDesc />
 					</li>
 				))
 			}

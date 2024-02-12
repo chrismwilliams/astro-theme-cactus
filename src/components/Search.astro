@@ -4,26 +4,26 @@
 import "@pagefind/default-ui/css/ui.css";
 ---
 
-<site-search id="search" class="ms-auto">
+<site-search class="ms-auto" id="search">
 	<button
+		class="flex h-9 w-9 items-center justify-center rounded-md ring-zinc-400 transition-all hover:ring-2"
 		data-open-modal
 		disabled
-		class="flex h-9 w-9 items-center justify-center rounded-md ring-zinc-400 transition-all hover:ring-2"
 	>
 		<svg
 			aria-label="search"
 			class="h-7 w-7"
-			xmlns="http://www.w3.org/2000/svg"
-			width="16"
-			height="16"
-			viewBox="0 0 24 24"
 			fill="none"
+			height="16"
 			stroke="currentColor"
 			stroke-linecap="round"
 			stroke-linejoin="round"
 			stroke-width="1.5"
+			viewBox="0 0 24 24"
+			width="16"
+			xmlns="http://www.w3.org/2000/svg"
 		>
-			<path stroke="none" d="M0 0h24v24H0z"></path>
+			<path d="M0 0h24v24H0z" stroke="none"></path>
 			<path d="M3 10a7 7 0 1 0 14 0 7 7 0 1 0-14 0M21 21l-6-6"></path>
 		</svg>
 	</button>
@@ -33,9 +33,8 @@ import "@pagefind/default-ui/css/ui.css";
 	>
 		<div class="dialog-frame flex flex-col gap-4 p-6 pt-12 sm:pt-6">
 			<button
-				data-close-modal
 				class="ms-auto cursor-pointer rounded-md bg-zinc-200 p-2 font-semibold dark:bg-zinc-700"
-				>Close</button
+				data-close-modal>Close</button
 			>
 			{
 				import.meta.env.DEV ? (
@@ -57,45 +56,17 @@ import "@pagefind/default-ui/css/ui.css";
 
 <script>
 	class SiteSearch extends HTMLElement {
-		private openBtn: HTMLButtonElement;
 		private closeBtn: HTMLButtonElement;
 		private dialog: HTMLDialogElement;
 		private dialogFrame: HTMLDivElement;
+		private openBtn: HTMLButtonElement;
 
-		constructor() {
-			super();
-			this.openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
-			this.closeBtn = this.querySelector<HTMLButtonElement>("button[data-close-modal]")!;
-			this.dialog = this.querySelector("dialog")!;
-			this.dialogFrame = this.querySelector(".dialog-frame")!;
-
-			this.openBtn.addEventListener("click", this.openModal);
-			this.openBtn.disabled = false;
-			this.closeBtn.addEventListener("click", this.closeModal);
-		}
-
-		connectedCallback() {
-			// Listen for keyboard shortcut
-			window.addEventListener("keydown", this.onWindowKeydown);
-
-			// only add pagefind in production
-			if (import.meta.env.DEV) return;
-			const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
-			onIdle(async () => {
-				const { PagefindUI } = await import("@pagefind/default-ui");
-				new PagefindUI({
-					element: "#cactus__search",
-					baseUrl: import.meta.env.BASE_URL,
-					bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
-					showImages: false,
-					showSubResults: true,
-				});
-			});
-		}
-
-		disconnectedCallback() {
-			window.removeEventListener("keydown", this.onWindowKeydown);
-		}
+		closeModal = () => {
+			if (this.dialog.open) {
+				this.dialog.close();
+				window.removeEventListener("click", this.onWindowClick);
+			}
+		};
 
 		onWindowClick = (event: MouseEvent) => {
 			// check if it's a link
@@ -124,12 +95,40 @@ import "@pagefind/default-ui/css/ui.css";
 			window.addEventListener("click", this.onWindowClick);
 		};
 
-		closeModal = () => {
-			if (this.dialog.open) {
-				this.dialog.close();
-				window.removeEventListener("click", this.onWindowClick);
-			}
-		};
+		constructor() {
+			super();
+			this.openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
+			this.closeBtn = this.querySelector<HTMLButtonElement>("button[data-close-modal]")!;
+			this.dialog = this.querySelector("dialog")!;
+			this.dialogFrame = this.querySelector(".dialog-frame")!;
+
+			this.openBtn.addEventListener("click", this.openModal);
+			this.openBtn.disabled = false;
+			this.closeBtn.addEventListener("click", this.closeModal);
+		}
+
+		connectedCallback() {
+			// Listen for keyboard shortcut
+			window.addEventListener("keydown", this.onWindowKeydown);
+
+			// only add pagefind in production
+			if (import.meta.env.DEV) return;
+			const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+			onIdle(async () => {
+				const { PagefindUI } = await import("@pagefind/default-ui");
+				new PagefindUI({
+					baseUrl: import.meta.env.BASE_URL,
+					bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
+					element: "#cactus__search",
+					showImages: false,
+					showSubResults: true,
+				});
+			});
+		}
+
+		disconnectedCallback() {
+			window.removeEventListener("keydown", this.onWindowKeydown);
+		}
 	}
 
 	customElements.define("site-search", SiteSearch);
