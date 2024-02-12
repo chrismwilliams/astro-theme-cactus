@@ -1,6 +1,8 @@
 ---
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+
+import { Image } from "astro:assets";
+
 import FormattedDate from "../FormattedDate.astro";
 
 interface Props {
@@ -22,11 +24,11 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 	data.coverImage && (
 		<div class="aspect-h-9 aspect-w-16 mb-6">
 			<Image
-				src={data.coverImage.src}
 				alt={data.coverImage.alt}
 				class="object-cover"
-				loading="eager"
 				fetchpriority="high"
+				loading="eager"
+				src={data.coverImage.src}
 			/>
 		</div>
 	)
@@ -54,17 +56,17 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 		<div class="mt-3">
 			<svg
 				aria-hidden="true"
-				focusable="false"
-				xmlns="http://www.w3.org/2000/svg"
 				class="me-1 inline-block h-6 w-6"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
-				stroke="currentColor"
 				fill="none"
+				focusable="false"
+				stroke="currentColor"
 				stroke-linecap="round"
 				stroke-linejoin="round"
+				stroke-width="1.5"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
 			>
-				<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+				<path d="M0 0h24v24H0z" fill="none" stroke="none" />
 				<path d="M7.859 6h-2.834a2.025 2.025 0 0 0 -2.025 2.025v2.834c0 .537 .213 1.052 .593 1.432l6.116 6.116a2.025 2.025 0 0 0 2.864 0l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-6.117 -6.116a2.025 2.025 0 0 0 -1.431 -.593z" />
 				<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 				<path d="M6 9h-.01" />
@@ -72,10 +74,10 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 			{data.tags.map((tag, i) => (
 				<>
 					<a
-						class="cactus-link inline-block before:content-['#']"
 						aria-label={`View more blogs with the tag ${tag}`}
-						href={`/tags/${tag}/`}
+						class="cactus-link inline-block before:content-['#']"
 						data-pagefind-filter="tag"
+						href={`/tags/${tag}/`}
 					>{tag}</a>{i < data.tags.length - 1 && ", "}
 				</>
 			))}

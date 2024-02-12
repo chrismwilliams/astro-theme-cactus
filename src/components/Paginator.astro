@@ -2,24 +2,24 @@
 import type { PaginationLink } from "@/types";
 
 interface Props {
-	prevUrl?: PaginationLink;
 	nextUrl?: PaginationLink;
+	prevUrl?: PaginationLink;
 }
 
-const { prevUrl, nextUrl } = Astro.props;
+const { nextUrl, prevUrl } = Astro.props;
 ---
 
 {
 	(prevUrl || nextUrl) && (
 		<nav class="mt-8 flex items-center gap-x-4">
 			{prevUrl && (
-				<a class="me-auto py-2 sm:hover:text-accent" href={prevUrl.url} data-astro-prefetch>
+				<a class="me-auto py-2 sm:hover:text-accent" data-astro-prefetch href={prevUrl.url}>
 					{prevUrl.srLabel && <span class="sr-only">{prevUrl.srLabel}</span>}
 					{prevUrl.text ? prevUrl.text : "Previous"}
 				</a>
 			)}
 			{nextUrl && (
-				<a class="ms-auto py-2 sm:hover:text-accent" href={nextUrl.url} data-astro-prefetch>
+				<a class="ms-auto py-2 sm:hover:text-accent" data-astro-prefetch href={nextUrl.url}>
 					{nextUrl.srLabel && <span class="sr-only">{nextUrl.srLabel}</span>}
 					{nextUrl.text ? nextUrl.text : "Next"}
 				</a>

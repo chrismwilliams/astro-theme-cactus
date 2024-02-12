@@ -1,10 +1,11 @@
 ---
 import type { SiteMeta } from "@/types";
-import BaseHead from "@/components/BaseHead";
-import ThemeProvider from "@/components/ThemeProvider";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import SkipLink from "@/components/SkipLink";
+
+import BaseHead from "@/components/BaseHead.astro";
+import SkipLink from "@/components/SkipLink.astro";
+import ThemeProvider from "@/components/ThemeProvider.astro";
+import Footer from "@/components/layout/Footer.astro";
+import Header from "@/components/layout/Header.astro";
 import { siteConfig } from "@/site-config";
 
 interface Props {
@@ -12,13 +13,13 @@ interface Props {
 }
 
 const {
-	meta: { title, description = siteConfig.description, ogImage, articleDate },
+	meta: { articleDate, description = siteConfig.description, ogImage, title },
 } = Astro.props;
 ---
 
 <html lang={siteConfig.lang}>
 	<head>
-		<BaseHead title={title} description={description} ogImage={ogImage} articleDate={articleDate} />
+		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
 	</head>
 	<body>
 		<ThemeProvider />

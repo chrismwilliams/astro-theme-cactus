@@ -1,6 +1,7 @@
 ---
-import { Image } from "astro:assets";
 import type { WebmentionsChildren } from "@/types";
+
+import { Image } from "astro:assets";
 
 interface Props {
 	mentions: WebmentionsChildren[];
@@ -27,18 +28,18 @@ const likesToShow = likes
 					{likesToShow.map((like) => (
 						<li class="-ms-2">
 							<a
-								href={like.author?.url}
 								class="not-prose relative inline-block overflow-hidden rounded-full outline-none ring-2 ring-textColor hover:z-10 hover:ring-4 hover:ring-link focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-link"
-								target="_blank"
+								href={like.author?.url}
 								rel="noopener noreferrer"
+								target="_blank"
 								title={like.author?.name}
 							>
 								<Image
-									class="my-0 inline-block h-12 w-12"
-									src={like.author!.photo}
 									alt={like.author!.name}
-									width={48}
+									class="my-0 inline-block h-12 w-12"
 									height={48}
+									src={like.author!.photo}
+									width={48}
 								/>
 							</a>
 						</li>

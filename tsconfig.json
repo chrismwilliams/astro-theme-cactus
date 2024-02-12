@@ -5,14 +5,12 @@
 		"lib": ["es2022", "dom", "dom.iterable"],
 		"paths": {
 			"@/assets/*": ["src/assets/*"],
-			"@/components/*": ["src/components/*.astro"],
-			"@/layouts/*": ["src/layouts/*.astro"],
+			"@/components/*": ["src/components/*"],
+			"@/layouts/*": ["src/layouts/*"],
 			"@/utils": ["src/utils/index.ts"],
-			"@/stores/*": ["src/stores/*"],
 			"@/types": ["src/types.ts"],
 			"@/site-config": ["src/site.config.ts"]
 		}
 	},
-	"include": ["src", "*.ts"],
 	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
 }

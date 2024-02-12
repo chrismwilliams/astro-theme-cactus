@@ -1,53 +1,53 @@
 ---
-import PageLayout from "@/layouts/Base";
-import PostPreview from "@/components/blog/PostPreview";
-import SocialList from "@/components/SocialList";
+import SocialList from "@/components/SocialList.astro";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import PageLayout from "@/layouts/Base.astro";
 import { getAllPosts, sortMDByDate } from "@/utils";
 
 const MAX_POSTS = 10;
 const allPosts = await getAllPosts();
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
-const cactusTech: Array<{ title: string; desc: string; href: string }> = [
+const cactusTech: { desc: string; href: string; title: string }[] = [
 	{
-		title: "Astro",
 		desc: "Build fast websites, faster.",
 		href: "https://astro.build",
+		title: "Astro",
 	},
 	{
-		title: "Tailwind CSS",
 		desc: "Rapidly build modern websites without ever leaving your HTML.",
 		href: "https://tailwindcss.com",
+		title: "Tailwind CSS",
 	},
 	{
-		title: "Markdown",
 		desc: "Simple and easy-to-use markup language.",
 		href: "https://www.markdownguide.org/",
+		title: "Markdown",
 	},
 	{
-		title: "MDX",
 		desc: "Markdown for the component era.",
 		href: "https://mdxjs.com/",
+		title: "MDX",
 	},
 	{
-		title: "Satori",
 		desc: "Generating png Open Graph images for blog posts.",
 		href: "https://github.com/vercel/satori",
+		title: "Satori",
 	},
 	{
-		title: "Pagefind",
 		desc: "A fully static search library.",
 		href: "https://pagefind.app/",
+		title: "Pagefind",
 	},
 	{
-		title: "Astro Icon",
 		desc: "An easy to use Icon component for Astro.",
 		href: "https://github.com/natemoo-re/astro-icon#readme",
+		title: "Astro Icon",
 	},
 	{
-		title: "Expressive Code",
 		desc: "Highly customisable source code & syntax highlighter",
 		href: "https://expressive-code.com/",
+		title: "Expressive Code",
 	},
 ];
 ---
@@ -78,11 +78,11 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		<h2 class="title mb-4 text-xl">Technologies</h2>
 		<dl class="space-y-4">
 			{
-				cactusTech.map(({ href, title, desc }) => (
+				cactusTech.map(({ desc, href, title }) => (
 					<div class="flex flex-col gap-2 md:flex-row">
 						<dt>
 							<span class="flex">
-								<a href={href} target="_blank" rel="noopener noreferrer" class="cactus-link">
+								<a class="cactus-link" href={href} rel="noopener noreferrer" target="_blank">
 									{title}
 								</a>
 								:

@@ -1,25 +1,26 @@
 ---
-import ThemeToggle from "../ThemeToggle.astro";
-import Search from "../Search.astro";
 import { menuLinks } from "@/site-config";
+
+import Search from "../Search.astro";
+import ThemeToggle from "../ThemeToggle.astro";
 
 const url = new URL(Astro.request.url);
 ---
 
-<header id="main-header" class="group relative mb-28 flex items-center sm:ps-[4.5rem]">
+<header class="group relative mb-28 flex items-center sm:ps-[4.5rem]" id="main-header">
 	<div class="flex sm:flex-col">
 		<a
-			href="/"
-			class="inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block"
 			aria-current={url.pathname === "/" ? "page" : false}
+			class="inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block"
+			href="/"
 		>
 			<svg
-				class="me-3 h-10 w-6 sm:absolute sm:start-[-4.5rem] sm:me-0 sm:h-20 sm:w-12"
 				aria-hidden="true"
-				focusable="false"
+				class="me-3 h-10 w-6 sm:absolute sm:start-[-4.5rem] sm:me-0 sm:h-20 sm:w-12"
 				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
+				focusable="false"
 				viewBox="0 0 272 480"
+				xmlns="http://www.w3.org/2000/svg"
 			>
 				<title>Logo</title>
 				<path
@@ -36,17 +37,17 @@ const url = new URL(Astro.request.url);
 			<span class="text-xl font-bold sm:text-2xl">Astro Cactus</span>
 		</a>
 		<nav
-			id="navigation-menu"
-			class="absolute -inset-x-4 top-14 hidden flex-col items-end gap-y-4 rounded-md bg-bgColor/[.85] py-4 text-accent shadow backdrop-blur group-[.menu-open]:z-50 group-[.menu-open]:flex sm:static sm:z-auto sm:-ms-4 sm:mt-1 sm:flex sm:flex-row sm:items-center sm:divide-x sm:divide-dashed sm:divide-accent sm:rounded-none sm:bg-transparent sm:py-0 sm:shadow-none sm:backdrop-blur-none"
 			aria-label="Main menu"
+			class="absolute -inset-x-4 top-14 hidden flex-col items-end gap-y-4 rounded-md bg-bgColor/[.85] py-4 text-accent shadow backdrop-blur group-[.menu-open]:z-50 group-[.menu-open]:flex sm:static sm:z-auto sm:-ms-4 sm:mt-1 sm:flex sm:flex-row sm:items-center sm:divide-x sm:divide-dashed sm:divide-accent sm:rounded-none sm:bg-transparent sm:py-0 sm:shadow-none sm:backdrop-blur-none"
+			id="navigation-menu"
 		>
 			{
 				menuLinks.map((link) => (
 					<a
-						href={link.path}
-						class="px-4 py-4 sm:py-0 sm:hover:underline"
 						aria-current={url.pathname === link.path ? "page" : false}
+						class="px-4 py-4 sm:py-0 sm:hover:underline"
 						data-astro-prefetch
+						href={link.path}
 					>
 						{link.title}
 					</a>
@@ -58,40 +59,40 @@ const url = new URL(Astro.request.url);
 	<ThemeToggle />
 	<mobile-button>
 		<button
-			id="toggle-navigation-menu"
-			class="group relative ms-4 h-7 w-7 sm:invisible sm:hidden"
-			type="button"
-			aria-label="Open main menu"
 			aria-expanded="false"
 			aria-haspopup="menu"
+			aria-label="Open main menu"
+			class="group relative ms-4 h-7 w-7 sm:invisible sm:hidden"
+			id="toggle-navigation-menu"
+			type="button"
 		>
 			<svg
-				id="line-svg"
-				class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transition-all group-aria-expanded:scale-0 group-aria-expanded:opacity-0"
 				aria-hidden="true"
-				focusable="false"
-				xmlns="http://www.w3.org/2000/svg"
+				class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transition-all group-aria-expanded:scale-0 group-aria-expanded:opacity-0"
 				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
+				focusable="false"
+				id="line-svg"
 				stroke="currentColor"
+				stroke-width="1.5"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
 			>
-				<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5"
+				<path d="M3.75 9h16.5m-16.5 6.75h16.5" stroke-linecap="round" stroke-linejoin="round"
 				></path>
 			</svg>
 			<svg
-				id="cross-svg"
+				aria-hidden="true"
 				class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 scale-0 text-accent opacity-0 transition-all group-aria-expanded:scale-100 group-aria-expanded:opacity-100"
 				class="text-accent"
-				aria-hidden="true"
-				focusable="false"
-				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
+				focusable="false"
+				id="cross-svg"
 				stroke="currentColor"
+				stroke-width="1.5"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
 			>
-				<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+				<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
 			</svg>
 		</button>
 	</mobile-button>
@@ -102,8 +103,14 @@ const url = new URL(Astro.request.url);
 
 	class MobileNavBtn extends HTMLElement {
 		private headerEl: HTMLElement;
-		private mobileButtonEl: HTMLButtonElement;
 		private menuOpen: boolean;
+		private mobileButtonEl: HTMLButtonElement;
+
+		toggleMobileMenu = () => {
+			toggleClass(this.headerEl, "menu-open");
+			this.menuOpen = !this.menuOpen;
+			this.mobileButtonEl.setAttribute("aria-expanded", this.menuOpen.toString());
+		};
 
 		constructor() {
 			super();
@@ -113,12 +120,6 @@ const url = new URL(Astro.request.url);
 
 			this.mobileButtonEl.addEventListener("click", this.toggleMobileMenu);
 		}
-
-		toggleMobileMenu = () => {
-			toggleClass(this.headerEl, "menu-open");
-			this.menuOpen = !this.menuOpen;
-			this.mobileButtonEl.setAttribute("aria-expanded", this.menuOpen.toString());
-		};
 	}
 
 	customElements.define("mobile-button", MobileNavBtn);
