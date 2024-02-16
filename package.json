@@ -20,7 +20,7 @@
 		"astro-expressive-code": "^0.32.4",
 		"astro-icon": "^1.1.0",
 		"rehype-external-links": "^3.0.0",
-		"satori": "0.10.11",
+		"satori": "0.10.13",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.33.2"
 	},
