@@ -25,7 +25,7 @@
 		"sharp": "^0.33.2"
 	},
 	"devDependencies": {
-		"@astrojs/check": "^0.4.1",
+		"@astrojs/check": "^0.5.6",
 		"@iconify-json/mdi": "^1.1.64",
 		"@pagefind/default-ui": "^1.0.4",
 		"@resvg/resvg-js": "^2.6.0",
