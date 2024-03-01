@@ -45,7 +45,7 @@
 		"eslint-plugin-markdown": "^3.0.1",
 		"eslint-plugin-perfectionist": "^2.5.0",
 		"eslint-plugin-regexp": "^2.2.0",
-		"eslint-plugin-typescript-sort-keys": "^3.1.0",
+		"eslint-plugin-typescript-sort-keys": "^3.2.0",
 		"mdast-util-to-string": "^4.0.0",
 		"pagefind": "^1.0.4",
 		"postcss": "^8.4.35",
