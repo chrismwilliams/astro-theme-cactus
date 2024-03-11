@@ -1,6 +1,6 @@
 ---
 title: "Terminal - Horror Shooter"
-description: "A horror shooter game with an emphasis on AI behaviour trees. Built in UE5 and C++."
+description: "A horror shooter game with an emphasis on AI behaviour trees. Built using UE5 and C++."
 publishDate: "11 Feb 2024"
 coverImage:
     src: "./TerminalCover.png"
@@ -10,13 +10,39 @@ draft: false
 relatedPosts: []
 ---
 
-Check out [Terminal's Game Page](https://henryha993.itch.io/termina)!
+Check out **Terminal's**
+- [**Game Page**](https://henryha993.itch.io/termina)
+- [**Project Files**](https://github.com/HenryHa993/MBShooter)
 
 ## About
-Terminal is a horror shooter made using **C++** and **UE5**. This project contains 4 unique enemies, which undergo different animations and AI.
+Terminal is a horror shooter made using **C++** and **UE5**. This project contains 4 *unique* enemies, which undergo different animations and AI.
 
-This is a personal remake of a group project made during my time under [The Developer Academy's](https://thedeveloperacademy.com/) Unreal Engine 5 training.
+This is a personal remake of a group project made during my time at [The Developer Academy's](https://thedeveloperacademy.com/) Unreal Engine 5 training.
 
-This project was initially a zombie shooter with bare-bones AI and animation implementation. Upon revisit, I wanted to improve on those fronts and develop behaviours which take advantage of layered animations and Unreal Engine's EQS systems. Most of these components are done using C++ and are documented below in the **Related Posts** section.
+This project was initially a zombie shooter with bare-bones AI and animation implementation. Upon revisit, I wanted to improve on those fronts and develop behaviours which take advantage of **layered animations** and Unreal Engine's **EQS systems**.
+
+Most of these components are done using C++ and may be documented below in the **Related Posts** section.
+
+## Techniques
+The primary focus of this project was to make believable and varied behaviours. Below you can see some of the techniques used to achieve the enemies you see in Terminal.
+
+**Artificial Intelligence**
+1. Behaviour Trees
+2. EQS System
+
+**Animation**
+1. Animation Blueprints
+    - State Machines
+    - Event Graphs
+2. Anim Notifiers
+3. Layered Animations
+5. Blendspaces
+
+**Languages and Tools**
+1. C++
+    - Delegates
+2. Blueprints (Mostly for UI)
+    - Event Dispatchers
+3. Perforce
 
 ## Related Posts

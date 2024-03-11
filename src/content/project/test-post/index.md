@@ -1,8 +1,8 @@
 ---
 title: "Zombie Shooter"
 description: "This post is for testing the draft post functionality"
-publishDate: "10 Sept 2023"
-updatedDate: "11 Sept 2024"
+publishDate: "10 Sept 2011"
+updatedDate: "11 Sept 2011"
 coverImage:
   src: "./social-card.png"
   alt: "Astro build wallpaper"
