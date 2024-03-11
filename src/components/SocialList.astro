@@ -4,6 +4,7 @@ import { Icon } from "astro-icon/components";
 /** 
 	Uses https://www.astroicon.dev/getting-started/
 	Find icons via guide: https://www.astroicon.dev/guides/customization/#open-source-icon-sets
+	Only installed pack is: @iconify-json/mdi
 */
 const socialLinks: {
 	friendlyName: string;
@@ -16,26 +17,10 @@ const socialLinks: {
 		link: "https://github.com/chrismwilliams/astro-cactus",
 		name: "mdi:github",
 	},
-	{
-		friendlyName: "Mastodon",
-		link: "#",
-		name: "mdi:mastodon",
-	},
-	{
-		friendlyName: "LinkedIn",
-		link: "#",
-		name: "mdi:linkedin",
-	},
-	{
-		friendlyName: "email",
-		isWebmention: true,
-		link: "mailto:astro-cactus@chriswilliams.dev",
-		name: "mdi:email",
-	},
 ];
 ---
 
-<div class="flex flex-wrap items-end gap-x-4">
+<div class="flex flex-wrap items-end gap-x-2">
 	<p>Find me on</p>
 	<ul class="flex flex-1 items-center gap-x-2 sm:flex-initial">
 		{
