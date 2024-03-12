@@ -1,5 +1,5 @@
 ---
-title: "Escape Ghoul Prison - SFAS Finalist"
+title: "Escape Ghoul Prison - SFAS Competition Finalist"
 description: "An intense observation game which implements my own behaviour tree implementation, built with C++ and Directx only."
 publishDate: "21 Jan 2024"
 coverImage:

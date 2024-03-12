@@ -33,8 +33,9 @@ Here are some of the tools and techniques I used:
 **Languages and Tools**
 1. C#
     - Delegates
-2. Behaviour Bricks
-3. Unity
+2. Unity
+    - 2D Animation Package
+    - Behaviour Bricks
 4. GitHub
 
 ## Related Posts
