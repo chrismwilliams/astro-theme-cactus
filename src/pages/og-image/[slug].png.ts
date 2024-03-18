@@ -3,7 +3,8 @@ import satori, { type SatoriOptions } from "satori";
 import { html } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
 import { siteConfig } from "@/site-config";
-import { getAllPosts, getFormattedDate } from "@/utils";
+import { getFormattedDate } from "@/utils";
+import { getAllPosts } from "@/data/post";
 
 import RobotoMono from "@/assets/roboto-mono-regular.ttf";
 import RobotoMonoBold from "@/assets/roboto-mono-700.ttf";

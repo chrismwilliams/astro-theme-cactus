@@ -6,7 +6,7 @@ interface Props {
 }
 
 const {
-	heading: { depth, slug, subheadings, text },
+	heading: { depth, slug, children, text },
 } = Astro.props;
 ---
 
@@ -17,9 +17,9 @@ const {
 		href={`#${slug}`}><span class="me-0.5">#</span>{text}</a
 	>
 	{
-		!!subheadings.length && (
+		!!children.length && (
 			<ul>
-				{subheadings.map((subheading) => (
+				{children.map((subheading) => (
 					<Astro.self heading={subheading} />
 				))}
 			</ul>
