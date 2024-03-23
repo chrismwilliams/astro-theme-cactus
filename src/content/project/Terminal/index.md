@@ -29,6 +29,7 @@ The primary focus of this project was to incorporate some varied behaviours into
 ### C++
 1. **C++ Anim Notifiers**
     - Used to check player range and apply damage on a specific frame of attack animations.
+    - An example [`Source/MB2/Private/AnimNotify_AttackPlayer.cpp`](https://github.com/HenryHa993/MBShooter/blob/main/Source/MB2/Private/AnimNotify_AttackPlayer.cpp)
 ```cpp
 void UAnimNotify_AttackPlayer::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
@@ -60,9 +61,12 @@ void UAnimNotify_AttackPlayer::Notify(USkeletalMeshComponent* MeshComp, UAnimSeq
 2. **C++ HealthComponent**
     - Had the health as a separate `ActorComponent` class.
     - This is a huge improvement of how I used to do it (in the `Character` classes) and is great in terms of modularity.
+    - See [`Source/MB2/Private/HealthComponent.cpp`](https://github.com/HenryHa993/MBShooter/blob/main/Source/MB2/Private/HealthComponent.cpp)
 3. **C++ Delegates**
     - Used to trigger **behaviour trees** when specific stages are reached.
     - This ensures behaviour trees aren't ticking for enemies which are behind doors which aren't open.
+    - In general, delegates are used where I can in order to keep components decoupled.
+    - An example: [`Source/MB2/Private/MB2GameState.cpp`](https://github.com/HenryHa993/MBShooter/blob/main/Source/MB2/Private/MB2GameState.cpp)
 ```cpp
     void AMB2GameState::IncrementGameStage()
     {
@@ -87,6 +91,7 @@ void UAnimNotify_AttackPlayer::Notify(USkeletalMeshComponent* MeshComp, UAnimSeq
 4. **C++ Gameplay Timers**
     - This was used to add a delay between rounds.
     - This is more of a feel-good thing, didn't want rounds to be sudden and disorient the player due to the camera panning.
+    - An Example [`Source/MB2/Private/MB2GameState.cpp`](https://github.com/HenryHa993/MBShooter/blob/main/Source/MB2/Private/MB2GameState.cpp)
 ```cpp
 // This is called each time an alien dies
 void AMB2GameState::CheckStageComplete()
@@ -117,6 +122,7 @@ void AMB2GameState::CheckStageComplete()
 5. **C++ Camera Lock On**
     - For clarity, I used a camera lock-on technique to alert the player of what door/stage was being unlocked.
     - This C++ function is called in **blueprints** for the opening duration.
+    - See [`Source/MB2/Private/StageDoorActor.cpp`](https://github.com/HenryHa993/MBShooter/blob/main/Source/MB2/Private/StageDoorActor.cpp)
 ```cpp
 void UAnimNotify_AttackPlayer::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
@@ -148,10 +154,15 @@ void UAnimNotify_AttackPlayer::Notify(USkeletalMeshComponent* MeshComp, UAnimSeq
 6. **Parry**
     - One of the enemies has a charging attack which can be interrupted if it is hit while it charges.
     - This is mainly done with the **behaviour tree** and in the **C++** where the alien updates whether it was hit in a given frame. I thought it was cool.
+    - See:
+    - [`Source/MB2/Private/BaseAlienCharacter.cpp`](https://github.com/HenryHa993/MBShooter/blob/main/Source/MB2/Private/BaseAlienCharacter.cpp)
+    - [`Source/MB2/Private/BTService_UpdateIsHitThisFrame.cpp`](https://github.com/HenryHa993/MBShooter/blob/main/Source/MB2/Private/BTService_UpdateIsHitThisFrame.cpp)
+    - **BTBaseAlien**
 
 ### Blueprints
 1. **Event Dispatchers**
     - Door functionality was done in **blueprints**, so a matching event was created to listen to `MB2GameState`'s broadcast of the `OnGameStateChanged` delegate.
+    - See **Door_A_BP1**
 2. **UI**
     - Mostly done in **blueprints**, but handled in the `MB2GameState` **C++** class.
 
@@ -159,14 +170,18 @@ void UAnimNotify_AttackPlayer::Notify(USkeletalMeshComponent* MeshComp, UAnimSeq
 1. **Behaviour Trees**
     - **Tasks** and **services** done in **C++**.
     - Below is a charge attack sequence.
+    - See [`Content/MoonBaseRedux/Core/AI/BaseAlien`](https://github.com/HenryHa993/MBShooter/tree/main/Content/MoonBaseRedux/Core/AI/BaseAlien)
 
 ![Terminal Charge Attack Sequence](./terminal-bt.png)
 
 2. **Environment Query System**
     - Used to calculate locations for the hiding and strafing behaviours.
     - Incorporated into behaviour trees.
+    - See [`Content/MoonBaseRedux/Core/AI/BaseAlien/EQS`](https://github.com/HenryHa993/MBShooter/tree/main/Content/MoonBaseRedux/Core/AI/BaseAlien/EQS)
 
 ### Animation Programming
+If you want to checkout all the animation work, see [`Content/MoonBaseRedux/Characters/Alien/Animations`](https://github.com/HenryHa993/MBShooter/tree/main/Content/MoonBaseRedux/Characters/Alien/Animations)
+
 1. **Animation Blueprints**
     - **State Machines** used to switch between **blendspaces**.
     - **Event Graphs** done in **blueprints** in order to update variables used in the **state machines**.
