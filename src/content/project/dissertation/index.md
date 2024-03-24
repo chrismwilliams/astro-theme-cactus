@@ -12,7 +12,7 @@ relatedPosts: []
 
 Check out the **Library's**
 - 💾 [**Project Files**](https://github.com/HenryHa993/EscapeGhoulPrison)
-- 📃 [**Dissertation**](/public/PALibraryDissertation.pdf)
+- 📃 [**Dissertation**](/PALibraryDissertation.pdf)
 
 ## About
 This procedural animation library was done for final year dissertation at Warwick University. The goal was to create a library which abstracted and refined the process of coding new **procedural animations** within **Unity**.
