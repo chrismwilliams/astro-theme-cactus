@@ -27,7 +27,7 @@ Most of these components are done using C++ and may be documented further in the
 The primary focus of this project was to incorporate some varied behaviours into a complete game. Below you can see some of the techniques used to achieve the gameplay and enemies you see in Terminal.
 
 ### C++
-1. **C++ Anim Notifiers**
+1. **Anim Notifiers**
     - Used to check player range and apply damage on a specific frame of attack animations.
     - An example [`Source/MB2/Private/AnimNotify_AttackPlayer.cpp`](https://github.com/HenryHa993/MBShooter/blob/main/Source/MB2/Private/AnimNotify_AttackPlayer.cpp)
 ```cpp
@@ -58,7 +58,7 @@ void UAnimNotify_AttackPlayer::Notify(USkeletalMeshComponent* MeshComp, UAnimSeq
     }
 }
 ```
-2. **C++ HealthComponent**
+2. **HealthComponent**
     - Had the health as a separate `ActorComponent` class.
     - This is a huge improvement of how I used to do it (in the `Character` classes) and is great in terms of modularity.
     - See [`Source/MB2/Private/HealthComponent.cpp`](https://github.com/HenryHa993/MBShooter/blob/main/Source/MB2/Private/HealthComponent.cpp)
@@ -119,7 +119,7 @@ void AMB2GameState::CheckStageComplete()
         false);
 }
 ```
-5. **C++ Camera Lock On**
+5. **Camera Lock On**
     - For clarity, I used a camera lock-on technique to alert the player of what door/stage was being unlocked.
     - This C++ function is called in **blueprints** for the opening duration.
     - See [`Source/MB2/Private/StageDoorActor.cpp`](https://github.com/HenryHa993/MBShooter/blob/main/Source/MB2/Private/StageDoorActor.cpp)
@@ -151,7 +151,7 @@ void UAnimNotify_AttackPlayer::Notify(USkeletalMeshComponent* MeshComp, UAnimSeq
     }
 }
 ```
-6. **Parry**
+6. **Parry Mechanic**
     - One of the enemies has a charging attack which can be interrupted if it is hit while it charges.
     - This is mainly done with the **behaviour tree** and in the **C++** where the alien updates whether it was hit in a given frame. I thought it was cool.
     - See:
