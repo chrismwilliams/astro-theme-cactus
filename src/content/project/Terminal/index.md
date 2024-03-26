@@ -203,5 +203,6 @@ If you want to checkout all the animation work, see [`Content/MoonBaseRedux/Char
 
 ### Version Control
 1. **Perforce**
+    - Setting up the initial depot and p4ignore in order to collaborate.
 
 ## Related Posts

@@ -7,7 +7,7 @@ coverImage:
     alt: "Ghoul prison cover image"
 tags: ["directx", "c++", "ai", "behaviour-trees"]
 draft: false
-relatedPosts: []
+relatedPosts: ["sfas-retro"]
 ---
 
 Check out **Escape Ghoul Prison's**
@@ -19,7 +19,7 @@ Escape Ghoul Prison is a puzzle observation game made using only **C++** and **D
 
 This is a submission to **Grads In Game's Search For a Star 2024** competition, in which I became a [**finalist**](https://gradsingames.com/search-for-a-star/sfas-2024-the-finalists/#prog) for!
 
-This project was scored and rated by a vast range of [industry professionals](https://gradsingames.com/search-for-a-star/sfas-2024-the-finalists/#prog) and was an incredibly fun technical challenge. I received some awesome feedback for this project, so I will likely write a separate retrospective post in the near future.
+This project was scored and rated by a vast range of [industry professionals](https://gradsingames.com/search-for-a-star/sfas-2024-the-finalists/#prog) and was an incredibly fun technical challenge. I received some awesome feedback for this project, so I wrote a separate learnings post [**here**](/posts/sfas-retro/).
 
 ![Ghoul Prison GIF](https://img.itch.zone/aW1nLzE0NzM5ODQwLmdpZg==/original/mEFfqR.gif)
 

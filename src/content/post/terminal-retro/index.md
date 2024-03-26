@@ -6,7 +6,7 @@ tags: ["unreal", "c++", "retro"]
 draft: false
 ---
 
-If you haven't read the project post for Terminal before reading this, please do so [**here**](https://heny.quest/projects/terminal/)!
+If you haven't read the project post for Terminal before reading this, please do so [**here**](/projects/terminal/)!
 
 ## Project Goals
 Returning to this project, I had pretty big indicators on what to improve. Mainly on the animation and AI front.
