@@ -34,8 +34,6 @@ I learned a lot from this section -- especially about how memory is managed in C
 [^1]: [Command Pattern](https://gameprogrammingpatterns.com/command.html), Game Programming Patterns
 
 ### Coding Best Practises
-This has personally been my favourite section to go through. I spent quite a while going through this section and learned a huge amount. I'll definitely be incorporating these points in the future.
-
 1. Pass *non*-**POD** (Plain Old Data) Types as a `const` reference  -- *unless you have a good reason*.
 	- Ensures you are not mutating objects unexpectedly.
 	- Generally can pass **POD** types by **value**.
@@ -65,6 +63,8 @@ This has personally been my favourite section to go through. I spent quite a whi
 5. Remember to use **assertions** or `if()` statements to avoid possible exceptions.
 
 ### Submission-Specific
+This has personally been my favourite section to go through. Specifically, I spent quite some time ensuring I understood the memory layout of C as this was identified by one of the assessors as a gap in my knowledge. This is true, especially when coming from a memory managed language like C#.
+
 1. Most of my game code lived in the `Game.cpp`, it would have been worth splitting it out more into separate files. e.g.,
 	- Class-based `GameState`
 	- Class-based `Levels`
