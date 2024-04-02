@@ -1,5 +1,5 @@
 ---
-title: "Rixa - Group Project"
+title: "Rixa - Top-Down Shooter"
 description: "A retro top-down shooter inspired by Commando on the C64. Made with C++ and Playbuffer."
 publishDate: "2 Apr 2024"
 coverImage:
@@ -15,7 +15,7 @@ Check out **Rixa's**
 - 💾 [**Project Files**](https://github.com/d7kh3ty/rixa/tree/main)
 
 ## About
-Rixa is a retro, top-down shooter inspired by Commando on the C64. This was originally a group project done under the Developer Academy but I recently decided to overhaul it as I recently got some amazing C++ [**feedback**](/posts/sfas-reto/) and thought it was a good chance to reinforce some learning.
+Rixa is a retro, top-down shooter inspired by Commando on the C64. This was originally a group project done under the Developer Academy but I recently decided to overhaul it as I recently got some amazing C++ [**feedback**](/posts/sfas-retro/) and thought it was a good chance to reinforce some learning.
 
 This was made using **C++** and Sumo Digital's **Playbuffer** library.
 
