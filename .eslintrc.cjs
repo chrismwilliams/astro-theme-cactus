@@ -1,6 +1,8 @@
 /** @type {import("@types/eslint").Linter.Config} */
 module.exports = {
 	env: {
+		browser: true,
+		es2022: true,
 		node: true,
 	},
 	extends: [
@@ -11,6 +13,7 @@ module.exports = {
 		"plugin:perfectionist/recommended-natural",
 		"plugin:regexp/recommended",
 		"plugin:typescript-sort-keys/recommended",
+		"plugin:deprecation/recommended",
 	],
 	ignorePatterns: ["node_modules", "dist"],
 	overrides: [
@@ -38,25 +41,21 @@ module.exports = {
 				"plugin:@typescript-eslint/stylistic-type-checked",
 			],
 			files: ["*.ts", "*.tsx"],
-			rules: {
-				"deprecation/deprecation": "error",
-			},
 		},
 		{
-			extends: ["plugin:markdown/recommended"],
+			extends: ["plugin:markdown/recommended-legacy"],
 			files: ["**/*.md"],
 			processor: "markdown/markdown",
 		},
 	],
 	parser: "@typescript-eslint/parser",
-	plugins: [
-		"@typescript-eslint",
-		"astro",
-		"deprecation",
-		"perfectionist",
-		"regexp",
-		"typescript-sort-keys",
-	],
+	parserOptions: {
+		ecmaVersion: "latest",
+		project: true,
+		sourceType: "module",
+		tsconfigRootDir: __dirname,
+	},
+	plugins: ["@typescript-eslint", "astro", "perfectionist", "regexp", "typescript-sort-keys"],
 	root: true,
 	rules: {
 		"@typescript-eslint/no-unused-vars": [

@@ -13,5 +13,6 @@
 			"@/site-config": ["src/site.config.ts"]
 		}
 	},
+	"include": ["./.eslintrc.cjs", "**/*"],
 	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
 }
