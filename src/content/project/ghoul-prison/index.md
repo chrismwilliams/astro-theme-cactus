@@ -31,21 +31,26 @@ Coming into this competition, I really wanted to work on some sort of AI behavio
     - Having previous experience with coroutines in **C#** and **Unity** made me comfortable enough to pick up and utilise it in this project for the **behaviour tree** implementation.
     - In specific, coroutines were used to implement the `RUNNING` return state, which means that a specific node hasn't finished operating within that tick and must continue to run in the next update cycle.
     - This is a modern **C++ 20** technique.
-    - See [`Source/Engine/Implementation/BehaviourTree`](https://github.com/HenryHa993/EscapeGhoulPrison/tree/main/Source/Engine/Implementation/BehaviourTree)
+    
+        See [`Source/Engine/Implementation/BehaviourTree`](https://github.com/HenryHa993/EscapeGhoulPrison/tree/main/Source/Engine/Implementation/BehaviourTree)
 
 2. **Behaviour Tree**
     - Features of the behaviour tree included: **Selector Nodes**, **Sequence Nodes**, **Services** and **RUNNING State functionality**.
     - This implementation is used for the AI of the prison warden in the game.
-    - See [`Source/Engine/Implementation/BehaviourTree`](https://github.com/HenryHa993/EscapeGhoulPrison/tree/main/Source/Engine/Implementation/BehaviourTree)
+    
+        See [`Source/Engine/Implementation/BehaviourTree`](https://github.com/HenryHa993/EscapeGhoulPrison/tree/main/Source/Engine/Implementation/BehaviourTree)
+
 3. **Sprite System**
     - Built out a sprite script in order to manage multiple different billboards under a single object.
     - This was used for the stage indicators on the left, as well as the prison warden's sprite changes and detection indicator.
-    - See [`Source/Engine/Implementation/GameObjects`](https://github.com/HenryHa993/EscapeGhoulPrison/tree/main/Source/Engine/Implementation/GameObjects)
+    
+        See [`Source/Engine/Implementation/GameObjects`](https://github.com/HenryHa993/EscapeGhoulPrison/tree/main/Source/Engine/Implementation/GameObjects)
 
 ### Artificial Intelligence
 1. **WardenBT**
     - Based off my behaviour tree, I built out a few **task nodes** and **services** to construct the patrolling behaviour of the prison warden.
-    - See [`Source/Game/EnemyBTs`](https://github.com/HenryHa993/EscapeGhoulPrison/tree/main/Source/Game/EnemyBTs)
+    
+        See [`Source/Game/EnemyBTs`](https://github.com/HenryHa993/EscapeGhoulPrison/tree/main/Source/Game/EnemyBTs)
 
 ### Version Control
 1. **GitHub**
