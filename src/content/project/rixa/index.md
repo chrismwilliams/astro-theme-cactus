@@ -11,7 +11,7 @@ relatedPosts: []
 ---
 
 Check out **Rixa's**
-- 🕹️ [**Game Page/Development Document**](https://henryha993.itch.io/rixa)
+- 🕹️ [**Game Page**](https://henryha993.itch.io/rixa)
 - 💾 [**Project Files**](https://github.com/d7kh3ty/rixa/tree/main)
 
 ## About
