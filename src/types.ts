@@ -1,84 +1,85 @@
-export type SiteConfig = {
+export interface SiteConfig {
 	author: string;
-	title: string;
-	description: string;
-	lang: string;
-	ogLocale: string;
 	date: {
 		locale: string | string[] | undefined;
 		options: Intl.DateTimeFormatOptions;
 	};
+	description: string;
+	lang: string;
+	ogLocale: string;
+	sortPostsByUpdatedDate: boolean;
+	title: string;
 	webmentions?: {
 		link: string;
 		pingback?: string;
 	};
-};
+}
 
-export type PaginationLink = {
-	url: string;
-	text?: string;
+export interface PaginationLink {
 	srLabel?: string;
-};
+	text?: string;
+	url: string;
+}
 
-export type SiteMeta = {
-	title: string;
+export interface SiteMeta {
+	articleDate?: string | undefined;
 	description?: string;
 	ogImage?: string | undefined;
-	articleDate?: string | undefined;
-};
+	title: string;
+}
 
 /** Webmentions */
-export type WebmentionsFeed = {
-	type: string;
+export interface WebmentionsFeed {
+	children: WebmentionsChildren[];
 	name: string;
-	children: WebmentionsChildren[];
-};
-
-export type WebmentionsCache = {
-	lastFetched: string | null;
-	children: WebmentionsChildren[];
-};
-
-export type WebmentionsChildren = {
 	type: string;
+}
+
+export interface WebmentionsCache {
+	children: WebmentionsChildren[];
+	lastFetched: null | string;
+}
+
+export interface WebmentionsChildren {
 	author: Author | null;
-	url: string;
-	published?: string | null;
-	"wm-received": string;
-	"wm-id": number;
-	"wm-source": string;
-	"wm-target": string;
-	"wm-protocol": string;
-	syndication?: string[] | null;
 	content?: Content | null;
 	"mention-of": string;
-	"wm-property": string;
-	"wm-private": boolean;
+	name?: null | string;
+	photo?: null | string[];
+	published?: null | string;
 	rels?: Rels | null;
-	name?: string | null;
-	photo?: string[] | null;
 	summary?: Summary | null;
-};
-
-export type Author = {
+	syndication?: null | string[];
 	type: string;
+	url: string;
+	"wm-id": number;
+	"wm-private": boolean;
+	"wm-property": string;
+	"wm-protocol": string;
+	"wm-received": string;
+	"wm-source": string;
+	"wm-target": string;
+}
+
+export interface Author {
 	name: string;
 	photo: string;
+	type: string;
 	url: string;
-};
+}
 
-export type Content = {
+export interface Content {
 	"content-type": string;
-	value: string;
 	html: string;
 	text: string;
-};
+	value: string;
+}
 
-export type Rels = {
+export interface Rels {
 	canonical: string;
-};
+}
 
-export type Summary = {
+export interface Summary {
 	"content-type": string;
 	value: string;
-};
+}
