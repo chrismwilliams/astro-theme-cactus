@@ -33,7 +33,7 @@ export function groupPostsByYear(posts: CollectionEntry<"post">[]) {
 		if (!acc[year]) {
 			acc[year] = [];
 		}
-		acc[year].push(post);
+		acc[year]?.push(post);
 		return acc;
 	}, {});
 }
