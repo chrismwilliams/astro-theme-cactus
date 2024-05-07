@@ -4,14 +4,15 @@ import type { CollectionEntry } from "astro:content";
 
 import Pagination from "@/components/Paginator.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
+import { getAllPosts, getUniqueTags, groupPostsByYear, sortMDByDate } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
-import { getAllPosts, getUniqueTags, sortMDByDate } from "@/data/post";
 
 export const getStaticPaths = (async ({ paginate }) => {
+	const MAX_POSTS_PER_PAGE = 10;
 	const allPosts = await getAllPosts();
 	const allPostsByDate = sortMDByDate(allPosts);
 	const uniqueTags = getUniqueTags(allPosts);
-	return paginate(allPostsByDate, { pageSize: 10, props: { uniqueTags } });
+	return paginate(allPostsByDate, { pageSize: MAX_POSTS_PER_PAGE, props: { uniqueTags } });
 }) satisfies GetStaticPaths;
 
 interface Props {
@@ -29,38 +30,46 @@ const meta = {
 const paginationProps = {
 	...(page.url.prev && {
 		prevUrl: {
-			text: `← Previous Posts`,
+			text: `← Previous Page`,
 			url: page.url.prev,
 		},
 	}),
 	...(page.url.next && {
 		nextUrl: {
-			text: `Next Posts →`,
+			text: `Next Page →`,
 			url: page.url.next,
 		},
 	}),
 };
+
+const groupedByYear = groupPostsByYear(page.data);
+const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 ---
 
 <PageLayout meta={meta}>
 	<h1 class="title mb-6">Posts</h1>
 	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
 		<section aria-label="Blog post list">
-			<ul class="space-y-8 text-start">
-				{
-					page.data.map((p) => (
-						<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
-							<PostPreview as="h2" post={p} withDesc />
-						</li>
-					))
-				}
-			</ul>
+			{
+				descYearKeys.map((yearKey) => (
+					<>
+						<h2 class="title text-lg">{yearKey}</h2>
+						<ul class="mb-8 mt-6 space-y-8 text-start">
+							{groupedByYear[yearKey]?.map((p) => (
+								<li class="flex flex-col gap-2 sm:flex-row">
+									<PostPreview post={p} />
+								</li>
+							))}
+						</ul>
+					</>
+				))
+			}
 			<Pagination {...paginationProps} />
 		</section>
 		{
 			!!uniqueTags.length && (
 				<aside>
-					<h2 class="mb-4 flex items-center text-lg font-semibold">
+					<h2 class="title mb-4 flex items-center text-lg">
 						<svg
 							aria-hidden="true"
 							class="h-6 w-6"
