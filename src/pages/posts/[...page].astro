@@ -56,7 +56,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 						<h2 class="title text-lg">{yearKey}</h2>
 						<ul class="mb-8 mt-6 space-y-8 text-start">
 							{groupedByYear[yearKey]?.map((p) => (
-								<li class="flex flex-col gap-2 sm:flex-row">
+								<li class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
 									<PostPreview post={p} />
 								</li>
 							))}
