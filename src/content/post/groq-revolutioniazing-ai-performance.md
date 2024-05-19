@@ -1,5 +1,5 @@
 ---
-title: "Revolutionizing AI Performance: Introducing Groq and the LPU Architecture"
+title: "AI Performance: Groq and the LPU Architecture"
 publishDate: "21 February 2024"
 description: "An example post for Astro Cactus, detailing how to add a custom social image card in the frontmatter"
 tags: ["example", "blog", "image"]
