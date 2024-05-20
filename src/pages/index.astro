@@ -9,14 +9,19 @@ const allPosts = await getAllPosts();
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
 const projectLinks: { desc: string; href: string; title: string }[] = [
-    {
+	{
+        desc: "(build-in-public) iterations on tldraw AI canvas",
+        href: "https://draw.connivence.io",
+        title: "draw.connivence.io",
+    },
+	{
         desc: "(soon) a micro-startup studio",
-        href: "http://studio.connivence.io",
+        href: "https://studio.connivence.io",
         title: "studio.connivence.io",
     },
     {
-        desc: "(soon) a (bi?) weekly email about GenAI & tech-related things",
-        href: "http://yetAnotherAInewsletter.org",
+        desc: "(soon) an automated GenAI & tech-related newsletter",
+        href: "https://yetAnotherAInewsletter.org",
         title: "yetAnotherAInewsletter.org",
     },
     {
@@ -25,7 +30,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
         title: "feedcast.io",
     },
     {
-        desc: "(2020-terminated) a lightweight CMS, websites & funnels no-code builder",
+        desc: "(2020-terminated) CMS, websites & funnels no-code builder",
         href: "https://kaliko.solutions/",
         title: "kaliko.solutions",
     },
@@ -34,6 +39,21 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
         href: "https://connivence.io/",
         title: "connivence.io",
     },
+	{
+		desc: "(2017-2018) 1st GTM @ gerermaboite.fr [acquired by Cegid]",
+		href: "https://www.ccistore.fr/produit/2669984/cegid-gerer-ma-boite",
+		title: "cegid.com",
+	},
+	{
+		desc: "(2016-2017) SDR @ wizishop.com",
+		href: "https://www.wizishop.com",
+		title: "wizishop.com",
+	},
+	{
+		desc:"(2015-2016) SDR @ isendpro.com",
+		href: "https://isendpro.com",
+		title: "isendpro.com",
+	}
 ];
 ---
 
@@ -51,9 +71,6 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 	</section>
 	<section aria-label="Blog post list" class="mt-16">
 		<h2 class="title mb-4 text-xl">Posts</h2>
-		<p>
-			uploading...
-		</p>
 		<ul class="space-y-4">
 			{
 				allPostsByDate.map((p) => (
@@ -95,7 +112,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 				Involved into SaaS companies since 2016. I started by selling them. Then I fell into marketing. Switched to product management. Now actively learning code.
 			</p>
 			<p>
-				Currently, I’m working as a Growth / Product Manager at @feedcast.io, an e-commerce multichannel advertising platform + doing occasional freelance missions in various fields including but not limited to:
+				Currently, I’m doing Growth / Product Manager / GTM @feedcast.io, an e-commerce multichannel advertising platform + doing occasional consulting missions in various fields including but not limited to:
 			</p>
 			<ul>
 				<li>- Go-to-market Strategies</li>
