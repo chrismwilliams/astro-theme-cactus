@@ -10,13 +10,13 @@ draft: false
 ---
 
 
-## Challenging the Status Quo: Groq Takes on Nvidia**
+## Challenging the Status Quo: Groq Takes on Nvidia
 
 The new player [Groq](https://groq.com/) has surfaced as a formidable contender against Nvidia's long-standing supremacy. This innovative startup is capturing attention with its ultra-efficient AI chips, which are meticulously engineered to elevate AI performance to unprecedented levels, potentially reshaping competitive dynamics in the tech industry. In response to the massive focus on GPU to train/deploy generative AIs, they invented LPUs.
 
-### LPU: A Game-Changing Architecture**
+### LPU: A Game-Changing Architecture
 
-Central to Groq's breakthroughs is the LPU (Language Processing Unit), a pioneering architecture meticulously crafted for AI language models such as ChatGPT. Unlike traditional processors, the LPU is optimized for efficiency, consuming less power and resources while delivering superior performance, thus setting a new standard in processor design for AI tasks.
+Central to Groq's breakthroughs is the LPU (Language Processing Unit), a pioneering architecture meticulously crafted for AI language models such as ChatGPT. Unlike traditional processors, the [LPU is optimized for efficiency](https://wow.groq.com/lpu-inference-engine/), consuming less power and resources while delivering superior performance, thus setting a new standard in processor design for AI tasks.
 
 ### Unparalleled Speed and Efficiency
 
