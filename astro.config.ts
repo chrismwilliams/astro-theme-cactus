@@ -11,6 +11,10 @@ import remarkUnwrapImages from "remark-unwrap-images";
 import { expressiveCodeOptions } from "./src/site.config";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
 
+// enabling web analytics
+import vercel from '@astrojs/vercel/static';
+
+
 // https://astro.build/config
 export default defineConfig({
 	image: {
@@ -52,6 +56,12 @@ export default defineConfig({
 		},
 		plugins: [rawFonts([".ttf", ".woff"])],
 	},
+	output: 'static',
+	adapter: vercel({
+		webAnalytics: {
+			enabled: true,
+		},
+	}),
 });
 
 function rawFonts(ext: string[]) {
