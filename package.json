@@ -19,6 +19,7 @@
 		"astro": "4.5.16",
 		"astro-expressive-code": "^0.34.1",
 		"astro-icon": "^1.1.0",
+		"gsap": "^3.12.5",
 		"rehype-external-links": "^3.0.0",
 		"satori": "0.10.13",
 		"satori-html": "^0.3.2",

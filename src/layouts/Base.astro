@@ -7,6 +7,7 @@ import ThemeProvider from "@/components/ThemeProvider.astro";
 import Footer from "@/components/layout/Footer.astro";
 import Header from "@/components/layout/Header.astro";
 import { siteConfig } from "@/site-config";
+import { gsap } from "gsap";
 
 interface Props {
 	meta: SiteMeta;
@@ -20,6 +21,7 @@ const {
 <html lang={siteConfig.lang}>
 	<head>
 		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
+		<script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 	</head>
 	<body>
 		<ThemeProvider />
@@ -28,6 +30,56 @@ const {
 		<main id="main">
 			<slot />
 		</main>
+		<script>
+			window.addEventListener("load", () => {
+			  const svgNS = "http://www.w3.org/2000/svg";
+			  const count = 50; // Number of sparkles
+			  const width = window.innerWidth;
+			  const height = window.innerHeight;
+		  
+			  // Create SVG element
+			  const svg = document.createElementNS(svgNS, "svg");
+			  svg.setAttribute("width", width.toString());
+			  svg.setAttribute("height", height.toString());
+			  svg.style.position = "fixed";
+			  svg.style.top = "0";
+			  svg.style.left = "0";
+			  svg.style.zIndex = "-1";
+			  document.body.appendChild(svg);
+		  
+			  // Function to create sparkle
+			  const createSparkle = () => {
+				const rect = document.createElementNS(svgNS, "rect");
+				rect.setAttribute("width", "2");
+				rect.setAttribute("height", "2");
+				const fillColor = document.documentElement.getAttribute("data-theme") === "dark" ? "white" : "black";
+				rect.setAttribute("fill", fillColor);
+				rect.setAttribute("x", (Math.random() * width).toString());
+				rect.setAttribute("y", "-10");
+				gsap.set(rect, { opacity: 0 });
+				svg.appendChild(rect);
+				gsap.to(rect, {
+				  opacity: 1,
+				  y: height + 10,
+				  duration: Math.random() * 3 + 2,
+				  ease: "none",
+				  onComplete: () => {
+					rect.remove();
+				  }
+				});
+			  };
+		  
+			  // Generate sparkles at intervals
+			  for (let i = 0; i < count; i++) {
+				setTimeout(createSparkle, i * 100);
+			  }
+		  
+			  // Continue creating sparkles
+			  setInterval(() => {
+				createSparkle();
+			  }, 200);
+			});
+		  </script>
 		<Footer />
 	</body>
 </html>

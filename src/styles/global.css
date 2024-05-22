@@ -27,9 +27,10 @@
 
 	html {
 		@apply scroll-smooth;
+		
 	}
 
 	body {
-		@apply mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor px-8 pt-16 font-mono text-sm font-normal text-textColor antialiased;
+		@apply mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor/10 px-6 pt-16 font-mono text-sm font-normal antialiased;
 	}
 }

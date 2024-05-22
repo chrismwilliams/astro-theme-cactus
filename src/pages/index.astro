@@ -5,8 +5,13 @@ import PageLayout from "@/layouts/Base.astro";
 import { getAllPosts, sortMDByDate } from "@/data/post";
 
 const MAX_POSTS = 10;
-const allPosts = await getAllPosts();
-const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+let allPostsByDate: any[] = [];
+
+(async () => {
+  const allPosts = await getAllPosts();
+  allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+})();
 
 const projectLinks: { desc: string; href: string; title: string }[] = [
 	{
@@ -101,7 +106,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 					))
 				}
 			</dl>
-			<h2 class="title mb-4 text-xl">Abstract</h1>
+			<h2 class="title mb-4 text-xl">Abstract</h2>
 			<p>
 				I studied french literature and used to love philosophy. Then I needed money so I took my first corporate job at a SaaS company.
 			</p>
@@ -139,7 +144,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 				<li>- (soon) on a Youtube channel</li>
 			</ul>
 			<p class="mt-4">
-				For work inquiries, feel free to email me at <a href="mailto:kvncyf@icloud.com">kvncyf@icloud.com</a>.
+				For work inquiries, feel free to email me at <a href="mailto:kvncyf@icloud.com"><u>kvncyf@icloud.com</u></a>.
 			</p>
 			<img src="/young-man-under-the-moon.png" alt="Midjourney – 'young man standing beneath the moon --sref 3136260955 --stylize 300'" class="mb-4" />
 	</section>
