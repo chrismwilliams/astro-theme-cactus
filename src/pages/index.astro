@@ -5,13 +5,10 @@ import PageLayout from "@/layouts/Base.astro";
 import { getAllPosts, sortMDByDate } from "@/data/post";
 
 const MAX_POSTS = 10;
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-let allPostsByDate: any[] = [];
 
-(async () => {
-  const allPosts = await getAllPosts();
-  allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
-})();
+const allPosts = await getAllPosts();
+const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+
 
 const projectLinks: { desc: string; href: string; title: string }[] = [
 	{
