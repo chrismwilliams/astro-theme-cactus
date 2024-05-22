@@ -31,55 +31,76 @@ const {
 			<slot />
 		</main>
 		<script>
-			window.addEventListener("load", () => {
-			  const svgNS = "http://www.w3.org/2000/svg";
-			  const count = 50; // Number of sparkles
-			  const width = window.innerWidth;
-			  const height = window.innerHeight;
-		  
-			  // Create SVG element
-			  const svg = document.createElementNS(svgNS, "svg");
-			  svg.setAttribute("width", width.toString());
-			  svg.setAttribute("height", height.toString());
-			  svg.style.position = "fixed";
-			  svg.style.top = "0";
-			  svg.style.left = "0";
-			  svg.style.zIndex = "-1";
-			  document.body.appendChild(svg);
-		  
-			  // Function to create sparkle
-			  const createSparkle = () => {
+		window.addEventListener("load", () => {
+			const svgNS = "http://www.w3.org/2000/svg";
+			const count = 50; // Number of sparkles
+			const width = window.innerWidth;
+			const height = window.innerHeight;
+
+			// Create SVG element
+			const svg = document.createElementNS(svgNS, "svg");
+			svg.setAttribute("width", width.toString());
+			svg.setAttribute("height", height.toString());
+			svg.style.position = "fixed";
+			svg.style.top = "0";
+			svg.style.left = "0";
+			svg.style.zIndex = "-1";
+			document.body.appendChild(svg);
+
+			// Function to create sparkle
+			const createSparkle = () => {
+			const fillColor = document.documentElement.getAttribute("data-theme") === "dark" ? "white" : "black";
+			const x = Math.random() * width;
+			const y = -10;
+
+			// Create a group to hold the star parts
+			const starGroup = document.createElementNS(svgNS, "g");
+			starGroup.setAttribute("transform", `translate(${x}, ${y})`);
+			svg.appendChild(starGroup);
+
+			// Create the 4-branch star using small rectangles
+			const createRect = (x, y) => {
 				const rect = document.createElementNS(svgNS, "rect");
 				rect.setAttribute("width", "2");
 				rect.setAttribute("height", "2");
-				const fillColor = document.documentElement.getAttribute("data-theme") === "dark" ? "white" : "black";
 				rect.setAttribute("fill", fillColor);
-				rect.setAttribute("x", (Math.random() * width).toString());
-				rect.setAttribute("y", "-10");
-				gsap.set(rect, { opacity: 0 });
-				svg.appendChild(rect);
-				gsap.to(rect, {
-				  opacity: 1,
-				  y: height + 10,
-				  duration: Math.random() * 3 + 2,
-				  ease: "none",
-				  onComplete: () => {
-					rect.remove();
-				  }
-				});
-			  };
-		  
-			  // Generate sparkles at intervals
-			  for (let i = 0; i < count; i++) {
-				setTimeout(createSparkle, i * 100);
-			  }
-		  
-			  // Continue creating sparkles
-			  setInterval(() => {
-				createSparkle();
-			  }, 200);
+				rect.setAttribute("x", x);
+				rect.setAttribute("y", y);
+				starGroup.appendChild(rect);
+			};
+
+			// Center part
+			createRect(0, 0);
+			// Top branch
+			createRect(0, -1);
+			// Bottom branch
+			createRect(0, 1);
+			// Left branch
+			createRect(-1, 0);
+			// Right branch
+			createRect(1, 0);
+
+			gsap.set(starGroup, { opacity: 0 });
+			gsap.to(starGroup, {
+				opacity: 1,
+				y: height + 10,
+				duration: Math.random() * 3 + 2,
+				ease: "ease-out",
+				onComplete: () => {
+				starGroup.remove();
+				}
 			});
-		  </script>
+			};
+
+			// Generate initial sparkles
+			for (let i = 0; i < count; i++) {
+			setTimeout(createSparkle, i * 100);
+			}
+
+			// Continue creating sparkles
+			setInterval(createSparkle, 200);
+		});
+		</script>
 		<Footer />
 	</body>
 </html>
