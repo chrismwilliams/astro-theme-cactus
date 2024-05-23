@@ -33,7 +33,7 @@ const {
 		<script>
 		window.addEventListener("load", () => {
 			const svgNS = "http://www.w3.org/2000/svg";
-			const count = 50; // Number of sparkles
+			const count = 10; // Reduced number of sparkles for a sober effect
 			const width = window.innerWidth;
 			const height = window.innerHeight;
 
@@ -59,13 +59,13 @@ const {
 			svg.appendChild(starGroup);
 
 			// Create the 4-branch star using small rectangles
-			const createRect = (x, y) => {
+			const createRect = (x: number, y: number) => {
 				const rect = document.createElementNS(svgNS, "rect");
 				rect.setAttribute("width", "2");
 				rect.setAttribute("height", "2");
 				rect.setAttribute("fill", fillColor);
-				rect.setAttribute("x", x);
-				rect.setAttribute("y", y);
+				rect.setAttribute("x", x.toString());
+				rect.setAttribute("y", y.toString());
 				starGroup.appendChild(rect);
 			};
 
@@ -85,7 +85,7 @@ const {
 				opacity: 1,
 				y: height + 10,
 				duration: Math.random() * 3 + 2,
-				ease: "ease-out",
+				ease: "ease-in",
 				onComplete: () => {
 				starGroup.remove();
 				}
