@@ -7,7 +7,7 @@ import ThemeProvider from "@/components/ThemeProvider.astro";
 import Footer from "@/components/layout/Footer.astro";
 import Header from "@/components/layout/Header.astro";
 import { siteConfig } from "@/site-config";
-import { gsap } from "gsap";
+// import { gsap } from "gsap";
 
 interface Props {
 	meta: SiteMeta;
@@ -21,7 +21,7 @@ const {
 <html lang={siteConfig.lang}>
 	<head>
 		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
-		<script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+		<!-- <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script> -->
 	</head>
 	<body>
 		<ThemeProvider />
@@ -30,7 +30,7 @@ const {
 		<main id="main">
 			<slot />
 		</main>
-		<script>
+		<!-- <script>
 		window.addEventListener("load", () => {
 			const svgNS = "http://www.w3.org/2000/svg";
 			const count = 10; // Reduced number of sparkles for a sober effect
@@ -100,7 +100,7 @@ const {
 			// Continue creating sparkles
 			setInterval(createSparkle, 200);
 		});
-		</script>
+		</script> -->
 		<Footer />
 	</body>
 </html>

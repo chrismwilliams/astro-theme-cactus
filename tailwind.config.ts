@@ -41,6 +41,10 @@ export default {
 	],
 	theme: {
 		extend: {
+			// magicui-retro-grid
+			animation: {
+				grid: "grid 15s linear infinite",
+			},
 			colors: {
 				accent: "hsl(var(--theme-accent) / <alpha-value>)",
 				"accent-2": "hsl(var(--theme-accent-2) / <alpha-value>)",
@@ -53,6 +57,13 @@ export default {
 				// Add any custom fonts here
 				sans: [...fontFamily.sans],
 				serif: [...fontFamily.serif],
+			},
+			// magicui-retro-grid
+			keyframes: {
+				grid: {
+					"0%": { transform: "translateY(-50%)" },
+					"100%": { transform: "translateY(0)" },
+				},
 			},
 			transitionProperty: {
 				height: "height",

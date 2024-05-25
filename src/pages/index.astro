@@ -3,6 +3,8 @@ import SocialList from "@/components/SocialList.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import PageLayout from "@/layouts/Base.astro";
 import { getAllPosts, sortMDByDate } from "@/data/post";
+import RetroGrid from "@/components/magicui/retro-grid";
+import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
 
 const MAX_POSTS = 10;
 
@@ -61,16 +63,26 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<h1 class="title mb-6">Hello World</h1>
-		<p class="mb-4">
-			Hey I'm Kevin!
-		</p>
-		<p class="mb-4">
-			28y old eurasian born in south France, currently based in Paris. 
-			Seasonal (not seasonned) pianist. Happy future husband. Here you'll read about my thoughts, projects, learnings...
-		</p>
-		<SocialList />
+
 	</section>
+
+<section>
+	<div class="relative flex h-full w-full max-w-[100%] items-center justify-center overflow-hidden rounded-lg border bg-background p-10 md:shadow-xl gap-4">
+		<div class="flex flex-col">
+			<h1 class="@pointer-events-none z-10 whitespace-pre-wrap bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-left text-5xl font-bold leading-none tracking-tighter text-transparent pb-2">
+				Hello World
+			</h1>
+			<p class="mb-4">
+				I'm Kevin! 8y old eurasian born in south France, currently based in Paris. 
+				Seasonal (not seasonned) pianist. Happy future husband. Here you'll read about my thoughts, projects, learnings...
+			</p>
+			<SocialList />
+		</div>
+   
+		<RetroGrid className=""/>
+	</div>
+</section>
+
 	<section aria-label="Blog post list" class="mt-16">
 		<h2 class="title mb-4 text-xl">Posts</h2>
 		<ul class="space-y-4">
@@ -83,6 +95,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 			}
 		</ul>
 	</section>
+
 	<section class="mt-16">
 		<div class="space-y-6">
 			<h2 class="title mb-4 text-xl">Projects</h2>
@@ -105,13 +118,13 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 			</dl>
 			<h2 class="title mb-4 text-xl">Abstract</h2>
 			<p>
-				I studied french literature and used to love philosophy. Then I needed money so I took my first corporate job at a SaaS company.
+				Studied french literature and used to love philosophy. I wanted to do politics but growing up I needed money so I took my first corporate job at a SaaS company.
 			</p>
 			<p>
 				SaaS (Software-as-a-service) is a scrappy, ever-expanding market which is also an expected <a class="cactus-link" href="https://www.statista.com/statistics/505243/worldwide-software-as-a-service-revenue/" target="_blank" rel="noopener noreferrer">$230 billions-sized industry</a> by the end of 2024.
 			</p>
 			<p>
-				Involved into SaaS companies since 2016. I started by selling them. Then I fell into marketing. Switched to product management. Now actively learning code.
+				Involved into SaaS companies since 2016. I started as a sales, then I fell into marketing. Switched to product management. Now actively learning code.
 			</p>
 			<p>
 				Currently working as a Growth Product Manager & GTM @feedcast.io, an e-commerce multichannel advertising platform + doing occasional consulting missions in various fields including but not limited to:
@@ -144,5 +157,12 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 				For work inquiries, feel free to email me at <a href="mailto:kvncyf@icloud.com"><u>kvncyf@icloud.com</u></a>.
 			</p>
 			<img src="/young-man-under-the-moon.png" alt="Midjourney – 'young man standing beneath the moon --sref 3136260955 --stylize 300'" class="mb-4" />
+	</section>
+	<section>
+		<VelocityScroll
+		text="Velocity Scroll"
+		default_velocity={5}
+		className="font-display text-center text-4xl font-bold tracking-[-0.02em] text-black drop-shadow-sm dark:text-white md:text-7xl md:leading-[5rem]"
+		/>
 	</section>
 </PageLayout>
