@@ -15,7 +15,7 @@ import { remarkReadingTime } from "./src/utils/remark-reading-time";
 // https://astro.build/config
 export default defineConfig({
 	image: {
-		domains: ["webmention.io"],
+		domains: ["kvncyf.me"],
 	},
 	integrations: [
 		react(),
@@ -47,7 +47,7 @@ export default defineConfig({
 	},
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,
-	site: "https://astro-cactus.chriswilliams.dev/",
+	site: "https://kvncyf.me/",
 	vite: {
 		define: {
 			'import.meta.env.PUBLIC_APP_URL': JSON.stringify(process.env.PUBLIC_APP_URL),
