@@ -63,33 +63,38 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 
 <PageLayout meta={{ title: "Home" }}>
 
-<section>
-	<div class="relative flex h-full w-full max-w-[100%] items-center justify-center overflow-hidden rounded-xl border border-gray-100 dark:border-stone-900 bg-background p-5 md:shadow-xl gap-4 pt-0">
-		<div class="flex flex-col">
-			<h1 class="@pointer-events-none z-10 whitespace-pre-wrap bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-left text-3xl font-bold leading-none tracking-tighter text-transparent pb-2 md:text-5xl">
-				Welcome
-			</h1>
-			<p class="mb-4">
-				I'm Kevin. 28 eurasian born in south France. Currently based in Paris.
-				Tech dude. Pianist. Happy future husband. Here you'll read about my thoughts, projects, learnings...
-			</p>
-			<SocialList />
+	<section>
+		<div class="relative flex h-full w-full max-w-[100%] items-center justify-center overflow-hidden rounded-xl border border-gray-100 dark:border-stone-900 bg-background gap-4 pt-8">
+			<div class="flex flex-col w-full max-w-[100%]">
+				<h1 class="pointer-events-none z-10 whitespace-pre-wrap bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-left text-3xl font-bold leading-none tracking-tighter text-transparent pb-2 md:text-5xl hidden">
+					Welcome
+				</h1>
+				<div class="overflow-hidden max-w-full">
+					<VelocityScroll
+						client:load
+						text="Welcome"
+						default_velocity={5}
+						className="font-display text-center text-2xl font-bold tracking-[-0.02em] drop-shadow-sm bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-transparent md:text-4xl md:leading-[3rem]"
+					/>
+				</div>
+				
+				<div class="p-5">
+					<p class="mb-4 max-w-full">
+						I'm Kevin. 28 eurasian born in south France. Currently based in Paris.
+						Tech dude. Pianist. Happy future husband. Here you'll read about my thoughts, projects, learnings...
+					</p>
+					<div class="max-w-full">
+						<SocialList />
+					</div>
+				</div>
+			</div>
+		
+			<RetroGrid client:load/>
 		</div>
-   
-		<RetroGrid client:load/>
-	</div>
-</section>
+	</section>
 
 	<section aria-label="Blog post list" class="mt-16">
 		<h2 class="title mb-4 text-xl hidden">Posts</h2>
-		<div class="border border-gray-100 dark:border-stone-900 shadow-sm py-2 my-8 p-0 rounded-xl ">
-			<VelocityScroll
-				client:load
-				text="Posts"
-				default_velocity={5}
-				className="font-display text-center text-3xl font-bold tracking-[-0.02em] drop-shadow-sm text-stone-600 dark:text-stone-600 md:text-4xl md:leading-[3rem]"
-			/>
-		</div>
 		<ul class="space-y-4">
 			{
 				allPostsByDate.map((p) => (
@@ -105,15 +110,8 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 
 	<section class="mt-16">
 		<div class="space-y-6">
-			<h2 class="title mb-4 text-xl hidden">Projects</h2>
-			<div class="border border-gray-100 dark:border-stone-900 shadow-sm py-2 my-8 p-0 rounded-xl ">
-				<VelocityScroll
-					client:load
-					text="Projects"
-					default_velocity={5}
-					className="font-display text-center text-3xl font-bold tracking-[-0.02em] drop-shadow-sm text-stone-600 dark:text-stone-600 md:text-4xl md:leading-[3rem]"
-				/>
-			</div>
+			<h2 class="title mb-4 text-xl">Projects</h2>
+
 			<dl class="space-y-4">
 				{
 					projectLinks.map(({ desc, href, title }) => (
@@ -131,15 +129,8 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 					))
 				}
 			</dl>
-			<h2 class="title mb-4 text-xl hidden">Abstract</h2>
-			<div class="border border-gray-100 dark:border-stone-900 shadow-sm py-2 my-8 p-0 rounded-xl ">
-				<VelocityScroll
-					client:load
-					text="Abstract"
-					default_velocity={5}
-					className="font-display text-center text-3xl font-bold tracking-[-0.02em] drop-shadow-sm text-stone-600 dark:text-stone-600 md:text-4xl md:leading-[3rem]"
-				/>
-			</div>
+			<h2 class="title mb-4 text-xl">Abstract</h2>
+
 			<p>
 				Studied french literature and used to love philosophy. I wanted to do politics but growing up I needed money so I took my first corporate job at a SaaS company.
 			</p>
