@@ -25,16 +25,33 @@ const url = new URL(Astro.request.url);
 				<title>Logo</title>
 				<path
 					d="M181.334 93.333v-40L226.667 80v40l-45.333-26.667ZM136.001 53.333 90.667 26.667v426.666L136.001 480V53.333Z"
-					fill="#B04304"></path>
+					fill="url(#gradient1)"></path>
 				<path
 					d="m136.001 119.944 45.333-26.667 45.333 26.667-45.333 26.667-45.333-26.667ZM90.667 26.667 136.001 0l45.333 26.667-45.333 26.666-45.334-26.666ZM181.334 53.277l45.333-26.666L272 53.277l-45.333 26.667-45.333-26.667ZM0 213.277l45.333-26.667 45.334 26.667-45.334 26.667L0 213.277ZM136 239.944l-45.333-26.667v53.333L136 239.944Z"
-					fill="#FF5D01"></path>
+					fill="url(#gradient2)"></path>
 				<path
 					d="m136 53.333 45.333-26.666v120L226.667 120V80L272 53.333V160l-90.667 53.333v240L136 480V306.667L45.334 360V240l45.333-26.667v53.334L136 240V53.333Z"
-					fill="#53C68C"></path>
-				<path d="M45.334 240 0 213.334v120L45.334 360V240Z" fill="#B04304"></path>
+					fill="url(#gradient3)"></path>
+				<path d="M45.334 240 0 213.334v120L45.334 360V240Z" fill="url(#gradient1)"></path>
+				<defs>
+					<linearGradient id="gradient1" x1="0" y1="0" x2="1" y2="1">
+						<stop offset="0%" stop-color="#ffd319" />
+						<stop offset="50%" stop-color="#ff2975" />
+						<stop offset="100%" stop-color="#8c1eff" />
+					</linearGradient>
+					<linearGradient id="gradient2" x1="0" y1="0" x2="1" y2="1">
+						<stop offset="0%" stop-color="#ffd319" />
+						<stop offset="50%" stop-color="#ff2975" />
+						<stop offset="100%" stop-color="#8c1eff" />
+					</linearGradient>
+					<linearGradient id="gradient3" x1="0" y1="0" x2="1" y2="1">
+						<stop offset="0%" stop-color="#ffd319" />
+						<stop offset="50%" stop-color="#ff2975" />
+						<stop offset="100%" stop-color="#8c1eff" />
+					</linearGradient>
+				</defs>
 			</svg>
-			<span class="text-xl font-bold sm:text-2xl">kvncyf.me</span>
+			<span class="text-xl font-bold sm:text-2xl bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-transparent">kvncyf.me</span>
 		</a>
 		<nav
 			aria-label="Main menu"
@@ -45,7 +62,7 @@ const url = new URL(Astro.request.url);
 				menuLinks.map((link) => (
 					<a
 						aria-current={url.pathname === link.path ? "page" : false}
-						class="px-4 py-4 underline-offset-2 sm:py-0 sm:hover:underline"
+						class="px-4 py-4 underline-offset-2 sm:py-0 sm:hover:underline bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-transparent"
 						data-astro-prefetch
 						href={link.path}
 					>
