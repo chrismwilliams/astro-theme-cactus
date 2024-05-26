@@ -41,9 +41,10 @@ export default {
 	],
 	theme: {
 		extend: {
-			// magicui-retro-grid
+			// magicui
 			animation: {
 				grid: "grid 15s linear infinite",
+				orbit: "orbit calc(var(--duration)*1s) linear infinite",
 			},
 			colors: {
 				accent: "hsl(var(--theme-accent) / <alpha-value>)",
@@ -58,11 +59,19 @@ export default {
 				sans: [...fontFamily.sans],
 				serif: [...fontFamily.serif],
 			},
-			// magicui-retro-grid
+			// magicui
 			keyframes: {
 				grid: {
 					"0%": { transform: "translateY(-50%)" },
 					"100%": { transform: "translateY(0)" },
+				},
+				orbit: {
+					"0%": {
+						transform: "rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)",
+					},
+					"100%": {
+						transform: "rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)",
+					},
 				},
 			},
 			transitionProperty: {

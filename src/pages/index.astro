@@ -62,29 +62,34 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 ---
 
 <PageLayout meta={{ title: "Home" }}>
-	<section>
-
-	</section>
 
 <section>
-	<div class="relative flex h-full w-full max-w-[100%] items-center justify-center overflow-hidden rounded-lg border bg-background p-10 md:shadow-xl gap-4">
+	<div class="relative flex h-full w-full max-w-[100%] items-center justify-center overflow-hidden rounded-xl border border-gray-100 dark:border-stone-900 bg-background p-5 md:shadow-xl gap-4 pt-0">
 		<div class="flex flex-col">
-			<h1 class="@pointer-events-none z-10 whitespace-pre-wrap bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-left text-5xl font-bold leading-none tracking-tighter text-transparent pb-2">
-				Hello World
+			<h1 class="@pointer-events-none z-10 whitespace-pre-wrap bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-left text-3xl font-bold leading-none tracking-tighter text-transparent pb-2 md:text-5xl">
+				Welcome
 			</h1>
 			<p class="mb-4">
-				I'm Kevin! 28y old eurasian born in south France, currently based in Paris. 
-				Seasonal (not seasonned) pianist. Happy future husband. Here you'll read about my thoughts, projects, learnings...
+				I'm Kevin. 28 eurasian born in south France. Currently based in Paris.
+				Tech dude. Pianist. Happy future husband. Here you'll read about my thoughts, projects, learnings...
 			</p>
 			<SocialList />
 		</div>
    
-		<RetroGrid className=""/>
+		<RetroGrid client:load/>
 	</div>
 </section>
 
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="title mb-4 text-xl">Posts</h2>
+		<h2 class="title mb-4 text-xl hidden">Posts</h2>
+		<div class="border border-gray-100 dark:border-stone-900 shadow-sm py-2 my-8 p-0 rounded-xl ">
+			<VelocityScroll
+				client:load
+				text="Posts"
+				default_velocity={5}
+				className="font-display text-center text-3xl font-bold tracking-[-0.02em] drop-shadow-sm text-stone-600 dark:text-stone-600 md:text-4xl md:leading-[3rem]"
+			/>
+		</div>
 		<ul class="space-y-4">
 			{
 				allPostsByDate.map((p) => (
@@ -96,9 +101,19 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 		</ul>
 	</section>
 
+
+
 	<section class="mt-16">
 		<div class="space-y-6">
-			<h2 class="title mb-4 text-xl">Projects</h2>
+			<h2 class="title mb-4 text-xl hidden">Projects</h2>
+			<div class="border border-gray-100 dark:border-stone-900 shadow-sm py-2 my-8 p-0 rounded-xl ">
+				<VelocityScroll
+					client:load
+					text="Projects"
+					default_velocity={5}
+					className="font-display text-center text-3xl font-bold tracking-[-0.02em] drop-shadow-sm text-stone-600 dark:text-stone-600 md:text-4xl md:leading-[3rem]"
+				/>
+			</div>
 			<dl class="space-y-4">
 				{
 					projectLinks.map(({ desc, href, title }) => (
@@ -116,7 +131,15 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 					))
 				}
 			</dl>
-			<h2 class="title mb-4 text-xl">Abstract</h2>
+			<h2 class="title mb-4 text-xl hidden">Abstract</h2>
+			<div class="border border-gray-100 dark:border-stone-900 shadow-sm py-2 my-8 p-0 rounded-xl ">
+				<VelocityScroll
+					client:load
+					text="Abstract"
+					default_velocity={5}
+					className="font-display text-center text-3xl font-bold tracking-[-0.02em] drop-shadow-sm text-stone-600 dark:text-stone-600 md:text-4xl md:leading-[3rem]"
+				/>
+			</div>
 			<p>
 				Studied french literature and used to love philosophy. I wanted to do politics but growing up I needed money so I took my first corporate job at a SaaS company.
 			</p>
@@ -156,13 +179,9 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 			<p class="mt-4">
 				For work inquiries, feel free to email me at <a href="mailto:kvncyf@icloud.com"><u>kvncyf@icloud.com</u></a>.
 			</p>
-			<VelocityScroll
-			text="Velocity Scroll"
-			default_velocity={5}
-			className="font-display text-center text-4xl font-bold tracking-[-0.02em] text-black drop-shadow-sm dark:text-white md:text-7xl md:leading-[5rem]"
-			/>
-			<img src="/young-man-under-the-moon.png" alt="Midjourney – 'young man standing beneath the moon --sref 3136260955 --stylize 300'" class="mb-4" />
-	</section>
-	<section>
+			<div class="border border-gray-100 dark:border-stone-900 shadow-sm p-0 rounded-xl overflow-hidden">
+				<img src="/young-man-under-the-moon.png" alt="Midjourney – 'young man standing beneath the moon --sref 3136260955 --stylize 300'" />
+			</div>
+		</div>
 	</section>
 </PageLayout>

@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
@@ -48,11 +48,16 @@ export function VelocityScroll({
       stiffness: 400,
     });
 
-    const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
-      clamp: false,
-    });
+    const velocityFactor = useTransform<number, number>(
+      smoothVelocity,
+      [0, 1000],
+      [0, 5],
+      {
+        clamp: false,
+      }
+    );
 
-    const [repetitions, setRepetitions] = useState(1);
+    const [repetitions, setRepetitions] = useState<number>(1);
     const containerRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLSpanElement>(null);
 
@@ -75,7 +80,7 @@ export function VelocityScroll({
 
     const x = useTransform(baseX, (v) => `${wrap(-100 / repetitions, 0, v)}%`);
 
-    const directionFactor = React.useRef<number>(1);
+    const directionFactor = useRef<number>(1);
     useAnimationFrame((t, delta) => {
       let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
@@ -97,7 +102,8 @@ export function VelocityScroll({
       >
         <motion.div className={cn("inline-block", className)} style={{ x }}>
           {Array.from({ length: repetitions }).map((_, i) => (
-            <span key={i} ref={i === 0 ? textRef : null}>
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+<span key={i} ref={i === 0 ? textRef : null}>
               {children}{" "}
             </span>
           ))}
