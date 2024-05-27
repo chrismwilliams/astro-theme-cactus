@@ -108,36 +108,37 @@ const url = new URL(Astro.request.url);
 				stroke-width="1.5"
 				viewBox="0 0 24 24"
 				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
-			</svg>
-		</button>
-	</mobile-button>
-</header>
-
-<script>
-	import { toggleClass } from "@/utils";
-
-	class MobileNavBtn extends HTMLElement {
-		private headerEl: HTMLElement;
-		private menuOpen: boolean;
-		private mobileButtonEl: HTMLButtonElement;
-
-		toggleMobileMenu = () => {
-			toggleClass(this.headerEl, "menu-open");
-			this.menuOpen = !this.menuOpen;
-			this.mobileButtonEl.setAttribute("aria-expanded", this.menuOpen.toString());
-		};
-
-		constructor() {
-			super();
-			this.headerEl = document.getElementById("main-header")!;
-			this.mobileButtonEl = this.querySelector("button") as HTMLButtonElement;
-			this.menuOpen = false;
-
-			this.mobileButtonEl.addEventListener("click", this.toggleMobileMenu);
+				>
+					<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+				</svg>
+			</button>
+		</mobile-button>
+	</header>
+	
+	<script>
+		import { toggleClass } from "@/utils";
+	
+		class MobileNavBtn extends HTMLElement {
+			private headerEl: HTMLElement;
+			private menuOpen: boolean;
+			private mobileButtonEl: HTMLButtonElement;
+	
+			toggleMobileMenu = () => {
+				toggleClass(this.headerEl, "menu-open");
+				this.menuOpen = !this.menuOpen;
+				this.mobileButtonEl.setAttribute("aria-expanded", this.menuOpen.toString());
+			};
+	
+			constructor() {
+				super();
+				this.headerEl = document.getElementById("main-header")!;
+				this.mobileButtonEl = this.querySelector("button") as HTMLButtonElement;
+				this.menuOpen = false;
+	
+				this.mobileButtonEl.addEventListener("click", this.toggleMobileMenu);
+			}
 		}
-	}
-
-	customElements.define("mobile-button", MobileNavBtn);
-</script>
+	
+		customElements.define("mobile-button", MobileNavBtn);
+	</script>
+	
