@@ -6,7 +6,7 @@ export const siteConfig: SiteConfig = {
 	author: "Kevin CHAN YOU FEE",
 	// Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.
 	date: {
-		locale: "en-GB",
+		locale: "en-US",
 		options: {
 			day: "numeric",
 			month: "short",
@@ -31,7 +31,7 @@ export const siteConfig: SiteConfig = {
 export const menuLinks: { path: string, title: string; }[] = [
 	{
 		path: "/",
-		title: "Home",
+		title: "Hey",
 	},
 	{
 		path: "/posts/",
