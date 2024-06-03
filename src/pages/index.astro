@@ -1,27 +1,29 @@
 ---
+"use client";
+
 import SocialList from "@/components/SocialList.astro";
-import PostPreview from "@/components/blog/PostPreview.astro";
+// import PostPreview from "@/components/blog/PostPreview.astro";
 import PageLayout from "@/layouts/Base.astro";
-import { getAllPosts, sortMDByDate } from "@/data/post";
+// import { getAllPosts, sortMDByDate } from "@/data/post";
 import RetroGrid from "@/components/magicui/retro-grid";
 import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
 
-const MAX_POSTS = 10;
+// const MAX_POSTS = 10;
 
-const allPosts = await getAllPosts();
-const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+// const allPosts = await getAllPosts();
+// const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
 
 const projectLinks: { desc: string; href: string; title: string }[] = [
 	{
-        desc: "(build-in-public) iterating on tldraw.com AI canvas",
-        href: "https://draw.kvncyf.me",
-        title: "draw.kvncyf.me",
+        desc: "(soon) a micro-startup studio / remote incubator",
+        href: "https://labs.connivence.io",
+        title: "labs.connivence.io",
     },
 	{
-        desc: "(soon) a micro-startup studio",
-        href: "https://studio.connivence.io",
-        title: "studio.connivence.io",
+        desc: "tldraw.com (AI-experiment) canvas fork",
+        href: "https://draw.kvncyf.me",
+        title: "draw.kvncyf.me",
     },
     {
         desc: "(pre-launch) an automated GenAI & tech-related newsletter",
@@ -34,22 +36,22 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
         title: "feedcast.io",
     },
     {
-        desc: "(2020-terminated) CMS, websites & funnels no-code builder",
+        desc: "(2020-discontinued) ceo – CMS, websites & funnels no-code builder",
         href: "https://kaliko.solutions/",
         title: "kaliko.solutions",
     },
 	{
-        desc: "(2018-today) my growth consulting structure",
+        desc: "(2018-today) founder – where things happens ❤️‍🔥",
         href: "https://connivence.io/",
         title: "connivence.io",
     },
 	{
-		desc: "(2017-2018) 1st GTM @ gerermaboite.fr [acquired by Cegid]",
+		desc: "(2017-2018) 1st GTM – gerermaboite.fr [acquired by Cegid]",
 		href: "https://www.ccistore.fr/produit/2669984/cegid-gerer-ma-boite",
 		title: "cegid.com",
 	},
 	{
-		desc: "(2016-2017) SDR @ wizishop.com",
+		desc: "(2016-2017) SDR – wizishop.com",
 		href: "https://www.wizishop.com",
 		title: "wizishop.com",
 	},
@@ -71,8 +73,8 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 				</h1>
 				<div class="overflow-hidden max-w-full">
 					<VelocityScroll
-						client:load
-						text="Welcome"
+						client:only="@astrojs/react"
+						text="AGI is near"
 						default_velocity={5}
 						className="font-display text-center text-2xl font-bold tracking-[-0.02em] drop-shadow-sm bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-transparent md:text-4xl md:leading-[3rem]"
 					/>
@@ -80,22 +82,25 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 				
 				<div class="p-5">
 					<p class="mb-4 max-w-full">
-						I'm Kevin. 28, eurasian born in south France. Currently based in Paris.
-						Tech Worker. Pianist. Happy future husband. Here you'll read about my thoughts, projects, learnings.
+						I'm Kevin. Tech worker based in Paris, from south France. 
+						<br>
+						Pianist. Happy future husband. Here you'll read about my thoughts, projects, learnings.
 					</p>
 					<div class="max-w-full">
 						<SocialList />
 					</div>
 				</div>
 			</div>
-		
-			<RetroGrid client:load/>
+			<RetroGrid client:only="@astrojs/react"/>
 		</div>
 	</section>
 
 	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="title mb-4 text-xl hidden">Posts</h2>
-		<ul class="space-y-4">
+		<h2 class="title mb-4 text-xl">Posts</h2>
+		<p>
+			(wip) Writing a life update for re-balancing purposes
+		</p>
+		<!-- <ul class="space-y-4">
 			{
 				allPostsByDate.map((p) => (
 					<li class="flex flex-col gap-x-2 sm:flex-row">
@@ -103,7 +108,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 					</li>
 				))
 			}
-		</ul>
+		</ul> -->
 	</section>
 
 
@@ -132,7 +137,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 			<h2 class="title mb-4 text-xl">Abstract</h2>
 
 			<p>
-				Studied french literature and used to love philosophy. I wanted to do politics but growing up I needed money so I took my first corporate job at a SaaS company.
+				I studied french literature and used to love philosophy. Wanted to do politics initially but rapidly needed money so I took my first corporate job at a SaaS company.
 			</p>
 			<p>
 				SaaS (Software-as-a-service) is a scrappy, ever-expanding market which is also an expected <a class="cactus-link" href="https://www.statista.com/statistics/505243/worldwide-software-as-a-service-revenue/" target="_blank" rel="noopener noreferrer">$230 billions-sized industry</a> by the end of 2024.
@@ -168,7 +173,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 				<li>- (soon) on a Youtube channel</li>
 			</ul>
 			<p class="mt-4">
-				For work inquiries, feel free to email me at <a href="mailto:hey@kvncyf.me"><u>hey@kvncyf.me</u></a>.
+				For work inquiries, feel free to email me at <a href="mailto:kevin@connivence.io"><u>kevin@connivence.io</u></a>.
 			</p>
 			<div class="border border-gray-100 dark:border-stone-900 shadow-sm p-0 rounded-xl overflow-hidden">
 				<img src="/young-man-under-the-moon.png" alt="Midjourney – 'young man standing beneath the moon --sref 3136260955 --stylize 300'" />

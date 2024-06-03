@@ -6,7 +6,7 @@ tags: ["AI", "Nvidia", "Groq", "OpenAI"]
 coverImage:
   src: "./cover.png"
   alt: "Why groq is so much better"
-draft: false
+draft: true
 ---
 
 

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { Config } from "tailwindcss";
 
@@ -5,10 +7,7 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 
 export default {
-	content: [
-		"./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}",
-		"!./src/pages/og-image/[slug].png.ts",
-	],
+	content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}","!./src/pages/og-image/[slug].png.ts",],
 	corePlugins: {
 		// disable aspect ratio as per docs -> @tailwindcss/aspect-ratio
 		aspectRatio: false,
@@ -45,6 +44,8 @@ export default {
 			animation: {
 				grid: "grid 15s linear infinite",
 				orbit: "orbit calc(var(--duration)*1s) linear infinite",
+				slide: "slide var(--speed) ease-in-out infinite alternate",
+				"spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
 			},
 			colors: {
 				accent: "hsl(var(--theme-accent) / <alpha-value>)",
@@ -71,6 +72,25 @@ export default {
 					},
 					"100%": {
 						transform: "rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)",
+					},
+				},
+				slide: {
+					to: {
+						transform: "translate(calc(100cqw - 100%), 0)",
+					},
+				},
+				"spin-around": {
+					"0%": {
+						transform: "translateZ(0) rotate(0)",
+					},
+					"15%, 35%": {
+						transform: "translateZ(0) rotate(90deg)",
+					},
+					"65%, 85%": {
+						transform: "translateZ(0) rotate(270deg)",
+					},
+					"100%": {
+						transform: "translateZ(0) rotate(360deg)",
 					},
 				},
 			},
