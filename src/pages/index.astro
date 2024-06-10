@@ -1,12 +1,10 @@
 ---
-"use client";
-
 import SocialList from "@/components/SocialList.astro";
 // import PostPreview from "@/components/blog/PostPreview.astro";
 import PageLayout from "@/layouts/Base.astro";
 // import { getAllPosts, sortMDByDate } from "@/data/post";
-import RetroGrid from "@/components/magicui/retro-grid";
 import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
+import RetroGrid from "@/components/magicui/retro-grid";
 
 // const MAX_POSTS = 10;
 
@@ -15,6 +13,11 @@ import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
 
 
 const projectLinks: { desc: string; href: string; title: string }[] = [
+	{
+        desc: "(2018-today) founder – accelerationist community ❤️‍🔥",
+        href: "https://connivence.io/",
+        title: "connivence.io",
+    },
 	{
         desc: "(soon) a micro-startup studio / remote incubator",
         href: "https://labs.connivence.io",
@@ -31,7 +34,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
         title: "yetAnotherAInewsletter.org",
     },
     {
-        desc: "(2021-today) an e-commerce multichannel advertising platform",
+        desc: "(2021-today) supercharge e-commerce multichannel advertising platform",
         href: "https://feedcast.io/",
         title: "feedcast.io",
     },
@@ -39,11 +42,6 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
         desc: "(2020-discontinued) ceo – CMS, websites & funnels no-code builder",
         href: "https://kaliko.solutions/",
         title: "kaliko.solutions",
-    },
-	{
-        desc: "(2018-today) founder – where things happens ❤️‍🔥",
-        href: "https://connivence.io/",
-        title: "connivence.io",
     },
 	{
 		desc: "(2017-2018) 1st GTM – gerermaboite.fr [acquired by Cegid]",
@@ -73,7 +71,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 				</h1>
 				<div class="overflow-hidden max-w-full">
 					<VelocityScroll
-						client:only="@astrojs/react"
+						client:load
 						text="AGI is near"
 						default_velocity={5}
 						className="font-display text-center text-2xl font-bold tracking-[-0.02em] drop-shadow-sm bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-transparent md:text-4xl md:leading-[3rem]"
@@ -89,7 +87,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 					</div>
 				</div>
 			</div>
-			<RetroGrid client:only="@astrojs/react"/>
+			<RetroGrid client:load/>
 		</div>
 	</section>
 

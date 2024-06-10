@@ -1,56 +1,23 @@
 ---
+
 import { menuLinks } from "@/site-config";
 
-import Search from "../Search.astro";
-import ThemeToggle from "../ThemeToggle.astro";
+// import Search from "../Search.astro";
+// import ThemeToggle from "../ThemeToggle.astro";
+import Image from "astro/components/Image.astro";
+import logo from "@/assets/logo.png"; // Import the image
 
 const url = new URL(Astro.request.url);
 ---
 
 <header class="group relative mb-20 flex items-center md:mb-15 sm:ps-[4.5rem]" id="main-header">
-	<div class="flex sm:flex-col">
+	<div class="flex w-full space-between sm:flex-col">
 		<a
 			aria-current={url.pathname === "/" ? "page" : false}
 			class="inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block"
 			href="/"
 		>
-	<svg
-				aria-hidden="true"
-				class="me-3 h-10 w-6 hidden sm:block sm:absolute sm:start-[-4.5rem] sm:me-0 sm:h-20 sm:w-12"
-				fill="none"
-				focusable="false"
-				viewBox="0 0 272 480"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<title>Logo</title>
-				<path
-					d="M181.334 93.333v-40L226.667 80v40l-45.333-26.667ZM136.001 53.333 90.667 26.667v426.666L136.001 480V53.333Z"
-					fill="url(#gradient1)"></path>
-				<path
-					d="m136.001 119.944 45.333-26.667 45.333 26.667-45.333 26.667-45.333-26.667ZM90.667 26.667 136.001 0l45.333 26.667-45.333 26.666-45.334-26.666ZM181.334 53.277l45.333-26.666L272 53.277l-45.333 26.667-45.333-26.667ZM0 213.277l45.333-26.667 45.334 26.667-45.334 26.667L0 213.277ZM136 239.944l-45.333-26.667v53.333L136 239.944Z"
-					fill="url(#gradient2)"></path>
-				<path
-					d="m136 53.333 45.333-26.666v120L226.667 120V80L272 53.333V160l-90.667 53.333v240L136 480V306.667L45.334 360V240l45.333-26.667v53.334L136 240V53.333Z"
-					fill="url(#gradient3)"></path>
-				<path d="M45.334 240 0 213.334v120L45.334 360V240Z" fill="url(#gradient1)"></path>
-				<defs>
-					<linearGradient id="gradient1" x1="0" y1="0" x2="1" y2="1">
-						<stop offset="0%" stop-color="#ffd319" />
-						<stop offset="50%" stop-color="#ff2975" />
-						<stop offset="100%" stop-color="#8c1eff" />
-					</linearGradient>
-					<linearGradient id="gradient2" x1="0" y1="0" x2="1" y2="1">
-						<stop offset="0%" stop-color="#ffd319" />
-						<stop offset="50%" stop-color="#ff2975" />
-						<stop offset="100%" stop-color="#8c1eff" />
-					</linearGradient>
-					<linearGradient id="gradient3" x1="0" y1="0" x2="1" y2="1">
-						<stop offset="0%" stop-color="#ffd319" />
-						<stop offset="50%" stop-color="#ff2975" />
-						<stop offset="100%" stop-color="#8c1eff" />
-					</linearGradient>
-				</defs>
-			</svg>
+			<Image src={logo} alt="Logo" class="me-10 h-10 w-10 hidden sm:block sm:absolute sm:start-[-5.5rem] sm:me-0 sm:h-20 sm:w-20 border border-gray-300 rounded-[16px]" />
 			<span class="text-xl font-bold sm:text-2xl bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-transparent">kvncyf.me</span>
 		</a>
 		<nav
@@ -72,8 +39,8 @@ const url = new URL(Astro.request.url);
 			}
 		</nav>
 	</div>
-	<Search />
-	<ThemeToggle />
+	<!-- <Search />
+	<ThemeToggle /> -->
 	<mobile-button>
 		<button
 			aria-expanded="false"
@@ -141,4 +108,3 @@ const url = new URL(Astro.request.url);
 	
 		customElements.define("mobile-button", MobileNavBtn);
 	</script>
-	
