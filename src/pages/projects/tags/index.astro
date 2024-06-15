@@ -1,0 +1,39 @@
+---
+import PageLayout from "@/layouts/Base";
+import { getAllProjects, getUniqueProjectTagsWithCount } from "@/utils";
+
+const allPosts = await getAllProjects();
+const allTags = getUniqueProjectTagsWithCount(allPosts);
+
+const meta = {
+	title: "All Tags",
+	description: "A list of all the topics I've written about in my projects.",
+};
+---
+
+<PageLayout meta={meta}>
+	<h1 class="title mb-6">Project Tags</h1>
+	<p class="mb-4">
+		You can filter my projects using their corresponding tags. If you're looking for my post tags,
+		check them out <a href="/posts/tags/" class="cactus-link">here</a>.
+	</p>
+	<ul class="space-y-4">
+		{
+			allTags.map(([tag, val]) => (
+				<li class="flex items-center gap-x-2">
+					<a
+						class="cactus-link inline-block font-bold"
+						href={`/projects/tags/${tag}/`}
+						title={`View posts with the tag: ${tag}`}
+						data-astro-prefetch
+					>
+						&#35;{tag}
+					</a>
+					<span class="inline-block">
+						- {val} Project{val > 1 && "s"}
+					</span>
+				</li>
+			))
+		}
+	</ul>
+</PageLayout>

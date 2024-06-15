@@ -5,7 +5,7 @@ publishDate: "19 Jun 2023"
 coverImage:
     src: "./level.png"
     alt: "PA library cover image"
-tags: ["unity", "c#", "ai", "behaviour-trees", "procedural-animation"]
+tags: ["unity", "c-sharp", "ai", "behaviour-trees", "procedural-animation"]
 draft: false
 relatedPosts: []
 ---

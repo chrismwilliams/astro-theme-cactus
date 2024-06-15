@@ -21,11 +21,11 @@ interface Props {
 	uniqueTags: string[];
 }
 
-const { page } = Astro.props;
+const { page, uniqueTags } = Astro.props;
 
 const meta = {
 	title: "Projects",
-	description: "Ready my projects.",
+	description: "Check out some of my projects.",
 };
 
 const paginationProps = {
@@ -47,8 +47,8 @@ const paginationProps = {
 <PageLayout meta={meta}>
 	<h1 class="title mb-6">Projects</h1>
 	<p class="mb-6">
-		If you are curious about any specific techniques used for a project, check out the related posts
-		section! I will have (hopefully) written about them.
+		Here are some of my projects! If you want to filter them by tags you can do so on the side. Some
+		have related posts tied to them aswell.
 	</p>
 	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
 		<section aria-label="Blog post list">
@@ -64,8 +64,7 @@ const paginationProps = {
 			</ul>
 			<Pagination {...paginationProps} />
 		</section>
-		<!-- {
-			// Tag bar
+		{
 			!!uniqueTags.length && (
 				<aside>
 					<h2 class="mb-4 flex items-center text-lg font-semibold">
@@ -92,7 +91,7 @@ const paginationProps = {
 							<li>
 								<a
 									class="flex items-center justify-center rounded-lg bg-accent p-1"
-									href={`/tags/${tag}/`}
+									href={`/projects/tags/${tag}/`}
 									aria-label={`View all posts with the tag: ${tag}`}
 								>
 									{tag}
@@ -101,12 +100,12 @@ const paginationProps = {
 						))}
 					</ul>
 					<span class="mt-4 block sm:text-end">
-						<a class="sm:hover:text-accent" href="/tags/" aria-label="View all blog categories">
+						<a class="sm:hover:text-accent" href="./tags/" aria-label="View all blog categories">
 							View all →
 						</a>
 					</span>
 				</aside>
 			)
-		} -->
+		}
 	</div>
 </PageLayout>

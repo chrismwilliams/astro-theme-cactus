@@ -12,18 +12,20 @@ const meta = {
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-6">Tags</h1>
+	<h1 class="title mb-6">Post Tags</h1>
 	<p class="mb-4">
-		These filter all my blog posts by tag. If you are curious about my projects specifically, please
-		check out the projects tab.
+		My posts separated by tags. If you're looking for my project tags, there is a separate page <a
+			href="/projects/tags/"
+			class="cactus-link">here</a
+		>.
 	</p>
 	<ul class="space-y-4">
 		{
 			allTags.map(([tag, val]) => (
 				<li class="flex items-center gap-x-2">
 					<a
-						class="cactus-link inline-block"
-						href={`/tags/${tag}/`}
+						class="cactus-link inline-block font-bold"
+						href={`/posts/tags/${tag}/`}
 						title={`View posts with the tag: ${tag}`}
 						data-astro-prefetch
 					>

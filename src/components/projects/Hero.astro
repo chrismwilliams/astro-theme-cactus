@@ -68,7 +68,13 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 			</svg>
 			{data.tags.map((tag, i) => (
 				<>
-					<a class="cactus-link inline-block before:content-['#']">{tag}</a>
+					<a
+						class="cactus-link inline-block font-bold before:content-['#']"
+						href={`/projects/tags/${tag}/`}
+						data-pagefind-filter="tag"
+					>
+						{tag}
+					</a>
 					{i < data.tags.length - 1 && ", "}
 				</>
 			))}

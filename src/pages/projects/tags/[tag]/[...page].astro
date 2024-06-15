@@ -2,14 +2,14 @@
 import type { Page, GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
 import PageLayout from "@/layouts/Base";
-import PostPreview from "@/components/blog/PostPreview";
+import ProjectPreview from "@/components/projects/ProjectPreview";
 import Pagination from "@/components/Paginator";
-import { getAllPosts, getUniquePostTags, sortPostsByDate } from "@/utils";
+import { getAllProjects, getUniqueProjectTags, sortProjectsByDate } from "@/utils";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-	const allPosts = await getAllPosts();
-	const allPostsByDate = sortPostsByDate(allPosts);
-	const uniqueTags = getUniquePostTags(allPostsByDate);
+	const allPosts = await getAllProjects();
+	const allPostsByDate = sortProjectsByDate(allPosts);
+	const uniqueTags = getUniqueProjectTags(allPostsByDate);
 
 	return uniqueTags.flatMap((tag) => {
 		const filterPosts = allPostsByDate.filter((post) => post.data.tags.includes(tag));
@@ -21,7 +21,7 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 };
 
 interface Props {
-	page: Page<CollectionEntry<"post">>;
+	page: Page<CollectionEntry<"project">>;
 }
 
 const { page } = Astro.props;
@@ -50,7 +50,7 @@ const paginationProps = {
 
 <PageLayout meta={meta}>
 	<h1 class="title mb-6 flex items-center">
-		<a href="/tags/" class="text-accent sm:hover:underline">Tags</a>
+		<a href="/projects/tags/" class="text-accent sm:hover:underline">Tags</a>
 		<span class="me-3 ms-2">→</span>
 		<span class="text-xl">#{tag}</span>
 	</h1>
@@ -59,7 +59,7 @@ const paginationProps = {
 			{
 				page.data.map((p) => (
 					<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
-						<PostPreview post={p} as="h2" withDesc />
+						<ProjectPreview project={p} as="h2" withDesc />
 					</li>
 				))
 			}

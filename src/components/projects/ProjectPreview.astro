@@ -55,7 +55,13 @@ const postDate = project.data.updatedDate ?? project.data.publishDate;
 				</svg>
 				{project.data.tags.map((tag: string, i: number) => (
 					<>
-						<a class="cactus-link inline-block before:content-['#']">{tag}</a>
+						<a
+							class="cactus-link inline-block font-bold before:content-['#']"
+							href={`/projects/tags/${tag}/`}
+							data-pagefind-filter="tag"
+						>
+							{tag}
+						</a>
 						{i < project.data.tags.length - 1 && ", "}
 					</>
 				))}

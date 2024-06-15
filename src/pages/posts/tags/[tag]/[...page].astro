@@ -1,0 +1,91 @@
+---
+import type { Page, GetStaticPaths } from "astro";
+import type { CollectionEntry } from "astro:content";
+import PageLayout from "@/layouts/Base";
+import PostPreview from "@/components/blog/PostPreview";
+// import ProjectPreview from "@/components/projects/ProjectPreview";
+import Pagination from "@/components/Paginator";
+import {
+	getAllPosts,
+	getUniquePostTags,
+	sortPostsByDate,
+	// getAllProjects,
+	// getUniqueProjectTags,
+	// sortProjectsByDate,
+} from "@/utils";
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+	const allPosts = await getAllPosts();
+	const allPostsByDate = sortPostsByDate(allPosts);
+	const uniqueTags = getUniquePostTags(allPostsByDate);
+
+	return uniqueTags.flatMap((tag) => {
+		const filterPosts = allPostsByDate.filter((post) => post.data.tags.includes(tag));
+		return paginate(filterPosts, {
+			params: { tag },
+			pageSize: 10,
+		});
+	});
+};
+
+// export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+// 	const allPosts = await getAllProjects();
+// 	const allPostsByDate = sortProjectsByDate(allPosts);
+// 	const uniqueTags = getUniqueProjectTags(allPostsByDate);
+
+// 	return uniqueTags.flatMap((tag) => {
+// 		const filterPosts = allPostsByDate.filter((post) => post.data.tags.includes(tag));
+// 		return paginate(filterPosts, {
+// 			params: { tag },
+// 			pageSize: 10,
+// 		});
+// 	});
+// };
+
+interface Props {
+	page: Page<CollectionEntry<"post">>;
+}
+
+const { page } = Astro.props;
+const { tag } = Astro.params;
+
+const meta = {
+	title: `Tag: ${tag}`,
+	description: `View all posts with the tag - ${tag}`,
+};
+
+const paginationProps = {
+	...(page.url.prev && {
+		prevUrl: {
+			url: page.url.prev,
+			text: `← Previous Tags`,
+		},
+	}),
+	...(page.url.next && {
+		nextUrl: {
+			url: page.url.next,
+			text: `Next Tags →`,
+		},
+	}),
+};
+---
+
+<PageLayout meta={meta}>
+	<h1 class="title mb-6 flex items-center">
+		<a href="/posts/tags/" class="text-accent sm:hover:underline">Tags</a>
+		<span class="me-3 ms-2">→</span>
+		<span class="text-xl">#{tag}</span>
+	</h1>
+	<section aria-label="Blog post list">
+		<ul class="space-y-8">
+			{
+				page.data.map((p) => (
+					<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
+						<PostPreview post={p} as="h2" withDesc />
+					</li>
+				))
+			}
+		</ul>
+		<Pagination {...paginationProps} />
+	</section>
+</PageLayout>
