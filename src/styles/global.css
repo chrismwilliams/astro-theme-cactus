@@ -11,7 +11,7 @@
 		--theme-link: 172deg 18% 41%;
 		--theme-text: 203deg 11% 15%;
 		--theme-accent: 351deg 66% 48%;
-		--theme-accent-2: 0deg 0% 7%;
+    --theme-accent-2: 351deg 66% 48%;
 		--theme-quote: 351deg 66% 48%;
 	}
 
@@ -21,7 +21,7 @@
 		--theme-link: 330deg 49% 67%;
 		--theme-text: 220deg 3% 79%;
 		--theme-accent: 159deg 64% 45%;
-		--theme-accent-2: 0deg 0% 93%;
+    --theme-accent-2: 159deg 64% 45%;
 		--theme-quote: 102deg 100% 86%;
 	}
 
@@ -31,5 +31,6 @@
 
 	body {
 		@apply mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor px-8 pt-16 font-mono text-sm font-normal text-textColor antialiased;
+    hyphens: auto;
 	}
 }
