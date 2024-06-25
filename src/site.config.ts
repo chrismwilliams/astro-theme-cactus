@@ -9,7 +9,7 @@ export const siteConfig: SiteConfig = {
 		locale: "en-GB",
 		options: {
 			day: "numeric",
-			month: "short",
+			month: "numeric",
 			year: "numeric",
 		},
 	},
@@ -41,7 +41,7 @@ export const menuLinks: { path: string; title: string }[] = [
 	},
 	{
 		path: "/posts/",
-		title: "Blog",
+		title: "Writing",
 	},
 ];
 

@@ -1,6 +1,6 @@
-import type { Config } from "tailwindcss";
+import type {Config} from "tailwindcss";
 
-import { fontFamily } from "tailwindcss/defaultTheme";
+import {fontFamily} from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 
 export default {
@@ -75,7 +75,10 @@ export default {
 						hr: {
 							borderTopStyle: "dashed",
 						},
-						strong: {
+            p: {
+              textAlign: "justify",
+            },
+            strong: {
 							fontWeight: "700",
 						},
 						sup: {

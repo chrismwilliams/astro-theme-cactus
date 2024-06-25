@@ -4,7 +4,7 @@ import PostPreview from "@/components/blog/PostPreview.astro";
 import { getAllPosts, sortMDByDate } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 
-const MAX_POSTS = 10;
+const MAX_POSTS = 12;
 const allPosts = await getAllPosts();
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
@@ -62,9 +62,9 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 		</p>
 		<SocialList />
 	</section>
-	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="title mb-4 text-xl">Posts</h2>
-		<ul class="space-y-4">
+	<section aria-label="Blog post list" class="mt-6">
+		<h2 class="title mb-4 text-xl">Most recent blog posts</h2>
+		<ul class="space-y-2">
 			{
 				allPostsByDate.map((p) => (
 					<li class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
@@ -94,4 +94,13 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 			}
 		</dl>
 	</section>
+  <span class="mt-4 block sm:text-end">
+    <a
+      class="sm:hover:text-accent"
+      href="/posts"
+      aria-label="View all blog posts"
+    >
+      View all →
+    </a>
+  </span>
 </PageLayout>
