@@ -19,12 +19,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: install node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: 8
           run_install: false
@@ -46,8 +46,9 @@ jobs:
         run: pnpm install
 
         # use astro check for issues
-      - name: Run check
-        run: pnpm astro check
+        # commented out due to issues with satori after installing react: https://github.com/withastro/language-tools/issues/885
+#      - name: Run check
+#        run: pnpm astro check
 
         # ensure build works
       - name: Run build

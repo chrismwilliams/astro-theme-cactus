@@ -5,6 +5,7 @@ import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import fs from "fs";
+import react from '@astrojs/react';
 import rehypeExternalLinks from "rehype-external-links";
 import remarkUnwrapImages from "remark-unwrap-images";
 
@@ -24,6 +25,7 @@ export default defineConfig({
 		}),
 		sitemap(),
 		mdx(),
+    react(),
 	],
 	markdown: {
 		rehypePlugins: [
