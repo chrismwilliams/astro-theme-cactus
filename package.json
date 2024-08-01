@@ -39,7 +39,7 @@
 		"autoprefixer": "^10.4.19",
 		"eslint": "^8.57.0",
 		"eslint-import-resolver-typescript": "^3.6.1",
-		"eslint-plugin-astro": "^0.34.0",
+		"eslint-plugin-astro": "^1.2.3",
 		"eslint-plugin-deprecation": "^2.0.0",
 		"eslint-plugin-import": "^2.29.1",
 		"eslint-plugin-jsx-a11y": "^6.8.0",
