@@ -68,6 +68,7 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 			{
 				allPostsByDate.map((p) => (
 					<li class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
+						{/* @ts-expect-error - issue with -> @astrojs/check@0.9.3 */}
 						<PostPreview post={p} />
 					</li>
 				))
