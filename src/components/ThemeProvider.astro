@@ -1,4 +1,4 @@
-{/* Inlined to avoid FOUC. */}
+{/* Inlined to avoid FOUC. This is a parser blocking script. */}
 <script is:inline>
 	const lightModePref = window.matchMedia("(prefers-color-scheme: light)");
 
@@ -10,7 +10,7 @@
 	function setTheme(newTheme) {
 		if (newTheme !== "light" && newTheme !== "dark") {
 			return console.warn(
-				`Invalid theme value '${newTheme}' received. Expected 'light' or 'dark'.`,
+				`Invalid theme value '${newTheme}' received. Expected 'light' or 'dark'.`
 			);
 		}
 
