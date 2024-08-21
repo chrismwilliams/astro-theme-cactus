@@ -1,6 +1,5 @@
 ---
 import { menuLinks } from "@/site-config";
-
 import Search from "../Search.astro";
 import ThemeToggle from "../ThemeToggle.astro";
 
@@ -99,7 +98,7 @@ const url = new URL(Astro.request.url);
 </header>
 
 <script>
-	import { toggleClass } from "@/utils";
+	import { toggleClass } from "@/utils/domElement";
 
 	class MobileNavBtn extends HTMLElement {
 		#menuOpen: boolean = false;
