@@ -1,7 +1,6 @@
 ---
-import type { WebmentionsChildren } from "@/types";
-
 import { Image } from "astro:assets";
+import type { WebmentionsChildren } from "@/types";
 
 interface Props {
 	mentions: WebmentionsChildren[];
@@ -10,7 +9,7 @@ interface Props {
 const { mentions } = Astro.props;
 const MAX_LIKES = 10;
 
-const likes = mentions.filter((mention) => mention["wm-property"] == "like-of");
+const likes = mentions.filter((mention) => mention["wm-property"] === "like-of");
 const likesToShow = likes
 	.filter((like) => like.author?.photo && like.author.photo !== "")
 	.slice(0, MAX_LIKES);
@@ -30,7 +29,7 @@ const likesToShow = likes
 							<a
 								class="not-prose relative inline-block overflow-hidden rounded-full outline-none ring-2 ring-textColor hover:z-10 hover:ring-4 hover:ring-link focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-link"
 								href={like.author?.url}
-								rel="noopener noreferrer"
+								rel="noreferrer"
 								target="_blank"
 								title={like.author?.name}
 							>

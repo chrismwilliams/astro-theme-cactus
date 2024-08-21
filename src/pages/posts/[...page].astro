@@ -1,11 +1,10 @@
 ---
-import type { GetStaticPaths, Page } from "astro";
 import type { CollectionEntry } from "astro:content";
-
 import Pagination from "@/components/Paginator.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import { getAllPosts, getUniqueTags, groupPostsByYear, sortMDByDate } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
+import type { GetStaticPaths, Page } from "astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const MAX_POSTS_PER_PAGE = 10;
@@ -30,13 +29,13 @@ const meta = {
 const paginationProps = {
 	...(page.url.prev && {
 		prevUrl: {
-			text: `← Previous Page`,
+			text: "← Previous Page",
 			url: page.url.prev,
 		},
 	}),
 	...(page.url.next && {
 		nextUrl: {
-			text: `Next Page →`,
+			text: "Next Page →",
 			url: page.url.next,
 		},
 	}),
