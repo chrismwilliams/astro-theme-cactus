@@ -102,23 +102,18 @@ const url = new URL(Astro.request.url);
 	import { toggleClass } from "@/utils";
 
 	class MobileNavBtn extends HTMLElement {
-		private headerEl: HTMLElement;
-		private menuOpen: boolean;
-		private mobileButtonEl: HTMLButtonElement;
+		#menuOpen: boolean = false;
 
-		toggleMobileMenu = () => {
-			toggleClass(this.headerEl, "menu-open");
-			this.menuOpen = !this.menuOpen;
-			this.mobileButtonEl.setAttribute("aria-expanded", this.menuOpen.toString());
-		};
+		connectedCallback() {
+			const headerEl = document.getElementById("main-header")!;
+			const mobileButtonEl = this.querySelector<HTMLButtonElement>("button");
+			this.#menuOpen = false;
 
-		constructor() {
-			super();
-			this.headerEl = document.getElementById("main-header")!;
-			this.mobileButtonEl = this.querySelector("button") as HTMLButtonElement;
-			this.menuOpen = false;
-
-			this.mobileButtonEl.addEventListener("click", this.toggleMobileMenu);
+			mobileButtonEl?.addEventListener("click", () => {
+				if (headerEl) toggleClass(headerEl, "menu-open");
+				this.#menuOpen = !this.#menuOpen;
+				mobileButtonEl.setAttribute("aria-expanded", this.#menuOpen.toString());
+			});
 		}
 	}
 
