@@ -1,21 +1,21 @@
 {
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[javascript]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[typescript]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[javascriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[typescriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[json]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[jsonc]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[astro]": { "editor.defaultFormatter": "astro-build.astro-vscode" },
+	"editor.formatOnSave": true,
 	"editor.codeActionsOnSave": {
-		"source.fixAll": "explicit"
+		"source.organizeImports": "never",
+		"source.organizeImports.biome": "explicit",
+		"source.fixAll": "never",
+		"quickfix.biome": "explicit"
 	},
 	"[markdown]": {
 		"editor.wordWrap": "on"
 	},
-	"prettier.documentSelectors": ["**/*.astro"],
-	"eslint.probe": [
-		"astro",
-		"javascript",
-		"javascriptreact",
-		"markdown",
-		"typescript",
-		"typescriptreact"
-	],
-	"[astro]": {
-		"editor.defaultFormatter": "astro-build.astro-vscode"
-	}
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"astro.content-intellisense": true
 }
