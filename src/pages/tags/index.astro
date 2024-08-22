@@ -1,6 +1,6 @@
 ---
-import PageLayout from "@/layouts/Base.astro";
 import { getAllPosts, getUniqueTagsWithCount } from "@/data/post";
+import PageLayout from "@/layouts/Base.astro";
 
 const allPosts = await getAllPosts();
 const allTags = getUniqueTagsWithCount(allPosts);

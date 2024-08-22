@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-
 import { fontFamily } from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 
@@ -24,7 +23,7 @@ export default {
 	plugins: [
 		require("@tailwindcss/typography"),
 		require("@tailwindcss/aspect-ratio"),
-		plugin(function ({ addComponents }) {
+		plugin(({ addComponents }) => {
 			addComponents({
 				".cactus-link": {
 					"&:hover": {

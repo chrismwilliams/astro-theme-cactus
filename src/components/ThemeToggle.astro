@@ -57,7 +57,7 @@
 
 <script>
 	// Note that if you fire the theme-change event outside of this component, it will not be reflected in the button's aria-checked attribute. You will need to add an event listener if you want that.
-	import { rootInDarkMode } from "@/utils";
+	import { rootInDarkMode } from "@/utils/domElement";
 
 	class ThemeToggle extends HTMLElement {
 		connectedCallback() {
