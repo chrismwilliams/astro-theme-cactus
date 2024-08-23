@@ -106,7 +106,6 @@ const url = new URL(Astro.request.url);
 		connectedCallback() {
 			const headerEl = document.getElementById("main-header")!;
 			const mobileButtonEl = this.querySelector<HTMLButtonElement>("button");
-			this.#menuOpen = false;
 
 			mobileButtonEl?.addEventListener("click", () => {
 				if (headerEl) toggleClass(headerEl, "menu-open");
