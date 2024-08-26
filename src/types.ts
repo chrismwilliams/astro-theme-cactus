@@ -1,3 +1,5 @@
+import type { Element } from "astro-expressive-code/hast";
+
 export interface SiteConfig {
 	author: string;
 	date: {
@@ -83,3 +85,9 @@ export interface Summary {
 	"content-type": string;
 	value: string;
 }
+
+export interface RehypeComponentData {
+	properties: { [x: string]: string };
+	children: Element[];
+}
+

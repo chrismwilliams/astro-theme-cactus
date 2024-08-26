@@ -19,14 +19,19 @@
 		"@astrojs/rss": "4.0.7",
 		"@astrojs/sitemap": "3.1.6",
 		"@astrojs/tailwind": "5.1.0",
+		"@types/mdast": "^4.0.4",
 		"astro": "4.14.3",
 		"astro-expressive-code": "^0.35.6",
 		"astro-icon": "^1.1.1",
 		"cssnano": "^7.0.5",
+		"hastscript": "^9.0.0",
+		"rehype-components": "^0.3.0",
 		"rehype-external-links": "^3.0.0",
+		"remark-directive": "^3.0.0",
 		"satori": "0.10.14",
 		"satori-html": "^0.3.2",
-		"sharp": "^0.33.5"
+		"sharp": "^0.33.5",
+		"unist-util-visit": "^5.0.0"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.3",
