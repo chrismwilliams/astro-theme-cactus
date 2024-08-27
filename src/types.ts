@@ -1,5 +1,3 @@
-import type { Element } from "astro-expressive-code/hast";
-
 export interface SiteConfig {
 	author: string;
 	date: {
@@ -86,8 +84,4 @@ export interface Summary {
 	value: string;
 }
 
-export interface RehypeComponentData {
-	properties: { [x: string]: string };
-	children: Element[];
-}
-
+export type AdmonitionType = "tip" | "note" | "important" | "caution" | "warning";

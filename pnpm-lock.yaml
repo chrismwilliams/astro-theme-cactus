@@ -20,9 +20,6 @@ importers:
       '@astrojs/tailwind':
         specifier: 5.1.0
         version: 5.1.0(astro@4.14.3(@types/node@22.4.2)(rollup@4.21.0)(typescript@5.5.4))(tailwindcss@3.4.10)
-      '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
       astro:
         specifier: 4.14.3
         version: 4.14.3(@types/node@22.4.2)(rollup@4.21.0)(typescript@5.5.4)
@@ -38,9 +35,15 @@ importers:
       hastscript:
         specifier: ^9.0.0
         version: 9.0.0
-      rehype-components:
-        specifier: ^0.3.0
-        version: 0.3.0
+      mdast-util-directive:
+        specifier: ^3.0.0
+        version: 3.0.0
+      mdast-util-to-markdown:
+        specifier: ^2.1.0
+        version: 2.1.0
+      mdast-util-to-string:
+        specifier: ^4.0.0
+        version: 4.0.0
       rehype-external-links:
         specifier: ^3.0.0
         version: 3.0.0
@@ -56,6 +59,9 @@ importers:
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -81,12 +87,15 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.14
         version: 0.5.14(tailwindcss@3.4.10)
+      '@types/hast':
+        specifier: ^3.0.4
+        version: 3.0.4
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.41)
-      mdast-util-to-string:
-        specifier: ^4.0.0
-        version: 4.0.0
       pagefind:
         specifier: ^1.1.0
         version: 1.1.0
@@ -912,9 +921,6 @@ packages:
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
-  '@types/hast@3.0.1':
-    resolution: {integrity: sha512-hs/iBJx2aydugBQx5ETV3ZgeSS0oIreQrFJ4bjBl0XvM4wAmDjFEALY7p0rTSLt2eL+ibjRAAs9dTPiCLtmbqQ==}
-
   '@types/hast@3.0.4':
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
 
@@ -944,9 +950,6 @@ packages:
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
-
-  '@types/unist@3.0.0':
-    resolution: {integrity: sha512-MFETx3tbTjE7Uk6vvnWINA/1iJ7LuMdO4fcq8UfF0pRbj01aGLduVvQcRyswuACJdpnHgg8E3rQLhaRdNEJS0w==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -2622,9 +2625,6 @@ packages:
   reading-time@1.5.0:
     resolution: {integrity: sha512-onYyVhBNr4CmAxFsKS7bz+uTLRakypIe4R+5A824vBSkQy/hB3fZepoVEf8OVAxzLvK+H/jm9TzpI3ETSm64Kg==}
 
-  rehype-components@0.3.0:
-    resolution: {integrity: sha512-yl2bUkZi+sU0gxwVCun7IkjiDLPczSs1SKMKHmjlSLkk4mMryBd/aYba5J8suhJdquBEKSw6ZNxU3MvVQ9xqoQ==}
-
   rehype-expressive-code@0.35.6:
     resolution: {integrity: sha512-pPdE+pRcRw01kxMOwHQjuRxgwlblZt5+wAc3w2aPGgmcnn57wYjn07iKO7zaznDxYVxMYVvYlnL+R3vWFQS4Gw==}
 
@@ -4059,10 +4059,6 @@ snapshots:
 
   '@types/estree@1.0.5': {}
 
-  '@types/hast@3.0.1':
-    dependencies:
-      '@types/unist': 3.0.0
-
   '@types/hast@3.0.4':
     dependencies:
       '@types/unist': 3.0.3
@@ -4095,8 +4091,6 @@ snapshots:
       minipass: 4.2.8
 
   '@types/unist@2.0.11': {}
-
-  '@types/unist@3.0.0': {}
 
   '@types/unist@3.0.3': {}
 
@@ -4934,7 +4928,7 @@ snapshots:
 
   hast-util-is-element@3.0.0:
     dependencies:
-      '@types/hast': 3.0.1
+      '@types/hast': 3.0.4
 
   hast-util-parse-selector@4.0.0:
     dependencies:
@@ -5054,7 +5048,7 @@ snapshots:
 
   hast-util-whitespace@3.0.0:
     dependencies:
-      '@types/hast': 3.0.1
+      '@types/hast': 3.0.4
 
   hastscript@8.0.0:
     dependencies:
@@ -6203,18 +6197,13 @@ snapshots:
 
   reading-time@1.5.0: {}
 
-  rehype-components@0.3.0:
-    dependencies:
-      hast-util-is-element: 3.0.0
-      unist-util-visit: 5.0.0
-
   rehype-expressive-code@0.35.6:
     dependencies:
       expressive-code: 0.35.6
 
   rehype-external-links@3.0.0:
     dependencies:
-      '@types/hast': 3.0.1
+      '@types/hast': 3.0.4
       '@ungap/structured-clone': 1.2.0
       hast-util-is-element: 3.0.0
       is-absolute-url: 4.0.1

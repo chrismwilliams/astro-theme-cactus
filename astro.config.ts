@@ -8,18 +8,13 @@ import { defineConfig } from "astro/config";
 import { expressiveCodeOptions } from "./src/site.config";
 
 // Remark plugins
+import remarkDirective from "remark-directive"; /* Handle ::: directives as nodes */
 import remarkUnwrapImages from "remark-unwrap-images";
+import { remarkAdmonitions } from "./src/plugins/remark-admonitions"; /* Add admonitions */
 import { remarkReadingTime } from "./src/plugins/remark-reading-time";
-import remarkDirective from "remark-directive" /* Handle ::: directives as nodes */
-import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.ts"; /* Add directive label to node */
 
 // Rehype plugins
 import rehypeExternalLinks from "rehype-external-links";
-import rehypeComponents from "rehype-components"; /* Render as components from the tree */
-import Admonitions from "./src/plugins/rehype-component-admonition.ts" /* The admonition component */
-
-import type { RehypeComponentData } from "@/types";
-
 
 // https://astro.build/config
 export default defineConfig({
@@ -45,17 +40,8 @@ export default defineConfig({
 					target: "_blank",
 				},
 			],
-      [rehypeComponents, {
-        components: {
-          "tip": (x: RehypeComponentData["properties"], y: RehypeComponentData["children"]) => Admonitions(x, y, "tip"),
-					"note": (x: RehypeComponentData["properties"], y: RehypeComponentData["children"]) => Admonitions(x, y, "note"),
-          "important": (x: RehypeComponentData["properties"], y: RehypeComponentData["children"]) => Admonitions(x, y, "important"),
-          "caution": (x: RehypeComponentData["properties"], y: RehypeComponentData["children"]) => Admonitions(x, y, "caution"),
-          "warning": (x: RehypeComponentData["properties"], y: RehypeComponentData["children"]) => Admonitions(x, y, "warning"),
-        },
-      }],
 		],
-		remarkPlugins: [remarkUnwrapImages, remarkReadingTime, remarkDirective, parseDirectiveNode],
+		remarkPlugins: [remarkUnwrapImages, remarkReadingTime, remarkDirective, remarkAdmonitions],
 		remarkRehype: {
 			footnoteLabelProperties: {
 				className: [""],
