@@ -33,7 +33,7 @@ Astro Cactus is a simple opinionated starter built with the Astro framework. Use
 - Dark / Light mode, using Tailwind and CSS variables
 - [Astro Assets Integration](https://docs.astro.build/en/guides/assets/) for optimised images
 - MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts
-  - Includes [Admonitions](https://astro-cactus.chriswilliams.dev/posts/markdown-admonistions/)
+  - Includes [Admonitions](https://astro-cactus.chriswilliams.dev/posts/markdown-elements/admonistions/)
 - [Satori](https://github.com/vercel/satori) for creating open graph png images
 - Pagination
 - [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
