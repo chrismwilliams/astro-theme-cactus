@@ -111,10 +111,10 @@ export default {
 							"--admonition-color": "var(--tw-prose-quotes)",
 							"@apply my-4 py-4 ps-4 border-s-2 border-[--admonition-color]": "",
 							".aside-title": {
-								"@apply font-bold text-base flex items-center my-0 capitalize text-[--admonition-color]":
+								"@apply font-bold text-base flex items-center gap-2 my-0 capitalize text-[--admonition-color]":
 									"",
 								"&:before": {
-									"@apply inline-block overflow-visible	me-2 h-4 w-4 align-middle content-[''] bg-[--admonition-color]":
+									"@apply inline-block shrink-0 overflow-visible h-4 w-4 align-middle content-[''] bg-[--admonition-color]":
 										"",
 									"mask-size": "contain",
 									"mask-position": "center",
