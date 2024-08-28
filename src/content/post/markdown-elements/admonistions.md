@@ -2,16 +2,16 @@
 title: "Markdown Admonitions"
 description: "This post showcases using the markdown admonition feature in Astro Cactus"
 publishDate: "25 Aug 2024"
-tags: ["test", "markdown", "admonitions"]
+tags: ["markdown", "admonitions"]
 ---
 
-## What are Admonitions
+## What are admonitions
 
 Admonitions (also known as “asides”) are useful for providing supportive and/or supplementary information related to your content.
 
 ## How to use them
 
-To use admonitions in Astro Cactus, wrap your Markdown content in a pair of triple colons `:::`. The first pair should also include the 'type' of Admonition you want to use.
+To use admonitions in Astro Cactus, wrap your Markdown content in a pair of triple colons `:::`. The first pair should also include the type of admonition you want to use.
 
 For example, with the following Markdown:
 
@@ -36,8 +36,6 @@ The following admonitions are currently supported:
 - `important`
 - `warning`
 - `caution`
-
-You can choose any of the admonitions by adding the 'type' to the first pair of triple colons `:::`.
 
 ### Note
 
