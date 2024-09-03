@@ -5,8 +5,10 @@ import tailwind from "@astrojs/tailwind";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import robotsTxt from "astro-robots-txt";
+import webmanifest from "astro-webmanifest";
 import { defineConfig } from "astro/config";
 import { expressiveCodeOptions } from "./src/site.config";
+import { siteConfig } from "./src/site.config";
 
 // Remark plugins
 import remarkDirective from "remark-directive"; /* Handle ::: directives as nodes */
@@ -32,6 +34,32 @@ export default defineConfig({
 		sitemap(),
 		mdx(),
 		robotsTxt(),
+		webmanifest({
+			/**
+			 * required
+			 **/
+			name: siteConfig.title,
+
+			/**
+			 * optional
+			 **/
+			// short_name: "Astro_Cactus",
+			description: siteConfig.description,
+			lang: siteConfig.lang,
+			icon: "src/icon.svg", // source for favicon & icons
+			start_url: "/",
+			background_color: "#1d1f21",
+			theme_color: "#2bbc8a",
+			display: "standalone",
+
+			config: {
+				outfile: "site.webmanifest",
+				createFavicon: true,
+				insertFaviconLinks: true,
+				insertManifestLink: true,
+				insertAppleTouchLinks: true,
+			},
+		}),
 	],
 	markdown: {
 		rehypePlugins: [
