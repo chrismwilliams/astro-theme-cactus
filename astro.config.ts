@@ -4,6 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
+import robotsTxt from "astro-robots-txt";
 import { defineConfig } from "astro/config";
 import { expressiveCodeOptions } from "./src/site.config";
 
@@ -30,6 +31,7 @@ export default defineConfig({
 		}),
 		sitemap(),
 		mdx(),
+		robotsTxt(),
 	],
 	markdown: {
 		rehypePlugins: [
