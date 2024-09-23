@@ -35,29 +35,43 @@ export default defineConfig({
 		mdx(),
 		robotsTxt(),
 		webmanifest({
+			// See: https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/README.md
 			/**
 			 * required
 			 **/
 			name: siteConfig.title,
-
 			/**
 			 * optional
 			 **/
 			// short_name: "Astro_Cactus",
 			description: siteConfig.description,
 			lang: siteConfig.lang,
-			icon: "src/icon.svg", // source for favicon & icons
+			icon: "public/icon.svg", // source for favicon & icons
+			icons: [
+				{
+					src: "icons/apple-touch-icon.png",
+					sizes: "180x180",
+					type: "image/png",
+				},
+				{
+					src: "icons/icon-192.png",
+					sizes: "192x192",
+					type: "image/png",
+				},
+				{
+					src: "icons/icon-512.png",
+					sizes: "512x512",
+					type: "image/png",
+				},
+			],
 			start_url: "/",
 			background_color: "#1d1f21",
 			theme_color: "#2bbc8a",
 			display: "standalone",
-
 			config: {
-				outfile: "site.webmanifest",
-				createFavicon: true,
-				insertFaviconLinks: true,
-				insertManifestLink: true,
-				insertAppleTouchLinks: true,
+				insertFaviconLinks: false,
+				insertThemeColorMeta: false,
+				insertManifestLink: false,
 			},
 		}),
 	],
