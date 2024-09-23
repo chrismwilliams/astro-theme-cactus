@@ -40,7 +40,7 @@
 	"devDependencies": {
 		"@astrojs/check": "^0.9.3",
 		"@biomejs/biome": "^1.8.3",
-		"@iconify-json/mdi": "^1.1.68",
+		"@iconify-json/mdi": "^1.2.0",
 		"@pagefind/default-ui": "^1.1.0",
 		"@resvg/resvg-js": "^2.6.2",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
