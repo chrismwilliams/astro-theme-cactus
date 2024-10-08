@@ -82,8 +82,8 @@ importers:
         specifier: ^1.1.68
         version: 1.1.68
       '@pagefind/default-ui':
-        specifier: ^1.1.0
-        version: 1.1.0
+        specifier: ^1.1.1
+        version: 1.1.1
       '@resvg/resvg-js':
         specifier: ^2.6.2
         version: 2.6.2
@@ -688,8 +688,8 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@pagefind/default-ui@1.1.0':
-    resolution: {integrity: sha512-+XiAJAK++C64nQcD7s3Prdmd5S92lT05fwjOxm0L1jj80jbL+tmvcqkkFnPpoqhnicIPgcAX/Y5W0HRZnBt35w==}
+  '@pagefind/default-ui@1.1.1':
+    resolution: {integrity: sha512-ZM0zDatWDnac/VGHhQCiM7UgA4ca8jpjA+VfuTJyHJBaxGqZMQnm4WoTz9E0KFcue1Bh9kxpu7uWFZfwpZZk0A==}
 
   '@pagefind/linux-arm64@1.1.0':
     resolution: {integrity: sha512-8zjYCa2BtNEL7KnXtysPtBELCyv5DSQ4yHeK/nsEq6w4ToAMTBl0K06khqxdSGgjMSwwrxvLzq3so0LC5Q14dA==}
@@ -4028,7 +4028,7 @@ snapshots:
   '@pagefind/darwin-x64@1.1.0':
     optional: true
 
-  '@pagefind/default-ui@1.1.0': {}
+  '@pagefind/default-ui@1.1.1': {}
 
   '@pagefind/linux-arm64@1.1.0':
     optional: true
