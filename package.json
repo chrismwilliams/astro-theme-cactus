@@ -15,7 +15,7 @@
 		"check": "astro check"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "3.1.4",
+		"@astrojs/mdx": "3.1.7",
 		"@astrojs/rss": "4.0.7",
 		"@astrojs/sitemap": "3.1.6",
 		"@astrojs/tailwind": "5.1.0",
