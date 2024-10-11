@@ -8,21 +8,18 @@ export default {
 		"!./src/pages/og-image/[slug].png.ts",
 	],
 	corePlugins: {
-		// disable aspect ratio as per docs -> @tailwindcss/aspect-ratio
-		aspectRatio: false,
+		// disable some core plugins as they are included in the css, even when unused
 		borderOpacity: false,
 		fontVariantNumeric: false,
 		ringOffsetColor: false,
 		ringOffsetWidth: false,
 		scrollSnapType: false,
 		textOpacity: false,
-		// disable some core plugins as they are included in the css, even when unused
 		touchAction: false,
 	},
 	darkMode: ["class", '[data-theme="dark"]'],
 	plugins: [
 		require("@tailwindcss/typography"),
-		require("@tailwindcss/aspect-ratio"),
 		plugin(({ addComponents }) => {
 			addComponents({
 				".cactus-link": {
@@ -55,7 +52,6 @@ export default {
 			transitionProperty: {
 				height: "height",
 			},
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
 			// Remove above once tailwindcss exposes theme type
 			typography: (theme) => ({
@@ -70,6 +66,9 @@ export default {
 						code: {
 							border: "1px dotted #666",
 							borderRadius: "2px",
+						},
+						kbd: {
+							"@apply dark:bg-textColor": "",
 						},
 						hr: {
 							borderTopStyle: "dashed",
@@ -92,6 +91,7 @@ export default {
 								"@apply bg-none": "",
 							},
 						},
+						/* Table */
 						"tbody tr": {
 							borderBottomWidth: "none",
 						},
@@ -105,8 +105,16 @@ export default {
 							borderBottom: "1px dashed #666",
 							fontWeight: "700",
 						},
-
-						/* Admonitions/Aside css*/
+						'th[align="center"], td[align="center"]': {
+							"text-align": "center",
+						},
+						'th[align="right"], td[align="right"]': {
+							"text-align": "right",
+						},
+						'th[align="left"], td[align="left"]': {
+							"text-align": "left",
+						},
+						/* Admonitions/Aside */
 						".aside": {
 							"--admonition-color": "var(--tw-prose-quotes)",
 							"@apply my-4 py-4 ps-4 border-s-2 border-[--admonition-color]": "",
