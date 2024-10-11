@@ -1,5 +1,5 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, render } from "astro:content";
 
 import Masthead from "@/components/blog/Masthead.astro";
 import TOC from "@/components/blog/TOC.astro";
@@ -12,16 +12,20 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const {
-	data: { description, ogImage, publishDate, title, updatedDate },
-	slug,
-} = post;
-const socialImage = ogImage ?? `/og-image/${slug}.png`;
+const { ogImage, title, description, updatedDate, publishDate } = post.data;
+const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
-const { headings } = await post.render();
+const { headings } = await render(post);
 ---
 
-<BaseLayout meta={{ articleDate, description, ogImage: socialImage, title }}>
+<BaseLayout
+	meta={{
+		articleDate,
+		description,
+		ogImage: socialImage,
+		title,
+	}}
+>
 	<div class="gap-x-10 lg:flex lg:items-start">
 		{!!headings.length && <TOC headings={headings} />}
 		<article class="flex-grow break-words" data-pagefind-body>

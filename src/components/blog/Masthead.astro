@@ -8,10 +8,8 @@ interface Props {
 }
 
 const {
-	content: { data, render },
+	content: { data },
 } = Astro.props;
-
-const { remarkPluginFrontmatter } = await render();
 
 const dateTimeOptions: Intl.DateTimeFormatOptions = {
 	month: "long",
@@ -20,7 +18,7 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 
 {
 	data.coverImage && (
-		<div class="aspect-[16/9] mb-6">
+		<div class="mb-6 aspect-[16/9]">
 			<Image
 				alt={data.coverImage.alt}
 				class="object-cover"
@@ -38,12 +36,14 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
 	<p class="font-semibold">
 		<FormattedDate date={data.publishDate} dateTimeOptions={dateTimeOptions} /> /{" "}
-		{remarkPluginFrontmatter.minutesRead}
+		{/* @ts-ignore:next-line. TODO: add reading time to collection schema? */}
+		{data.minutesRead}
 	</p>
 	{
 		data.updatedDate && (
 			<span class="rounded-lg bg-quote/10 px-2 py-1 text-quote">
-				Updated:<FormattedDate class="ms-1" date={data.updatedDate} dateTimeOptions={dateTimeOptions} />
+				Updated:
+				<FormattedDate class="ms-1" date={data.updatedDate} dateTimeOptions={dateTimeOptions} />
 			</span>
 		)
 	}
