@@ -19,7 +19,7 @@
 		"@astrojs/rss": "4.0.7",
 		"@astrojs/sitemap": "3.2.0",
 		"@astrojs/tailwind": "5.1.1",
-		"astro": "4.15.12",
+		"astro": "4.16.1",
 		"astro-expressive-code": "^0.37.0",
 		"astro-icon": "^1.1.1",
 		"astro-robots-txt": "^1.0.0",
