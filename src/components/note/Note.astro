@@ -1,0 +1,25 @@
+---
+import { type CollectionEntry, render } from "astro:content";
+import FormattedDate from "../FormattedDate.astro";
+
+interface Props {
+	note: CollectionEntry<"note">;
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+---
+
+<article class="inline-grid rounded-md bg-[rgb(240,240,240)] px-4 py-3 dark:bg-[rgb(33,35,38)]">
+	<div class="prose prose-sm prose-cactus mt-4 max-w-none [&>p:last-of-type]:mb-0">
+		<Content />
+	</div>
+	<FormattedDate
+		dateTimeOptions={{
+			hour: "2-digit",
+			minute: "2-digit",
+		}}
+		class="-order-1 font-semibold text-accent-2"
+		date={note.data.publishDate}
+	/>
+</article>
