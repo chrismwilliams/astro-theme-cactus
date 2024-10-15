@@ -47,7 +47,7 @@ const paginationProps = {
 			{
 				page.data.map((note) => (
 					<li class="">
-						<Note note={note} />
+						<Note note={note} as="h2" isPreview />
 					</li>
 				))
 			}

@@ -50,8 +50,8 @@ const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 				</h2>
 				<ul class="space-y-4" role="list">
 					{latestNotes.map((note) => (
-						<li class="">
-							<Note note={note} />
+						<li>
+							<Note note={note} as="h3" isPreview />
 						</li>
 					))}
 				</ul>
