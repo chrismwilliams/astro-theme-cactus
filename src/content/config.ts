@@ -2,31 +2,31 @@ import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
 function removeDupsAndLowerCase(array: string[]) {
-	if (!array.length) return array;
-	const lowercaseItems = array.map((str) => str.toLowerCase());
-	const distinctItems = new Set(lowercaseItems);
-	return Array.from(distinctItems);
+	return [...new Set(array.map((str) => str.toLowerCase()))];
 }
 
+const baseSchema = z.object({
+	title: z.string().max(60),
+	description: z.string().optional(),
+	publishDate: z
+		.string()
+		.or(z.date())
+		.transform((val) => new Date(val)),
+});
+
 const post = defineCollection({
-	loader: glob({ pattern: "**/\[^_]*.md", base: "./src/content/post" }),
+	loader: glob({ pattern: "**/*.md", base: "./src/content/post" }),
 	schema: ({ image }) =>
-		z.object({
+		baseSchema.extend({
 			coverImage: z
 				.object({
 					alt: z.string(),
 					src: image(),
 				})
 				.optional(),
-			description: z.string().min(50).max(160),
 			draft: z.boolean().default(false),
 			ogImage: z.string().optional(),
-			publishDate: z
-				.string()
-				.or(z.date())
-				.transform((val) => new Date(val)),
 			tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
-			title: z.string().max(60),
 			updatedDate: z
 				.string()
 				.optional()
@@ -34,4 +34,14 @@ const post = defineCollection({
 		}),
 });
 
-export const collections = { post };
+const note = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/note" }),
+	schema: baseSchema.extend({
+		publishDate: z
+			.string()
+			.datetime({ offset: true }) // Ensures ISO 8601 format with offsets allowed (e.g. "2024-01-01T00:00:00Z" and "2024-01-01T00:00:00+02:00")
+			.transform((val) => new Date(val)),
+	}),
+});
+
+export const collections = { post, note };
