@@ -12,7 +12,11 @@ const { as: Tag = "div", note, isPreview = false } = Astro.props;
 const { Content } = await render(note);
 ---
 
-<article class="inline-grid rounded-md bg-[rgb(240,240,240)] px-4 py-3 dark:bg-[rgb(33,35,38)]">
+<article
+	class:list={[
+		isPreview && "inline-grid rounded-md bg-[rgb(240,240,240)] px-4 py-3 dark:bg-[rgb(33,35,38)]",
+	]}
+>
 	<Tag class="title" class:list={{ "text-base": isPreview }}>
 		{
 			isPreview ? (
