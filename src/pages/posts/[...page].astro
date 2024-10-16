@@ -10,8 +10,9 @@ import { Icon } from "astro-icon/components";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const MAX_POSTS_PER_PAGE = 10;
+	const MAX_TAGS = 7;
 	const allPosts = await getAllPosts();
-	const uniqueTags = getUniqueTags(allPosts);
+	const uniqueTags = getUniqueTags(allPosts).slice(0, MAX_TAGS);
 	return paginate(allPosts.sort(collectionDateSort), {
 		pageSize: MAX_POSTS_PER_PAGE,
 		props: { uniqueTags },
@@ -111,7 +112,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 						))}
 					</ul>
 					<span class="mt-4 block sm:text-end">
-						<a aria-label="View all blog categories" class="sm:hover:text-accent-2" href="/tags/">
+						<a aria-label="View all blog categories" class="sm:hover:text-link" href="/tags/">
 							View all →
 						</a>
 					</span>
