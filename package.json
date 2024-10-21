@@ -16,10 +16,10 @@
 	},
 	"dependencies": {
 		"@astrojs/mdx": "4.0.0-beta.2",
-		"@astrojs/rss": "4.0.8",
-		"@astrojs/sitemap": "3.2.0",
+		"@astrojs/rss": "4.0.9",
+		"@astrojs/sitemap": "3.2.1",
 		"@astrojs/tailwind": "5.1.2",
-		"astro": "5.0.0-beta.4",
+		"astro": "5.0.0-beta.5",
 		"astro-expressive-code": "^0.37.0",
 		"astro-icon": "^1.1.1",
 		"astro-robots-txt": "^1.0.0",
