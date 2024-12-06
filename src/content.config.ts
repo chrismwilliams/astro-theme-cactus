@@ -10,7 +10,7 @@ const baseSchema = z.object({
 });
 
 const post = defineCollection({
-	loader: glob({ pattern: "**/*.md", base: "./src/content/post" }),
+	loader: glob({ base: "./src/content/post", pattern: "**/*.{md,mdx}" }),
 	schema: ({ image }) =>
 		baseSchema.extend({
 			description: z.string(),
@@ -35,7 +35,7 @@ const post = defineCollection({
 });
 
 const note = defineCollection({
-	loader: glob({ pattern: "**/*.md", base: "./src/content/note" }),
+	loader: glob({ base: "./src/content/note", pattern: "**/*.{md,mdx}" }),
 	schema: baseSchema.extend({
 		description: z.string().optional(),
 		publishDate: z
