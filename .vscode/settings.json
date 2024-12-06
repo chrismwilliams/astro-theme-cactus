@@ -5,12 +5,11 @@
 	"[typescriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
 	"[json]": { "editor.defaultFormatter": "biomejs.biome" },
 	"[jsonc]": { "editor.defaultFormatter": "biomejs.biome" },
-	"[astro]": { "editor.defaultFormatter": "astro-build.astro-vscode" },
 	"editor.formatOnSave": true,
+	"prettier.documentSelectors": ["**/*.astro"],
 	"editor.codeActionsOnSave": {
 		"source.organizeImports": "never",
 		"source.organizeImports.biome": "explicit",
-		"source.fixAll": "never",
 		"quickfix.biome": "explicit"
 	},
 	"[markdown]": {

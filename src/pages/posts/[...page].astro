@@ -2,16 +2,21 @@
 import type { CollectionEntry } from "astro:content";
 import Pagination from "@/components/Paginator.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
-import { getAllPosts, getUniqueTags, groupPostsByYear, sortMDByDate } from "@/data/post";
+import { getAllPosts, getUniqueTags, groupPostsByYear } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
+import { collectionDateSort } from "@/utils/date";
 import type { GetStaticPaths, Page } from "astro";
+import { Icon } from "astro-icon/components";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const MAX_POSTS_PER_PAGE = 10;
+	const MAX_TAGS = 7;
 	const allPosts = await getAllPosts();
-	const allPostsByDate = sortMDByDate(allPosts);
-	const uniqueTags = getUniqueTags(allPosts);
-	return paginate(allPostsByDate, { pageSize: MAX_POSTS_PER_PAGE, props: { uniqueTags } });
+	const uniqueTags = getUniqueTags(allPosts).slice(0, MAX_TAGS);
+	return paginate(allPosts.sort(collectionDateSort), {
+		pageSize: MAX_POSTS_PER_PAGE,
+		props: { uniqueTags },
+	});
 }) satisfies GetStaticPaths;
 
 interface Props {
@@ -46,14 +51,20 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-6">Posts</h1>
+	<h1 class="title mb-6 flex items-center gap-3">
+		Posts
+		<a class="text-accent" href="/rss.xml" target="_blank">
+			<span class="sr-only">RSS feed</span>
+			<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
+		</a>
+	</h1>
 	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
 		<section aria-label="Blog post list">
 			{
 				descYearKeys.map((yearKey) => (
 					<>
 						<h2 class="title text-lg">{yearKey}</h2>
-						<ul class="mb-8 mt-6 space-y-8 text-start">
+						<ul class="mb-16 mt-5 space-y-4 text-start">
 							{groupedByYear[yearKey]?.map((p) => (
 								<li class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
 									<PostPreview post={p} />
@@ -68,7 +79,8 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 		{
 			!!uniqueTags.length && (
 				<aside>
-					<h2 class="title mb-4 flex items-center text-lg">
+					<h2 class="title mb-4 flex items-center gap-2 text-lg">
+						Tags
 						<svg
 							aria-hidden="true"
 							class="h-6 w-6"
@@ -85,23 +97,22 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 							<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 							<path d="M6 9h-.01" />
 						</svg>
-						Tags
 					</h2>
-					<ul class="flex flex-wrap gap-2 text-bgColor">
+					<ul class="flex flex-wrap gap-2">
 						{uniqueTags.map((tag) => (
 							<li>
 								<a
 									aria-label={`View all posts with the tag: ${tag}`}
-									class="flex items-center justify-center rounded-lg bg-accent p-1"
+									class="cactus-link flex items-center justify-center"
 									href={`/tags/${tag}/`}
 								>
-									{tag}
+									#{tag}
 								</a>
 							</li>
 						))}
 					</ul>
 					<span class="mt-4 block sm:text-end">
-						<a aria-label="View all blog categories" class="sm:hover:text-accent" href="/tags/">
+						<a aria-label="View all blog categories" class="sm:hover:text-link" href="/tags/">
 							View all →
 						</a>
 					</span>

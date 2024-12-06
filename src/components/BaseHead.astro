@@ -1,7 +1,8 @@
 ---
-import { siteConfig } from "@/site-config";
+import { WEBMENTION_PINGBACK, WEBMENTION_URL } from "astro:env/client";
+import { siteConfig } from "@/site.config";
 import type { SiteMeta } from "@/types";
-import "../styles/global.css";
+import "@/styles/global.css";
 
 type Props = SiteMeta;
 
@@ -76,12 +77,10 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 
 {/* Webmentions */}
 {
-	siteConfig.webmentions && (
+	WEBMENTION_URL && (
 		<>
-			<link href={siteConfig.webmentions.link} rel="webmention" />
-			{siteConfig.webmentions.pingback && (
-				<link href={siteConfig.webmentions.pingback} rel="pingback" />
-			)}
+			<link href={WEBMENTION_URL} rel="webmention" />
+			{WEBMENTION_PINGBACK && <link href={WEBMENTION_PINGBACK} rel="pingback" />}
 		</>
 	)
 }

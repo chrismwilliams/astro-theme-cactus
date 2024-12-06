@@ -1,17 +1,15 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import FormattedDate from "../FormattedDate.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
 
 interface Props {
 	content: CollectionEntry<"post">;
 }
 
 const {
-	content: { data, render },
+	content: { data },
 } = Astro.props;
-
-const { remarkPluginFrontmatter } = await render();
 
 const dateTimeOptions: Intl.DateTimeFormatOptions = {
 	month: "long",
@@ -20,7 +18,7 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 
 {
 	data.coverImage && (
-		<div class="aspect-[16/9] mb-6">
+		<div class="mb-6 aspect-[16/9]">
 			<Image
 				alt={data.coverImage.alt}
 				class="object-cover"
@@ -35,15 +33,17 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 <h1 class="title">
 	{data.title}
 </h1>
-<div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
+<div class="flex flex-wrap items-center gap-x-3 gap-y-2">
 	<p class="font-semibold">
 		<FormattedDate date={data.publishDate} dateTimeOptions={dateTimeOptions} /> /{" "}
-		{remarkPluginFrontmatter.minutesRead}
+		{/* @ts-ignore:next-line. TODO: add reading time to collection schema? */}
+		{data.readingTime}
 	</p>
 	{
 		data.updatedDate && (
-			<span class="rounded-lg bg-quote/10 px-2 py-1 text-quote">
-				Updated:<FormattedDate class="ms-1" date={data.updatedDate} dateTimeOptions={dateTimeOptions} />
+			<span class="rounded-lg bg-quote/5 px-2 py-1 text-quote">
+				Updated:
+				<FormattedDate class="ms-1" date={data.updatedDate} dateTimeOptions={dateTimeOptions} />
 			</span>
 		)
 	}
@@ -70,12 +70,11 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 			</svg>
 			{data.tags.map((tag, i) => (
 				<>
-					<a
-						aria-label={`View more blogs with the tag ${tag}`}
-						class="cactus-link inline-block before:content-['#']"
-						data-pagefind-filter="tag"
-						href={`/tags/${tag}/`}
-					>{tag}</a>{i < data.tags.length - 1 && ", "}
+					{/* prettier-ignore */}
+					<span class="contents">
+						<a aria-label={`View more blogs with the tag ${tag}`} class="cactus-link inline-block before:content-['#']" data-pagefind-filter="tag" href={`/tags/${tag}/`}>{tag}
+						</a>{i < data.tags.length - 1 && ", "}
+					</span>
 				</>
 			))}
 		</div>

@@ -1,6 +1,4 @@
 ---
-import { Image } from "astro:assets";
-import aboutImg from "@/assets/about-astro.png";
 import PageLayout from "@/layouts/Base.astro";
 
 const meta = {
@@ -12,12 +10,4 @@ const meta = {
 <PageLayout meta={meta}>
 	<h1 class="title mb-6">404 | Oops something went wrong</h1>
 	<p class="mb-8">Please use the navigation to find your way back</p>
-	<div class="my-4 grid justify-center">
-		<Image
-			alt="A cartoon cactus looking at the 'Astro.build' logo"
-			class="rotate-180"
-			loading="eager"
-			src={aboutImg}
-		/>
-	</div>
 </PageLayout>

@@ -1,17 +1,23 @@
-import { siteConfig } from "@/site-config";
-
-const dateFormat = new Intl.DateTimeFormat(siteConfig.date.locale, siteConfig.date.options);
+import type { CollectionEntry } from "astro:content";
+import { siteConfig } from "@/site.config";
 
 export function getFormattedDate(
-	date: string | number | Date,
+	date: Date | undefined,
 	options?: Intl.DateTimeFormatOptions,
-) {
-	if (typeof options !== "undefined") {
-		return new Date(date).toLocaleDateString(siteConfig.date.locale, {
-			...(siteConfig.date.options as Intl.DateTimeFormatOptions),
-			...options,
-		});
+): string {
+	if (date === undefined) {
+		return "Invalid Date";
 	}
 
-	return dateFormat.format(new Date(date));
+	return new Intl.DateTimeFormat(siteConfig.date.locale, {
+		...(siteConfig.date.options as Intl.DateTimeFormatOptions),
+		...options,
+	}).format(date);
+}
+
+export function collectionDateSort(
+	a: CollectionEntry<"post" | "note">,
+	b: CollectionEntry<"post" | "note">,
+) {
+	return b.data.publishDate.getTime() - a.data.publishDate.getTime();
 }

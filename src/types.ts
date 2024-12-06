@@ -7,12 +7,7 @@ export interface SiteConfig {
 	description: string;
 	lang: string;
 	ogLocale: string;
-	sortPostsByUpdatedDate: boolean;
 	title: string;
-	webmentions?: {
-		link: string;
-		pingback?: string;
-	};
 }
 
 export interface PaginationLink {

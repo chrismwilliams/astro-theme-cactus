@@ -25,21 +25,23 @@ const likesToShow = likes
 			{!!likesToShow.length && (
 				<ul class="flex list-none flex-wrap overflow-hidden ps-2" role="list">
 					{likesToShow.map((like) => (
-						<li class="-ms-2">
+						<li class="p-like h-cite -ms-2">
 							<a
-								class="not-prose relative inline-block overflow-hidden rounded-full outline-none ring-2 ring-textColor hover:z-10 hover:ring-4 hover:ring-link focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-link"
+								class="u-url not-prose relative inline-block overflow-hidden rounded-full outline-none ring-2 ring-textColor hover:z-10 hover:ring-4 hover:ring-link focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-link"
 								href={like.author?.url}
 								rel="noreferrer"
 								target="_blank"
 								title={like.author?.name}
 							>
-								<Image
-									alt={like.author!.name}
-									class="my-0 inline-block h-12 w-12"
-									height={48}
-									src={like.author!.photo}
-									width={48}
-								/>
+								<span class="p-author h-card">
+									<Image
+										alt={like.author!.name}
+										class="u-photo my-0 inline-block h-12 w-12"
+										height={48}
+										src={like.author!.photo}
+										width={48}
+									/>
+								</span>
 							</a>
 						</li>
 					))}
