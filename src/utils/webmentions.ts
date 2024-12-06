@@ -1,8 +1,8 @@
 import * as fs from "node:fs";
+import { WEBMENTION_API_KEY } from "astro:env/server";
 import type { WebmentionsCache, WebmentionsChildren, WebmentionsFeed } from "@/types";
 
 const DOMAIN = import.meta.env.SITE;
-const API_TOKEN = import.meta.env.WEBMENTION_API_KEY;
 const CACHE_DIR = ".data";
 const filePath = `${CACHE_DIR}/webmentions.json`;
 const validWebmentionTypes = ["like-of", "mention-of", "in-reply-to"];
@@ -16,12 +16,12 @@ async function fetchWebmentions(timeFrom: string | null, perPage = 1000) {
 		return null;
 	}
 
-	if (!API_TOKEN) {
+	if (!WEBMENTION_API_KEY) {
 		console.warn("No webmention api token specified in .env");
 		return null;
 	}
 
-	let url = `https://webmention.io/api/mentions.jf2?domain=${hostName}&token=${API_TOKEN}&sort-dir=up&per-page=${perPage}`;
+	let url = `https://webmention.io/api/mentions.jf2?domain=${hostName}&token=${WEBMENTION_API_KEY}&sort-dir=up&per-page=${perPage}`;
 
 	if (timeFrom) url += `&since${timeFrom}`;
 

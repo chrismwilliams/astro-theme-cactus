@@ -7,8 +7,8 @@ import icon from "astro-icon";
 import robotsTxt from "astro-robots-txt";
 import webmanifest from "astro-webmanifest";
 import { defineConfig, envField } from "astro/config";
-import { expressiveCodeOptions } from "./src/site-config";
-import { siteConfig } from "./src/site-config";
+import { expressiveCodeOptions } from "./src/site.config";
+import { siteConfig } from "./src/site.config";
 
 // Remark plugins
 import remarkDirective from "remark-directive"; /* Handle ::: directives as nodes */

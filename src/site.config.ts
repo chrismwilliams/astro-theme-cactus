@@ -23,7 +23,8 @@ export const siteConfig: SiteConfig = {
 	title: "Astro Theme Cactus",
 	webmentions: {
 		// Webmention.io API endpoint. Get your own here: https://webmention.io/, and follow this blog post: https://astro-cactus.chriswilliams.dev/posts/webmentions/
-		link: "https://webmention.io/astro-cactus.chriswilliams.dev/webmention",
+		link: process.env.WEBMENTIONS_URL,
+		pingback: undefined,
 	},
 };
 

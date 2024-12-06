@@ -8,9 +8,9 @@ export interface SiteConfig {
 	lang: string;
 	ogLocale: string;
 	title: string;
-	webmentions?: {
-		link: string;
-		pingback?: string;
+	webmentions: {
+		link?: string | undefined;
+		pingback?: string | undefined;
 	};
 }
 

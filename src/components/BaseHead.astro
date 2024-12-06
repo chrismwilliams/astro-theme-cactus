@@ -1,7 +1,7 @@
 ---
-import { siteConfig } from "@/site-config";
+import { siteConfig } from "@/site.config";
 import type { SiteMeta } from "@/types";
-import "../styles/global.css";
+import "@/styles/global.css";
 
 type Props = SiteMeta;
 
@@ -76,7 +76,7 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 
 {/* Webmentions */}
 {
-	siteConfig.webmentions && (
+	siteConfig.webmentions.link && (
 		<>
 			<link href={siteConfig.webmentions.link} rel="webmention" />
 			{siteConfig.webmentions.pingback && (
