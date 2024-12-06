@@ -26,16 +26,14 @@ Astro Cactus is a simple opinionated starter built with the Astro framework. Use
 
 ## Key Features
 
-- Astro v4 Fast 🚀
+- Astro v5 Fast 🚀
 - TailwindCSS Utility classes
 - Accessible, semantic HTML markup
 - Responsive & SEO-friendly
 - Dark / Light mode, using Tailwind and CSS variables
-- [Astro Assets Integration](https://docs.astro.build/en/guides/assets/) for optimised images
-- MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts
+- MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts & notes
   - Includes [Admonitions](https://astro-cactus.chriswilliams.dev/posts/markdown-elements/admonistions/)
 - [Satori](https://github.com/vercel/satori) for creating open graph png images
-- Pagination
 - [Automatic RSS feed](https://docs.astro.build/en/guides/rss)
 - [Webmentions](https://webmention.io/)
 - Auto-generated:
@@ -44,7 +42,7 @@ Astro Cactus is a simple opinionated starter built with the Astro framework. Use
   - [web app manifest](https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/README.md)
 - [Pagefind](https://pagefind.app/) static search library integration
 - [Astro Icon](https://github.com/natemoo-re/astro-icon) svg icon component
-- [Expressive Code](https://expressive-code.com/) source code and syntax highlighter
+- [Expressive Code](https://expressive-code.com/) code blocks and syntax highlighter
 
 ## Demo 💻
 
@@ -86,7 +84,7 @@ Replace pnpm with your choice of npm / yarn
 ## Configure
 
 - Edit the config file `src/site.config.ts` for basic site meta data
-  - Read [this post](http://astro-cactus.chriswilliams.dev/posts/webmentions/) for adding webmentions to your site, otherwise set `siteConfig.webmentions.link` to an empty value.
+  - Read [this post](http://astro-cactus.chriswilliams.dev/posts/webmentions/) for adding webmentions to your site.
 - Update file `astro.config.ts`
   - **Important**: the site property with your own domain.
   - [astro-webmanifest options](https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/README.md)
