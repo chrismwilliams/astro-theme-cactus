@@ -3,11 +3,3 @@ declare module "@pagefind/default-ui" {
 		constructor(arg: unknown);
 	}
 }
-
-interface ImportMetaEnv {
-	readonly WEBMENTION_API_KEY: string;
-}
-
-interface ImportMeta {
-	readonly env: ImportMetaEnv;
-}
