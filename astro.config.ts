@@ -105,8 +105,9 @@ export default defineConfig({
 	},
 	env: {
 		schema: {
-			WEBMENTION_API_KEY: envField.string({ context: "server", access: "secret" }),
-			WEBMENTION_URL: envField.string({ context: "client", access: "public", default: undefined }),
+			WEBMENTION_API_KEY: envField.string({ context: "server", access: "secret", optional: true }),
+			WEBMENTION_URL: envField.string({ context: "client", access: "public", optional: true }),
+			WEBMENTION_PINGBACK: envField.string({ context: "client", access: "public", optional: true }),
 		},
 	},
 });

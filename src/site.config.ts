@@ -21,11 +21,6 @@ export const siteConfig: SiteConfig = {
 	ogLocale: "en_GB",
 	// Used to construct the meta title property found in src/components/BaseHead.astro L:11, and webmanifest name found in astro.config.ts L:42
 	title: "Astro Theme Cactus",
-	webmentions: {
-		// Webmention.io API endpoint. Get your own here: https://webmention.io/, and follow this blog post: https://astro-cactus.chriswilliams.dev/posts/webmentions/
-		link: process.env.WEBMENTIONS_URL,
-		pingback: undefined,
-	},
 };
 
 // Used to generate links in both the Header & Footer.

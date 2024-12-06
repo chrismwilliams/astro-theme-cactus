@@ -3,14 +3,14 @@ title: "Adding Webmentions to Astro Cactus"
 description: "This post describes the process of adding webmentions to your own site"
 publishDate: "11 Oct 2023"
 tags: ["webmentions", "astro", "social"]
-updatedDate: 8 April 2024
+updatedDate: 6 December 2024
 ---
 
 ## TLDR
 
 1. Add a link on your homepage to either your GitHub profile and/or email address as per [IndieLogin's](https://indielogin.com/setup) instructions. You _could_ do this via `src/components/SocialList.astro`, just be sure to include `isWebmention` to the relevant link if doing so.
 2. Create an account @ [Webmention.io](https://webmention.io/) by entering your website's address.
-3. Add the link feed and api key to and `.env` file with the key `WEBMENTION_URL` and `WEBMENTION_API_KEY` respectively. You could rename `.env.example` found in this template.
+3. Add the link feed and api key to a `.env` file with the key `WEBMENTION_URL` and `WEBMENTION_API_KEY` respectively, you could rename `.env.example` found in this template. You can also add the optional `WEBMENTION_PINGBACK` link here too.
 4. Go to [brid.gy](https://brid.gy/) and sign-in to each social account[s] you wish to link.
 5. Publish and build your website, remember to add the api key, and it should now be ready to receive webmentions!
 
@@ -34,10 +34,10 @@ Firstly, you need to add a link on your site to prove ownership. If you have a l
 
 ### Sign up to Webmention.io
 
-Next, head over to [Webmention.io](https://webmention.io/) and create an account by signing in with your domain name, e.g. `https://astro-cactus.chriswilliams.dev/`. Please note that .app TLDs don't function correctly. Once in, it will give you a couple of links for your domain to accept webmentions. Make a note of these and create a `.env` file (this template include an example `.env.example` which you could rename). Add the link feed and api key with the key/values of `WEBMENTION_URL` and `WEBMENTION_API_KEY` respectively. Please try not to publish this to a repository!
+Next, head over to [Webmention.io](https://webmention.io/) and create an account by signing in with your domain name, e.g. `https://astro-cactus.chriswilliams.dev/`. Please note that .app TLDs don't function correctly. Once in, it will give you a couple of links for your domain to accept webmentions. Make a note of these and create a `.env` file (this template include an example `.env.example` which you could rename). Add the link feed and api key with the key/values of `WEBMENTION_URL` and `WEBMENTION_API_KEY` respectively, and the optional `WEBMENTION_PINGBACK` url if required. Please try not to publish this to a repository!
 
 :::note
-You don't have to include the pingback link. Maybe coincidentally, but after adding it I started to receive a higher frequency of spam in my mailbox, informing me that my website could be better. Tbh they're not wrong. I've now removed it, but it's up to you.
+You don't have to include the pingback link. Maybe coincidentally, but after adding it I started to receive a higher frequency of spam in my mailbox, informing me that my website could be better. TBH they're not wrong. I've now removed it, but it's up to you.
 :::
 
 ### Sign up to Brid.gy
