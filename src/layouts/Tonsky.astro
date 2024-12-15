@@ -1,0 +1,82 @@
+---
+const { frontmatter } = Astro.props;
+// const cover = frontmatter.photo;
+
+import "@/styles/tonsky.less";
+import "@/styles/han.less";
+
+import Languages from "@/components/lang/Languages.astro";
+import { hasChinese } from "@/components/lang/zh";
+import * as cheerio from "cheerio";
+import "@fontsource/ibm-plex-mono/latin-ext-400.css";
+import "@fontsource/ibm-plex-mono/cyrillic-400.css";
+import "@fontsource/ibm-plex-mono/latin-400.css";
+import "@fontsource/ibm-plex-mono/latin-400-italic.css";
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/latin-600.css";
+import "@fontsource/ibm-plex-sans/latin-400-italic.css";
+// TODO: Plex Sans KR
+
+const $ = cheerio.load(await Astro.slots.render("default"));
+$(
+  "li, p:not(table p):not(pre p), h1, h2, h3, h4, h5, h6, blockquote, thead"
+).each(function () {
+  if ($(this).attr("lang") || $(this).attr("data-bilingual")) return;
+  const text = $(this).text();
+  if (!text.trim()) return;
+  const lang = hasChinese(text) ? "zh" : "en";
+  $(this).attr("lang", lang);
+});
+const html = $.html();
+---
+
+<div class="page">
+  <!-- {cover && <img src={cover} alt={frontmatter.title} />} -->
+  {!frontmatter.hide_title && <h1>{frontmatter.title}</h1>}
+  <label for="show-en" class="btn">Show English</label>
+  <input type="checkbox" id="show-en" />
+  /
+  <Languages
+    src="en"
+    here="zh"
+    langs={frontmatter.langs}
+    classList={["tonsky"]}
+  />
+  <article class="content" set:html={html} />
+
+</div>
+
+<style is:global lang="less">
+  input#show-en {
+    accent-color: #383838;
+    transform: scale(1.2);
+    margin: 0 0.5em;
+  }
+
+  label[for="show-en"] {
+    cursor: pointer;
+    user-select: none;
+  }
+  .page {
+    article {
+      margin-top: 1em;
+      // overflow-x: hidden;
+    }
+  }
+  #show-en:not(:checked) {
+    & ~ article {
+      [lang="en"] {
+        display: none;
+      }
+    }
+  }
+
+  #comments {
+    max-width: 600px;
+    margin: 1rem auto 0;
+  }
+
+  #footnote-label {
+    display: none;
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+title: "资本论入门"
+publishDate: "15 December 2024"
+layout: ""
+description: "This post is used for validating if duplicate tags are removed, regardless of the string case"
+tags: ["blog", "blog", "Blog", "test", "bloG", "Test", "BLOG"]
+draft: true
+---
+
+
+# Bell Labs and CSP Threads
+
+<address style="text-align: right; margin-bottom: .7em;">
+  作者：<a href="http://swtch.com/~rsc/" rel="author"><strong>Russ Cox</strong></a>
+</address>
+
+![Illustration by [Yulia Prokopova](https://www.behance.net/julia_litvin)](/translate/01.png)
+
+This page is a slice of the history of concurrent programming, focusing on one particular lineage of Hoare's language of communicating sequential processes (CSP) [1] [1a]. Concurrent programming in this style is interesting for reasons not of efficiency but of clarity. That is, it is a widespread mistake to think only of concurrent programming as a means to increase performance, e.g., to overlap disk I/O requests, to reduce latency by prefetching results to expected queries, or to take advantage of multiple processors. Such advantages are important but not relevant to this discussion. After all, they can be realized in other styles, such as asynchronous event-driven programming. Instead, we are interested in concurrent programming because it provides a natural abstraction that can make some programs much simpler. 
+
+本页聚焦于并发编程发展史中，Hoare的顺序通信进程（CSP）语言的演进脉络。这种风格的并发编程的有趣之处不在于高效，而在于清晰。也就是说，把并发编程看作提高性能的方式是一个广为人知的误解，例如交叉硬盘IO请求，通过提前发起预期的查询来降低延迟，或者是利用好多处理器。这样的优点很重要但是和本页的讨论不相关。毕竟，他们可以用其他风格来实现，例如异步事件驱动编程。然而，我们对这种并发编程感兴趣是因为提供一种简化程序又很自然的抽象。
