@@ -1,0 +1,254 @@
+---
+title: "Bell Labs and CSP Threads"
+publishDate: "14 December 2024"
+layout: ""
+description: "This post is used for validating if duplicate tags are removed, regardless of the string case"
+tags: ["translation"]
+updatedDate: 15 December 2024
+---
+
+
+# [Bell Labs and CSP Threads](https://swtch.com/~rsc/thread/#1)
+
+<address style="text-align: right; margin-bottom: .7em;">
+  作者：<a href="http://swtch.com/~rsc/" rel="author"><strong>Russ Cox</strong></a>
+</address>
+
+![Illustration by [Yulia Prokopova](https://www.behance.net/julia_litvin)](/images/translation/01.png)
+
+## Introduction
+
+This page is a slice of the history of concurrent programming, focusing on one particular lineage of Hoare's language of communicating sequential processes (CSP) [1] [1a]. Concurrent programming in this style is interesting for reasons not of efficiency but of clarity.
+That is, it is a widespread mistake to think only of concurrent programming as a means to increase performance, e.g., to overlap disk I/O requests, to reduce latency by prefetching results to expected queries, or to take advantage of multiple processors.
+Such advantages are important but not relevant to this discussion.
+After all, they can be realized in other styles, such as asynchronous event-driven programming.
+Instead, we are interested in concurrent programming because it provides a natural abstraction that can make some programs much simpler. 
+
+本页聚焦于并发编程发展史中，Hoare的顺序通信进程（CSP）语言的演进脉络。这种风格的并发编程的有趣之处不在于高效，而在于清晰。也就是说，把并发编程看作提高性能的方式是一个广为人知的误解，例如交叉硬盘IO请求，通过提前发起预期的查询来降低延迟，或者是利用好多处理器。
+这样的优点很重要但是和本页的讨论不相关。毕竟，他们可以用其他风格来实现，例如异步事件驱动编程。然而，我们对这种并发编程感兴趣是因为提供一种简化程序又很自然的抽象。
+
+## What this is not
+
+Most computer science undergraduates are forced to read Andrew Birrell's “[An Introduction to Programming with Threads.](http://gatekeeper.research.compaq.com/pub/DEC/SRC/research-reports/SRC-035.pdf)” 
+The SRC threads model is the one used by most thread packages currently available.
+The problem with all of these is that they are too low-level.
+Unlike the communication primitive provided by Hoare, the primitives in the SRC-style threading module must be combined with other techniques, usually shared memory, in order to be used effectively. 
+In general, programmers tend not to build their own higher-level constructs, and are left frustrated by needing to pay attention to such low-level details. 
+
+大多数科班生都被Andrew Birrell的《多线程编程入门》折磨过。SRC线程模型是当前线程库中采用最多的线程模型。
+SRC模型最大的问题是太底层了。不像是Hoare的通信原语，SRC风格的线程模块中的原语必须和其他技术结合使用，通常是共享内存。
+通常程序员不会构建自己的高级结构，而要一直在这些底层细节中挣扎前行。
+
+For the moment, push Birrell's tutorial out of your mind. This is a different thread model.
+If you approach it as a different thread model, you may well find it much easier to understand. 
+
+此刻先忘了Birrell吧:) 这是另一个线程模型。如果你接受了这是一个不同的线程模型，你也许会发现理解起来更加容易。
+
+## Communicating Sequential Processes
+
+By 1978, there were many proposed methods in use for communication and synchronization in the context of programming multiprocessors. 
+Shared memory was the most common communication mechanism, and semaphores, critical regions, and monitors were among the synchronization mechanisms.
+C. A. R. Hoare addressed both issues with a single language primitive: synchronous communication.
+In Hoare's CSP language, processes communicate by sending or receiving values from named unbuffered channels.
+Since the channels are unbuffered, the send operation blocks until the value has been transferred to a receiver, thus providing a mechanism for synchronization. 
+
+直到1978年，多处理器编程环境已经有很多种通信和同步的方案了。
+共享内存是最常见的通信机制，而信号量和临界区也是同步机制之一。 C. A. R. Hoare 在一个语言原语中解决了这两个问题：同步通信。
+在 Hoare 的 CSP 语言中，进程通过发送或接收值到命名的未缓冲通道来通信。由于通道是未缓冲的，发送操作会阻塞，直到值被传输到接收方，从而提供了一种同步机制。
+
+One of Hoare's examples is that of reformatting 80-column cards for printing on a 125-column printer.
+In his solution, one process reads a card at a time, sending the disassembled contents character by character to a second process.
+This second process assembles groups of 125 characters, sending the groups to the line printer.
+This sounds trivial, but in the absence of buffered I/O libraries, the necessary bookkeeping involved in a single-process solution is onerous.
+In fact, buffered I/O libraries are really just encapsulations of these two sorts of processes that export the single-character communication interface. 
+
+Hoare其中一个案例是80列卡片重新排版以打印在125列打印机上。
+在解决方案中，一个进程一次读取一张卡片，将分词后的字符一个一个地发送给另一个进程。
+这个第二个进程组装了125个字符的组，然后将组发送给行打印机。
+听起来很简单，但是如果没有缓冲的I/O库，在单进程解决方案中涉及的 necesary bookkeeping 是非常麻烦的。
+事实上，缓冲的I/O库只是这两个进程的封装，它们都导出了单个字符通信接口。
+
+As another example, which Hoare credits to Doug McIlroy, consider the generation of all primes less than a thousand.
+The sieve of Eratosthenes can be simulated by a pipeline of processes executing the following pseudocode: 
+
+另一个例子是，由 Doug McIlroy cite 的，考虑小于一千的所有质数。
+埃拉托斯特尼筛法可以用进程流水线模拟，执行如下伪代码：
+
+```
+p = get a number from left neighbor
+print p
+loop:
+    n = get a number from left neighbor
+    if (p does not divide n)
+        send n to right neighbor
+```
+
+A generating process can feed the numbers 2, 3, 4, ..., 1000 into the left end of the pipeline:
+the first process in the line eliminates the multiples of 2, the second eliminates the multiples of 3, the third eliminates the multiples of 5, and so on: 
+
+生成进程可以将从 2 到 1000 的数字输入到流水线的左侧：
+流水线上的第一个进程会删除2的倍数，第二个进程会删除3的倍数，第三个进程会删除5的倍数，以此类推。 
+
+![sieve](/images/translation/01-sieve.gif)
+
+The linear pipeline nature of the examples thus far is misrepresentative of the general nature of CSP, but even restricted to linear pipelines, the model is quite powerful. 
+The power has been forcefully demonstrated by the success of the filter-and-pipeline approach for which the Unix operating system is well known 
+Indeed, pipelines predate Hoare's paper. In an internal Bell Labs memo dated October 11, 1964，
+Doug McIlroy was toying with ideas that would become Unix pipelines:
+ “We should have some ways of coupling programs like garden hose--screw in another segment when it becomes necessary to massage data in another way.
+This is the way of IO also.”
+
+到目前为止，例子的线性流水线性质是不正确的，但是对线性流水线来说，模型非常强大。
+强大之处已经被Unix操作系统成功的过滤管道方式所证明。
+事实上，管道在Hoare论文之前就存在了。
+在1964年10月11日， 道格·麦克罗伊当时正在探索一些后来演变成 Unix 管道的概念：
+“我们应该找到一些像连接花园水管那样连接程序的方法——需要以另一种方式处理数据时，就拧上另一段。I/O 也是同样的道理。”
+
+Hoare's communicating processes are more general than typical Unix shell pipelines, since they can be connected in arbitrary patterns.
+In fact, Hoare gives as an example a 3x3 matrix of processes somewhat like the prime sieve that can be used to multiply a vector by a 3x3 square matrix. 
+
+Hoare 的通信进程比典型的 Unix shell 管道更通用，因为它们可以在任意模式下连接。
+事实上，Hoare 给出一个例子是一个 3x3 的进程矩阵， somewhat like 质数筛，可以用来将向量乘以一个 3x3 方阵。
+
+Of course, the Unix pipe mechanism doesn't require the linear layout; only the shell syntax does.
+McIlroy reports toying with syntax for a shell with general plumbing early on but not liking the syntax enough to implement it (personal communication, 2011). 
+Later shells did support some restricted forms of non-linear pipelines. Rochkind's 2dsh supports dags; Tom Duff's rc supports trees. 
+
+当然，Unix 管道机制并非必须是线性的；只是 shell 语法如此规定。
+据麦克罗伊所述，他早期曾考虑过设计一种支持更灵活管道连接方式的 shell 语法，但由于对语法不太满意而未付诸实践（2011 年的私人通信）。
+后来的 shell 确实支持一些受限的非线性管道形式。Rochkind 的 2dsh 支持有向无环图；Tom Duff 的 rc 支持树形结构。
+
+Hoare's language was novel and influential, but lacking in a few key aspects. 
+The main defect is that the unbuffered channels used for communication are not first-class objects:
+they cannot be stored in variables, passed as arguments to functions, or sent across channels.
+As a result of this, the communication structure must be fixed while writing the program. 
+Hence we must write a program to print the first 1000 primes rather than the first n primes,
+and to multiply a vector by a 3x3 matrix rather than an nxn matrix. 
+
+Hoare 语言新颖且具有影响力，但是缺少了几个关键的方面。
+主要的缺陷是用于通信的无缓冲通道不是一等对象：它们不能存储在变量中、作为参数传递给函数，或者通过通道发送。
+因此，通信结构必须在编写程序时就固定下来。
+因此，我们必须编写一个程序来打印前 1000 个质数，而不是打印前 n 个质数，
+以及编写一个程序将向量乘以 3x3 矩阵，而不是 nxn 矩阵。
+
+## Pan and Promela
+
+In 1980, barely two years after Hoare's paper, Gerard Holzmann and Rob Pike created a protocol analyzer called pan that takes a CSP dialect as input. 
+Pan's CSP dialect had concatenation, selection, and looping, but no variables.
+Even so, Holzmann reports that “Pan found its first error in a Bell Labs data-switch control protocol on 21 November 1980. ” 
+That dialect may well have been the first CSP language at Bell Labs, and it certainly provided Pike with experience using and implementing a CSP-like language, his first of many. 
+
+1980 年，在霍尔发表论文后仅仅两年，Gerard Holzmann 和 Rob Pike 就创建了一个名为 pan 的协议分析器，该分析器接受一种 CSP 方言作为输入。
+Pan 的 CSP 方言具备连接、选择和循环等控制结构，但不支持变量。
+Pan 于 1980 年 11 月 21 日在贝尔实验室的一个数据交换控制协议中发现了其首个错误。
+这种方言很可能就是贝尔实验室最早出现的 CSP 语言，并且无疑为 Pike 提供了使用和实现类 CSP 语言的宝贵经验，这也是他众多相关实践中的首次尝试。
+
+Holzmann's protocol analyzer developed into the Spin model checker and its Promela language, which features first-class channels in the same way as Newsqueak (q.v.). 
+
+Holzmann 的协议分析器开发into Spin 模型检查器和其 Promela 语言，该语言与 Newsqueak 一样，具有一等通道。
+
+## Newsqueak
+
+Moving in a different direction, Luca Cardelli and Rob Pike developed the ideas in CSP into the Squeak mini-language [4] for generating user interface code. 
+(This Squeak is distinct from the Squeak Smalltalk implementation.)
+Pike later expanded Squeak into the fully-fledged programming language Newsqueak [5][6] which begat Plan 9's Alef [7] [8], Inferno's Limbo [9], and Google's Go [13].
+The main semantic advantage of Newsqueak over Squeak is that Newsqueak treats communications channels as first-class objects: 
+unlike in CSP and Squeak, channels can be stored in variables, passed as arguments to functions, and sent across channels.
+This in turn enables the programmatic construction of the communication structure, thus allowing the creation of more complex structures than would be reasonable to design by hand. In particular, 
+Doug McIlroy demonstrated how the communication facilities of Newsqueak can be employed to write elegant programs for manipulating symbolic power series.
+Similar attempts in traditional languages tend to mire in bookkeeping. 
+In a similar vein, Rob Pike demonstrated how the communication facilities can be employed to break out of the common event-based programming model, writing a concurrent window system
+
+换一个方向，Luca Cardelli 和 Rob Pike 将 CSP 的思想发展成了一种用于生成用户界面代码的 Squeak 迷你语言 [4]。
+（此 Squeak 与 Squeak Smalltalk 实现有所不同。）Pike 后来将 Squeak 扩展为功能完备的编程语言 Newsqueak [5][6]，
+而 Newsqueak 又催生了 Plan 9 的 Alef [7][8]、Inferno 的 Limbo [9] 和 Google 的 Go [13]。
+Newsqueak 相较于 Squeak 的主要语义优势在于，它将通信通道视为一等公民：与 CSP 和 Squeak 不同，通道可以存储在变量中、作为函数参数传递，甚至可以通过其他通道进行传递。
+这使得程序能够动态构建通信结构，从而创建出复杂度远超手动设计的系统。例如，Doug McIlroy 就展示了如何利用 Newsqueak 的通信机制编写简洁的程序来处理符号幂级数。
+而在传统语言中进行类似尝试，往往会陷入繁琐的簿记工作。
+同样，Rob Pike 也展示了如何利用这些通信机制突破常见的基于事件的编程模型，并实现了一个并发窗口系统。
+
+## Alef  
+Alef [7] [8] was a language designed by Phil Winterbottom to apply the Newsqueak ideas to a full-fledged systems programming language. 
+Alef has two types of what we have been calling processes: procs and threads.
+The program is organized into one or more procs, which are shared-memory operating system processes that can be preemptively scheduled.
+Each proc contains one or more tasks, which are cooperatively scheduled coroutines.
+Note that each task is assigned to a particular proc: they do not migrate between procs.
+
+Alef [7][8] 是由 Phil Winterbottom 设计的，旨在将 Newsqueak 的理念应用于构建功能完善的系统级编程语言。Alef 中有两种我们通常称为“进程”的实体：procs 和 threads（任务）。程序由一个或多个 proc 构成，这些 proc 是可进行抢占式调度的共享内存操作系统进程。每个 proc 包含一个或多个 task（任务），这些 task 是以协作式进行调度的协程。需要注意的是，每个 task 都绑定到一个特定的 proc，它们不会在不同的 proc 之间迁移。
+
+The main use of procs is to provide contexts that can block for I/O independently of the main tasks.
+(Plan 9 has no select call, and even on Unix you need multiple procs if you want to overlap computation with non-network I/O.) 
+The Acme paper [12] has a nice brief discussion of procs and threads, as do the lecture notes about the Plan 9 window system, also mentioned below. 
+
+Procs 的主要作用是提供独立的 I/O 阻塞上下文，从而使 I/O 操作不会阻塞主 tasks 的执行。（Plan 9 操作系统没有 select 调用，即使在 Unix 系统中，若要实现计算与非网络 I/O 操作的并行执行，也需要使用多个进程。）Acme 论文 [12] 对 procs 和 threads 进行了简明扼要的阐述，下文将提及的 Plan 9 窗口系统讲义中也有相关论述。
+## Limbo  
+The Inferno operating system is a Plan 9 spinoff intended for set-top boxes.
+Its programming language, Limbo [9], was heavily influenced by Alef.
+It removed the distinction between procs and tasks, effectively having just procs, though they were of lighter weight than what most people think of as processes.
+All parallelism is preemptive. It is interesting that despite this, the language provides no real support for locking.
+Instead, the channel communication typically provides enough synchronization and encourages programmers to arrange that there is always a clear owner for any piece of data.
+Explicit locking is unnecessary.
+
+Inferno 操作系统是 Plan 9 的一个衍生版本，其目标是机顶盒等嵌入式设备。其编程语言 Limbo [9] 受到了 Alef 的深刻影响。Limbo 去除了 procs 和 tasks 之间的区分，实际上只保留了 procs，但这些 procs 比大多数人通常理解的“进程”要轻量得多。所有并行操作都是抢占式的。有趣的是，尽管如此，该语言并没有提供真正的锁机制支持。相反，通道通信通常就足以提供必要的同步，并鼓励程序员确保任何数据都始终有明确的“所有者”。因此，显式加锁就显得不必要了。
+
+## Libthread  
+Back in the Plan 9 world, the Alef compilers turned out to be difficult to maintain as Plan 9 was ported to ever more architectures.
+Libthread was originally created to port Alef programs to C, so that the Alef compilers could be retired.
+Alef's procs and tasks are called procs and threads in libthread. The manual page is the definitive reference.
+
+在 Plan 9 环境中，随着 Plan 9 移植到越来越多的硬件架构，Alef 编译器的维护变得日益困难。Libthread 最初是为了将 Alef 程序移植到 C 语言而创建，从而可以逐步淘汰 Alef 编译器。在 Libthread 中，Alef 的 procs 和 tasks 分别被称为 procs 和 threads。其手册页是权威的参考资料。
+
+## Go  
+Rob Pike and Ken Thompson moved on to Google and placed CSP at the center of the Go language's concurrency support.
+
+## Getting Started  
+To get a feel for the model, especially how processes and threads interact, it is worth reading the Alef User's Guide [8].
+The first thirty slides of this presentation are a good introduction to how Alef constructs are represented in C. 
+
+The best examples of the power of the CSP model are McIlroy's and Pike's papers, mentioned above [10] [11]. 
+
+Rob Pike's home page contains lecture notes from a course on concurrent programming: an introduction, and slides about the two aforementioned papers: squinting and window system.
+The last of the three provides a good example of how Plan 9 programs typically use procs and tasks.
+Rob Pike gave a tech talk at Google that provides a good introduction (57 minute video).
+Rob Pike's half of his 2010 Google I/O talk with Russ Cox shows how to use channels and Go's concurrency to implement a load balancing work management system. 
+
+Rob Pike 的个人主页上提供了一份并发编程课程的讲义：《简介》，以及关于前文提及的两篇论文的幻灯片：“squinting” 和 “window system”。其中，最后一份幻灯片很好地展示了 Plan 9 程序如何典型地使用 procs 和 tasks。Rob Pike 曾在 Google 发表过一次技术讲座，对相关内容进行了很好的介绍（57 分钟视频）。在 2010 年的 Google I/O 大会上，Rob Pike 与 Russ Cox 共同进行了一场演讲，其中 Rob Pike 的部分展示了如何使用通道和 Go 的并发特性来实现一个负载均衡的工作管理系统。
+
+## Related Resources
+
+John Reppy has applied the same ideas to ML, producing Concurrent ML. 
+He used CML to build, among other things, the eXene multithreaded (non-event-driven) X Window System toolkit. 
+
+## References
+
+[1] C. A. R. Hoare, “Communicating Sequential Processes,” Communications of the ACM 21(8) (August 1978), 666-677.
+
+[1a]C. A. R. Hoare, Communicating Sequential Processes. Prentice Hall, Englewood Cliffs, New Jersey, 1985.
+
+[2] Michael S. Mahoney, ed., The Unix Oral History Project, Release 0: The Beginning
+
+[3] M. Douglas McIlroy, internal Bell Labs memorandum, October 1964.
+
+[4] Luca Cardelli and Rob Pike, “Squeak: a Language for Communicating with Mice,” Computer Graphics, 19(3) (July 1985: SIGGRAPH '85 Proceedings), 199-204.
+
+[5] Rob Pike, “The Implementation of Newsqueak,” Software--Practice and Experience, 20(7) (July 1990), 649-659.
+
+[6] Rob Pike, “Newsqueak: a Language for Communicating with Mice,” Computing Science Technical Report 143, AT&T Bell Laboratories, Murray Hill, 1989.
+
+[7] Phil Winterbottom, “Alef Language Reference Manual,” in Plan 9 Programmer's Manual: Volume Two, AT&T, Murray Hill, 1995.
+
+[8] Bob Flandrena, “Alef Users' Guide,” in Plan 9 Programmer's Manual: Volume Two, AT&T, Murray Hill, 1995.
+
+[9] Dennis M. Ritchie, “The Limbo Programming Language,” in Inferno Programmer's Manual, Volume 2, Vita Nuova Holdings Ltd., York, 2000.
+
+[10] M. Douglas McIlroy, “Squinting at Power Series,” Software--Practice and Experience, 20(7) (July 1990), 661-683.
+
+[11] Rob Pike, “A Concurrent Window System,” Computing Systems, 2(2) 133-153.
+
+[12] Rob Pike, “Acme: A User Interface for Programmers,” Proceedings of the Winter 1994 USENIX Conference, 223-234.
+
+[13] golang.org, “The Go Programming Language”.
+
+[14] Gerard Holzmann, “Spin's Roots”.
+
+[15] Gerard Holzmann, “Promela Language Reference”. 
