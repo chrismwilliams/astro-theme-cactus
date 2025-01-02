@@ -5,7 +5,7 @@ publishDate: "21 Jan 2024"
 coverImage:
     src: "./ghoul-prison-cover.png"
     alt: "Ghoul prison cover image"
-tags: ["directx", "c++", "ai", "behaviour-trees"]
+tags: ["directx", "c++", "coroutines", "behaviour-trees", "tools-dev"]
 draft: false
 relatedPosts: ["sfas-retro"]
 ---
@@ -13,13 +13,16 @@ relatedPosts: ["sfas-retro"]
 Check out **Escape Ghoul Prison's**
 - 🕹️ [**Game Page/Development Document**](https://henryha993.itch.io/escape-ghoul-prison)
 - 💾 [**Project Files**](https://github.com/HenryHa993/EscapeGhoulPrison)
+- 👾 [**Behaviour Tree System Improvements**](/projects/behaviour-tree/)
 
 ## About
 Escape Ghoul Prison is a puzzle observation game made using only **C++** and **DirectX**. In this project, I implement my very own **behaviour tree system** using modern C++ techniques such as **coroutines**.
 
 This is a submission to **Grads In Game's Search For a Star 2024** competition, in which I became a [**finalist**](https://gradsingames.com/search-for-a-star/sfas-2024-the-finalists/#prog) for!
 
-This project was scored and rated by a vast range of [industry professionals](https://gradsingames.com/search-for-a-star/sfas-2024-the-finalists/#prog) and was an incredibly fun technical challenge. I received some awesome feedback for this project, so I wrote a separate learnings post [**here**](/posts/sfas-retro/).
+This project was scored and rated by a range of [industry professionals](https://gradsingames.com/search-for-a-star/sfas-2024-the-finalists/#prog) and was an incredibly fun technical challenge. I received some awesome feedback for this project, so I wrote a separate learnings post [**here**](/posts/sfas-retro/).
+
+I have also made improvements to the behaviour tree, which you can find [**here**](/projects/behaviour-tree/)!
 
 ![Ghoul Prison GIF](https://img.itch.zone/aW1nLzE0NzM5ODQwLmdpZg==/original/mEFfqR.gif)
 

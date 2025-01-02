@@ -1,18 +1,17 @@
 ---
 title: "The Gaggle Gathers - WGJ23"
-description: "A retro game inspired by Snakes and Foxes from the wheel of time."
+description: "A collaborative Unity project for the 2023 Warwick Game Jam."
 publishDate: "9 Feb 2023"
 coverImage:
     src: "./gaggle-gathers-cover.jpg"
     alt: "TGG cover image"
-tags: ["unity", "c-sharp", "jam"]
+tags: ["unity", "c#", "jam","group-project"]
 draft: false
 relatedPosts: []
 ---
 
 Check out **The Gaggle Gather's**
 - 🕹️ [**Game Page**](https://henryha993.itch.io/the-gaggle-gathers)
-- 💾 [**Project Files**](https://github.com/HenryHa993/Geese-Game)
 
 ## About
 This was a submission for the **2023 Warwick Game Jame** in collaboration with [Joel Evans](https://www.linkedin.com/in/joel-evans-dev/).

@@ -5,7 +5,7 @@ publishDate: "15 Jun 2024"
 coverImage:
     src: "./bt-cover.png"
     alt: "Code cover image"
-tags: ["c++", "ai", "behaviour-trees", "tools"]
+tags: ["c++", "coroutines", "behaviour-trees", "tools-dev"]
 draft: false
 relatedPosts: []
 ---
