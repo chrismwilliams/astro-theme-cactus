@@ -64,7 +64,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 				descYearKeys.map((yearKey) => (
 					<>
 						<h2 class="title text-lg">{yearKey}</h2>
-						<ul class="mb-16 mt-5 space-y-4 text-start">
+						<ul class="mt-5 mb-16 space-y-4 text-start">
 							{groupedByYear[yearKey]?.map((p) => (
 								<li class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
 									<PostPreview post={p} />
@@ -112,7 +112,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 						))}
 					</ul>
 					<span class="mt-4 block sm:text-end">
-						<a aria-label="View all blog categories" class="sm:hover:text-link" href="/tags/">
+						<a aria-label="View all blog categories" class="hover:text-link" href="/tags/">
 							View all →
 						</a>
 					</span>
