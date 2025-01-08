@@ -15,7 +15,8 @@ const { post } = Astro.props;
 const { ogImage, title, description, updatedDate, publishDate } = post.data;
 const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
-const { headings } = await render(post);
+const { headings, remarkPluginFrontmatter } = await render(post);
+const readingTime: string = remarkPluginFrontmatter.readingTime;
 ---
 
 <BaseLayout
@@ -29,7 +30,7 @@ const { headings } = await render(post);
 	<div class="gap-x-10 lg:flex lg:items-start">
 		{!!headings.length && <TOC headings={headings} />}
 		<article class="flex-grow break-words" data-pagefind-body>
-			<div id="blog-hero"><Masthead content={post} /></div>
+			<div id="blog-hero"><Masthead content={post} readingTime={readingTime} /></div>
 			<div
 				class="prose prose-sm prose-cactus prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none mt-12"
 			>
