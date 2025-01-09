@@ -16,13 +16,7 @@
 }
 
 @layer base {
-	:root,
-	:root[data-theme="light"] {
-		color-scheme: light;
-	}
-
 	:root[data-theme="dark"] {
-		color-scheme: dark;
 		--color-bgColor: oklch(23.64% 0.0045 248);
 		--color-link: oklch(70.44% 0.1133 349);
 		--color-textColor: oklch(83.54% 0 264);

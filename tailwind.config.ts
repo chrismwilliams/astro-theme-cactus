@@ -4,9 +4,6 @@ export default {
 	plugins: [require("@tailwindcss/typography")],
 	theme: {
 		extend: {
-			// transitionProperty: {
-			// 	height: "height",
-			// },
 			// @apply doesn't work the same in v4.0.0-beta.8 as it did in v3
 			typography: () => ({
 				DEFAULT: {
