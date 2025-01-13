@@ -158,7 +158,7 @@ See [`Assets/Scripts/MarkerManager.cs`](https://github.com/HenryHa993/ARCardGame
 #### UI
 Nan Yi and Damian were the main drivers behind the design of the UI. I adapted initial designs into the game using world space canvas elements and billboarding techniques. I also implemented UI animation scripts to fade and spin elements in-game.
 
-See
+See:
 
 [`Assets/Scripts/UnitBoardUI.cs`](https://github.com/HenryHa993/ARCardGame/blob/main/Assets/Scripts/UnitBoardUI.cs)
 
