@@ -6,6 +6,7 @@
 /* use a selector-based strategy for dark mode */
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+/* you could refactor below to use light-dark() depending on your users */
 @theme {
 	--color-bgColor: oklch(98.48% 0 0);
 	--color-link: oklch(55.44% 0.0431 185.69);
@@ -16,13 +17,23 @@
 }
 
 @layer base {
-	:root[data-theme="dark"] {
-		--color-bgColor: oklch(23.64% 0.0045 248);
-		--color-link: oklch(70.44% 0.1133 349);
-		--color-textColor: oklch(83.54% 0 264);
-		--color-accent: oklch(70.91% 0.1415 163.7);
-		--color-accent-2: oklch(94.66% 0 0);
-		--color-quote: oklch(94.8% 0.106 136.49);
+	html {
+		color-scheme: light dark;
+		accent-color: var(--color-accent);
+
+		&[data-theme="light"] {
+			color-scheme: light;
+		}
+
+		&[data-theme="dark"] {
+			color-scheme: dark;
+			--color-bgColor: oklch(23.64% 0.0045 248);
+			--color-link: oklch(70.44% 0.1133 349);
+			--color-textColor: oklch(83.54% 0 264);
+			--color-accent: oklch(70.91% 0.1415 163.7);
+			--color-accent-2: oklch(94.66% 0 0);
+			--color-quote: oklch(94.8% 0.106 136.49);
+		}
 	}
 }
 
