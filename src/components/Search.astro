@@ -7,6 +7,7 @@ import "@/styles/blocks/search.css";
 <site-search class="ms-auto" id="search">
 	<button
 		class="hover:text-accent flex h-9 w-9 cursor-pointer items-center justify-center rounded-md"
+		aria-keyshortcuts="Control+K Meta+K"
 		data-open-modal
 		disabled
 	>
@@ -57,60 +58,27 @@ import "@/styles/blocks/search.css";
 
 <script>
 	class SiteSearch extends HTMLElement {
-		private closeBtn: HTMLButtonElement;
-		private dialog: HTMLDialogElement;
-		private dialogFrame: HTMLDivElement;
-		private openBtn: HTMLButtonElement;
-
-		closeModal = () => {
-			if (this.dialog.open) {
-				this.dialog.close();
-				window.removeEventListener("click", this.onWindowClick);
-			}
-		};
-
-		onWindowClick = (event: MouseEvent) => {
-			// check if it's a link
-			const isLink = "href" in (event.target || {});
-			// make sure the click is either a link or outside of the dialog
-			if (
-				isLink ||
-				(document.body.contains(event.target as Node) &&
-					!this.dialogFrame.contains(event.target as Node))
-			)
-				this.closeModal();
-		};
-
-		onWindowKeydown = (e: KeyboardEvent) => {
-			// check if it's the / key
-			if (e.key === "/" && !this.dialog.open) {
-				this.openModal();
-				e.preventDefault();
-			}
-		};
-
-		openModal = (event?: MouseEvent) => {
-			this.dialog.showModal();
-			this.querySelector("input")?.focus();
-			event?.stopPropagation();
-			window.addEventListener("click", this.onWindowClick);
-		};
+		#closeBtn: HTMLButtonElement;
+		#dialog: HTMLDialogElement;
+		#dialogFrame: HTMLDivElement;
+		#openBtn: HTMLButtonElement;
+		#controller: AbortController;
 
 		constructor() {
 			super();
-			this.openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
-			this.closeBtn = this.querySelector<HTMLButtonElement>("button[data-close-modal]")!;
-			this.dialog = this.querySelector("dialog")!;
-			this.dialogFrame = this.querySelector(".dialog-frame")!;
+			this.#openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
+			this.#closeBtn = this.querySelector<HTMLButtonElement>("button[data-close-modal]")!;
+			this.#dialog = this.querySelector("dialog")!;
+			this.#dialogFrame = this.querySelector(".dialog-frame")!;
+			this.#controller = new AbortController();
 
-			this.openBtn.addEventListener("click", this.openModal);
-			this.openBtn.disabled = false;
-			this.closeBtn.addEventListener("click", this.closeModal);
-		}
-
-		connectedCallback() {
-			// Listen for keyboard shortcut
-			window.addEventListener("keydown", this.onWindowKeydown);
+			// Set up events
+			this.#openBtn.addEventListener("click", this.openModal);
+			this.#openBtn.disabled = false;
+			this.#closeBtn.addEventListener("click", this.closeModal);
+			this.#dialog.addEventListener("close", () => {
+				window.removeEventListener("click", this.onWindowClick);
+			});
 
 			// only add pagefind in production
 			if (import.meta.env.DEV) return;
@@ -127,9 +95,43 @@ import "@/styles/blocks/search.css";
 			});
 		}
 
-		disconnectedCallback() {
-			window.removeEventListener("keydown", this.onWindowKeydown);
+		connectedCallback() {
+			// window events, requires cleanup
+			window.addEventListener("keydown", this.onWindowKeydown, { signal: this.#controller.signal });
 		}
+
+		disconnectedCallback() {
+			this.#controller.abort();
+		}
+
+		openModal = (event?: MouseEvent) => {
+			this.#dialog.showModal();
+			this.querySelector("input")?.focus();
+			event?.stopPropagation();
+			window.addEventListener("click", this.onWindowClick, { signal: this.#controller.signal });
+		};
+
+		closeModal = () => this.#dialog.close();
+
+		onWindowClick = (event: MouseEvent) => {
+			// check if it's a link
+			const isLink = "href" in (event.target || {});
+			// make sure the click is either a link or outside of the dialog
+			if (
+				isLink ||
+				(document.body.contains(event.target as Node) &&
+					!this.#dialogFrame.contains(event.target as Node))
+			)
+				this.closeModal();
+		};
+
+		onWindowKeydown = (e: KeyboardEvent) => {
+			// check if it's the Control+K or ⌘+K shortcut
+			if ((e.metaKey === true || e.ctrlKey === true) && e.key === "k") {
+				this.#dialog.open ? this.closeModal() : this.openModal();
+				e.preventDefault();
+			}
+		};
 	}
 
 	customElements.define("site-search", SiteSearch);
