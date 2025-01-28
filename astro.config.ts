@@ -23,7 +23,7 @@ import rehypeUnwrapImages from "rehype-unwrap-images";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://astro-cactus.chriswilliams.dev/",
+	site: siteConfig.url,
 	image: {
 		domains: ["webmention.io"],
 	},
@@ -35,14 +35,8 @@ export default defineConfig({
 		robotsTxt(),
 		webmanifest({
 			// See: https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/README.md
-			/**
-			 * required
-			 **/
 			name: siteConfig.title,
-			/**
-			 * optional
-			 **/
-			// short_name: "Astro_Cactus",
+			short_name: "Astro_Cactus", // optional
 			description: siteConfig.description,
 			lang: siteConfig.lang,
 			icon: "public/icon.svg", // the source for generating favicon & icons
@@ -96,7 +90,6 @@ export default defineConfig({
 	},
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,
-	// ! Please remember to replace the following site property with your own domain
 	vite: {
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
