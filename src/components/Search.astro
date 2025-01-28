@@ -31,9 +31,9 @@ import "@/styles/blocks/search.css";
 	</button>
 	<dialog
 		aria-label="search"
-		class="bg-global-bg h-full max-h-full w-full max-w-full border border-zinc-400 shadow-sm backdrop:backdrop-blur-sm sm:mx-auto sm:mt-16 sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem] sm:rounded-md"
+		class="bg-global-bg h-full max-h-full w-full max-w-full border border-zinc-400 shadow-sm backdrop:backdrop-blur-sm open:flex sm:mx-auto sm:mt-16 sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem] sm:rounded-md"
 	>
-		<div class="dialog-frame flex flex-col gap-4 p-6 pt-12 sm:pt-6">
+		<div class="dialog-frame flex grow flex-col gap-4 p-6 pt-12 sm:pt-6">
 			<button
 				class="ms-auto cursor-pointer rounded-md bg-zinc-200 p-2 font-semibold dark:bg-zinc-700"
 				data-close-modal>Close</button
@@ -121,8 +121,9 @@ import "@/styles/blocks/search.css";
 				isLink ||
 				(document.body.contains(event.target as Node) &&
 					!this.#dialogFrame.contains(event.target as Node))
-			)
+			) {
 				this.closeModal();
+			}
 		};
 
 		onWindowKeydown = (e: KeyboardEvent) => {
