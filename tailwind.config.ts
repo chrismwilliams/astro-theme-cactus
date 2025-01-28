@@ -26,7 +26,7 @@ export default {
 						},
 						kbd: {
 							"&:where([data-theme='dark'], [data-theme='dark'] *)": {
-								background: "var(--color-textColor)",
+								background: "var(--color-global-text)",
 							},
 						},
 						hr: {
@@ -78,13 +78,13 @@ export default {
 				},
 				cactus: {
 					css: {
-						"--tw-prose-body": "var(--color-textColor)",
-						"--tw-prose-bold": "var(--color-textColor)",
-						"--tw-prose-bullets": "var(--color-textColor)",
-						"--tw-prose-code": "var(--color-textColor)",
+						"--tw-prose-body": "var(--color-global-text)",
+						"--tw-prose-bold": "var(--color-global-text)",
+						"--tw-prose-bullets": "var(--color-global-text)",
+						"--tw-prose-code": "var(--color-global-text)",
 						"--tw-prose-headings": "var(--color-accent-2)",
 						"--tw-prose-hr": "0.5px dashed #666",
-						"--tw-prose-links": "var(--color-textColor)",
+						"--tw-prose-links": "var(--color-global-text)",
 						"--tw-prose-quotes": "var(--color-quote)",
 						"--tw-prose-th-borders": "#666",
 					},

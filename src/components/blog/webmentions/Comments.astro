@@ -22,13 +22,13 @@ const comments = mentions.filter(
 			<p class="text-accent-2 mb-0">
 				<strong>{comments.length}</strong> Mention{comments.length > 1 ? "s" : ""}
 			</p>
-			<ul class="divide-textColor/20 mt-0 divide-y ps-0" role="list">
+			<ul class="divide-global-text/20 mt-0 divide-y ps-0" role="list">
 				{comments.map((mention) => (
 					<li class="p-comment h-cite my-0 flex items-start gap-x-5 py-5">
 						{mention.author?.photo && mention.author.photo !== "" ? (
 							mention.author.url && mention.author.url !== "" ? (
 								<a
-									class="u-author not-prose ring-textColor hover:ring-link focus-visible:ring-link shrink-0 overflow-hidden rounded-full ring-2 hover:ring-4 focus-visible:ring-4"
+									class="u-author not-prose ring-global-text hover:ring-link focus-visible:ring-link shrink-0 overflow-hidden rounded-full ring-2 hover:ring-4 focus-visible:ring-4"
 									href={mention.author.url}
 									rel="noreferrer"
 									target="_blank"
