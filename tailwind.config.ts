@@ -4,7 +4,6 @@ export default {
 	plugins: [require("@tailwindcss/typography")],
 	theme: {
 		extend: {
-			// @apply doesn't work the same in v4.0.0-beta.8 as it did in v3
 			typography: () => ({
 				DEFAULT: {
 					css: {
@@ -74,19 +73,6 @@ export default {
 						'th[align="left"], td[align="left"]': {
 							"text-align": "left",
 						},
-					},
-				},
-				cactus: {
-					css: {
-						"--tw-prose-body": "var(--color-global-text)",
-						"--tw-prose-bold": "var(--color-global-text)",
-						"--tw-prose-bullets": "var(--color-global-text)",
-						"--tw-prose-code": "var(--color-global-text)",
-						"--tw-prose-headings": "var(--color-accent-2)",
-						"--tw-prose-hr": "0.5px dashed #666",
-						"--tw-prose-links": "var(--color-global-text)",
-						"--tw-prose-quotes": "var(--color-quote)",
-						"--tw-prose-th-borders": "#666",
 					},
 				},
 				sm: {
