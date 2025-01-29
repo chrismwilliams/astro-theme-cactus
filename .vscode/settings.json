@@ -16,5 +16,8 @@
 		"editor.wordWrap": "on"
 	},
 	"typescript.tsdk": "node_modules/typescript/lib",
-	"astro.content-intellisense": true
+	"astro.content-intellisense": true,
+	"files.associations": {
+		"*.mdx": "markdown"
+	}
 }
