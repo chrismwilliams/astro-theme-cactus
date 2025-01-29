@@ -2,6 +2,7 @@
 title: "Markdown Admonitions"
 description: "This post showcases using the markdown admonition feature in Astro Cactus"
 publishDate: "25 Aug 2024"
+updatedDate: "7 Jan 2025"
 tags: ["markdown", "admonitions"]
 ---
 
@@ -73,18 +74,6 @@ Crucial information necessary for users to succeed.
 Crucial information necessary for users to succeed.
 :::
 
-### Warning
-
-```md
-:::warning
-Critical content demanding immediate user attention due to potential risks.
-:::
-```
-
-:::warning
-Critical content demanding immediate user attention due to potential risks.
-:::
-
 ### Caution
 
 ```md
@@ -95,6 +84,18 @@ Negative potential consequences of an action.
 
 :::caution
 Negative potential consequences of an action.
+:::
+
+### Warning
+
+```md
+:::warning
+Critical content demanding immediate user attention due to potential risks.
+:::
+```
+
+:::warning
+Critical content demanding immediate user attention due to potential risks.
 :::
 
 ## Customising the admonition title
