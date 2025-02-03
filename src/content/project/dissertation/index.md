@@ -5,6 +5,9 @@ publishDate: "19 Jun 2023"
 coverImage:
     src: "./level.png"
     alt: "PA library cover image"
+coverGif:
+    src: "./level.png"
+    alt: "PA library cover image"
 tags: ["unity", "c-sharp", "a*-search", "behaviour-trees", "procedural-animation"]
 draft: false
 relatedPosts: []

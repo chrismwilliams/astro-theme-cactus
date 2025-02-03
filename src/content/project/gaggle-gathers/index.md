@@ -5,6 +5,9 @@ publishDate: "9 Feb 2023"
 coverImage:
     src: "./gaggle-gathers-cover.jpg"
     alt: "TGG cover image"
+coverGif:
+    src: "./gaggle-gathers-cover.jpg"
+    alt: "TGG cover image"
 tags: ["unity", "c-sharp", "jam","group-project"]
 draft: false
 relatedPosts: []

@@ -5,6 +5,9 @@ publishDate: "5 Jan 2025"
 coverImage:
     src: "./ARCardCover.jpg"
     alt: "ARCardBattler cover image"
+coverGif:
+    src: "./ARCardCover.jpg"
+    alt: "ARCardBattler cover image"
 tags: ["unity", "c-sharp", "group-project", "augmented-reality"]
 draft: false
 relatedPosts: []

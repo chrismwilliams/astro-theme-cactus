@@ -5,6 +5,9 @@ publishDate: "2 Apr 2024"
 coverImage:
     src: "./rixa-cover.png"
     alt: "Rixa cover image"
+coverGif:
+    src: "./rixa-video.webp"
+    alt: "Rixa cover image"
 tags: ["c++", "group-project"]
 draft: false
 relatedPosts: []

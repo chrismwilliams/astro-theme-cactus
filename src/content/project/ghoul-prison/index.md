@@ -5,6 +5,9 @@ publishDate: "21 Jan 2024"
 coverImage:
     src: "./ghoul-prison-cover.png"
     alt: "Ghoul prison cover image"
+coverGif:
+    src: "./ghoulprison.gif"
+    alt: "Ghoul prison cover gif"
 tags: ["directx", "c++", "coroutines", "behaviour-trees", "tools-dev"]
 draft: false
 relatedPosts: ["sfas-retro"]

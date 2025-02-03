@@ -5,6 +5,9 @@ publishDate: "11 Feb 2024"
 coverImage:
     src: "./TerminalCover.png"
     alt: "Terminal cover image"
+coverGif:
+    src: "./TerminalCover.png"
+    alt: "Terminal cover image"
 tags: ["unreal", "c++", "behaviour-trees"]
 draft: false
 relatedPosts: ["terminal-retro"]

@@ -53,6 +53,12 @@ const project = defineCollection({
 					alt: z.string(),
 				})
 				.optional(),
+			coverGif: z
+				.object({
+					src: image(),
+					alt: z.string(),
+				})
+				.optional(),
 			draft: z.boolean().default(false),
 			tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
 			ogImage: z.string().optional(),

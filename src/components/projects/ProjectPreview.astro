@@ -17,8 +17,8 @@ const postDate = project.data.updatedDate ?? project.data.publishDate;
 	project.data.coverImage && (
 		<a href={`/projects/${project.slug}/`}>
 			<Image
-				src={project.data.coverImage.src}
-				alt={project.data.coverImage.alt}
+				src={project.data.coverGif.src}
+				alt={project.data.coverGif.alt}
 				width={1024}
 				height={1024 / 2}
 				class="aspect-thumbnail mb-4 rounded-2xl object-cover shadow-xl"
