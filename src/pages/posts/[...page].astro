@@ -51,31 +51,34 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-6 flex items-center gap-3">
-		Posts
+	<div class="mb-6 flex items-center gap-3">
+		<h1 class="title">Posts</h1>
 		<a class="text-accent" href="/rss.xml" target="_blank">
 			<span class="sr-only">RSS feed</span>
 			<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
 		</a>
-	</h1>
-	<div class="grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8">
-		<section aria-label="Blog post list">
+	</div>
+	<div class="grid sm:grid-cols-[3fr_1fr] sm:gap-x-8 sm:gap-y-16">
+		<div>
 			{
 				descYearKeys.map((yearKey) => (
-					<>
-						<h2 class="title text-lg">{yearKey}</h2>
-						<ul class="mb-16 mt-5 space-y-4 text-start">
+					<section aria-labelledby={`year-${yearKey}`}>
+						<h2 id={`year-${yearKey}`} class="title text-lg">
+							<span class="sr-only">Posts in</span>
+							{yearKey}
+						</h2>
+						<ul class="mt-5 mb-16 space-y-4 text-start">
 							{groupedByYear[yearKey]?.map((p) => (
 								<li class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
 									<PostPreview post={p} />
 								</li>
 							))}
 						</ul>
-					</>
+					</section>
 				))
 			}
 			<Pagination {...paginationProps} />
-		</section>
+		</div>
 		{
 			!!uniqueTags.length && (
 				<aside>
@@ -101,19 +104,18 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 					<ul class="flex flex-wrap gap-2">
 						{uniqueTags.map((tag) => (
 							<li>
-								<a
-									aria-label={`View all posts with the tag: ${tag}`}
-									class="cactus-link flex items-center justify-center"
-									href={`/tags/${tag}/`}
-								>
-									#{tag}
+								<a class="cactus-link flex items-center justify-center" href={`/tags/${tag}/`}>
+									<span aria-hidden="true">#</span>
+									<span class="sr-only">View all posts with the tag</span>
+									{tag}
 								</a>
 							</li>
 						))}
 					</ul>
 					<span class="mt-4 block sm:text-end">
-						<a aria-label="View all blog categories" class="sm:hover:text-link" href="/tags/">
-							View all →
+						<a class="hover:text-link" href="/tags/">
+							View all <span aria-hidden="true">→</span>
+							<span class="sr-only">blog tags</span>
 						</a>
 					</span>
 				</aside>

@@ -40,9 +40,6 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <meta content={description} name="description" />
 <meta content={siteConfig.author} name="author" />
 
-{/* Theme Colour */}
-<meta content="" name="theme-color" />
-
 {/* Open Graph / Facebook */}
 <meta content={articleDate ? "article" : "website"} property="og:type" />
 <meta content={title} property="og:title" />
@@ -73,7 +70,8 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <link href="/sitemap-index.xml" rel="sitemap" />
 
 {/* RSS auto-discovery */}
-<link href="/rss.xml" rel="alternate" title={siteConfig.title} type="application/rss+xml" />
+<link href="/rss.xml" title="Blog" rel="alternate" type="application/rss+xml" />
+<link href="/notes/rss.xml" title="Notes" rel="alternate" type="application/rss+xml" />
 
 {/* Webmentions */}
 {

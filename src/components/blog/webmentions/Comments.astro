@@ -14,26 +14,21 @@ const validComments = ["mention-of", "in-reply-to"];
 const comments = mentions.filter(
 	(mention) => validComments.includes(mention["wm-property"]) && mention.content?.text,
 );
-
-/**
- ! show a link to the mention 
-
- */
 ---
 
 {
 	!!comments.length && (
 		<div>
-			<p class="mb-0 text-accent-2">
+			<p class="text-accent-2 mb-0">
 				<strong>{comments.length}</strong> Mention{comments.length > 1 ? "s" : ""}
 			</p>
-			<ul class="mt-0 divide-y divide-textColor/20 ps-0" role="list">
+			<ul class="divide-global-text/20 mt-0 divide-y ps-0" role="list">
 				{comments.map((mention) => (
 					<li class="p-comment h-cite my-0 flex items-start gap-x-5 py-5">
 						{mention.author?.photo && mention.author.photo !== "" ? (
 							mention.author.url && mention.author.url !== "" ? (
 								<a
-									class="u-author not-prose shrink-0 overflow-hidden rounded-full outline-none ring-2 ring-textColor hover:ring-4 hover:ring-link focus-visible:ring-4 focus-visible:ring-link"
+									class="u-author not-prose ring-global-text hover:ring-link focus-visible:ring-link shrink-0 overflow-hidden rounded-full ring-2 hover:ring-4 focus-visible:ring-4"
 									href={mention.author.url}
 									rel="noreferrer"
 									target="_blank"
@@ -59,7 +54,7 @@ const comments = mentions.filter(
 						) : null}
 						<div class="flex-auto">
 							<div class="p-author h-card flex items-center justify-between gap-x-2">
-								<p class="p-name my-0 line-clamp-1 font-semibold text-accent-2">
+								<p class="p-name text-accent-2 my-0 line-clamp-1 font-semibold">
 									{mention.author?.name}
 								</p>
 								<a
@@ -70,7 +65,7 @@ const comments = mentions.filter(
 									target="_blank"
 								>
 									<span class="hidden" id="cmt-source">
-										Vist the source of this webmention
+										Visit the source of this webmention
 									</span>
 									<Icon
 										aria-hidden="true"
@@ -80,7 +75,7 @@ const comments = mentions.filter(
 									/>
 								</a>
 							</div>
-							<p class="comment-content mb-0 mt-1 break-words [word-break:break-word]">
+							<p class="comment-content mt-1 mb-0 break-words [word-break:break-word]">
 								{mention.content?.text}
 							</p>
 						</div>
