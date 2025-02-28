@@ -1,42 +1,47 @@
 ---
-import PageLayout from "@/layouts/Base";
-import PostPreview from "@/components/blog/PostPreview";
+import { Image } from "astro:assets";
 import SocialList from "@/components/SocialList";
-import { getAllPosts, sortPostsByDate } from "@/utils";
+import PageLayout from "@/layouts/Base";
+import ProfileImage from "@/assets/pocketgamer.jpg";
 
-const MAX_POSTS = 5;
-const allPosts = await getAllPosts();
-const allPostsByDate = sortPostsByDate(allPosts).slice(0, MAX_POSTS);
+const meta = {
+	title: "About",
+	description: "I'm a starter theme for Astro.build",
+};
 ---
 
-<PageLayout meta={{ title: "Home" }}>
-	<section>
-		<h1 class="title mb-6">Howdy</h1>
-		<p class="mb-4">
-			This site houses some of my <a href="/posts" class="cactus-link">learnings</a> and <a
-				href="/projects"
-				class="cactus-link">projects</a
-			> surrounding games development.<br />Or toilet thoughts.
-		</p>
-		<p class="mb-4">
-			If you would like to know more about what I do, check out my <a
-				href="/about/"
-				class="cactus-link">About</a
-			> section or my CV below!
-		</p>
+<PageLayout meta={meta}>
+	<h1 class="title mb-6">Ahoy!</h1>
+	<Image
+		class="aspect-thumbnail mb-4 rounded-2xl object-cover shadow-xl"
+		src={ProfileImage}
+		alt="Me with some very handsome men."
+		loading="eager"
+		fetchpriority="high"
+	/>
 
-		<SocialList />
-	</section>
-	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="title mb-4 text-xl">Recent Posts</h2>
-		<ul class="space-y-4 sm:space-y-2">
-			{
-				allPostsByDate.map((p) => (
-					<li class="flex flex-col gap-x-2 sm:flex-row">
-						<PostPreview post={p} />
-					</li>
-				))
-			}
-		</ul>
+	<div>
+		<p class="mb-4 mr-6">
+			My name is Henry (right), and I'm a games programmer based in London!
+		</p>
+		<p class="mb-4 mr-6">
+			It all began with The Last of Us and its Grounded documentary. It exposed me to games development, as both a collaborative effort and something I want participate in. Since then, I have taken for opportunities to collaborate on games.
+		<p class="mb-4 mr-6">
+			From game jams during my bachelors in Computer Science, to group projects as part of a games programming bootcamp. Working on games has been a dream, and I continue to do so in my masters in Computer Games Programming!
+		</p>
+		<p class="mb-4 mr-6">You can contact me or check out my CV below!</p>
+	</div>
+	<SocialList />
+
+	<section class="mt-16">
+		<section class="mt-16">
+			<h2 class="title mb-4 text-xl">Website Credits</h2>
+			<p class="mb-4">
+				This site is an extension of Chris William's <a
+					href="https://github.com/chrismwilliams/astro-theme-cactus/tree/main"
+					class="cactus-link">Astro Cactus</a
+				>!
+			</p>
+		</section>
 	</section>
 </PageLayout>
