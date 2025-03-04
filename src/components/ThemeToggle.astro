@@ -57,26 +57,32 @@
 	import { rootInDarkMode } from "@/utils/domElement";
 
 	class ThemeToggle extends HTMLElement {
-		connectedCallback() {
-			const button = this.querySelector<HTMLButtonElement>("button")!;
-			// set aria role value
-			button.setAttribute("role", "switch");
-			button.setAttribute("aria-checked", String(rootInDarkMode()));
+		constructor() {
+			super();
+			const button = this.querySelector<HTMLButtonElement>("button");
 
-			// button event
-			button.addEventListener("click", () => {
-				// invert theme
-				let themeChangeEvent = new CustomEvent("theme-change", {
-					detail: {
-						theme: rootInDarkMode() ? "light" : "dark",
-					},
-				});
-				// dispatch event -> ThemeProvider.astro
-				document.dispatchEvent(themeChangeEvent);
-
-				// set the aria-checked attribute
+			if (button) {
+				// set aria role value
+				button.setAttribute("role", "switch");
 				button.setAttribute("aria-checked", String(rootInDarkMode()));
-			});
+
+				// button event
+				button.addEventListener("click", () => {
+					// invert theme
+					let themeChangeEvent = new CustomEvent("theme-change", {
+						detail: {
+							theme: rootInDarkMode() ? "light" : "dark",
+						},
+					});
+					// dispatch event -> ThemeProvider.astro
+					document.dispatchEvent(themeChangeEvent);
+
+					// set the aria-checked attribute
+					button.setAttribute("aria-checked", String(rootInDarkMode()));
+				});
+			} else {
+				console.warn("Theme Toggle: No button found");
+			}
 		}
 	}
 

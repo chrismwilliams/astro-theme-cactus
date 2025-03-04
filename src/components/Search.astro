@@ -58,27 +58,41 @@ import "@/styles/blocks/search.css";
 
 <script>
 	class SiteSearch extends HTMLElement {
-		#closeBtn: HTMLButtonElement;
-		#dialog: HTMLDialogElement;
-		#dialogFrame: HTMLDivElement;
-		#openBtn: HTMLButtonElement;
+		#closeBtn: HTMLButtonElement | null;
+		#dialog: HTMLDialogElement | null;
+		#dialogFrame: HTMLDivElement | null;
+		#openBtn: HTMLButtonElement | null;
 		#controller: AbortController;
 
 		constructor() {
 			super();
-			this.#openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
-			this.#closeBtn = this.querySelector<HTMLButtonElement>("button[data-close-modal]")!;
-			this.#dialog = this.querySelector("dialog")!;
-			this.#dialogFrame = this.querySelector(".dialog-frame")!;
+			this.#openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]");
+			this.#closeBtn = this.querySelector<HTMLButtonElement>("button[data-close-modal]");
+			this.#dialog = this.querySelector<HTMLDialogElement>("dialog");
+			this.#dialogFrame = this.querySelector(".dialog-frame");
 			this.#controller = new AbortController();
 
 			// Set up events
-			this.#openBtn.addEventListener("click", this.openModal);
-			this.#openBtn.disabled = false;
-			this.#closeBtn.addEventListener("click", this.closeModal);
-			this.#dialog.addEventListener("close", () => {
-				window.removeEventListener("click", this.onWindowClick);
-			});
+			if (this.#openBtn) {
+				this.#openBtn.addEventListener("click", this.openModal);
+				this.#openBtn.disabled = false;
+			} else {
+				console.warn("Search button not found");
+			}
+
+			if (this.#closeBtn) {
+				this.#closeBtn.addEventListener("click", this.closeModal);
+			} else {
+				console.warn("Close button not found");
+			}
+
+			if (this.#dialog) {
+				this.#dialog.addEventListener("close", () => {
+					window.removeEventListener("click", this.onWindowClick);
+				});
+			} else {
+				console.warn("Dialog not found");
+			}
 
 			// only add pagefind in production
 			if (import.meta.env.DEV) return;
@@ -105,13 +119,18 @@ import "@/styles/blocks/search.css";
 		}
 
 		openModal = (event?: MouseEvent) => {
+			if (!this.#dialog) {
+				console.warn("Dialog not found");
+				return;
+			}
+
 			this.#dialog.showModal();
 			this.querySelector("input")?.focus();
 			event?.stopPropagation();
 			window.addEventListener("click", this.onWindowClick, { signal: this.#controller.signal });
 		};
 
-		closeModal = () => this.#dialog.close();
+		closeModal = () => this.#dialog?.close();
 
 		onWindowClick = (event: MouseEvent) => {
 			// check if it's a link
@@ -120,13 +139,17 @@ import "@/styles/blocks/search.css";
 			if (
 				isLink ||
 				(document.body.contains(event.target as Node) &&
-					!this.#dialogFrame.contains(event.target as Node))
+					!this.#dialogFrame?.contains(event.target as Node))
 			) {
 				this.closeModal();
 			}
 		};
 
 		onWindowKeydown = (e: KeyboardEvent) => {
+			if (!this.#dialog) {
+				console.warn("Dialog not found");
+				return;
+			}
 			// check if it's the Control+K or ⌘+K shortcut
 			if ((e.metaKey === true || e.ctrlKey === true) && e.key === "k") {
 				this.#dialog.open ? this.closeModal() : this.openModal();
