@@ -20,3 +20,62 @@ const toc = generateToc(headings);
 		</ol>
 	</nav>
 </details>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const tocLinks = Array.from(document.querySelectorAll("a[href^='#']"));
+		const headers = tocLinks.map((link) => document.querySelector(link.getAttribute("href")));
+
+		let lastActiveId = null;
+		const visibleTitles = new Set();
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					const target = entry.target;
+					if (entry.isIntersecting) {
+						visibleTitles.add(target);
+					} else {
+						visibleTitles.delete(target);
+					}
+				});
+
+				const currentHeading = [...visibleTitles]
+					.map((title) => [title, title.getBoundingClientRect().top])
+					.reduce((prev, curr) => (prev[1] > curr[1] ? prev : curr), [null, 0])[0];
+
+				if (currentHeading && currentHeading.id !== lastActiveId) {
+					tocLinks.forEach((link) => {
+						const isActive = link.getAttribute("href") === `#${currentHeading.id}`;
+						link.classList.toggle("text-accent", isActive);
+						link.classList.toggle("font-bold", isActive);
+					});
+					lastActiveId = currentHeading.id;
+				}
+			},
+			{ root: null, rootMargin: "0px 0px -40% 0px", threshold: [0, 1] },
+		);
+
+		headers.forEach((header) => observer.observe(header));
+
+		tocLinks.forEach((link) => {
+			link.addEventListener("click", (event) => {
+				event.preventDefault();
+
+				const targetId = link.getAttribute("href").substring(1);
+				const targetElement = document.getElementById(targetId);
+				if (targetElement) {
+					const offset = 500;
+					const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+
+					window.scrollTo({
+						top: targetPosition - offset,
+						behavior: "smooth",
+					});
+
+					history.replaceState(null, "", `#${targetId}`);
+				}
+			});
+		});
+	});
+</script>
