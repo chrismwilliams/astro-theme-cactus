@@ -35,6 +35,10 @@
 			--color-quote: oklch(94.8% 0.106 136.49);
 		}
 	}
+
+	:target {
+		scroll-margin-block: 5ex;
+	}
 }
 
 @layer components {
