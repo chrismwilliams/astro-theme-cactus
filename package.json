@@ -1,6 +1,6 @@
 {
 	"name": "astro-cactus",
-	"version": "6.2.0",
+	"version": "6.3.0",
 	"private": false,
 	"scripts": {
 		"dev": "astro dev",
@@ -59,10 +59,6 @@
 		"typescript": "^5.8.3"
 	},
 	"pnpm": {
-		"onlyBuiltDependencies": [
-			"@biomejs/biome",
-			"esbuild",
-			"sharp"
-		]
+		"onlyBuiltDependencies": ["@biomejs/biome", "esbuild", "sharp"]
 	}
 }
