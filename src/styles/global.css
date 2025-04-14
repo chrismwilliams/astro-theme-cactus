@@ -39,6 +39,10 @@
 	:target {
 		scroll-margin-block: 5ex;
 	}
+
+	@view-transition {
+		navigation: auto;
+	}
 }
 
 @layer components {
