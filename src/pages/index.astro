@@ -32,7 +32,7 @@ const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 	</section>
 	<section class="mt-16">
 		<h2 class="title text-accent mb-6 text-xl"><a href="/posts/">Posts</a></h2>
-		<ul class="space-y-4" role="list">
+		<ul class="space-y-6" role="list">
 			{
 				allPostsByDate.map((p) => (
 					<li class="grid gap-2 sm:grid-cols-[auto_1fr]">
@@ -48,7 +48,7 @@ const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 				<h2 class="title text-accent mb-6 text-xl">
 					<a href="/notes/">Notes</a>
 				</h2>
-				<ul class="space-y-4" role="list">
+				<ul class="space-y-6" role="list">
 					{latestNotes.map((note) => (
 						<li>
 							<Note note={note} as="h3" isPreview />

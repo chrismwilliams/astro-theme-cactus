@@ -16,5 +16,9 @@
 		"editor.wordWrap": "on"
 	},
 	"typescript.tsdk": "node_modules/typescript/lib",
-	"astro.content-intellisense": true
+	"astro.content-intellisense": true,
+	"files.associations": {
+		"*.css": "tailwindcss"
+	},
+	"tailwindCSS.experimental.configFile": "./src/styles/global.css"
 }
