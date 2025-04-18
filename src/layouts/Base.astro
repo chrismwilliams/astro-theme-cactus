@@ -1,12 +1,11 @@
 ---
-import type { SiteMeta } from "@/types";
-
 import BaseHead from "@/components/BaseHead.astro";
 import SkipLink from "@/components/SkipLink.astro";
 import ThemeProvider from "@/components/ThemeProvider.astro";
 import Footer from "@/components/layout/Footer.astro";
 import Header from "@/components/layout/Header.astro";
-import { siteConfig } from "@/site-config";
+import { siteConfig } from "@/site.config";
+import type { SiteMeta } from "@/types";
 
 interface Props {
 	meta: SiteMeta;
@@ -17,11 +16,13 @@ const {
 } = Astro.props;
 ---
 
-<html lang={siteConfig.lang}>
+<html class="scroll-smooth" lang={siteConfig.lang}>
 	<head>
 		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
 	</head>
-	<body>
+	<body
+		class="bg-global-bg text-global-text mx-auto flex min-h-screen max-w-3xl flex-col px-4 pt-16 font-mono text-sm font-normal antialiased sm:px-8"
+	>
 		<ThemeProvider />
 		<SkipLink />
 		<Header />

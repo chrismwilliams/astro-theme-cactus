@@ -49,6 +49,7 @@ An example containing a clickable reference[^1] with a link to the source.
 Second example containing a reference[^2] with a link to the source.
 
 [^1]: Reference first footnote with a return to content link.
+
 [^2]: Second reference with a link.
 
 If you check out this example in `src/content/post/markdown-elements/index.md`, you'll notice that the references and the heading "Footnotes" are added to the bottom of the page via the [remark-rehype](https://github.com/remarkjs/remark-rehype#options) plugin.
@@ -142,23 +143,30 @@ function demo() {
 | engine | engine to be used for processing templates. Handlebars is the default.    |
 | ext    | extension to be used for dest files.                                      |
 
-Right aligned columns
+### Table Alignment
 
-| Option |                                                               Description |
-| -----: | ------------------------------------------------------------------------: |
-|   data | path to data files to supply the data that will be passed into templates. |
-| engine |    engine to be used for processing templates. Handlebars is the default. |
-|    ext |                                      extension to be used for dest files. |
+| Item         | Price | # In stock |
+| ------------ | :---: | ---------: |
+| Juicy Apples | 1.99  |        739 |
+| Bananas      | 1.89  |          6 |
+
+### Keyboard elements
+
+| Action                | Shortcut                                   |
+| --------------------- | ------------------------------------------ |
+| Vertical split        | <kbd>Alt+Shift++</kbd>                     |
+| Horizontal split      | <kbd>Alt+Shift+-</kbd>                     |
+| Auto split            | <kbd>Alt+Shift+d</kbd>                     |
+| Switch between splits | <kbd>Alt</kbd> + arrow keys                |
+| Resizing a split      | <kbd>Alt+Shift</kbd> + arrow keys          |
+| Close a split         | <kbd>Ctrl+Shift+W</kbd>                    |
+| Maximize a pane       | <kbd>Ctrl+Shift+P</kbd> + Toggle pane zoom |
 
 ## Images
 
 Image in the same folder: `src/content/post/markdown-elements/logo.png`
 
 ![Astro theme cactus logo](./logo.png)
-
-Image in the aliased assets folder: `src/assets/about-astro.png`
-
-![A cartoon cactus looking at the Astro.build logo](@/assets/about-astro.png)
 
 ## Links
 

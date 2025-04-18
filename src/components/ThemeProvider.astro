@@ -1,4 +1,4 @@
-{/* Inlined to avoid FOUC. */}
+{/* Inlined to avoid FOUC. This is a parser blocking script. */}
 <script is:inline>
 	const lightModePref = window.matchMedia("(prefers-color-scheme: light)");
 
@@ -23,9 +23,6 @@
 
 		root.setAttribute("data-theme", newTheme);
 
-		const colorThemeMetaTag = document.querySelector("meta[name='theme-color']");
-		const bgColour = getComputedStyle(document.body).getPropertyValue("--theme-bg");
-		colorThemeMetaTag.setAttribute("content", `hsl(${bgColour})`);
 		if (typeof localStorage !== "undefined") {
 			localStorage.setItem("theme", newTheme);
 		}

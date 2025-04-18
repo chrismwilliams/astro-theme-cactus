@@ -17,7 +17,7 @@
 	// }
 	"Add frontmatter to an Astro Cactus Post": {
 		"scope": "markdown,mdx",
-		"prefix": "frontmatter",
+		"prefix": "frontmatter-post",
 		"body": [
 			"---",
 			"title: ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}",
@@ -29,5 +29,18 @@
 			"$2",
 		],
 		"description": "Add frontmatter for new Markdown post",
+	},
+	"Add frontmatter to an Astro Cactus Note": {
+		"scope": "markdown,mdx",
+		"prefix": "frontmatter-note",
+		"body": [
+			"---",
+			"title: ${TM_FILENAME_BASE/(.*)/${1:/capitalize}/}",
+			"description: 'Enter a description here (optional)'",
+			"publishDate: \"${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}T${CURRENT_HOUR}:${CURRENT_MINUTE}:00Z\"",
+			"---",
+			"$2",
+		],
+		"description": "Add frontmatter for a new Markdown note",
 	},
 }

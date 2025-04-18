@@ -4,15 +4,9 @@
 		"baseUrl": ".",
 		"lib": ["es2022", "dom", "dom.iterable"],
 		"paths": {
-			"@/assets/*": ["src/assets/*"],
-			"@/components/*": ["src/components/*"],
-			"@/data/*": ["src/data/*"],
-			"@/layouts/*": ["src/layouts/*"],
-			"@/utils": ["src/utils/index.ts"],
-			"@/types": ["src/types.ts"],
-			"@/site-config": ["src/site.config.ts"]
+			"@/*": ["src/*"]
 		}
 	},
-	"include": ["./.eslintrc.cjs", "**/*"],
+	"include": [".astro/types.d.ts", "**/*"],
 	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
 }

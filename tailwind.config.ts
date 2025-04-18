@@ -1,69 +1,20 @@
-import type {Config} from "tailwindcss";
-
-import {fontFamily} from "tailwindcss/defaultTheme";
-import plugin from "tailwindcss/plugin";
+import type { Config } from "tailwindcss";
 
 export default {
-	content: [
-		"./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}",
-		"!./src/pages/og-image/[slug].png.ts",
-	],
-	corePlugins: {
-		// disable aspect ratio as per docs -> @tailwindcss/aspect-ratio
-		aspectRatio: false,
-		borderOpacity: false,
-		fontVariantNumeric: false,
-		ringOffsetColor: false,
-		ringOffsetWidth: false,
-		scrollSnapType: false,
-		textOpacity: false,
-		// disable some core plugins as they are included in the css, even when unused
-		touchAction: false,
-	},
-	darkMode: ["class", '[data-theme="dark"]'],
-	plugins: [
-		require("@tailwindcss/typography"),
-		require("@tailwindcss/aspect-ratio"),
-		plugin(function ({ addComponents }) {
-			addComponents({
-				".cactus-link": {
-					"&:hover": {
-						"@apply decoration-link decoration-2": {},
-					},
-					"@apply underline underline-offset-2": {},
-				},
-				".title": {
-					"@apply text-2xl font-semibold text-accent-2": {},
-				},
-			});
-		}),
-	],
+	plugins: [require("@tailwindcss/typography")],
 	theme: {
 		extend: {
-			colors: {
-				accent: "hsl(var(--theme-accent) / <alpha-value>)",
-				"accent-2": "hsl(var(--theme-accent-2) / <alpha-value>)",
-				bgColor: "hsl(var(--theme-bg) / <alpha-value>)",
-				link: "hsl(var(--theme-link) / <alpha-value>)",
-				quote: "hsl(var(--theme-quote) / <alpha-value>)",
-				textColor: "hsl(var(--theme-text) / <alpha-value>)",
-			},
-			fontFamily: {
-				// Add any custom fonts here
-				sans: [...fontFamily.sans],
-				serif: [...fontFamily.serif],
-			},
-			transitionProperty: {
-				height: "height",
-			},
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-expect-error
-			// Remove above once tailwindcss exposes theme type
-			typography: (theme) => ({
+			typography: () => ({
 				DEFAULT: {
 					css: {
 						a: {
-							"@apply cactus-link": "",
+							textUnderlineOffset: "2px",
+							"&:hover": {
+								"@media (hover: hover)": {
+									textDecorationColor: "var(--color-link)",
+									textDecorationThickness: "2px",
+								},
+							},
 						},
 						blockquote: {
 							borderLeftWidth: "0",
@@ -72,17 +23,19 @@ export default {
 							border: "1px dotted #666",
 							borderRadius: "2px",
 						},
+						kbd: {
+							"&:where([data-theme='dark'], [data-theme='dark'] *)": {
+								background: "var(--color-global-text)",
+							},
+						},
 						hr: {
 							borderTopStyle: "dashed",
 						},
-            p: {
-              textAlign: "justify",
-            },
-            strong: {
+						strong: {
 							fontWeight: "700",
 						},
 						sup: {
-							"@apply ms-0.5": "",
+							marginInlineStart: "calc(var(--spacing) * 0.5)",
 							a: {
 								"&:after": {
 									content: "']'",
@@ -91,11 +44,13 @@ export default {
 									content: "'['",
 								},
 								"&:hover": {
-									"@apply text-link no-underline bg-none": "",
+									"@media (hover: hover)": {
+										color: "var(--color-link)",
+									},
 								},
-								"@apply bg-none": "",
 							},
 						},
+						/* Table */
 						"tbody tr": {
 							borderBottomWidth: "none",
 						},
@@ -109,25 +64,21 @@ export default {
 							borderBottom: "1px dashed #666",
 							fontWeight: "700",
 						},
-					},
-				},
-				cactus: {
-					css: {
-						"--tw-prose-body": theme("colors.textColor / 1"),
-						"--tw-prose-bold": theme("colors.textColor / 1"),
-						"--tw-prose-bullets": theme("colors.textColor / 1"),
-						"--tw-prose-code": theme("colors.textColor / 1"),
-						"--tw-prose-headings": theme("colors.accent-2 / 1"),
-						"--tw-prose-hr": "0.5px dashed #666",
-						"--tw-prose-links": theme("colors.textColor / 1"),
-						"--tw-prose-quotes": theme("colors.quote / 1"),
-						"--tw-prose-th-borders": "#666",
+						'th[align="center"], td[align="center"]': {
+							"text-align": "center",
+						},
+						'th[align="right"], td[align="right"]': {
+							"text-align": "right",
+						},
+						'th[align="left"], td[align="left"]': {
+							"text-align": "left",
+						},
 					},
 				},
 				sm: {
 					css: {
 						code: {
-							fontSize: theme("fontSize.sm")[0],
+							fontSize: "var(--text-sm)",
 							fontWeight: "400",
 						},
 					},

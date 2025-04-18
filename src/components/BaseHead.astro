@@ -1,9 +1,8 @@
 ---
+import { WEBMENTION_PINGBACK, WEBMENTION_URL } from "astro:env/client";
+import { siteConfig } from "@/site.config";
 import type { SiteMeta } from "@/types";
-
-import { siteConfig } from "@/site-config";
-
-import "../styles/global.css";
+import "@/styles/global.css";
 
 type Props = SiteMeta;
 
@@ -16,24 +15,30 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 ---
 
 <meta charset="utf-8" />
-<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <title>{siteTitle}</title>
 
-{/* Icons / Favicon */}
-<link href="/favicon.ico" rel="icon" sizes="any" />
+{/* Icons */}
 <link href="/icon.svg" rel="icon" type="image/svg+xml" />
-<link href="/apple-touch-icon.png" rel="apple-touch-icon" />
-<link href="/manifest.webmanifest" rel="manifest" />
+{
+	import.meta.env.PROD && (
+		<>
+			{/* Favicon & Apple Icon */}
+			<link rel="icon" href="/favicon-32x32.png" type="image/png" />
+			<link href="/icons/apple-touch-icon.png" rel="apple-touch-icon" />
+			{/* Manifest */}
+			<link href="/manifest.webmanifest" rel="manifest" />
+		</>
+	)
+}
+
+{/* Canonical URL */}
 <link href={canonicalURL} rel="canonical" />
 
 {/* Primary Meta Tags */}
 <meta content={siteTitle} name="title" />
 <meta content={description} name="description" />
 <meta content={siteConfig.author} name="author" />
-
-{/* Theme Colour */}
-<meta content="" name="theme-color" />
 
 {/* Open Graph / Facebook */}
 <meta content={articleDate ? "article" : "website"} property="og:type" />
@@ -65,16 +70,15 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <link href="/sitemap-index.xml" rel="sitemap" />
 
 {/* RSS auto-discovery */}
-<link href="/rss.xml" rel="alternate" title={siteConfig.title} type="application/rss+xml" />
+<link href="/rss.xml" title="Blog" rel="alternate" type="application/rss+xml" />
+<link href="/notes/rss.xml" title="Notes" rel="alternate" type="application/rss+xml" />
 
 {/* Webmentions */}
 {
-	siteConfig.webmentions && (
+	WEBMENTION_URL && (
 		<>
-			<link href={siteConfig.webmentions.link} rel="webmention" />
-			{siteConfig.webmentions.pingback && (
-				<link href={siteConfig.webmentions.pingback} rel="pingback" />
-			)}
+			<link href={WEBMENTION_URL} rel="webmention" />
+			{WEBMENTION_PINGBACK && <link href={WEBMENTION_PINGBACK} rel="pingback" />}
 		</>
 	)
 }

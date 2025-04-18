@@ -13,20 +13,16 @@ export const siteConfig: SiteConfig = {
 			year: "numeric",
 		},
 	},
-	// Meta property used as the default description meta property
+	// Used as the default description meta property and webmanifest description
 	description: "An opinionated starter theme for Astro",
-	// HTML lang property, found in src/layouts/Base.astro L:18
+	// HTML lang property, found in src/layouts/Base.astro L:18 & astro.config.ts L:48
 	lang: "en-GB",
 	// Meta property, found in src/components/BaseHead.astro L:42
 	ogLocale: "en_GB",
-	// Option to sort posts by updatedDate if set to true (if property exists). Default (false) will sort by publishDate
-	sortPostsByUpdatedDate: false,
-	// Meta property used to construct the meta title property, found in src/components/BaseHead.astro L:11
+	// Used to construct the meta title property found in src/components/BaseHead.astro L:11, and webmanifest name found in astro.config.ts L:42
 	title: "Astro Theme Cactus",
-	webmentions: {
-		// Webmention.io API endpoint. Get your own here: https://webmention.io/, and follow this blog post: https://astro-cactus.chriswilliams.dev/posts/webmentions/
-		link: "https://webmention.io/astro-cactus.chriswilliams.dev/webmention",
-	},
+	// ! Please remember to replace the following site property with your own domain, used in astro.config.ts
+	url: "https://astro-cactus.chriswilliams.dev/",
 };
 
 // Used to generate links in both the Header & Footer.
@@ -43,6 +39,10 @@ export const menuLinks: { path: string; title: string }[] = [
 		path: "/posts/",
 		title: "Writing",
 	},
+	{
+		path: "/notes/",
+		title: "Notes",
+	},
 ];
 
 // https://expressive-code.com/reference/configuration/
@@ -50,7 +50,7 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
 	styleOverrides: {
 		borderRadius: "4px",
 		codeFontFamily:
-			'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+			'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
 		codeFontSize: "0.875rem",
 		codeLineHeight: "1.7142857rem",
 		codePaddingInline: "1rem",
