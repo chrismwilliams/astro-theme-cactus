@@ -1,9 +1,9 @@
 ---
 title: "Proxmox_VE自用配置"
-description: "Proxmox_VE初次使用配置"
+description: "Proxmox_VE一些有用的配置"
 publishDate: "18 04 2025"
 tags: ["PVE", "Config", "Linux"]
-updatedDate: 18 04 2025
+updatedDate: "18 04 2025"
 ---
 
 # Proxmox_VE自用配置
