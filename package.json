@@ -1,6 +1,6 @@
 {
 	"name": "astro-cactus",
-	"version": "6.4.0",
+	"version": "6.5.0",
 	"private": false,
 	"scripts": {
 		"dev": "astro dev",
@@ -62,11 +62,6 @@
 		"overrides": {
 			"sharp": "^0.34.2"
 		},
-		"onlyBuiltDependencies": [
-			"@biomejs/biome",
-			"@tailwindcss/oxide",
-			"esbuild",
-			"sharp"
-		]
+		"onlyBuiltDependencies": ["@biomejs/biome", "@tailwindcss/oxide", "esbuild", "sharp"]
 	}
 }
