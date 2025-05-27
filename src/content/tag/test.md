@@ -1,6 +1,6 @@
 ---
-title: Test Posts
-description: These posts are used for testing various features of the theme.
+title: Test Tag
+description: This tag is used for testing various features of the theme.
 ---
 
 This is an example of a custom intro on a tag page. Its markdown can be found in `src/content/tag/test.md`.

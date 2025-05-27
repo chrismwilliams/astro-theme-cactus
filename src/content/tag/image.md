@@ -1,5 +1,5 @@
 ---
-description: Learn about image handling in Astro Theme Cactus
+description: Learn about image handling in Astro Cactus
 ---
 
 This is an example of a custom intro on a tag page. Its markdown can be found in `src/content/tag/image.md`.
