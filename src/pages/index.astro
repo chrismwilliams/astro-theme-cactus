@@ -14,73 +14,73 @@ import RetroGrid from "@/components/magicui/retro-grid";
 
 const projectLinks: { desc: string; href: string; title: string }[] = [
 	{
-        desc: "(2018-today) founder – accelerationist community ❤️‍🔥",
+        desc: "(2021-today) AI-powered advertising platform for e-commerce brands",
+        href: "https://feedcast.ai/",
+        title: "feedcast.ai",
+    },	
+	{
+        desc: "(2018-today) consulting + freelance collective",
         href: "https://connivence.io/",
         title: "connivence.io",
     },
+	// {
+    //     desc: "(soon) a micro-startup studio",
+    //     href: "https://labs.connivence.io",
+    //     title: "labs.connivence.io",
+    // },
 	{
-        desc: "(soon) a micro-startup studio / remote incubator",
-        href: "https://labs.connivence.io",
-        title: "labs.connivence.io",
-    },
-	{
-        desc: "tldraw.com (AI-experiment) canvas fork",
+        desc: "tldraw fork because it's the best canvas",
         href: "https://draw.kvncyf.me",
         title: "draw.kvncyf.me",
     },
-    {
-        desc: "(pre-launch) an automated GenAI & tech-related newsletter",
-        href: "https://yetAnotherAInewsletter.org",
-        title: "yetAnotherAInewsletter.org",
-    },
-    {
-        desc: "(2021-today) supercharge e-commerce multichannel advertising platform",
-        href: "https://feedcast.io/",
-        title: "feedcast.io",
-    },
+    // {
+    //     desc: "(pre-launch) an automated GenAI & tech-related newsletter",
+    //     href: "https://yetAnotherAInewsletter.org",
+    //     title: "yetAnotherAInewsletter.org",
+    // },
     {
         desc: "(2020-discontinued) ceo – CMS, websites & funnels no-code builder",
         href: "https://kaliko.solutions/",
         title: "kaliko.solutions",
     },
 	{
-		desc: "(2017-2018) 1st GTM – gerermaboite.fr [acquired by Cegid]",
+		desc: "(2017-2018) 1st go-to-market @gerermaboite.fr [acquired by cegid]",
 		href: "https://www.ccistore.fr/produit/2669984/cegid-gerer-ma-boite",
 		title: "cegid.com",
 	},
 	{
-		desc: "(2016-2017) SDR – wizishop.com",
+		desc: "(2016-2017) sales @ wizishop.com",
 		href: "https://www.wizishop.com",
 		title: "wizishop.com",
 	},
 	{
-		desc:"(2015-2016) SDR @ isendpro.com",
+		desc:"(2015-2016) sales @ isendpro.com",
 		href: "https://isendpro.com",
 		title: "isendpro.com",
 	}
 ];
 ---
 
-<PageLayout meta={{ title: "Home" }}>
+<PageLayout meta={{ title: "home" }}>
 
 	<section>
 		<div class="relative flex h-full w-full max-w-[100%] items-center justify-center overflow-hidden rounded-xl border border-gray-100 dark:border-stone-900 bg-background gap-4 pt-8">
 			<div class="flex flex-col w-full max-w-[100%]">
 				<h1 class="pointer-events-none z-10 whitespace-pre-wrap bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-left text-3xl font-bold leading-none tracking-tighter text-transparent pb-2 md:text-5xl hidden">
-					Welcome
+					welcome
 				</h1>
 				<div class="overflow-hidden max-w-full">
 					<VelocityScroll
 						client:load
-						text="AGI is near"
+						text="agi is near"
 						default_velocity={5}
-						className="font-display text-center text-2xl font-bold tracking-[-0.02em] drop-shadow-sm bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-transparent md:text-4xl md:leading-[3rem]"
+						className="font-display text-center text-2xl font-bold tracking-[-0.02em] drop-shadow-sm bg-gradient-to-b from-[#ffd319] via-[#388d48] to-[#8c1eff] bg-clip-text text-transparent md:text-4xl md:leading-[3rem]"
 					/>
 				</div>
 				
 				<div class="p-5">
 					<p class="mb-4 max-w-full">
-						I'm Kevin. Tech worker based in Paris, from south France. Pianist. Happy future husband. Here you'll read about my thoughts, projects, learnings.
+						hey i'm kevin ✌️ growth/product engineer focused on b2b software. i talk about ethical tech, osint, agentic AI systems. doing occasional consulting. based in paris, remote only. 
 					</p>
 					<div class="max-w-full">
 						<SocialList />
@@ -91,12 +91,12 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 		</div>
 	</section>
 
-	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="title mb-4 text-xl">Posts</h2>
+	<!-- <section aria-label="Blog post list" class="mt-16">
+		<h2 class="title mb-4 text-xl">posts</h2>
 		<p>
 			(wip) life update for re-balancing purposes
 		</p>
-		<!-- <ul class="space-y-4">
+		<ul class="space-y-4">
 			{
 				allPostsByDate.map((p) => (
 					<li class="flex flex-col gap-x-2 sm:flex-row">
@@ -104,14 +104,12 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 					</li>
 				))
 			}
-		</ul> -->
-	</section>
-
-
+		</ul>
+	</section> -->
 
 	<section class="mt-16">
 		<div class="space-y-6">
-			<h2 class="title mb-4 text-xl">Projects</h2>
+			<h2 class="title mb-4 text-xl">projects</h2>
 
 			<dl class="space-y-4">
 				{
@@ -130,46 +128,45 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 					))
 				}
 			</dl>
-			<h2 class="title mb-4 text-xl">Abstract</h2>
+			<h2 class="title mb-4 text-xl">abstract</h2>
 
+			<!-- <p>
+				i studied french literature and philosophy. wanted to get involved inpolitics initially but rapidly needed money so I took my first corporate job at a SaaS company.
+			</p> -->
 			<p>
-				I studied french literature and used to love philosophy. Wanted to do politics initially but rapidly needed money so I took my first corporate job at a SaaS company.
+				SaaS (software-as-a-service) is a scrappy, ever-expanding market which is also an expected <a class="cactus-link" href="https://www.statista.com/statistics/505243/worldwide-software-as-a-service-revenue/" target="_blank" rel="noopener noreferrer">$230 billions-sized industry</a> by the end of 2024.
 			</p>
+			<!-- <p>
+				involved into SaaS companies since 2016. I started as a sales, then I fell into marketing. Switched to product management. Now actively learning code.
+			</p> -->
 			<p>
-				SaaS (Software-as-a-service) is a scrappy, ever-expanding market which is also an expected <a class="cactus-link" href="https://www.statista.com/statistics/505243/worldwide-software-as-a-service-revenue/" target="_blank" rel="noopener noreferrer">$230 billions-sized industry</a> by the end of 2024.
-			</p>
-			<p>
-				Involved into SaaS companies since 2016. I started as a sales, then I fell into marketing. Switched to product management. Now actively learning code.
-			</p>
-			<p>
-				Currently working as a Growth Product Manager & GTM @feedcast.io, an e-commerce multichannel advertising platform + doing occasional consulting missions in various fields including but not limited to:
+				currently working as a growth/product engineer @feedcast.ai, an e-commerce multichannel advertising platform + doing occasional consulting missions in various fields including but not limited to:
 			</p>
 			<ul>
-				<li>- Go-to-market Strategies</li>
-				<li>- Growth / Marketing Automation</li>
-				<li>- CRM Management / Custom Setups</li>
-				<li>- Internal Teams Alignement</li>
-				<li>- Business Automation Workflows</li>
-				<li>- Product Management, UI/UX Design</li>
-				<li>- GenAI Consulting & Engineering</li>
+				<li>- go-to-market strategy</li>
+				<li>- growth/marketing automation</li>
+				<li>- crm administration</li>
+				<li>- internal teams alignement</li>
+				<li>- product management, ui/ux design</li>
+				<li>- genai consulting & engineering</li>
+				<li>- fullstack development + cloud infrastructure</li>
 			</ul>
 			<p>
-				During 2020's lockdown, I started playing with GPT-3 models. In November 2022, ChatGPT made GenAI a mainstream thing. Starting 2023, I slowly became obsessed with migrating my day-to-day automation workflows (<a class="cactus-link" href="http://zapier.com" target="_blank" rel="noopener noreferrer">zapier.com</a>, <a class="cactus-link" href="http://make.com" target="_blank" rel="noopener noreferrer">make.com</a>, <a class="cactus-link" href="http://n8n.com" target="_blank" rel="noopener noreferrer">n8n.com</a>) to GenAI agents.
+				during 2020's lockdown, i started playing with GPT-3 models. in late-2022, ChatGPT made generative AI a mainstream thing. early-2023, i became obsessed with migrating my day-to-day automation workflows (<a class="cactus-link" href="http://zapier.com" target="_blank" rel="noopener noreferrer">zapier.com</a>, <a class="cactus-link" href="http://make.com" target="_blank" rel="noopener noreferrer">make.com</a>, <a class="cactus-link" href="http://n8n.com" target="_blank" rel="noopener noreferrer">n8n.com</a>) to GenAI agents.
 			</p>
 			<p>
-				Since then… <a class="cactus-link" href="https://www.theverge.com/2023/11/6/23948386/chatgpt-active-user-count-openai-developer-conference" target="_blank" rel="noopener noreferrer">ChatGPT peaked at 100M users in just 2 months.</a> Never-ending projects releases every day. Big-whales chasing AGI. Open-source LLMs developers offered free AI to the world. Software was supposed to eat the world but it turns out <a href="https://www.forbes.com/sites/cognitiveworld/2019/08/29/software-ate-the-world-now-ai-is-eating-software/" target="_blank" rel="noopener noreferrer">AI is slowly eating software</a>.
+				since then… <a class="cactus-link" href="https://www.theverge.com/2023/11/6/23948386/chatgpt-active-user-count-openai-developer-conference" target="_blank" rel="noopener noreferrer">ChatGPT peaked at 100M users in just 2 months.</a> AI projects releases every day. humanity is chasing AGI. open-source LLMs developers offered free AI to the world. software didn't ate the world but it turns out
 			</p>
 			<p>
-				Today I'm truly convinced that we're living a major shift which is probably at least as big as the internet creation. So like every tech-aficionados I started…
+				i'm truly convinced that we're living a major shift which is probably bigger than the internet creation.
 			</p>
-			<h2 class="title mb-4 text-xl">Documenting my journey:</h2>
+			<h2 class="title mb-4 text-xl">documenting my journey:</h2>
 			<ul>
-				<li>- Here at kvncyf.me</li>
-				<li>- Occasionally on <a class="cactus-link" href="https://twitter.com/kvncyf_" target="_blank" rel="noopener noreferrer">X/Twitter</a></li>
-				<li>- (soon) on a Youtube channel</li>
+				<li>- here at kvncyf.me</li>
+				<li>- occasionally on <a class="cactus-link" href="https://twitter.com/kvncyf_" target="_blank" rel="noopener noreferrer">X/Twitter</a></li>
 			</ul>
 			<p class="mt-4">
-				For work inquiries, feel free to email me at <a href="mailto:kevin@connivence.io"><u>kevin@connivence.io</u></a>.
+				for work inquiries, feel free to email me at <a href="mailto:kevin@connivence.io"><u>kevin@connivence.io</u></a>.
 			</p>
 			<div class="border border-gray-100 dark:border-stone-900 shadow-sm p-0 rounded-xl overflow-hidden">
 				<img src="/young-man-under-the-moon.png" alt="Midjourney – 'young man standing beneath the moon --sref 3136260955 --stylize 300'" />

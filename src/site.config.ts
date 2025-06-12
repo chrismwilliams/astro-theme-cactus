@@ -14,7 +14,7 @@ export const siteConfig: SiteConfig = {
 		},
 	},
 	// Meta property used as the default description meta property
-	description: "Hey I'm Kevin. Welcome to my blog.",
+	description: "hey i'm kevin ✌️ growth/product engineer focused on b2b software. i talk about ethical tech, osint, agentic AI systems. doing occasional consulting. based in paris, remote only.",
 	// HTML lang property, found in src/layouts/Base.astro L:18
 	lang: "en-US",
 	// Meta property, found in src/components/BaseHead.astro L:42
@@ -30,12 +30,8 @@ export const siteConfig: SiteConfig = {
 // Used to generate links in both the Header & Footer.
 export const menuLinks: { path: string, title: string; }[] = [
 	{
-		path: "/",
-		title: "Hey",
-	},
-	{
 		path: "/posts/",
-		title: "Blog",
+		title: "blog",
 	},
 ];
 
