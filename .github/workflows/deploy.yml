@@ -33,7 +33,6 @@ jobs:
     needs: confirm-deployment-necessary
     if: needs.confirm-deployment-necessary.outputs.deploy == 'true'
     runs-on: ubuntu-latest
-    environment: PROD
 
     steps:
       - name: "Check out repository"
