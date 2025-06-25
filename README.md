@@ -118,7 +118,7 @@ Adding a post/note/tag is as simple as adding your .md(x) files to either `src/c
 
 The Tag collection allows you to override the content for generated tag pages. For example the template includes `src/content/tag/test.md` which overrides the content shown in `your-domain.com/tags/test`.
 
-> **Note**  
+> **Note**
 > For a tag page to work, the file name (`src/content/tag/*`) must also be in a post's [tags frontmatter.](#post-frontmatter)
 
 The posts/notes/tags included with this template are there as an example of how to structure your frontmatter. Additionally, the [Astro docs](https://docs.astro.build/en/guides/markdown-content/) has a detailed section on markdown pages.
@@ -179,7 +179,7 @@ You may be asked to included a snippet inside the **HEAD** tag of your website w
 
 [Astro docs](https://docs.astro.build/en/guides/deploy/) has a great section and breakdown of how to deploy your own Astro site on various platforms and their idiosyncrasies.
 
-By default the site will be built (see [Commands](#commands) section above) to a `/dist` directory.
+By default, the site will be built (see [Commands](#commands) section above) to a `/dist` directory.
 
 ## Acknowledgment
 
