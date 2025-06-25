@@ -68,7 +68,7 @@ jobs:
       - name: "Build artefact"
         run: pnpm build
 
-      - name: "Prepare secrets for ssh connection and execute deployment"
+      - name: "Prepare for ssh connection and execute deployment"
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           SSH_PASS: ${{ secrets.SSH_PASS }}
