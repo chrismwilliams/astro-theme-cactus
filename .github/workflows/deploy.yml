@@ -18,7 +18,7 @@ jobs:
         id: analyse
         run: |
           git fetch origin refs/heads/main
-          DIFF=$(git diff origin/main -- './*' ':(exclude)./.github/*')
+          DIFF=$(git diff origin/main -- './*' ':(exclude)./README.md' ':(exclude)./.github/*')
           if [[ -n "$DIFF" ]]; then
             echo "Changes outside of .github detected, deployment will proceed."
             echo "deploy=true" >> $GITHUB_OUTPUT
