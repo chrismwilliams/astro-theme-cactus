@@ -31,7 +31,7 @@ jobs:
 
   deploy:
     needs: confirm-deployment-necessary
-    if: needs.confirm-deployment-necessary.outputs.deploy == 'true'
+    if: needs.confirm-deployment-necessary.outputs.deploy == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
