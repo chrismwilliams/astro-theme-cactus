@@ -34,7 +34,7 @@ Astro Cactus is a simple opinionated starter built with [Astro](https://astro.bu
 - Responsive & SEO-friendly
 - Dark & Light mode
 - MD & [MDX](https://docs.astro.build/en/guides/markdown-content/#mdx-only-features) posts & notes
-  - Includes [Admonitions](https://astro-cactus.chriswilliams.dev/posts/markdown-elements/admonistions/)
+  - Includes [Admonitions](https://astro-cactus.chriswilliams.dev/posts/markdown-elements/admonitions/)
 - [Satori](https://github.com/vercel/satori) for creating open graph png images
 - [Automatic RSS feeds](https://docs.astro.build/en/guides/rss)
 - [Webmentions](https://webmention.io/)
