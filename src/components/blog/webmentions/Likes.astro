@@ -18,7 +18,7 @@ const likesToShow = likes
 {
 	!!likes.length && (
 		<div>
-			<p class="mb-0 text-accent-2">
+			<p class="text-accent-2 mb-0">
 				<strong>{likes.length}</strong>
 				{likes.length > 1 ? " People" : " Person"} liked this
 			</p>
@@ -27,7 +27,7 @@ const likesToShow = likes
 					{likesToShow.map((like) => (
 						<li class="p-like h-cite -ms-2">
 							<a
-								class="u-url not-prose relative inline-block overflow-hidden rounded-full outline-none ring-2 ring-textColor hover:z-10 hover:ring-4 hover:ring-link focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-link"
+								class="u-url not-prose ring-global-text hover:ring-link focus-visible:ring-link relative inline-block overflow-hidden rounded-full ring-2 hover:z-10 hover:ring-4 focus-visible:z-10 focus-visible:ring-4"
 								href={like.author?.url}
 								rel="noreferrer"
 								target="_blank"

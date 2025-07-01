@@ -12,17 +12,16 @@ const {
 
 <li class={`${depth > 2 ? "ms-2" : ""}`}>
 	<a
-		aria-label={`Scroll to section: ${text}`}
-		class={`block line-clamp-2 hover:text-accent ${depth <= 2 ? "mt-3" : "mt-2 text-[0.6875rem]"}`}
-		href={`#${slug}`}><span class="me-0.5">#</span>{text}</a
+		class={`line-clamp-2 hover:text-accent ${depth <= 2 ? "mt-3" : "mt-2 text-xs"}`}
+		href={`#${slug}`}><span aria-hidden="true" class="me-0.5">#</span>{text}</a
 	>
 	{
 		!!children.length && (
-			<ul>
+			<ol>
 				{children.map((subheading) => (
 					<Astro.self heading={subheading} />
 				))}
-			</ul>
+			</ol>
 		)
 	}
 </li>

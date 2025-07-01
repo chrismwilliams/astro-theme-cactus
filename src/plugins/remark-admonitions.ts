@@ -88,11 +88,15 @@ export const remarkAdmonitions: Plugin<[], Root> = () => (tree) => {
 		}
 
 		// Do not change prefix to AD, ADM, or similar, adblocks will block the content inside.
-		const aside = h("aside", { "aria-label": title, class: `aside aside-${admonitionType}` }, [
-			h("p", { class: "aside-title", "aria-hidden": "true" }, [...titleNode]),
-			h("div", { class: "aside-content" }, node.children),
-		]);
+		const admonition = h(
+			"aside",
+			{ "aria-label": title, class: "admonition", "data-admonition-type": admonitionType },
+			[
+				h("p", { class: "admonition-title", "aria-hidden": "true" }, [...titleNode]),
+				h("div", { class: "admonition-content" }, node.children),
+			],
+		);
 
-		parent.children[index] = aside;
+		parent.children[index] = admonition;
 	});
 };
