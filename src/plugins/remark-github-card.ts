@@ -21,8 +21,8 @@ export const remarkGithubCard: Plugin<[], Root> = () => (tree) => {
 			: repoName; // Remove leading URL
 
 		const repoParts = repoName.split("/");
-		const SimpleUUID = `GC${Math.random().toString(36).slice(-6)}`; // Collisions are not important
-		const realUrl = "https://github.com/" + repoName;
+		const SimpleUUID = `GC-${crypto.randomUUID()}`;
+		const realUrl = `https://github.com/${repoName}`;
 
 		// If its a repo link
 		if (repoParts.length > 1) {
