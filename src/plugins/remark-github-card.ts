@@ -42,8 +42,8 @@ export const remarkGithubCard: Plugin<[], Root> = () => (tree) => {
 							t.querySelector('.gh-description').style.display = 'none';
 						}
 						if (data.language) t.querySelector('.gh-language').innerText = data.language;
-        		t.querySelector('.gh-forks').innerText = Intl.NumberFormat('en-us', { notation: "compact", maximumFractionDigits: 1 }).format(data.forks).replaceAll("\u202f", '');
-        		t.querySelector('.gh-stars').innerText = Intl.NumberFormat('en-us', { notation: "compact", maximumFractionDigits: 1 }).format(data.stargazers_count).replaceAll("\u202f", '');
+        		t.querySelector('.gh-forks').innerText = Intl.NumberFormat(undefined, { notation: "compact", maximumFractionDigits: 1 }).format(data.forks).replaceAll("\u202f", '');
+        		t.querySelector('.gh-stars').innerText = Intl.NumberFormat(undefined, { notation: "compact", maximumFractionDigits: 1 }).format(data.stargazers_count).replaceAll("\u202f", '');
 						const avatarEl = t.querySelector('.gh-avatar');
         		avatarEl.style.backgroundImage = 'url(' + data.owner.avatar_url + ')';
         		avatarEl.style.backgroundColor = 'transparent';
@@ -115,8 +115,8 @@ export const remarkGithubCard: Plugin<[], Root> = () => (tree) => {
 						const avatarEl = t.querySelector('.gh-avatar');
         		avatarEl.style.backgroundImage = 'url(' + data.avatar_url + ')';
         		avatarEl.style.backgroundColor = 'transparent';
-						t.querySelector('.gh-followers').innerText = Intl.NumberFormat('en-us', { notation: "compact", maximumFractionDigits: 1 }).format(data.followers).replaceAll("\u202f", '');
-						t.querySelector('.gh-repositories').innerText = Intl.NumberFormat('en-us', { notation: "compact", maximumFractionDigits: 1 }).format(data.public_repos).replaceAll("\u202f", '');
+						t.querySelector('.gh-followers').innerText = Intl.NumberFormat(undefined, { notation: "compact", maximumFractionDigits: 1 }).format(data.followers).replaceAll("\u202f", '');
+						t.querySelector('.gh-repositories').innerText = Intl.NumberFormat(undefined, { notation: "compact", maximumFractionDigits: 1 }).format(data.public_repos).replaceAll("\u202f", '');
 						if (data.location) t.querySelector('.gh-region').innerText = data.location;
 
 					})
