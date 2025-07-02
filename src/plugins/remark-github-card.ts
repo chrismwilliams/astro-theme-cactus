@@ -70,7 +70,6 @@ export const remarkGithubCard: Plugin<[], Root> = () => (tree) => {
 					h("span", { class: "gh-repo" }, [{ type: "text", value: repoParts[1] }]),
 				]),
 				h("span", { class: "gh-icon" }),
-				script,
 			]);
 
 			const hChips = h("div", { class: "gh-chips" }, [
