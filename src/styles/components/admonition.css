@@ -1,6 +1,6 @@
 .admonition {
 	--admonition-color: var(--tw-prose-quotes);
-	@apply my-4 border-s-2 border-(--admonition-color) py-4 ps-4;
+	@apply border-s-2 border-(--admonition-color) py-4 ps-4;
 
 	.admonition-title {
 		@apply my-0! flex items-center gap-2 text-base font-bold text-(--admonition-color) capitalize;

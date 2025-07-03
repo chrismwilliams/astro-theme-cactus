@@ -73,6 +73,10 @@ export default {
 						'th[align="left"], td[align="left"]': {
 							"text-align": "left",
 						},
+						".expressive-code, .admonition, .github-card": {
+							marginTop: "calc(var(--spacing)*4)",
+							marginBottom: "calc(var(--spacing)*4)",
+						},
 					},
 				},
 				sm: {
