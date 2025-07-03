@@ -46,7 +46,6 @@ export const remarkGithubCard: Plugin<[], Root> = () => (tree) => {
         		t.querySelector('.gh-stars').innerText = Intl.NumberFormat(undefined, { notation: "compact", maximumFractionDigits: 1 }).format(data.stargazers_count).replaceAll("\u202f", '');
 						const avatarEl = t.querySelector('.gh-avatar');
         		avatarEl.style.backgroundImage = 'url(' + data.owner.avatar_url + ')';
-        		avatarEl.style.backgroundColor = 'transparent';
 
 						if (data.license?.spdx_id) {
 							t.querySelector('.gh-license').innerText = data.license?.spdx_id
@@ -64,10 +63,8 @@ export const remarkGithubCard: Plugin<[], Root> = () => (tree) => {
 
 			const hTitle = h("div", { class: "gh-title title" }, [
 				h("span", { class: "gh-avatar" }),
-				h("span", { class: "gh-text" }, [
-					h("span", { class: "gh-user" }, [{ type: "text", value: repoParts[0] }]),
-					h("span", { class: "gh-divider" }, [{ type: "text", value: "/" }]),
-					h("span", { class: "gh-repo" }, [{ type: "text", value: repoParts[1] }]),
+				h("a", { class: "gh-text not-prose cactus-link", href: realUrl }, [
+					{ type: "text", value: `${repoParts[0]}/${repoParts[1]}` },
 				]),
 				h("span", { class: "gh-icon" }),
 			]);
@@ -82,15 +79,14 @@ export const remarkGithubCard: Plugin<[], Root> = () => (tree) => {
 			const hDescription = h("div", { class: "gh-description" }, [
 				{
 					type: "text",
-					value:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+					value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 				},
 			]);
 
 			parent.children.splice(
 				index,
 				1,
-				h("a", { id: SimpleUUID, class: "github-card gh-loading no-underline", href: realUrl }, [
+				h("div", { id: SimpleUUID, class: "github-card gh-loading" }, [
 					hTitle,
 					hDescription,
 					hChips,
@@ -113,7 +109,6 @@ export const remarkGithubCard: Plugin<[], Root> = () => (tree) => {
 
 						const avatarEl = t.querySelector('.gh-avatar');
         		avatarEl.style.backgroundImage = 'url(' + data.avatar_url + ')';
-        		avatarEl.style.backgroundColor = 'transparent';
 						t.querySelector('.gh-followers').innerText = Intl.NumberFormat(undefined, { notation: "compact", maximumFractionDigits: 1 }).format(data.followers).replaceAll("\u202f", '');
 						t.querySelector('.gh-repositories').innerText = Intl.NumberFormat(undefined, { notation: "compact", maximumFractionDigits: 1 }).format(data.public_repos).replaceAll("\u202f", '');
 						if (data.location) t.querySelector('.gh-region').innerText = data.location;
@@ -130,23 +125,21 @@ export const remarkGithubCard: Plugin<[], Root> = () => (tree) => {
 			parent.children.splice(
 				index,
 				1,
-				h(
-					"a",
-					{ id: SimpleUUID, class: "github-card gh-simple gh-loading no-underline", href: realUrl },
-					[
-						h("div", { class: "gh-title title" }, [
-							h("span", { class: "gh-avatar" }),
-							h("span", { class: "gh-text" }, [{ type: "text", value: repoParts[0] }]),
-							h("span", { class: "gh-icon" }),
+				h("div", { id: SimpleUUID, class: "github-card gh-simple gh-loading" }, [
+					h("div", { class: "gh-title title" }, [
+						h("span", { class: "gh-avatar" }),
+						h("a", { class: "gh-text not-prose cactus-link", href: realUrl }, [
+							{ type: "text", value: repoParts[0] },
 						]),
-						h("div", { class: "gh-chips" }, [
-							h("span", { class: "gh-followers" }, [{ type: "text", value: "00K" }]),
-							h("span", { class: "gh-repositories" }, [{ type: "text", value: "00K" }]),
-							h("span", { class: "gh-region" }, [{ type: "text", value: "" }]),
-						]),
-						script,
-					],
-				),
+						h("span", { class: "gh-icon" }),
+					]),
+					h("div", { class: "gh-chips" }, [
+						h("span", { class: "gh-followers" }, [{ type: "text", value: "00K" }]),
+						h("span", { class: "gh-repositories" }, [{ type: "text", value: "00K" }]),
+						h("span", { class: "gh-region" }, [{ type: "text", value: "" }]),
+					]),
+					script,
+				]),
 			);
 		}
 	});
