@@ -16,7 +16,10 @@ You can also link a Github user:
 
 To use this feature you just use the "Github" directive:
 
-```markdown
+```markdown title="Linking a repo"
 ::github{repo="chrismwilliams/astro-theme-cactus"}
+```
 
+```markdown title="Linking a user"
 ::github{user="withastro"}
+```
