@@ -1,12 +1,12 @@
-import type { AdmonitionType } from "@/types";
-import { type Properties, h as _h } from "hastscript";
-import type { Node, Paragraph as P, Parent, PhrasingContent, Root } from "mdast";
-import type { Directives, LeafDirective, TextDirective } from "mdast-util-directive";
+import type { Parent, PhrasingContent, Root } from "mdast";
+import type { LeafDirective, TextDirective } from "mdast-util-directive";
 import { directiveToMarkdown } from "mdast-util-directive";
 import { toMarkdown } from "mdast-util-to-markdown";
 import { toString as mdastToString } from "mdast-util-to-string";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
+import type { AdmonitionType } from "@/types";
+import { h, isNodeDirective } from "../utils/remark";
 
 // Supported admonition types
 const Admonitions = new Set<AdmonitionType>(["tip", "note", "important", "caution", "warning"]);
@@ -14,15 +14,6 @@ const Admonitions = new Set<AdmonitionType>(["tip", "note", "important", "cautio
 /** Checks if a string is a supported admonition type. */
 function isAdmonition(s: string): s is AdmonitionType {
 	return Admonitions.has(s as AdmonitionType);
-}
-
-/** Checks if a node is a directive. */
-function isNodeDirective(node: Node): node is Directives {
-	return (
-		node.type === "containerDirective" ||
-		node.type === "leafDirective" ||
-		node.type === "textDirective"
-	);
 }
 
 /**
@@ -46,17 +37,6 @@ function transformUnhandledDirective(
 			type: "paragraph",
 		};
 	}
-}
-
-/** From Astro Starlight: Function that generates an mdast HTML tree ready for conversion to HTML by rehype. */
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function h(el: string, attrs: Properties = {}, children: any[] = []): P {
-	const { properties, tagName } = _h(el, attrs);
-	return {
-		children,
-		data: { hName: tagName, hProperties: properties },
-		type: "paragraph",
-	};
 }
 
 export const remarkAdmonitions: Plugin<[], Root> = () => (tree) => {
