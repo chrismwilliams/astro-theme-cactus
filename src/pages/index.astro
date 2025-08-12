@@ -1,69 +1,101 @@
 ---
 import SocialList from "@/components/SocialList.astro";
-import PostPreview from "@/components/blog/PostPreview.astro";
+// import PostPreview from "@/components/blog/PostPreview.astro";
 import PageLayout from "@/layouts/Base.astro";
-import { getAllPosts, sortMDByDate } from "@/data/post";
+// import { getAllPosts, sortMDByDate } from "@/data/post";
+import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
+import RetroGrid from "@/components/magicui/retro-grid";
 
-const MAX_POSTS = 10;
-const allPosts = await getAllPosts();
-const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+// const MAX_POSTS = 10;
 
-const cactusTech: { desc: string; href: string; title: string }[] = [
+// const allPosts = await getAllPosts();
+// const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+
+
+const projectLinks: { desc: string; href: string; title: string }[] = [
 	{
-		desc: "Build fast websites, faster.",
-		href: "https://astro.build",
-		title: "Astro",
+        desc: "(2021-today) AI-powered advertising platform for e-commerce brands",
+        href: "https://feedcast.ai/",
+        title: "feedcast.ai",
+    },	
+	{
+        desc: "(2018-today) consulting + freelance collective",
+        href: "https://connivence.io/",
+        title: "connivence.io",
+    },
+	// {
+    //     desc: "(soon) a micro-startup studio",
+    //     href: "https://labs.connivence.io",
+    //     title: "labs.connivence.io",
+    // },
+	{
+        desc: "tldraw fork because it's the best canvas",
+        href: "https://draw.kvncyf.me",
+        title: "draw.kvncyf.me",
+    },
+    // {
+    //     desc: "(pre-launch) an automated GenAI & tech-related newsletter",
+    //     href: "https://yetAnotherAInewsletter.org",
+    //     title: "yetAnotherAInewsletter.org",
+    // },
+    {
+        desc: "(2020-discontinued) ceo – CMS, websites & funnels no-code builder",
+        href: "https://kaliko.solutions/",
+        title: "kaliko.solutions",
+    },
+	{
+		desc: "(2017-2018) 1st go-to-market @gerermaboite.fr [acquired by cegid]",
+		href: "https://www.ccistore.fr/produit/2669984/cegid-gerer-ma-boite",
+		title: "cegid.com",
 	},
 	{
-		desc: "Rapidly build modern websites without ever leaving your HTML.",
-		href: "https://tailwindcss.com",
-		title: "Tailwind CSS",
+		desc: "(2016-2017) sales @ wizishop.com",
+		href: "https://www.wizishop.com",
+		title: "wizishop.com",
 	},
 	{
-		desc: "Simple and easy-to-use markup language.",
-		href: "https://www.markdownguide.org/",
-		title: "Markdown",
-	},
-	{
-		desc: "Markdown for the component era.",
-		href: "https://mdxjs.com/",
-		title: "MDX",
-	},
-	{
-		desc: "Generating png Open Graph images for blog posts.",
-		href: "https://github.com/vercel/satori",
-		title: "Satori",
-	},
-	{
-		desc: "A fully static search library.",
-		href: "https://pagefind.app/",
-		title: "Pagefind",
-	},
-	{
-		desc: "An easy to use Icon component for Astro.",
-		href: "https://github.com/natemoo-re/astro-icon#readme",
-		title: "Astro Icon",
-	},
-	{
-		desc: "Highly customisable source code & syntax highlighter",
-		href: "https://expressive-code.com/",
-		title: "Expressive Code",
-	},
+		desc:"(2015-2016) sales @ isendpro.com",
+		href: "https://isendpro.com",
+		title: "isendpro.com",
+	}
 ];
 ---
 
-<PageLayout meta={{ title: "Home" }}>
+<PageLayout meta={{ title: "home" }}>
+
 	<section>
-		<h1 class="title mb-6">Hello World!</h1>
-		<p class="mb-4">
-			Hi, I’m a theme for Astro, an example of how you can use this starter to create a personal
-			blog. If you want to know more about how you can customise me, add more posts, and make it
-			your own, click on the github icon link below and it will take you to my repo.
-		</p>
-		<SocialList />
+		<div class="relative flex h-full w-full max-w-[100%] items-center justify-center overflow-hidden rounded-xl border border-gray-100 dark:border-stone-900 bg-background gap-4 pt-8">
+			<div class="flex flex-col w-full max-w-[100%]">
+				<h1 class="pointer-events-none z-10 whitespace-pre-wrap bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-left text-3xl font-bold leading-none tracking-tighter text-transparent pb-2 md:text-5xl hidden">
+					welcome
+				</h1>
+				<div class="overflow-hidden max-w-full">
+					<VelocityScroll
+						client:load
+						text="is this agi?"
+						default_velocity={5}
+						className="font-display text-center text-2xl font-bold tracking-[-0.02em] drop-shadow-sm bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent md:text-4xl md:leading-[3rem]"
+					/>
+				</div>
+				
+				<div class="p-5">
+					<p class="mb-4 max-w-full">
+						hey i'm kevin ✌️ a growth/product engineer focused on b2b software. i talk about ethical tech, osint, agentic AI systems, future of work, and whatever my curiosity leads me to. everything is political. available for consulting. based in paris, remote only. 
+					</p>
+					<div class="max-w-full">
+						<SocialList />
+					</div>
+				</div>
+			</div>
+			<RetroGrid client:load/>
+		</div>
 	</section>
-	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="title mb-4 text-xl">Posts</h2>
+
+	<!-- <section aria-label="Blog post list" class="mt-16">
+		<h2 class="title mb-4 text-xl">posts</h2>
+		<p>
+			(wip) life update for re-balancing purposes
+		</p>
 		<ul class="space-y-4">
 			{
 				allPostsByDate.map((p) => (
@@ -73,25 +105,69 @@ const cactusTech: { desc: string; href: string; title: string }[] = [
 				))
 			}
 		</ul>
-	</section>
+	</section> -->
+
 	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">Technologies</h2>
-		<dl class="space-y-4">
-			{
-				cactusTech.map(({ desc, href, title }) => (
-					<div class="flex flex-col gap-2 md:flex-row">
-						<dt>
-							<span class="flex">
-								<a class="cactus-link" href={href} rel="noopener noreferrer" target="_blank">
-									{title}
-								</a>
-								:
-							</span>
-						</dt>
-						<dd>{desc}</dd>
-					</div>
-				))
-			}
-		</dl>
+		<div class="space-y-6">
+			<h2 class="title mb-4 text-xl"><span class="bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent">#</span> projects</h2>
+
+			<dl class="space-y-4">
+				{
+					projectLinks.map(({ desc, href, title }) => (
+						<div class="flex flex-col gap-2 md:flex-row">
+							<dt>
+								<span class="flex">
+									<a class="cactus-link" href={href} rel="noopener noreferrer" target="_blank">
+										{title}
+									</a>
+									:
+								</span>
+							</dt>
+							<dd>{desc}</dd>
+						</div>
+					))
+				}
+			</dl>
+			<h2 class="title mb-4 text-xl"><span class="bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent">#</span> abstract</h2>
+
+			<!-- <p>
+				i studied french literature and philosophy. wanted to get involved inpolitics initially but rapidly needed money so I took my first corporate job at a SaaS company.
+			</p> -->
+			<p>
+				SaaS (software-as-a-service) is a scrappy, ever-expanding market which is also an expected <a class="cactus-link" href="https://www.statista.com/statistics/505243/worldwide-software-as-a-service-revenue/" target="_blank" rel="noopener noreferrer">$230 billions-sized industry</a> by the end of 2024.
+			</p>
+			<p>
+				<strong>EDIT:</strong> as Sam Altman recently said, we've just entered the <strong>fast-fashion era of SaaS</strong>. tbh not sure if we're still in the game. but let's see.
+			</p>
+			<p>
+				i'm currently leading growth & product @feedcast.ai, an e-commerce multichannel advertising platform + doing occasional consulting missions in various fields including but not limited to:
+			</p>
+			<ul>
+				<li>- go-to-market strategy</li>
+				<li>- growth/marketing automation</li>
+				<li>- crm administration</li>
+				<li>- internal teams alignement</li>
+				<li>- product management, ui/ux design</li>
+				<li>- genai consulting & engineering</li>
+				<li>- fullstack development + cloud infrastructure</li>
+			</ul>
+			<p>
+				during 2020's lockdown, i started playing with GPT-3 models. in late-2022, ChatGPT made generative AI a mainstream thing. early-2023, i became obsessed with migrating my day-to-day automation workflows (<a class="cactus-link" href="http://zapier.com" target="_blank" rel="noopener noreferrer">zapier.com</a>, <a class="cactus-link" href="http://make.com" target="_blank" rel="noopener noreferrer">make.com</a>, <a class="cactus-link" href="http://n8n.com" target="_blank" rel="noopener noreferrer">n8n.com</a>) to GenAI agents.
+			</p>
+			<p>
+				since then… <a class="cactus-link" href="https://www.theverge.com/2023/11/6/23948386/chatgpt-active-user-count-openai-developer-conference" target="_blank" rel="noopener noreferrer">ChatGPT peaked at 100M users in just 2 months.</a> AI projects releases every day. humanity is chasing AGI. open-source LLMs developers offered free AI to the world. software didn't ate the world but it turns out
+			</p>
+			<p>
+				i'm truly convinced that we're living a major shift which is probably bigger than the internet creation.
+			</p>
+			<h2 class="title mb-4 text-xl"><span class="bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent">#</span> work with me</h2>
+			<ul>
+				<li>- send an email to <a href="mailto:kevin@connivence.io"><u>kevin@connivence.io</u></a></li>
+				<li>- or connect with me on <a class="cactus-link" href="https://twitter.com/kvncyf_" target="_blank" rel="noopener noreferrer">X/Twitter</a></li>
+			</ul>
+			<div class="border border-gray-100 dark:border-stone-900 shadow-sm p-0 rounded-xl overflow-hidden">
+				<img src="/young-man-under-the-moon.png" alt="Midjourney – 'young man standing beneath the moon --sref 3136260955 --stylize 300'" />
+			</div>
+		</div>
 	</section>
 </PageLayout>

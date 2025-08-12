@@ -8,7 +8,7 @@ import "@pagefind/default-ui/css/ui.css";
 	<button
 		class="flex h-9 w-9 items-center justify-center rounded-md ring-zinc-400 transition-all hover:ring-2"
 		data-open-modal
-		disabled
+		disabled={import.meta.env.DEV}
 	>
 		<svg
 			aria-label="search"

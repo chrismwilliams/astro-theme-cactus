@@ -17,7 +17,7 @@ const {
 } = Astro.props;
 ---
 
-<html lang={siteConfig.lang}>
+<html class="scroll-smooth" lang={siteConfig.lang}>
 	<head>
 		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
 	</head>
@@ -28,6 +28,17 @@ const {
 		<main id="main">
 			<slot />
 		</main>
-		<Footer />
-	</body>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <Footer />
+    <script is:inline type="speculationrules">
+      {
+        "prefetch": [
+          { "where": { "href_matches": "/*" }, "eagerness": "immediate" }
+        ],
+        "prerender": [
+          { "where": { "href_matches": "/*" }, "eagerness": "moderate" }
+        ]
+      }
+    </script>
+  </body>
 </html>

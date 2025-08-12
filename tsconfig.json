@@ -1,18 +1,46 @@
 {
-	"extends": "astro/tsconfigs/strictest",
-	"compilerOptions": {
-		"baseUrl": ".",
-		"lib": ["es2022", "dom", "dom.iterable"],
-		"paths": {
-			"@/assets/*": ["src/assets/*"],
-			"@/components/*": ["src/components/*"],
-			"@/data/*": ["src/data/*"],
-			"@/layouts/*": ["src/layouts/*"],
-			"@/utils": ["src/utils/index.ts"],
-			"@/types": ["src/types.ts"],
-			"@/site-config": ["src/site.config.ts"]
-		}
-	},
-	"include": ["./.eslintrc.cjs", "**/*"],
-	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
+  "extends": "astro/tsconfigs/strictest",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": [
+      "es2022",
+      "dom",
+      "dom.iterable"
+    ],
+    "paths": {
+      "@/assets/*": [
+        "src/assets/*"
+      ],
+      "@/components/*": [
+        "src/components/*"
+      ],
+      "@/data/*": [
+        "src/data/*"
+      ],
+      "@/layouts/*": [
+        "src/layouts/*"
+      ],
+      "@/utils": [
+        "src/utils/index.ts"
+      ],
+      "@/types": [
+        "src/types.ts"
+      ],
+      "@/site-config": [
+        "src/site.config.ts"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  },
+  "include": [
+    "./.eslintrc.cjs",
+    "**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    ".vscode",
+    "dist"
+  ]
 }

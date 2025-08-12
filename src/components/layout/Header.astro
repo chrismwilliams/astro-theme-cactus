@@ -1,51 +1,57 @@
 ---
-import { menuLinks } from "@/site-config";
 
-import Search from "../Search.astro";
-import ThemeToggle from "../ThemeToggle.astro";
+import { menuLinks } from "@/site-config";
+import Image from "astro/components/Image.astro";
+import logo from "@/assets/logo.png";
 
 const url = new URL(Astro.request.url);
 ---
 
-<header class="group relative mb-28 flex items-center sm:ps-[4.5rem]" id="main-header">
-	<div class="flex sm:flex-col">
+<header class="group relative mb-20 flex items-center md:mb-15 sm:ps-[4.5rem] md:ps-[6rem] lg:ps-[7.5rem]" id="main-header">
+	<div class="flex w-full space-between sm:flex-col">
 		<a
 			aria-current={url.pathname === "/" ? "page" : false}
 			class="inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block"
 			href="/"
 		>
-			<svg
-				aria-hidden="true"
-				class="me-3 h-10 w-6 sm:absolute sm:start-[-4.5rem] sm:me-0 sm:h-20 sm:w-12"
-				fill="none"
-				focusable="false"
-				viewBox="0 0 272 480"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<title>Logo</title>
-				<path
-					d="M181.334 93.333v-40L226.667 80v40l-45.333-26.667ZM136.001 53.333 90.667 26.667v426.666L136.001 480V53.333Z"
-					fill="#B04304"></path>
-				<path
-					d="m136.001 119.944 45.333-26.667 45.333 26.667-45.333 26.667-45.333-26.667ZM90.667 26.667 136.001 0l45.333 26.667-45.333 26.666-45.334-26.666ZM181.334 53.277l45.333-26.666L272 53.277l-45.333 26.667-45.333-26.667ZM0 213.277l45.333-26.667 45.334 26.667-45.334 26.667L0 213.277ZM136 239.944l-45.333-26.667v53.333L136 239.944Z"
-					fill="#FF5D01"></path>
-				<path
-					d="m136 53.333 45.333-26.666v120L226.667 120V80L272 53.333V160l-90.667 53.333v240L136 480V306.667L45.334 360V240l45.333-26.667v53.334L136 240V53.333Z"
-					fill="#53C68C"></path>
-				<path d="M45.334 240 0 213.334v120L45.334 360V240Z" fill="#B04304"></path>
-			</svg>
-			<span class="text-xl font-bold sm:text-2xl">Astro Cactus</span>
+			<Image
+				src={logo}
+				alt="Logo"
+				class="me-3 h-9 w-9 block sm:absolute sm:start-[-5.5rem] md:start-[-6rem] lg:start-[-7rem] sm:me-0 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 border border-gray-300 rounded-[16px] sm:rounded-[8px]"
+				widths={[36, 64, 80, 96]}
+				sizes="(min-width: 1024px) 96px, (min-width: 768px) 80px, (min-width: 640px) 64px, 36px"
+			/>
+			<span class="text-xl font-bold sm:text-2xl bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent">kvncyf.me</span>
 		</a>
 		<nav
 			aria-label="Main menu"
-			class="absolute -inset-x-4 top-14 hidden flex-col items-end gap-y-4 rounded-md bg-bgColor/[.85] py-4 text-accent shadow backdrop-blur group-[.menu-open]:z-50 group-[.menu-open]:flex sm:static sm:z-auto sm:-ms-4 sm:mt-1 sm:flex sm:flex-row sm:items-center sm:divide-x sm:divide-dashed sm:divide-accent sm:rounded-none sm:bg-transparent sm:py-0 sm:shadow-none sm:backdrop-blur-none"
-			id="navigation-menu"
+			class="absolute -inset-x-4 top-14 hidden flex-col items-end gap-y-4 rounded-md bg-bgColor/[.85] py-4 text-accent shadow backdrop-blur transition-all duration-300 ease-out opacity-0 translate-y-1 pointer-events-none group-[.menu-open]:z-50 group-[.menu-open]:flex group-[.menu-open]:opacity-100 group-[.menu-open]:translate-y-0 group-[.menu-open]:pointer-events-auto sm:hidden"
+			id="navigation-menu-mobile"
 		>
 			{
 				menuLinks.map((link) => (
 					<a
 						aria-current={url.pathname === link.path ? "page" : false}
-						class="px-4 py-4 underline-offset-2 sm:py-0 sm:hover:underline"
+						class="px-4 py-4 underline-offset-2 hover:underline bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent"
+						data-astro-prefetch
+						href={link.path}
+					>
+						{link.title}
+					</a>
+				))
+			}
+		</nav>
+
+		<nav
+			aria-label="Main menu"
+			class="hidden sm:-ms-4 sm:mt-1 sm:flex sm:flex-row sm:items-center sm:divide-x sm:divide-dashed sm:divide-accent"
+			id="navigation-menu-desktop"
+		>
+			{
+				menuLinks.map((link) => (
+					<a
+						aria-current={url.pathname === link.path ? "page" : false}
+						class="px-4 py-0 underline-offset-2 sm:hover:underline bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent"
 						data-astro-prefetch
 						href={link.path}
 					>
@@ -55,8 +61,6 @@ const url = new URL(Astro.request.url);
 			}
 		</nav>
 	</div>
-	<Search />
-	<ThemeToggle />
 	<mobile-button>
 		<button
 			aria-expanded="false"
@@ -91,36 +95,36 @@ const url = new URL(Astro.request.url);
 				stroke-width="1.5"
 				viewBox="0 0 24 24"
 				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
-			</svg>
-		</button>
+				>
+					<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+				</svg>
+			</button>
 	</mobile-button>
 </header>
-
-<script>
-	import { toggleClass } from "@/utils";
-
-	class MobileNavBtn extends HTMLElement {
-		private headerEl: HTMLElement;
-		private menuOpen: boolean;
-		private mobileButtonEl: HTMLButtonElement;
-
-		toggleMobileMenu = () => {
-			toggleClass(this.headerEl, "menu-open");
-			this.menuOpen = !this.menuOpen;
-			this.mobileButtonEl.setAttribute("aria-expanded", this.menuOpen.toString());
-		};
-
-		constructor() {
-			super();
-			this.headerEl = document.getElementById("main-header")!;
-			this.mobileButtonEl = this.querySelector("button") as HTMLButtonElement;
-			this.menuOpen = false;
-
-			this.mobileButtonEl.addEventListener("click", this.toggleMobileMenu);
+	
+	<script>
+		import { toggleClass } from "@/utils";
+	
+		class MobileNavBtn extends HTMLElement {
+			private headerEl: HTMLElement;
+			private menuOpen: boolean;
+			private mobileButtonEl: HTMLButtonElement;
+	
+			toggleMobileMenu = () => {
+				toggleClass(this.headerEl, "menu-open");
+				this.menuOpen = !this.menuOpen;
+				this.mobileButtonEl.setAttribute("aria-expanded", this.menuOpen.toString());
+			};
+	
+			constructor() {
+				super();
+				this.headerEl = document.getElementById("main-header")!;
+				this.mobileButtonEl = this.querySelector("button") as HTMLButtonElement;
+				this.menuOpen = false;
+	
+				this.mobileButtonEl.addEventListener("click", this.toggleMobileMenu);
+			}
 		}
-	}
-
-	customElements.define("mobile-button", MobileNavBtn);
-</script>
+	
+		customElements.define("mobile-button", MobileNavBtn);
+	</script>

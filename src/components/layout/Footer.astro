@@ -1,5 +1,5 @@
 ---
-import { menuLinks, siteConfig } from "@/site-config";
+import { menuLinks } from "@/site-config";
 
 const year = new Date().getFullYear();
 ---
@@ -8,8 +8,8 @@ const year = new Date().getFullYear();
 	class="mt-auto flex w-full flex-col items-center justify-center gap-y-2 pb-4 pt-20 text-center align-top font-semibold text-gray-600 dark:text-gray-400 sm:flex-row sm:justify-between sm:text-xs"
 >
 	<div class="me-0 sm:me-4">
-		&copy; {siteConfig.author}
-		{year}.<span class="inline-block">&nbsp;🚀&nbsp;Astro Cactus</span>
+		&copy; {year}  <span class="inline-block">– kvncyf.me – forked from </span>
+		<a href="https://github.com/chrismwilliams/astro-theme-cactus">@christmwilliams</a>
 	</div>
 	<nav
 		aria-label="More on this site"
