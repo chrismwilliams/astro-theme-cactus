@@ -113,9 +113,11 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
       </Marquee>
     </div>
 
-    <style>
+    <style is:global>
       .clients-marquee:has(.marquee-item:hover) .marquee-item {
-        opacity: 0.4;
+        opacity: 0.35;
+        filter: saturate(0.6);
+        transition: opacity 200ms ease, filter 200ms ease;
       }
       .clients-marquee .marquee-item:hover {
         opacity: 1;
