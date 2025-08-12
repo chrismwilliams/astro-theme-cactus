@@ -1,7 +1,6 @@
 ---
-alwaysApply: false
+alwaysApply: true
 ---
-
 # Repository rules, development, and maintenance
 
 This project is a customized fork of `astro-theme-cactus`. It is a personal website hosted on Vercel at `kvncyf.me`. We periodically pull upstream improvements while keeping the site intact.

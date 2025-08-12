@@ -103,15 +103,15 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
   <section class="mt-12" aria-label="Clients">
     <div class="relative rounded-xl border border-gray-100 bg-background p-3 dark:border-stone-900">
       <Marquee
-        className="[--gap:2rem] opacity-80 hover:opacity-100 hover:[&_.marquee-item]:opacity-40"
+        className="[--gap:2rem] opacity-80 hover:opacity-100 [&_.marquee-item]:opacity-60 [&_.marquee-item]:transition-all [&_.marquee-item]:duration-300 hover:[&_.marquee-item]:opacity-100 hover:[&_.marquee-item]:saturate-200 hover:[&_.marquee-item]:contrast-150 hover:[&_.marquee-item]:drop-shadow-lg"
       >
-        <img src={feedcast} alt="feedcast" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150" />
-        <img src={cegid} alt="cegid" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150" />
-        <img src={wizishop} alt="wizishop" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150" />
-        <img src={orixa} alt="Orixa Media" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150" />
-        <!-- <img src={sofinco} alt="Sofinco" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150" /> -->
-        <img src={cciNice} alt="CCI Nice" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150" />
-        <img src={dixdata} alt="Dixdata" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150" />
+        <img src={feedcast} alt="feedcast" class="marquee-item h-8 w-auto" />
+        <img src={cegid} alt="cegid" class="marquee-item h-8 w-auto" />
+        <img src={wizishop} alt="wizishop" class="marquee-item h-8 w-auto" />
+        <img src={orixa} alt="Orixa Media" class="marquee-item h-8 w-auto" />
+        <!-- <img src={sofinco} alt="Sofinco" class="marquee-item h-8 w-auto" /> -->
+        <img src={cciNice} alt="CCI Nice" class="marquee-item h-8 w-auto" />
+        <img src={dixdata} alt="Dixdata" class="marquee-item h-8 w-auto" />
       </Marquee>
     </div>
   </section>
