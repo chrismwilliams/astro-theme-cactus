@@ -1,17 +1,17 @@
 "use client";
 
 import { cn } from "@/utils/cn";
-import React from "react";
+import type { ReactNode } from "react";
 
 export interface ProgressiveBlurProps {
   className?: string;
   height?: string;
   position?: "top" | "bottom" | "both";
   blurLevels?: number[];
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
-export function ProgressiveBlur({
+export default function ProgressiveBlur({
   className,
   height = "30%",
   position = "bottom",
@@ -111,4 +111,4 @@ export function ProgressiveBlur({
   );
 }
 
-export ProgressiveBlur;
+
