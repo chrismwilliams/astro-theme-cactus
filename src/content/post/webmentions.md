@@ -4,6 +4,7 @@ description: "This post describes the process of adding webmentions to your own 
 publishDate: "11 Oct 2023"
 tags: ["webmentions", "astro", "social"]
 updatedDate: 6 December 2024
+pinned: true
 ---
 
 ## TLDR
