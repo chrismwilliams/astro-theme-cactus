@@ -1,17 +1,14 @@
-import { react } from '@astrojs/react';
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import fs from "node:fs";
 import mdx from "@astrojs/mdx";
-import react from '@astrojs/react';
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
+import react from "@astrojs/react";
 import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
-import fs from "node:fs";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
+import rehypeSlug from "rehype-slug";
 import remarkUnwrapImages from "remark-unwrap-images";
 
 import { expressiveCodeOptions } from "./src/site.config";
@@ -19,40 +16,34 @@ import { remarkReadingTime } from "./src/utils/remark-reading-time";
 
 // https://astro.build/config
 export default defineConfig({
-  image: {
-    domains: ["kvncyf.me"]
-  },
-  integrations: 
-    [tailwind({
-      applyBaseStyles: false
-    }),
+  site: "https://kvncyf.me/",
+  image: { domains: ["kvncyf.me"] },
+  integrations: [
+    tailwind({ applyBaseStyles: false }),
     icon(),
-    react()],
-  // ! Please remember to replace the following site property with your own domain
+    expressiveCode(expressiveCodeOptions),
+    react(),
+    mdx(),
+    sitemap(),
+  ],
   markdown: {
-    rehypePlugins: [[rehypeExternalLinks, {
-      rel: ["nofollow, noopener, noreferrer"],
-      target: "_blank"
-    }]],
+    rehypePlugins: [
+      rehypeSlug,
+      [rehypeAutolinkHeadings, { behavior: "wrap", properties: { className: ["not-prose"] } }],
+      [rehypeExternalLinks, { rel: ["noreferrer", "noopener"], target: "_blank" }],
+    ],
     remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
     remarkRehype: {
-      footnoteLabelProperties: {
-        className: [""]
-      }
-    }
+      footnoteLabelProperties: { className: [""] },
+    },
   },
-  // https://docs.astro.build/en/guides/prefetch/
-  prefetch: true,
-  site: "https://kvncyf.me/",
   vite: {
     define: {
-      'import.meta.env.PUBLIC_APP_URL': JSON.stringify(process.env.PUBLIC_APP_URL)
+      "import.meta.env.PUBLIC_APP_URL": JSON.stringify(process.env.PUBLIC_APP_URL),
     },
-    optimizeDeps: {
-      exclude: ["@resvg/resvg-js"]
-    },
-    plugins: [rawFonts([".ttf", ".woff"])]
-  }
+    optimizeDeps: { exclude: ["@resvg/resvg-js"] },
+    plugins: [rawFonts([".ttf", ".woff"])],
+  },
 });
 function rawFonts(ext: string[]) {
   return {
