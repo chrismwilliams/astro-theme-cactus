@@ -102,14 +102,16 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 
   <section class="mt-12" aria-label="Clients">
     <div class="relative rounded-xl border border-gray-100 bg-background p-3 dark:border-stone-900">
-      <Marquee pauseOnHover className="[--gap:2rem] opacity-80 hover:opacity-100">
-        <img src={feedcast} alt="feedcast" class="h-8 w-auto" />
-        <img src={cegid} alt="cegid" class="h-8 w-auto" />
-        <img src={wizishop} alt="wizishop" class="h-8 w-auto" />
-        <img src={orixa} alt="Orixa Media" class="h-8 w-auto" />
-        <!-- <img src={sofinco} alt="Sofinco" class="h-8 w-auto" /> -->
-        <img src={cciNice} alt="CCI Nice" class="h-8 w-auto" />
-        <img src={dixdata} alt="Dixdata" class="h-8 w-auto" />
+      <Marquee
+        className="[--gap:2rem] opacity-80 hover:opacity-100 hover:[&_.marquee-item]:opacity-30 hover:[&_.marquee-item]:grayscale"
+      >
+        <img src={feedcast} alt="feedcast" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:grayscale-0 hover:drop-shadow-lg" />
+        <img src={cegid} alt="cegid" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:grayscale-0 hover:drop-shadow-lg" />
+        <img src={wizishop} alt="wizishop" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:grayscale-0 hover:drop-shadow-lg" />
+        <img src={orixa} alt="Orixa Media" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:grayscale-0 hover:drop-shadow-lg" />
+        <!-- <img src={sofinco} alt="Sofinco" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:grayscale-0 hover:drop-shadow-lg" /> -->
+        <img src={cciNice} alt="CCI Nice" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:grayscale-0 hover:drop-shadow-lg" />
+        <img src={dixdata} alt="Dixdata" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:grayscale-0 hover:drop-shadow-lg" />
       </Marquee>
     </div>
   </section>
