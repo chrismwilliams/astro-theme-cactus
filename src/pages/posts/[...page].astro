@@ -55,7 +55,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 ---
 
 <PageLayout meta={meta}>
-	<div class="mb-6 flex items-center gap-3">
+	<div class="mb-12 flex items-center gap-3">
 		<h1 class="title">Posts</h1>
 		<a class="text-accent" href="/rss.xml" target="_blank">
 			<span class="sr-only">RSS feed</span>
@@ -80,14 +80,14 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 			}
 			{
 				descYearKeys.map((yearKey) => (
-					<section aria-labelledby={`year-${yearKey}`}>
+					<section class="mb-16">
 						<h2 id={`year-${yearKey}`} class="title text-lg">
 							<span class="sr-only">Posts in</span>
 							{yearKey}
 						</h2>
-						<ul class="mt-5 mb-16 space-y-6 text-start">
+						<ul class="mt-5 space-y-4 text-start">
 							{groupedByYear[yearKey]?.map((p) => (
-								<li class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
+								<li class="grid gap-1 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
 									<PostPreview post={p} />
 								</li>
 							))}
