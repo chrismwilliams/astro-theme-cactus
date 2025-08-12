@@ -1,0 +1,52 @@
+---
+alwaysApply: false
+---
+
+# Repository rules, development, and maintenance
+
+This project is a customized fork of `astro-theme-cactus`. It is a personal website hosted on Vercel at `kvncyf.me`. We periodically pull upstream improvements while keeping the site intact.
+
+## Branching
+- **main**: production
+- **dev**: staging for features
+- **chore/sync-upstream-<version>**: upstream sync branches
+
+## Development
+- **Runtime/PM**: Use Bun exclusively.
+
+### Commands
+- **Dev**: `bun run dev`
+- **Build**: `bun run build`
+- **Preview**: `bun run preview`
+- **Install deps**: `bun install`
+
+### Notes
+- **Client components**: use `client:load` or `client:visible` when importing React/TSX into `.astro` files.
+- **Image performance**: prefer Astro `<Image />` for static images. The `PixelImage` component uses background slices (no `<img>`) to avoid console hints while animating.
+- **Navigation**: desktop hover effect is link‑scoped; adjust styles in `src/components/layout/Header.astro`.
+- **MagicUI components used**: `marquee`, `pixel-image`, `retro-grid`, `scroll-based-velocity`.
+
+## Upstream (cactus theme)
+- **Remote upstream** → `https://github.com/chrismwilliams/astro-theme-cactus`
+- **Compare**: `git fetch --all --prune && git log --oneline --left-right origin/main...upstream/main`
+- **Start sync**: `git checkout -b chore/sync-upstream-<version> origin/main && git merge --no-ff upstream/main`
+- **Merge policy**: resolve conflicts, test locally, then merge to `dev`.
+
+## Low-risk ports already applied
+- `src/layouts/Base.astro`: add speculation rules `<script type="speculationrules">` and `scroll-smooth` class
+- `src/components/BaseHead.astro`: improved canonical, RSS, icons/manifest, webmentions
+- `astro.config.ts`:
+  - Ensure `astro-expressive-code` is before `@astrojs/mdx`
+  - Add `rehype-slug` + `rehype-autolink-headings`
+  - Keep Tailwind v3 + React integrations
+- **Dependencies added**: `rehype-autolink-headings`, `rehype-slug`, `rehype-unwrap-images`
+- **Build verified**: `bun run build`
+
+## Future upgrades (optional)
+- Consider upstream robots/webmanifest integrations
+- Tailwind v4 migration and Astro v5+ alignment
+- Port `src/plugins/*` remark utilities if/when needed
+
+## Maintenance notes
+- Prefer our content and custom components over upstream demos
+- Resolve conflicts file‑by‑file; keep the website behavior intact
