@@ -13,8 +13,8 @@ import {
   useTransform,
   useVelocity,
 } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
-import { cn } from "src/utils/cn"
+import { useEffect, useRef, useState } from "react";
+import { cn } from "@/utils/cn";
 
 interface VelocityScrollProps {
   className?: string;
@@ -79,7 +79,7 @@ export function VelocityScroll({
     const x = useTransform(baseX, (v) => `${wrap(-100 / repetitions, 0, v)}%`);
 
     const directionFactor = useRef<number>(1);
-    useAnimationFrame((t, delta) => {
+    useAnimationFrame((_time, delta) => {
       let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
       if (velocityFactor.get() < 0) {
@@ -101,7 +101,7 @@ export function VelocityScroll({
         <motion.div className={cn("inline-block", className)} style={{ x }}>
           {Array.from({ length: repetitions }).map((_, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-<span key={i} ref={i === 0 ? textRef : null}>
+            <span key={i} ref={i === 0 ? textRef : null}>
               {children}{" "}
             </span>
           ))}
@@ -112,12 +112,14 @@ export function VelocityScroll({
 
   return (
     <section className="relative w-full">
-      <ParallaxText baseVelocity={default_velocity} className={className} client:load>
+      <ParallaxText baseVelocity={default_velocity} className={className ?? ""}>
         {text}
       </ParallaxText>
-      <ParallaxText baseVelocity={-default_velocity} className={className} client:load>
+      <ParallaxText baseVelocity={-default_velocity} className={className ?? ""}>
         {text}
       </ParallaxText>
     </section>
   );
 }
+
+

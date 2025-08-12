@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { type CSSProperties } from "react";
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { cn } from "src/lib/utils";
+import { cn } from "@/utils/cn";
 
 export interface ShimmerButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -67,15 +67,11 @@ const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(
         <div
           className={cn(
             "insert-0 absolute h-full w-full",
-
             "rounded-2xl px-4 py-1.5 text-sm font-medium shadow-[inset_0_-8px_10px_#ffffff1f]",
-
             // transition
             "transform-gpu transition-all duration-300 ease-in-out",
-
             // on hover
             "group-hover:shadow-[inset_0_-6px_10px_#ffffff3f]",
-
             // on click
             "group-active:shadow-[inset_0_-10px_10px_#ffffff3f]",
           )}
@@ -95,3 +91,5 @@ const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(
 ShimmerButton.displayName = "ShimmerButton";
 
 export default ShimmerButton;
+
+

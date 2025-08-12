@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { cn } from "src/utils/cn"
+import { cn } from "@/utils/cn";
 
 export default function OrbitingCircles({
   children,
@@ -23,7 +23,7 @@ export default function OrbitingCircles({
     <>
       {path && (
         // biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
-<svg
+        <svg
           className="pointer-events-none absolute inset-0 h-full w-full"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
@@ -58,3 +58,5 @@ export default function OrbitingCircles({
     </>
   );
 }
+
+

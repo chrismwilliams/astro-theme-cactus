@@ -2,33 +2,17 @@ import { cn } from "@/utils/cn";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 interface MarqueeProps extends ComponentPropsWithoutRef<"div"> {
-  /**
-   * Optional CSS class name to apply custom styles
-   */
+  /** Optional CSS class name to apply custom styles */
   className?: string;
-  /**
-   * Whether to reverse the animation direction
-   * @default false
-   */
+  /** Whether to reverse the animation direction */
   reverse?: boolean;
-  /**
-   * Whether to pause the animation on hover
-   * @default false
-   */
+  /** Whether to pause the animation on hover */
   pauseOnHover?: boolean;
-  /**
-   * Content to be displayed in the marquee
-   */
+  /** Content to be displayed in the marquee */
   children: ReactNode;
-  /**
-   * Whether to animate vertically instead of horizontally
-   * @default false
-   */
+  /** Whether to animate vertically instead of horizontally */
   vertical?: boolean;
-  /**
-   * Number of times to repeat the content
-   * @default 4
-   */
+  /** Number of times to repeat the content */
   repeat?: number;
 }
 
@@ -71,3 +55,5 @@ export function Marquee({
     </div>
   );
 }
+
+

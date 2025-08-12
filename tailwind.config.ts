@@ -39,8 +39,8 @@ export default {
 		}),
 	],
 	theme: {
-		extend: {
-			// magicui
+			extend: {
+				// component animations and utilities
 			animation: {
 				grid: "grid 15s linear infinite",
 				orbit: "orbit calc(var(--duration)*1s) linear infinite",
@@ -62,7 +62,7 @@ export default {
 				sans: [...fontFamily.sans],
 				serif: [...fontFamily.serif],
 			},
-			// magicui
+				// keyframes for component animations
 			keyframes: {
 				grid: {
 					"0%": { transform: "translateY(-50%)" },
