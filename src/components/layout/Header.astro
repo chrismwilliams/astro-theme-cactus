@@ -42,16 +42,16 @@ const url = new URL(Astro.request.url);
 			}
 		</nav>
 
-		<nav
-			aria-label="Main menu"
-			class="hidden sm:-ms-4 sm:mt-1 sm:flex sm:flex-row sm:items-center sm:divide-x sm:divide-dashed sm:divide-accent"
-			id="navigation-menu-desktop"
-		>
+        <nav
+            aria-label="Main menu"
+            class="hidden sm:-ms-2 sm:mt-1 sm:flex sm:flex-row sm:items-center sm:divide-x sm:divide-dashed sm:divide-accent"
+            id="navigation-menu-desktop"
+        >
 			{
 				menuLinks.map((link) => (
 					<a
 						aria-current={url.pathname === link.path ? "page" : false}
-						class="px-4 py-0 underline-offset-2 sm:hover:underline bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent"
+                      class="px-3 py-0 underline-offset-2 transition-colors text-accent sm:hover:underline hover:bg-gradient-to-b hover:from-[#39ff14] hover:via-[#00ff90] hover:to-[#00ffea] hover:bg-clip-text hover:text-transparent"
 						data-astro-prefetch
 						href={link.path}
 					>

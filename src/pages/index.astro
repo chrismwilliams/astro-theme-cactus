@@ -2,11 +2,11 @@
 import SocialList from "@/components/SocialList.astro";
 // import PostPreview from "@/components/blog/PostPreview.astro";
 import PageLayout from "@/layouts/Base.astro";
-import { CometCard } from "@/components/ui/comet-card";
 // import { getAllPosts, sortMDByDate } from "@/data/post";
 import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
 import RetroGrid from "@/components/magicui/retro-grid";
 import { Marquee } from "@/components/magicui/marquee";
+import PixelImage from "@/components/magicui/pixel-image";
 import cciNice from "@/assets/clients/cci-nice.svg?url";
 import cegid from "@/assets/clients/cegid.svg?url";
 import dixdata from "@/assets/clients/dixdata.png?url";
@@ -83,7 +83,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 						client:load
 						text="is this agi?"
 						default_velocity={5}
-						className="font-display text-center text-2xl font-bold tracking-[-0.02em] drop-shadow-sm bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent md:text-4xl md:leading-[3rem]"
+						className="font-display text-center text-2xl font-bold tracking-[-0.02em] drop-shadow-sm bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent md:text-3xl md:leading-[3rem]"
 					/>
 				</div>
 				
@@ -184,32 +184,13 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 				i'm truly convinced that we're living a major shift which is probably bigger than the internet creation.
 			</p> -->
       <h2 class="title mb-4 text-xl"><span class="bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent">#</span> work with me</h2>
-      <div class="grid gap-4 sm:grid-cols-2">
-        <CometCard>
-          <div class="flex h-full flex-col justify-between p-4">
-            <div>
-              <h3 class="mb-2 text-lg font-semibold">business inquiries</h3>
-              <p class="opacity-80">Consulting, collaborations, or projects. I typically respond within 24–48h.</p>
-            </div>
-            <a href="mailto:kevin@connivence.io" class="mt-4 cactus-link">kevin@connivence.io</a>
-          </div>
-        </CometCard>
-        <CometCard>
-          <div class="flex h-full flex-col justify-between p-4">
-            <div>
-              <h3 class="mb-2 text-lg font-semibold">social</h3>
-              <p class="opacity-80">Casual reach-out and DMs.</p>
-            </div>
-            <div class="mt-4 space-x-4">
-              <a class="cactus-link" href="https://twitter.com/kvncyf_" target="_blank" rel="noopener noreferrer">X/Twitter</a>
-              <a class="cactus-link" href="https://www.linkedin.com/in/kvncyf/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            </div>
-          </div>
-        </CometCard>
+      <ul>
+        <li>- email me at <a class="cactus-link" href="mailto:kevin@connivence.io">kevin@connivence.io</a></li>
+        <li>- or DM me on <a class="cactus-link" href="https://twitter.com/kvncyf_" target="_blank" rel="noopener noreferrer">X/Twitter</a> or <a class="cactus-link" href="https://www.linkedin.com/in/kvncyf/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      </ul>
+      <div class="md:flex md:justify-start">
+        <PixelImage client:visible src="/young-man-under-the-moon.png" alt="young man standing beneath the moon" grid="8x8" className="mx-auto md:mx-0" />
       </div>
-			<div class="border border-gray-100 dark:border-stone-900 shadow-sm p-0 rounded-xl overflow-hidden">
-				<img src="/young-man-under-the-moon.png" alt="Midjourney – 'young man standing beneath the moon --sref 3136260955 --stylize 300'" />
-			</div>
 		</div>
 	</section>
 </PageLayout>
