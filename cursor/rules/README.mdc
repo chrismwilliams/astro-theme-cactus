@@ -12,7 +12,7 @@ This project is a customized fork of `astro-theme-cactus`. It is a personal webs
 
 ## How-to work here
 
-- We work in dedicated sessions here. Don't systematically commit and push changes online (github), rather prefer to intelligently manage your context tokens limits by sessions and proactively offer to commit and push changes when you consider that we're reaching a significant amount of changes (code). 
+- We work in dedicated sessions here. Don't systematically commit and push changes online (github) at the end of each request, instead prefer to intelligently manage your context tokens limits by sessions and proactively offer to commit and push changes when you consider that we're reaching a significant amount of changes (code). 
 
 ## Development
 - **Runtime/PM**: Use Bun exclusively.

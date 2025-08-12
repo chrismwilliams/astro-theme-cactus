@@ -99,32 +99,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 		</div>
 	</section>
 
-  <section class="mt-12" aria-label="Clients">
-    <div class="relative rounded-xl border border-gray-100 bg-background p-3 dark:border-stone-900">
-      <Marquee className="[--gap:2rem] clients-marquee">
-        <img src={feedcast} alt="feedcast" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-        <img src={cegid} alt="cegid" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-        <img src={wizishop} alt="wizishop" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-        <img src={orixa} alt="Orixa Media" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-        <!-- <img src={sofinco} alt="Sofinco" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" /> -->
-        <img src={cciNice} alt="CCI Nice" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-        <img src={dixdata} alt="Dixdata" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-      </Marquee>
-    </div>
-
-    <style is:global>
-      /* Dim only non-hovered items when any logo is hovered */
-      .clients-marquee:has(.marquee-item:hover) :where(.marquee-item:not(:hover)) {
-        opacity: 0.35;
-        filter: saturate(0.6);
-        transition: opacity 200ms ease, filter 200ms ease;
-      }
-      .clients-marquee .marquee-item:hover {
-        opacity: 1;
-        filter: saturate(1.6) contrast(1.2) drop-shadow(0 2px 6px rgba(0,0,0,0.2));
-      }
-    </style>
-  </section>
+  
 
 	<!-- <section aria-label="Blog post list" class="mt-16">
 		<h2 class="title mb-4 text-xl">posts</h2>
@@ -163,6 +138,29 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 					))
 				}
 			</dl>
+          <!-- Clients marquee moved here -->
+          <div class="relative rounded-xl border border-gray-100 bg-background p-3 dark:border-stone-900">
+            <Marquee className="[--gap:2rem] clients-marquee">
+              <img src={feedcast} alt="feedcast" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+              <img src={cegid} alt="cegid" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+              <img src={wizishop} alt="wizishop" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+              <img src={orixa} alt="Orixa Media" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+              <img src={cciNice} alt="CCI Nice" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+              <img src={dixdata} alt="Dixdata" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+            </Marquee>
+          </div>
+          <style is:global>
+            /* Dim only non-hovered items when any logo is hovered */
+            .clients-marquee:has(.marquee-item:hover) :where(.marquee-item:not(:hover)) {
+              opacity: 0.35;
+              filter: saturate(0.6);
+              transition: opacity 200ms ease, filter 200ms ease;
+            }
+            .clients-marquee .marquee-item:hover {
+              opacity: 1;
+              filter: saturate(1.6) contrast(1.2) drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+            }
+          </style>
 			<h2 class="title mb-4 text-xl"><span class="bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent">#</span> abstract</h2>
 
 			<!-- <p>
