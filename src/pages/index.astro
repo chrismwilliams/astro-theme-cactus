@@ -102,18 +102,26 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 
   <section class="mt-12" aria-label="Clients">
     <div class="relative rounded-xl border border-gray-100 bg-background p-3 dark:border-stone-900">
-      <Marquee
-        className="[--gap:2rem] opacity-80 hover:opacity-100 hover:[&_.marquee-item]:opacity-40"
-      >
-        <img src={feedcast} alt="feedcast" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-        <img src={cegid} alt="cegid" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-        <img src={wizishop} alt="wizishop" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-        <img src={orixa} alt="Orixa Media" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-        <!-- <img src={sofinco} alt="Sofinco" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150 hover:drop-shadow-lg" /> -->
-        <img src={cciNice} alt="CCI Nice" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
-        <img src={dixdata} alt="Dixdata" class="marquee-item h-8 w-auto transition-all duration-300 hover:!opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+      <Marquee className="[--gap:2rem] opacity-80 clients-marquee">
+        <img src={feedcast} alt="feedcast" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+        <img src={cegid} alt="cegid" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+        <img src={wizishop} alt="wizishop" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+        <img src={orixa} alt="Orixa Media" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+        <!-- <img src={sofinco} alt="Sofinco" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" /> -->
+        <img src={cciNice} alt="CCI Nice" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
+        <img src={dixdata} alt="Dixdata" class="marquee-item h-8 w-auto transition-all duration-300 hover:opacity-100 hover:saturate-150 hover:drop-shadow-lg" />
       </Marquee>
     </div>
+
+    <style>
+      .clients-marquee:has(.marquee-item:hover) .marquee-item {
+        opacity: 0.4;
+      }
+      .clients-marquee .marquee-item:hover {
+        opacity: 1;
+        filter: saturate(1.5) contrast(1.2) drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+      }
+    </style>
   </section>
 
 	<!-- <section aria-label="Blog post list" class="mt-16">
