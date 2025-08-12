@@ -2,6 +2,7 @@
 import SocialList from "@/components/SocialList.astro";
 // import PostPreview from "@/components/blog/PostPreview.astro";
 import PageLayout from "@/layouts/Base.astro";
+import { CometCard } from "@/components/ui/comet-card";
 // import { getAllPosts, sortMDByDate } from "@/data/post";
 import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
 import RetroGrid from "@/components/magicui/retro-grid";
@@ -129,7 +130,7 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 		</ul>
 	</section> -->
 
-	<section class="mt-16">
+  <section class="mt-16" id="contact">
 		<div class="space-y-6">
 			<h2 class="title mb-4 text-xl"><span class="bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent">#</span> projects</h2>
 
@@ -182,11 +183,30 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
 			<p>
 				i'm truly convinced that we're living a major shift which is probably bigger than the internet creation.
 			</p> -->
-			<h2 class="title mb-4 text-xl"><span class="bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent">#</span> work with me</h2>
-			<ul>
-				<li>- send an email to <a href="mailto:kevin@connivence.io"><u>kevin@connivence.io</u></a></li>
-				<li>- connect with me on <a class="cactus-link" href="https://twitter.com/kvncyf_" target="_blank" rel="noopener noreferrer">x/twitter</a> or <a class="cactus-link" href="https://www.linkedin.com/in/kvncyf/" target="_blank" rel="noopener noreferrer">linkedin</a> (cringey but ok).</li>
-			</ul>
+      <h2 class="title mb-4 text-xl"><span class="bg-gradient-to-b from-[#39ff14] via-[#00ff90] to-[#00ffea] bg-clip-text text-transparent">#</span> work with me</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <CometCard>
+          <div class="flex h-full flex-col justify-between p-4">
+            <div>
+              <h3 class="mb-2 text-lg font-semibold">business inquiries</h3>
+              <p class="opacity-80">Consulting, collaborations, or projects. I typically respond within 24–48h.</p>
+            </div>
+            <a href="mailto:kevin@connivence.io" class="mt-4 cactus-link">kevin@connivence.io</a>
+          </div>
+        </CometCard>
+        <CometCard>
+          <div class="flex h-full flex-col justify-between p-4">
+            <div>
+              <h3 class="mb-2 text-lg font-semibold">social</h3>
+              <p class="opacity-80">Casual reach-out and DMs.</p>
+            </div>
+            <div class="mt-4 space-x-4">
+              <a class="cactus-link" href="https://twitter.com/kvncyf_" target="_blank" rel="noopener noreferrer">X/Twitter</a>
+              <a class="cactus-link" href="https://www.linkedin.com/in/kvncyf/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
+          </div>
+        </CometCard>
+      </div>
 			<div class="border border-gray-100 dark:border-stone-900 shadow-sm p-0 rounded-xl overflow-hidden">
 				<img src="/young-man-under-the-moon.png" alt="Midjourney – 'young man standing beneath the moon --sref 3136260955 --stylize 300'" />
 			</div>
