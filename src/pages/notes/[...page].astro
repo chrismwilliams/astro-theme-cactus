@@ -10,10 +10,7 @@ import { Icon } from "astro-icon/components";
 export const getStaticPaths = (async ({ paginate }) => {
 	const MAX_NOTES_PER_PAGE = 10;
 	const allNotes = await getCollection("note");
-	const pinnedNotes = allNotes.filter(note => note.data.pinned);
-	const unpinnedNotes = allNotes.filter(note => !note.data.pinned).sort(collectionDateSort);
-	const sortedNotes = [...pinnedNotes, ...unpinnedNotes];
-	return paginate(sortedNotes, { pageSize: MAX_NOTES_PER_PAGE });
+	return paginate(allNotes.sort(collectionDateSort), { pageSize: MAX_NOTES_PER_PAGE });
 }) satisfies GetStaticPaths;
 
 interface Props {

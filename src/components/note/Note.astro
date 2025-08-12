@@ -19,17 +19,11 @@ const { Content } = await render(note);
 	<Tag class="title" class:list={{ "text-base": isPreview }}>
 		{
 			isPreview ? (
-				<span class="flex items-baseline">
-					{note.data.pinned && <span class="text-accent mr-2 no-underline">📌</span>}
-					<a class="cactus-link" href={`/notes/${note.id}/`}>
-						{note.data.title}
-					</a>
-				</span>
-			) : (
-				<>
-					{note.data.pinned && <span class="text-accent mr-2">📌</span>}
+				<a class="cactus-link" href={`/notes/${note.id}/`}>
 					{note.data.title}
-				</>
+				</a>
+			) : (
+				<>{note.data.title}</>
 			)
 		}
 	</Tag>

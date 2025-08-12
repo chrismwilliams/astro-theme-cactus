@@ -17,9 +17,7 @@ const allPostsByDate = allPosts
 // Notes
 const MAX_NOTES = 5;
 const allNotes = await getCollection("note");
-const pinnedNotes = allNotes.filter(note => note.data.pinned);
-const unpinnedNotes = allNotes.filter(note => !note.data.pinned).sort(collectionDateSort);
-const latestNotes = [...pinnedNotes, ...unpinnedNotes].slice(0, MAX_NOTES);
+const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 ---
 
 <PageLayout meta={{ title: "Home" }}>

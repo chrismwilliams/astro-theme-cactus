@@ -1,13 +1,9 @@
 import { getCollection } from "astro:content";
-import { siteConfig } from "@/site.config";
-import { collectionDateSort } from "@/utils/date";
 import rss from "@astrojs/rss";
+import { siteConfig } from "@/site.config";
 
 export const GET = async () => {
-	const allNotes = await getCollection("note");
-	const pinnedNotes = allNotes.filter(note => note.data.pinned);
-	const unpinnedNotes = allNotes.filter(note => !note.data.pinned).sort(collectionDateSort);
-	const notes = [...pinnedNotes, ...unpinnedNotes];
+	const notes = await getCollection("note");
 
 	return rss({
 		title: siteConfig.title,
