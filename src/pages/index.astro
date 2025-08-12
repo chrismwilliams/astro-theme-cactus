@@ -114,14 +114,16 @@ const projectLinks: { desc: string; href: string; title: string }[] = [
     </div>
 
     <style is:global>
-      .clients-marquee:has(.marquee-item:hover) .marquee-item {
+      /* Dim all items only when one is hovered; use :where to keep specificity low */
+      .clients-marquee:has(.marquee-item:hover) :where(.marquee-item) {
         opacity: 0.35;
         filter: saturate(0.6);
         transition: opacity 200ms ease, filter 200ms ease;
       }
+      /* Ensure hovered item overrides the dimming */
       .clients-marquee .marquee-item:hover {
-        opacity: 1;
-        filter: saturate(1.5) contrast(1.2) drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+        opacity: 1 !important;
+        filter: saturate(1.6) contrast(1.2) drop-shadow(0 2px 6px rgba(0,0,0,0.2)) !important;
       }
     </style>
   </section>
