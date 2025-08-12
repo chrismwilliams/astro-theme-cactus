@@ -62,8 +62,10 @@ const url = new URL(Astro.request.url);
 		</nav>
 	</div>
     <div class="flex items-center gap-1 sm:gap-2 ms-2">
-        <!-- Theme toggler on all viewports -->
-        <AnimatedThemeToggler client:only="react" />
+        <!-- Theme toggler hidden for now -->
+        <div class="hidden">
+            <AnimatedThemeToggler client:only="react" />
+        </div>
     
     <mobile-button>
 		<button
