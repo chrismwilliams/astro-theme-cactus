@@ -1,0 +1,36 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+---
+
+<PageLayout meta={{ title: "contact", description: "Contact Kevin – work inquiries, consulting, and general messages." }}>
+  <section class="space-y-6">
+    <h1 class="title text-xl">contact</h1>
+    <p>
+      For work inquiries or collaborations, email me at
+      <a class="cactus-link" href="mailto:kevin@connivence.io">kevin@connivence.io</a>.
+    </p>
+    <p>
+      You can also reach me on
+      <a class="cactus-link" href="https://twitter.com/kvncyf_" target="_blank" rel="noopener noreferrer">X/Twitter</a>
+      or
+      <a class="cactus-link" href="https://www.linkedin.com/in/kvncyf/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
+    </p>
+    <div class="rounded-xl border border-gray-100 p-4 dark:border-stone-900">
+      <form action="mailto:kevin@connivence.io" method="post" encType="text/plain" class="space-y-4">
+        <div>
+          <label for="name" class="mb-1 block">name</label>
+          <input id="name" name="name" type="text" required class="w-full rounded-md border px-3 py-2 outline-none" />
+        </div>
+        <div>
+          <label for="email" class="mb-1 block">email</label>
+          <input id="email" name="email" type="email" required class="w-full rounded-md border px-3 py-2 outline-none" />
+        </div>
+        <div>
+          <label for="message" class="mb-1 block">message</label>
+          <textarea id="message" name="message" rows="5" required class="w-full rounded-md border px-3 py-2 outline-none"></textarea>
+        </div>
+        <button type="submit" class="rounded-md border px-3 py-2 hover:bg-accent/10">send</button>
+      </form>
+    </div>
+  </section>
+</PageLayout>

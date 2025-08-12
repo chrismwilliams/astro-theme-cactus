@@ -46,6 +46,8 @@ export default {
 				orbit: "orbit calc(var(--duration)*1s) linear infinite",
 				slide: "slide var(--speed) ease-in-out infinite alternate",
 				"spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
 			},
 			colors: {
 				accent: "hsl(var(--theme-accent) / <alpha-value>)",
@@ -92,6 +94,14 @@ export default {
 					"100%": {
 						transform: "translateZ(0) rotate(360deg)",
 					},
+        },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
 				},
 			},
 			transitionProperty: {
