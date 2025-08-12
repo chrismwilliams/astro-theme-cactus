@@ -1,19 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface AnimatedThemeTogglerProps {
   className?: string;
 }
 
-function getRootTheme(): "light" | "dark" {
-  const attr = document.documentElement.getAttribute("data-theme");
-  if (attr === "light" || attr === "dark") return attr;
-  const stored = typeof localStorage !== "undefined" ? localStorage.getItem("theme") : null;
-  if (stored === "light" || stored === "dark") return stored;
-  return "dark";
-}
+// Dark-only mode: keep helpers for future re-enable but unused for now
 
 function setRootTheme(next: "light" | "dark") {
   const root = document.documentElement;
@@ -25,24 +19,17 @@ function setRootTheme(next: "light" | "dark") {
 }
 
 export function AnimatedThemeToggler({ className }: AnimatedThemeTogglerProps) {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
-    // hydrate initial theme from root/localStorage
-    const initial = getRootTheme();
-    setTheme(initial);
+    // Force dark on mount
+    setRootTheme("dark");
   }, []);
 
-  const isDark = theme === "dark";
+  const isDark = true;
 
   function handleToggle() {
-    const next = isDark ? "light" : "dark";
-    // Update immediately to avoid flicker
-    setRootTheme(next);
-    setTheme(next);
-    // Notify existing theme provider listeners for consistency
-    const evt = new CustomEvent("theme-change", { detail: { theme: next } });
-    document.dispatchEvent(evt);
+    // Disabled while site is dark-only
+    return;
   }
 
   return (

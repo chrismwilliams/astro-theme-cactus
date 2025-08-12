@@ -21,14 +21,13 @@ const {
     <head>
 		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
         <script is:inline>
-          // Avoid FOUC: set dark by default before hydration
+          // Force dark mode on first paint
           (function(){
             try {
-              const stored = localStorage.getItem('theme');
-              const next = stored === 'light' || stored === 'dark' ? stored : 'dark';
               const root = document.documentElement;
-              root.setAttribute('data-theme', next);
-              root.classList.toggle('dark', next === 'dark');
+              root.setAttribute('data-theme', 'dark');
+              root.classList.add('dark');
+              localStorage.setItem('theme', 'dark');
             } catch {}
           })();
         </script>

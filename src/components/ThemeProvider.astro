@@ -3,9 +3,8 @@
     const lightModePref = window.matchMedia("(prefers-color-scheme: light)");
 
     function getUserPref() {
-        const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("theme");
-        // Default to dark when not explicitly stored
-        return storedTheme === "light" || storedTheme === "dark" ? storedTheme : "dark";
+        // Force dark mode regardless of stored preference
+        return "dark";
     }
 
     function setTheme(newTheme) {
@@ -41,10 +40,11 @@
 	document.addEventListener("astro:after-swap", () => setTheme(getUserPref()));
 
 	// listen for theme-change custom event, fired in src/components/ThemeToggle.astro
-	document.addEventListener("theme-change", (e) => {
-		setTheme(e.detail.theme);
-	});
+    document.addEventListener("theme-change", () => {
+        // Ignore external requests and keep dark mode forced
+        setTheme("dark");
+    });
 
 	// listen for prefers-color-scheme change.
-	lightModePref.addEventListener("change", (e) => setTheme(e.matches ? "light" : "dark"));
+    lightModePref.addEventListener("change", () => setTheme("dark"));
 </script>
