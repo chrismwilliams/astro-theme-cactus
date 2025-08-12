@@ -1,8 +1,8 @@
 ---
-
 import { menuLinks } from "@/site-config";
 import Image from "astro/components/Image.astro";
 import logo from "@/assets/logo.png";
+import AnimatedThemeToggler from "@/components/magicui/animated-theme-toggler";
 
 const url = new URL(Astro.request.url);
 ---
@@ -61,7 +61,11 @@ const url = new URL(Astro.request.url);
 			}
 		</nav>
 	</div>
-	<mobile-button>
+    <div class="flex items-center gap-1 sm:gap-2 ms-2">
+        <!-- Theme toggler on all viewports -->
+        <AnimatedThemeToggler client:only="react" />
+    
+    <mobile-button>
 		<button
 			aria-expanded="false"
 			aria-haspopup="menu"
@@ -98,8 +102,9 @@ const url = new URL(Astro.request.url);
 				>
 					<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
 				</svg>
-			</button>
-	</mobile-button>
+            </button>
+    </mobile-button>
+    </div>
 </header>
 	
 	<script>

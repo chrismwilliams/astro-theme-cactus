@@ -1,13 +1,14 @@
 {/* Inlined to avoid FOUC. */}
 <script is:inline>
-	const lightModePref = window.matchMedia("(prefers-color-scheme: light)");
+    const lightModePref = window.matchMedia("(prefers-color-scheme: light)");
 
-	function getUserPref() {
-		const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("theme");
-		return storedTheme || (lightModePref.matches ? "light" : "dark");
-	}
+    function getUserPref() {
+        const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("theme");
+        // Default to dark when not explicitly stored
+        return storedTheme === "light" || storedTheme === "dark" ? storedTheme : "dark";
+    }
 
-	function setTheme(newTheme) {
+    function setTheme(newTheme) {
 		if (newTheme !== "light" && newTheme !== "dark") {
 			return console.warn(
 				`Invalid theme value '${newTheme}' received. Expected 'light' or 'dark'.`,
@@ -21,7 +22,9 @@
 			return;
 		}
 
-		root.setAttribute("data-theme", newTheme);
+        root.setAttribute("data-theme", newTheme);
+        // Keep Tailwind's class-based dark mode in sync to avoid FOUC
+        root.classList.toggle("dark", newTheme === "dark");
 
 		const colorThemeMetaTag = document.querySelector("meta[name='theme-color']");
 		const bgColour = getComputedStyle(document.body).getPropertyValue("--theme-bg");
@@ -31,8 +34,8 @@
 		}
 	}
 
-	// initial setup
-	setTheme(getUserPref());
+    // initial setup
+    setTheme(getUserPref());
 
 	// View Transitions hook to restore theme
 	document.addEventListener("astro:after-swap", () => setTheme(getUserPref()));

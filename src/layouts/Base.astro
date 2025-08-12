@@ -18,8 +18,20 @@ const {
 ---
 
 <html class="scroll-smooth" lang={siteConfig.lang}>
-	<head>
+    <head>
 		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
+        <script is:inline>
+          // Avoid FOUC: set dark by default before hydration
+          (function(){
+            try {
+              const stored = localStorage.getItem('theme');
+              const next = stored === 'light' || stored === 'dark' ? stored : 'dark';
+              const root = document.documentElement;
+              root.setAttribute('data-theme', next);
+              root.classList.toggle('dark', next === 'dark');
+            } catch {}
+          })();
+        </script>
 	</head>
 	<body>
 		<ThemeProvider />
