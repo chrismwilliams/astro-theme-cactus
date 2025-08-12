@@ -17,7 +17,7 @@ const { as: Tag = "div", post, withDesc = false } = Astro.props;
 />
 <Tag>
 	{post.data.draft && <span class="text-red-500">(Draft) </span>}
-	<a class="cactus-link" data-astro-prefetch href={`/posts/${post.id}/`}>
+	<a class="cactus-link" href={`/posts/${post.id}/`}>
 		{post.data.title}
 	</a>
 </Tag>
