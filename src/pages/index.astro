@@ -2,6 +2,26 @@
 import PageLayout from "@/layouts/Base.astro";
 import { Image } from "astro:assets";
 import hills from "@/content/images/hills.jpg";
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const homepage = await reader.singletons.homepage.read();
+
+// Provide default values if homepage data doesn't exist yet
+const content = homepage || {
+  heroTitle: 'When you hit a wall, we transform everything.',
+  heroDescription: 'We are AI-native operating partners for SaaS leaders who\'ve hit a wall. Get unstuck and go fast (again).',
+  mainProblemTitle: 'What got you here stopped working',
+  mainProblemDescription: 'Whether you\'re finding product-market fit, scaling past early success, or managing explosive growth - what used to work is now making things worse. Every day feels like trying to stay afloat instead of building the future.',
+  problemCards: [],
+  differentiatorTitle: 'We\'re Built Different',
+  differentiators: [],
+  servicesTitle: 'Sprint to get unstuck',
+  servicesSubtitle: 'How we work with you to get your groove back',
+  servicesDescription: 'Strategy clarity first, then systematic transformation. No wasted effort optimizing the wrong things.',
+  services: []
+};
 ---
 
 <PageLayout meta={{ title: "Home Page" }}>
@@ -11,11 +31,10 @@ import hills from "@/content/images/hills.jpg";
     class="gc-full md:col-span-3 md:col-start-4 lg:col-span-5 lg:col-start-5 gr-span-2"
   >
     <h2 class="text-3xl md:text-4xl leading-snug mb-4">
-      When you hit a wall, we transform everything.
+      {content.heroTitle}
     </h2>
     <p class="text-sm leading-normal">
-      We are AI-native operating partners for SaaS leaders who've hit a wall.
-      Get unstuck and go fast (again).
+      {content.heroDescription}
     </p>
   </section>
   <section class="gc-full grid-local gr-span-5">
@@ -35,80 +54,43 @@ import hills from "@/content/images/hills.jpg";
     <section class="gc-full grid-local gr-span-3 border-t-[5px]">
       <article class="col-span-3 md:col-span-5 lg:col-span-5">
         <h3 class="text-3xl md:text-4xl leading-snug mb-4">
-          What got you here stopped working
+          {content.mainProblemTitle}
         </h3>
         <p class="text-sm leading-normal">
-          Whether you're finding product-market fit, scaling past early success,
-          or managing explosive growth - what used to work is now making things
-          worse. Every day feels like trying to stay afloat instead of building
-          the future.
+          {content.mainProblemDescription}
         </p>
       </article>
     </section>
-    <section
-      class="col-span-1 md:col-span-2 lg:col-span-3 border-t-[5px] border-black p-3"
-    >
-      <h4 class="text-xl mb-3">Product Velocity Has Tanked</h4>
-      <p class="text-sm leading-normal">
-        Long lead times, clogged backlogs, spending more time fixing bugs than
-        shipping features. Your product got you here, now it's holding you back.
-      </p>
-    </section>
-    <section
-      class="col-span-1 md:col-span-2 lg:col-span-3 border-t-[5px] border-black p-3"
-    >
-      <h4 class="text-lg mb-10">Leadership Firefighting</h4>
-      <p class="text-sm leading-normal">
-        Strategic decisions delayed by operational inefficiency. Too much
-        strategic time consumed by friction or decisionmaking instead of
-        customer value creation.
-      </p>
-    </section>
-    <section
-      class="col-span-1 md:col-span-2 lg:col-span-3 border-t-[5px] border-black p-3"
-    >
-      <h4 class="text-xl mb-10">AI Adoption Chaos</h4>
-      <p class="text-sm leading-normal">
-        Technical teams experiment aimlessly while business teams fall behind.
-        AI creates more complexity than capability without systematic
-        implementation.
-      </p>
-    </section>
+    {content.problemCards?.map((card) => (
+      <section
+        class="col-span-1 md:col-span-2 lg:col-span-3 border-t-[5px] border-black p-3"
+      >
+        <h4 class="text-xl mb-3">{card.title}</h4>
+        <p class="text-sm leading-normal">
+          {card.description}
+        </p>
+      </section>
+    ))}
   </section>
 
   <!-- Differentiation -->
   <section class="gc-full grid-local gr-span-4">
     <article class="gc-full md:col-span-2 lg:col-span-2">
       <h3 class="text-3xl md:text-4xl leading-snug mb-4">
-        We’re Built Different
+        {content.differentiatorTitle}
       </h3>
     </article>
     <div
       class="gc-full grid-local md:col-span-5 md:col-start-3 lg:col-span-6 lg:col-start-4"
     >
-      <section class="gc-full border-t-[5px] border-black">
-        <h4 class="text-xl mb-3">Full-Stack Operators</h4>
-        <p class="text-sm leading-normal">
-          Product velocity expertise combined with executive coaching. We
-          transform technical capabilities and leadership development
-          simultaneously.
-        </p>
-      </section>
-
-      <section class="gc-full border-t-[5px] border-black">
-        <h4 class="text-xl mb-3">Fundamentals Before Features</h4>
-        <p class="text-sm leading-normal">
-          Strategic clarity before technical solutions. We identify what to stop
-          doing before building anything new.
-        </p>
-      </section>
-      <section class="gc-full border-t-[5px] border-black">
-        <h4 class="text-xl mb-3">Embedded Execution Model</h4>
-        <p class="text-sm leading-normal">
-          No parallel play — we integrate with your team as operators, ensuring
-          knowledge transfer and sustainable transformation your people own.
-        </p>
-      </section>
+      {content.differentiators?.map((diff) => (
+        <section class="gc-full border-t-[5px] border-black">
+          <h4 class="text-xl mb-3">{diff.title}</h4>
+          <p class="text-sm leading-normal">
+            {diff.description}
+          </p>
+        </section>
+      ))}
     </div>
   </section>
 
@@ -119,64 +101,26 @@ import hills from "@/content/images/hills.jpg";
         class="col-span-3 md:col-start-1 md:col-span-5 lg:col-start-1 lg:col-span-7"
       >
         <h3 class="text-3xl md:text-4xl leading-snug mb-4">
-          Sprint to get unstuck
+          {content.servicesTitle}
         </h3>
         <p class="text-sm leading-normal">
-          How we work with you to get your groove back
+          {content.servicesSubtitle}
         </p>
         <p class="text-sm leading-normal">
-          Strategy clarity first, then systematic transformation. No wasted
-          effort optimizing the wrong things.
+          {content.servicesDescription}
         </p>
       </article>
     </section>
-    <section
-      class="gc-full md:col-span-3 lg:col-span-4 border-t-[5px] border-black"
-    >
-      <h4 class="text-xl mb-3">30-Day Strategy Sprint</h4>
-      <h5 class="text-base mb-2">The Problem-Solution-Gap Audit</h5>
-      <p class="text-sm leading-normal mb-2">
-        Before optimizing velocity, get clarity on what customer problems you're
-        solving, how well you're delivering, and where the biggest gaps exist.
-      </p>
-      <ul class="text-sm leading-normal list-disc pl-5 mb-3">
-        <li>Customer problem mapping with evidence</li>
-        <li>Solution effectiveness audit across all functions</li>
-        <li>Strategic gap analysis and priority stack ranking</li>
-        <li>Clear decision: Transform current approach OR pivot focus</li>
-      </ul>
-      <p class="text-sm leading-normal">
-        <strong>Perfect for:</strong> Teams that feel busy but not productive, or
-        companies questioning product-market fit vs. organizational fit.
-      </p>
-    </section>
-    <section
-      class="col-span-1 md:col-span-3 lg:col-start-6 lg:col-span-4 border-t-[5px] border-black p-3"
-    >
-      <h4 class="text-xl mb-3">90-Day Velocity Restoration</h4>
-      <h5 class="text-base mb-2">Three Parallel Transformation Tracks</h5>
-      <p class="text-sm leading-normal mb-2">
-        Embedded operators who restore company-wide velocity through strategic
-        clarity, organizational alignment, and AI capability building.
-      </p>
-      <ul class="text-sm leading-normal list-disc pl-5 mb-3">
-        <li>
-          <strong>Product Velocity:</strong> Eliminate legacy anchors, restore weekly
-          deployment
-        </li>
-        <li>
-          <strong>Organizational Velocity:</strong> Leadership AI transition coaching,
-          strategic clarity
-        </li>
-        <li>
-          <strong>Team Velocity:</strong> Non-technical AI training, workflow design
-        </li>
-      </ul>
-      <p class="text-sm leading-normal">
-        <strong>Pre-requisite:</strong> Strategic clarity on customer problems and
-        solution effectiveness established.
-      </p>
-    </section>
+    {content.services?.map((service, index) => (
+      <section
+        class={index === 0 ? "gc-full md:col-span-3 lg:col-span-4 border-t-[5px] border-black" : "col-span-1 md:col-span-3 lg:col-start-6 lg:col-span-4 border-t-[5px] border-black p-3"}
+      >
+        <h4 class="text-xl mb-3">{service.title}</h4>
+        <div class="text-sm leading-normal">
+          {service.description}
+        </div>
+      </section>
+    ))}
   </section>
 </PageLayout>
 
