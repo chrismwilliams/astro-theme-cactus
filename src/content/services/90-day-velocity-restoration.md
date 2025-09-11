@@ -1,3 +1,8 @@
+---
+title: 90-Day Velocity Restoration
+order: 2
+---
+
 ### Three Parallel Transformation Tracks
 
 Embedded operators who restore company-wide velocity through strategic clarity, organizational alignment, and AI capability building.

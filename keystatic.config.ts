@@ -1,5 +1,6 @@
 // keystatic.config.ts
 import { config, fields, collection, singleton } from '@keystatic/core';
+import type { Config } from '@keystatic/core';
 
 export default config({
   storage: {
@@ -20,6 +21,57 @@ export default config({
         content: fields.markdoc({ label: 'Content' }),
       },
     }),
+    problemCards: collection({
+      label: 'Problem Cards',
+      slugField: 'title',
+      path: 'src/content/problemCards/*',
+      format: { contentField: 'description' },
+      schema: {
+        title: fields.slug({ name: { label: 'Title' } }),
+        order: fields.number({ 
+          label: 'Display Order',
+          defaultValue: 0
+        }),
+        description: fields.markdoc({ 
+          label: 'Description',
+          extension: 'md'
+        })
+      }
+    }),
+    differentiators: collection({
+      label: 'Differentiators',
+      slugField: 'title',
+      path: 'src/content/differentiators/*',
+      format: { contentField: 'description' },
+      schema: {
+        title: fields.slug({ name: { label: 'Title' } }),
+        order: fields.number({ 
+          label: 'Display Order',
+          defaultValue: 0
+        }),
+        description: fields.markdoc({ 
+          label: 'Description',
+          extension: 'md'
+        })
+      }
+    }),
+    services: collection({
+      label: 'Services',
+      slugField: 'title',
+      path: 'src/content/services/*',
+      format: { contentField: 'description' },
+      schema: {
+        title: fields.slug({ name: { label: 'Title' } }),
+        order: fields.number({ 
+          label: 'Display Order',
+          defaultValue: 0
+        }),
+        description: fields.markdoc({ 
+          label: 'Description',
+          extension: 'md'
+        })
+      }
+    })
   },
   singletons: {
     homepage: singleton({
@@ -48,38 +100,11 @@ export default config({
           defaultValue: 'Whether you\'re finding product-market fit, scaling past early success, or managing explosive growth - what used to work is now making things worse. Every day feels like trying to stay afloat instead of building the future.'
         }),
         
-        // Problem cards
-        problemCards: fields.array(
-          fields.object({
-            title: fields.text({ label: 'Title' }),
-            description: fields.markdoc({ 
-              label: 'Description'
-            })
-          }),
-          {
-            label: 'Problem Cards',
-            itemLabel: props => props.fields.title.value || 'Problem'
-          }
-        ),
-        
         // We're Built Different section
         differentiatorTitle: fields.text({
           label: 'Differentiator Title',
           defaultValue: 'We\'re Built Different'
         }),
-        
-        differentiators: fields.array(
-          fields.object({
-            title: fields.text({ label: 'Title' }),
-            description: fields.markdoc({ 
-              label: 'Description'
-            })
-          }),
-          {
-            label: 'Differentiators',
-            itemLabel: props => props.fields.title.value || 'Differentiator'
-          }
-        ),
         
         // Services section
         servicesTitle: fields.text({
@@ -94,21 +119,7 @@ export default config({
           label: 'Services Description',
           multiline: true,
           defaultValue: 'Strategy clarity first, then systematic transformation. No wasted effort optimizing the wrong things.'
-        }),
-        
-        // Service offerings
-        services: fields.array(
-          fields.object({
-            title: fields.text({ label: 'Title' }),
-            description: fields.markdoc({ 
-              label: 'Description'
-            })
-          }),
-          {
-            label: 'Services',
-            itemLabel: props => props.fields.title.value || 'Service'
-          }
-        )
+        })
       }
     })
   }

@@ -56,4 +56,28 @@ const tag = defineCollection({
 	}),
 });
 
-export const collections = { post, note, tag };
+const problemCards = defineCollection({
+	loader: glob({ base: "./src/content/problemCards", pattern: "**/*.{md,mdx}" }),
+	schema: z.object({
+		title: z.string(),
+		order: z.number().default(0),
+	}),
+});
+
+const differentiators = defineCollection({
+	loader: glob({ base: "./src/content/differentiators", pattern: "**/*.{md,mdx}" }),
+	schema: z.object({
+		title: z.string(),
+		order: z.number().default(0),
+	}),
+});
+
+const services = defineCollection({
+	loader: glob({ base: "./src/content/services", pattern: "**/*.{md,mdx}" }),
+	schema: z.object({
+		title: z.string(),
+		order: z.number().default(0),
+	}),
+});
+
+export const collections = { post, note, tag, problemCards, differentiators, services };

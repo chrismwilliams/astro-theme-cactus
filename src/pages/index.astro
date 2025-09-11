@@ -2,11 +2,28 @@
 import PageLayout from "@/layouts/Base.astro";
 import { Image } from "astro:assets";
 import hills from "@/content/images/hills.jpg";
+import { getCollection } from 'astro:content';
 import { createReader } from '@keystatic/core/reader';
 import keystaticConfig from '../../keystatic.config';
 
+// Get the singleton data
 const reader = createReader(process.cwd(), keystaticConfig);
 const homepage = await reader.singletons.homepage.read();
+
+// Get collections data
+const problemCardsCollection = await getCollection('problemCards') || [];
+const differentiatorsCollection = await getCollection('differentiators') || [];
+const servicesCollection = await getCollection('services') || [];
+
+// Sort collections by order
+problemCardsCollection.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+differentiatorsCollection.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+servicesCollection.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+
+// Collections are already rendered with Astro v5+
+const problemCards = problemCardsCollection;
+const differentiators = differentiatorsCollection;
+const services = servicesCollection;
 
 // Provide default values if homepage data doesn't exist yet
 const content = homepage || {
@@ -14,13 +31,10 @@ const content = homepage || {
   heroDescription: 'We are AI-native operating partners for SaaS leaders who\'ve hit a wall. Get unstuck and go fast (again).',
   mainProblemTitle: 'What got you here stopped working',
   mainProblemDescription: 'Whether you\'re finding product-market fit, scaling past early success, or managing explosive growth - what used to work is now making things worse. Every day feels like trying to stay afloat instead of building the future.',
-  problemCards: [],
   differentiatorTitle: 'We\'re Built Different',
-  differentiators: [],
   servicesTitle: 'Sprint to get unstuck',
   servicesSubtitle: 'How we work with you to get your groove back',
   servicesDescription: 'Strategy clarity first, then systematic transformation. No wasted effort optimizing the wrong things.',
-  services: []
 };
 ---
 
@@ -61,14 +75,12 @@ const content = homepage || {
         </p>
       </article>
     </section>
-    {content.problemCards?.map((card) => (
+    {problemCards.map((card) => (
       <section
         class="col-span-1 md:col-span-2 lg:col-span-3 border-t-[5px] border-black p-3"
       >
-        <h4 class="text-xl mb-3">{card.title}</h4>
-        <p class="text-sm leading-normal">
-          {card.description}
-        </p>
+        <h4 class="text-xl mb-3">{card.data.title}</h4>
+        <div class="text-sm leading-normal prose-sm prose-p:mb-0" set:html={card.rendered?.html} />
       </section>
     ))}
   </section>
@@ -83,12 +95,10 @@ const content = homepage || {
     <div
       class="gc-full grid-local md:col-span-5 md:col-start-3 lg:col-span-6 lg:col-start-4"
     >
-      {content.differentiators?.map((diff) => (
+      {differentiators.map((diff) => (
         <section class="gc-full border-t-[5px] border-black">
-          <h4 class="text-xl mb-3">{diff.title}</h4>
-          <p class="text-sm leading-normal">
-            {diff.description}
-          </p>
+          <h4 class="text-xl mb-3">{diff.data.title}</h4>
+          <div class="text-sm leading-normal prose-sm prose-p:mb-0" set:html={diff.rendered?.html} />
         </section>
       ))}
     </div>
@@ -111,14 +121,12 @@ const content = homepage || {
         </p>
       </article>
     </section>
-    {content.services?.map((service, index) => (
+    {services.map((service, index) => (
       <section
         class={index === 0 ? "gc-full md:col-span-3 lg:col-span-4 border-t-[5px] border-black" : "col-span-1 md:col-span-3 lg:col-start-6 lg:col-span-4 border-t-[5px] border-black p-3"}
       >
-        <h4 class="text-xl mb-3">{service.title}</h4>
-        <div class="text-sm leading-normal">
-          {service.description}
-        </div>
+        <h4 class="text-xl mb-3">{service.data.title}</h4>
+        <div class="text-sm leading-normal prose-sm" set:html={service.rendered?.html} />
       </section>
     ))}
   </section>

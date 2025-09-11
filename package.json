@@ -24,6 +24,7 @@
 		"@astrojs/sitemap": "3.4.1",
 		"@keystatic/astro": "^5.0.6",
 		"@keystatic/core": "^0.5.48",
+		"@markdoc/markdoc": "^0.5.4",
 		"@tailwindcss/vite": "4.1.11",
 		"@types/react": "^19.1.12",
 		"@types/react-dom": "^19.1.9",

@@ -1,3 +1,10 @@
+---
+title: 30-Day Strategy Sprint
+order: 1
+---
+
+## The Problem-Solution-Gap Audit
+
 Before optimizing velocity, get clarity on what customer problems you're solving, how well you're delivering, and where the biggest gaps exist.
 
 **What's Included:**

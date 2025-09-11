@@ -1,0 +1,6 @@
+---
+title: Leadership Firefighting
+order: 2
+---
+
+Strategic decisions delayed by operational inefficiency. Too much strategic time consumed by friction or decisionmaking instead of customer value creation.
