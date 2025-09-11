@@ -22,7 +22,7 @@ import { expressiveCodeOptions, siteConfig } from "./src/site.config";
 import keystatic from '@keystatic/astro';
 import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
-import vercel from '@astrojs/vercel';
+import vercel from '@astrojs/vercel/serverless';
 
 
 // https://astro.build/config
