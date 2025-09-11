@@ -6,7 +6,17 @@ import hills from "@/content/images/hills.jpg";
 
 <PageLayout meta={{ title: "Home Page" }}>
   <!-- Hero image -->
-  <div class="col-span-12 h-[250px] overflow-hidden mb-2">
+
+  <section class="grid-row-2 lg:col-span-4">
+    <h2 class="text-3xl md:text-4xl leading-snug mb-4">
+      When you hit a wall, we transform everything.
+    </h2>
+    <p class="text-sm leading-normal">
+      We are AI-native operating partners for SaaS leaders who've hit a wall.
+      Get unstuck and go fast (again).
+    </p>
+  </section>
+  <div class="gc-full grid-row-2">
     <Image
       src={hills}
       alt="Rolling hills landscape"
@@ -15,19 +25,10 @@ import hills from "@/content/images/hills.jpg";
   </div>
 
   <!-- Hero statement -->
-  <section class="col-span-6 pb-2 mb-4">
-    <h2 class="text-5xl md:text-4xl leading-snug mb-4">
-      When you hit a wall, we transform everything.
-    </h2>
-    <p class="text-sm leading-normal">
-      We are AI-native operating partners for SaaS leaders who've hit a wall.
-      Get unstuck and go fast (again).
-    </p>
-  </section>
 
   <!-- Two-column editorial with asymmetric spans -->
-  <article class="col-span-12 md:col-span-6 mb-12">
-    <h3 class="text-5xl md:text-4xl leading-snug mb-4">
+  <article class="grid-row-2 lg:gc-half">
+    <h3 class="text-3xl md:text-4xl leading-snug mb-4">
       What got you here stopped working
     </h3>
     <p class="text-sm leading-normal">
@@ -38,42 +39,29 @@ import hills from "@/content/images/hills.jpg";
   </article>
 
   <!-- Three-column problem sections -->
-  <section class="col-span-12 md:col-span-4 mb-6">
-    <h4 class="text-xl mb-3">Product Velocity Has Tanked</h4>
-    <p class="text-sm leading-normal">
-      Long lead times, clogged backlogs, spending more time fixing bugs than
-      shipping features. Your product got you here, now it's holding you back.
-    </p>
-  </section>
-  <section class="col-span-12 md:col-span-4 md:col-start-5 mb-6">
-    <h4 class="text-xl mb-10">Leadership Firefighting</h4>
-    <p class="text-sm leading-normal">
-      Strategic decisions delayed by operational inefficiency. Too much
-      strategic time consumed by friction or decisionmaking instead of customer
-      value creation.
-    </p>
-  </section>
-  <section class="col-span-12 md:col-span-4 md:col-start-9 mb-6">
-    <h4 class="text-xl mb-10">AI Adoption Chaos</h4>
-    <p class="text-sm leading-normal">
-      Technical teams experiment aimlessly while business teams fall behind. AI
-      creates more complexity than capability without systematic implementation.
-    </p>
-  </section>
-
-  <!-- Poster-like block for contrast -->
-  <div class="col-span-12 md:col-span-9 pt-16">
-    <div
-      class="text-6xl leading-tight md:leading-snug font-medium tracking-tight"
-    >
-      SYSTEM <span class="text-accent">/</span> STRUCTURE <span
-        class="text-accent">/</span
-      > SPACE
-    </div>
-  </div>
-  <div
-    class="col-span-12 md:col-span-3 md:text-right text-sm uppercase tracking-wide pt-16 flex items-end"
-  >
-    Swiss method, web-native execution
-  </div>
+  <article class="grid-local gc-full grid-row-2">
+    <section class="col-span-1">
+      <h4 class="text-xl mb-3">Product Velocity Has Tanked</h4>
+      <p class="text-sm leading-normal">
+        Long lead times, clogged backlogs, spending more time fixing bugs than
+        shipping features. Your product got you here, now it's holding you back.
+      </p>
+    </section>
+    <section class="col-span-1">
+      <h4 class="text-lg mb-10">Leadership Firefighting</h4>
+      <p class="text-sm leading-normal">
+        Strategic decisions delayed by operational inefficiency. Too much
+        strategic time consumed by friction or decisionmaking instead of
+        customer value creation.
+      </p>
+    </section>
+    <section class="col-span-1">
+      <h4 class="text-xl mb-10">AI Adoption Chaos</h4>
+      <p class="text-sm leading-normal">
+        Technical teams experiment aimlessly while business teams fall behind.
+        AI creates more complexity than capability without systematic
+        implementation.
+      </p>
+    </section>
+  </article>
 </PageLayout>

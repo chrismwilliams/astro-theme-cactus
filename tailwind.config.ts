@@ -46,7 +46,15 @@ export default {
 				measure: "72ch"
 			},
 			gridTemplateColumns: {
-				"12": "repeat(12, minmax(0, 1fr))"
+				"12": "repeat(12, minmax(0, 1fr))",
+				"var": "repeat(var(--cols), 1fr)"
+			},
+			gridAutoRows: {
+				"var": "var(--row)"
+			},
+			gap: {
+				"x-var": "var(--gutter-x)",
+				"y-var": "var(--gutter-y)"
 			},
 			typography: () => ({
 				DEFAULT: {

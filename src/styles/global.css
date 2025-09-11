@@ -6,6 +6,14 @@
 :root {
 	color-scheme: light;
 	--font-fallback-sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
+	/* Mobile-first responsive grid */
+	--cols: 3;                 /* mobile: 3 columns */
+	--row: 80px;               /* row height (baseline module) */
+	--gutter-x: 14px;          /* column gap */
+	--gutter-y: 14px;          /* row gap */
+	--margin: 3px;             /* inner margin around the grid - mobile first */
+	--line: rgba(255,255,255,.85); /* overlay line color */
+	--bg: #e85a14;             /* page background */
 }
 
 /* use a selector-based strategy for dark mode */
@@ -21,11 +29,76 @@
 	--color-quote: oklch(55.27% 0.195 19.06);
 }
 
+
+/* Responsive grid settings - mobile first approach */
+@media (min-width: 640px)  { :root { --cols: 3; --margin: 14px; } } /* sm+ */
+@media (min-width: 768px)  { :root { --cols: 6; --margin: 21px; } } /* md+ */
+@media (min-width: 1024px) { :root { --cols: 9; --margin: 28px; } } /* lg+ */
+
 @layer base {
 	html, body {
 		height: 100%;
 	}
 
+	body {
+		margin: 0;
+		background: var(--bg);
+		color: #111;
+		font-family: system-ui, sans-serif;
+		/* if you want the poster centered vertically: */
+		display: grid;
+		place-items: center;
+	  }
+	.grid-frame {
+	/* size the "poster" area; adjust as you like */
+	width: min(900px, 92vw);
+	/* height can be fluid or fixed; pick one: */
+	min-height: min(1280px, 140vh);
+	
+	padding: var(--margin);
+	position: relative;
+	
+	/* Use Tailwind-compatible grid setup with CSS variables */
+	display: grid;
+	grid-template-columns: repeat(var(--cols), 1fr); /* responsive fr tracks */
+	grid-auto-rows: var(--row);                      /* fixed row module */
+	column-gap: var(--gutter-x);
+	row-gap: var(--gutter-y);
+	}
+	
+	/* Optional: a thin keyline around the grid frame (like the poster border) */
+	.grid-frame {
+	outline: 2px solid rgba(255,255,255,.85);
+	outline-offset: -2px; /* inside the padding */
+	}
+
+	/* ---- Grid system using Tailwind patterns ---- */
+	
+/* Essential grid helpers that coordinate with CSS variables */
+.grid-local {
+	display: grid;
+	grid-template-columns: subgrid;
+	grid-auto-rows: var(--row);
+	column-gap: var(--gutter-x);
+	row-gap: var(--gutter-y);
+}
+
+/* Column spans that adapt to our responsive column count */
+.gc-full { grid-column: 1 / -1; }
+
+/* Only create responsive variants - no mobile defaults */
+  .lg\:gc-half { grid-column: span 3; }
+  .lg\:gc-third { grid-column: span 2; }
+
+
+/* Column start positions for header layout */
+  
+  .md\:gc-third { grid-column: span 2; }
+
+/* Row span utilities following Tailwind naming */
+.grid-row-2 { grid-row: span 2; }
+.grid-row-3 { grid-row: span 3; }
+.grid-row-4 { grid-row: span 4; }
 	html {
 		color-scheme: light dark;
 		accent-color: var(--color-accent);
