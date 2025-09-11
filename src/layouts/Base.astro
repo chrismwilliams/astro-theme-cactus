@@ -27,11 +27,13 @@ const {
       title={title}
     />
   </head>
-  <body class={`${baseline ? "baseline" : ""}`}>
+  <body
+    class={`container grid grid-cols-12 grid-rows-[auto_1fr_auto] gap-6 mx-auto px-6 max-w-7xl min-h-screen"}`}
+  >
     <ThemeProvider />
     <SkipLink />
     <Header />
-    <main class="container" id="main">
+    <main id="main" class="contents">
       <slot />
     </main>
     <Footer />

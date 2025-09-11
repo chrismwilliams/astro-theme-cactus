@@ -6,7 +6,8 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: { DEFAULT: "5px", lg: "7px", xl: "9px" }
+			padding: { DEFAULT: ".1em", lg: ".2em", xl: "1em" },
+			screens: { sm: "640px", md: "768px", lg: "1024px", xl: "1280px", "2xl": "1440px" }
 		},
 		extend: {
 			colors: {
