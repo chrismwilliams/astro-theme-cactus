@@ -1,6 +1,4 @@
 ---
-import Search from "@/components/Search.astro";
-import ThemeToggle from "@/components/ThemeToggle.astro";
 import { menuLinks } from "@/site.config";
 import { siteConfig } from "../../site.config";
 ---
@@ -10,49 +8,31 @@ import { siteConfig } from "../../site.config";
   id="main-header"
 >
   <!-- Logo/Brand - Left side -->
-  <div class="col-span-6 md:col-span-3">
+  <div class="col-span-5 md:col-span-5">
     <a
       aria-current={Astro.url.pathname === "/" ? "page" : false}
-      class="inline-flex items-center hover:text-accent transition-colors"
+      class="inline-flex items-baseline gap-3 hover:text-accent transition-colors"
       href="/"
     >
-      <svg
-        aria-hidden="true"
-        class="me-2 h-6 w-4"
-        fill="none"
-        focusable="false"
-        viewBox="0 0 272 480"
-        xmlns="http://www.w3.org/2000/svg"
+      <img src="/logo.svg" alt="Setpiece Logo" class="w-8 h-8 flex-shrink-0" />
+      <span class="text-lg font-medium tracking-tight whitespace-nowrap"
+        >{siteConfig.title}</span
       >
-        <title>Logo</title>
-        <path
-          d="M181.334 93.333v-40L226.667 80v40l-45.333-26.667ZM136.001 53.333 90.667 26.667v426.666L136.001 480V53.333Z"
-          fill="#B04304"></path>
-        <path
-          d="m136.001 119.944 45.333-26.667 45.333 26.667-45.333 26.667-45.333-26.667ZM90.667 26.667 136.001 0l45.333 26.667-45.333 26.666-45.334-26.666ZM181.334 53.277l45.333-26.666L272 53.277l-45.333 26.667-45.333-26.667ZM0 213.277l45.333-26.667 45.334 26.667-45.334 26.667L0 213.277ZM136 239.944l-45.333-26.667v53.333L136 239.944Z"
-          fill="#FF5D01"></path>
-        <path
-          d="m136 53.333 45.333-26.666v120L226.667 120V80L272 53.333V160l-90.667 53.333v240L136 480V306.667L45.334 360V240l45.333-26.667v53.334L136 240V53.333Z"
-          fill="#53C68C"></path>
-        <path d="M45.334 240 0 213.334v120L45.334 360V240Z" fill="#B04304"
-        ></path>
-      </svg>
-      <span class="text-lg font-medium tracking-tight">{siteConfig.title}</span>
     </a>
   </div>
 
-  <!-- Navigation - Center -->
+  <!-- Navigation - Aligned with hero -->
   <nav
     aria-label="Main menu"
-    class="col-span-12 md:col-span-6 order-3 md:order-2 mt-4 md:mt-0"
+    class="col-span-6 md:col-span-4 md:col-start-7 order-3 md:order-2 mt-4 md:mt-0 flex items-baseline"
     id="navigation-menu"
   >
-    <div class="hidden md:flex justify-center space-x-8">
+    <div class="hidden md:flex items-baseline space-x-8 leading-none">
       {
         menuLinks.map((link) => (
           <a
             aria-current={Astro.url.pathname === link.path ? "page" : false}
-            class="text-sm uppercase tracking-wide hover:text-accent transition-colors"
+            class="text-sm uppercase tracking-wide hover:text-accent transition-colors leading-none"
             href={link.path}
           >
             {link.title}
@@ -81,11 +61,8 @@ import { siteConfig } from "../../site.config";
 
   <!-- Controls - Right side -->
   <div
-    class="col-span-6 md:col-span-3 order-2 md:order-3 flex items-center justify-end space-x-3"
+    class="col-span-6 md:col-span-2 md:col-start-11 order-2 md:order-3 flex items-center justify-end space-x-3"
   >
-    <Search />
-    <ThemeToggle />
-
     <!-- Mobile menu button -->
     <mobile-button>
       <button

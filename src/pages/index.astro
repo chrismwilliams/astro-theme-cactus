@@ -1,53 +1,71 @@
 ---
 import Grid from "@/components/Grid.astro";
 import PageLayout from "@/layouts/Base.astro";
+import { Image } from "astro:assets";
+import hills from "@/content/images/hills.jpg";
 ---
 
-<PageLayout meta={{ title: "Astro Swiss" }}>
-  <Grid class="mb-12">
+<PageLayout meta={{ title: "Home Page" }}>
+  <Grid class="mb-2">
+    <div class="col-span-12 h-[250px] overflow-hidden">
+      <Image
+        src={hills}
+        alt="Rolling hills landscape"
+        class="w-full h-full object-cover object-top"
+      />
+    </div>
+  </Grid>
+  <Grid class="mb-4">
     <!-- Hero statement -->
-    <section class="col-span-12 md:col-span-8">
-      <h2 class="text-3xl md:text-4xl leading-snug mb-6">
-        Design with a <span class="text-accent">system</span>, not vibes.
+    <section class="col-span-6 pb-2">
+      <h2 class="text-5xl md:text-4xl leading-snug mb-4">
+        When you hit a wall, we transform everything.
       </h2>
-      <p class="prose">
-        Set a 4px baseline. Constrain measure to ~72ch. Use asymmetric spans to
-        create rhythm. Keep copy flush-left, ragged-right. Let whitespace do the
-        work.
+      <p class="text-sm leading-normal">
+        We are AI-native operating partners for SaaS leaders who've hit a wall.
+        Get unstuck and go fast (again).
       </p>
     </section>
-
-    <aside class="col-span-12 md:col-span-4 md:pl-4">
-      <div class="border-t border-ink/10 pt-4 text-sm leading-normal">
-        <div class="font-medium uppercase tracking-wide mb-2">Contents</div>
-        <ul class="space-y-1">
-          <li>Grid & rhythm</li>
-          <li>Type & hierarchy</li>
-          <li>Asymmetry & tension</li>
-        </ul>
-      </div>
-    </aside>
   </Grid>
 
   <!-- Two-column editorial with asymmetric spans -->
-  <Grid class="pt-12">
-    <article class="col-span-12 md:col-span-7">
-      <h3 class="text-xl mb-3">Grid & Rhythm</h3>
-      <p class="prose">
-        Work on a 4px baseline. Headlines use tighter leading (<code
-          >leading-snug</code
-        >), body uses 1.5 (<code>leading-normal</code>). Don’t improvise
-        line-heights.
+  <Grid class="mb-12">
+    <article class="col-span-12 md:col-span-6r">
+      <h3 class="text-5xl md:text-4xl leading-snug mb-4">
+        What got you here stopped working
+      </h3>
+      <p class="text-sm leading-normal">
+        Whether you’re finding product-market fit, scaling past early success,
+        or managing explosive growth - what used to work is now making things
+        worse. Every day feels like trying to stay afloat instead of building
+        the future.
       </p>
     </article>
-    <aside class="col-span-12 md:col-span-5 md:self-start">
-      <div class="p-6 border border-ink/10">
-        <p class="text-sm leading-normal">
-          Use <code class="font-mono">gap-6</code> for gutters, and consistent vertical
-          spacing.
-        </p>
-      </div>
-    </aside>
+  </Grid>
+  <Grid class="gap-y-6">
+    <section class="col-span-12 md:col-span-4">
+      <h4 class="text-xl mb-3">Product Velocity Has Tanked</h4>
+      <p class="text-sm leading-normal">
+        Long lead times, clogged backlogs, spending more time fixing bugs than
+        shipping features. Your product got you here, now it's holding you back.
+      </p>
+    </section>
+    <section class="col-span-12 md:col-span-4 md:col-start-5">
+      <h4 class="text-xl mb-10">Leadership Firefighting</h4>
+      <p class="text-sm leading-normal">
+        Strategic decisions delayed by operational inefficiency. Too much
+        strategic time consumed by friction or decisionmaking instead of
+        customer value creation.
+      </p>
+    </section>
+    <section class="col-span-12 md:col-span-4 md:col-start-9">
+      <h4 class="text-xl mb-10">AI Adoption Chaos</h4>
+      <p class="text-sm leading-normal">
+        Technical teams experiment aimlessly while business teams fall behind.
+        AI creates more complexity than capability without systematic
+        implementation.
+      </p>
+    </section>
   </Grid>
 
   <!-- Poster-like block for contrast -->
@@ -70,12 +88,3 @@ import PageLayout from "@/layouts/Base.astro";
     </div>
   </section>
 </PageLayout>
-<!-- Footer -->
-<footer class="py-16">
-  <div class="grid grid-cols-12 gap-6">
-    <div class="col-span-12 md:col-span-6 text-sm">© Your Studio</div>
-    <div class="col-span-12 md:col-span-6 md:text-right text-sm">
-      Typeset in Inter. Colors: ink / accent.
-    </div>
-  </div>
-</footer>

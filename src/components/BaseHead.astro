@@ -11,8 +11,15 @@ const { articleDate, description, ogImage, title } = Astro.props;
 const titleSeparator = "•";
 const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url).href;
+const socialImageURL = new URL(
+  ogImage ? ogImage : "/social-card.png",
+  Astro.url
+).href;
 ---
+
+<!-- Adobe Fonts -->
+<link rel="preconnect" href="https://use.typekit.net" crossorigin />
+<link rel="stylesheet" href="https://use.typekit.net/rxb5drz.css" />
 
 <meta charset="utf-8" />
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -21,15 +28,15 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 {/* Icons */}
 <link href="/icon.svg" rel="icon" type="image/svg+xml" />
 {
-	import.meta.env.PROD && (
-		<>
-			{/* Favicon & Apple Icon */}
-			<link rel="icon" href="/favicon-32x32.png" type="image/png" />
-			<link href="/icons/apple-touch-icon.png" rel="apple-touch-icon" />
-			{/* Manifest */}
-			<link href="/manifest.webmanifest" rel="manifest" />
-		</>
-	)
+  import.meta.env.PROD && (
+    <>
+      {/* Favicon & Apple Icon */}
+      <link rel="icon" href="/favicon-32x32.png" type="image/png" />
+      <link href="/icons/apple-touch-icon.png" rel="apple-touch-icon" />
+      {/* Manifest */}
+      <link href="/manifest.webmanifest" rel="manifest" />
+    </>
+  )
 }
 
 {/* Canonical URL */}
@@ -51,12 +58,12 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <meta content="1200" property="og:image:width" />
 <meta content="630" property="og:image:height" />
 {
-	articleDate && (
-		<>
-			<meta content={siteConfig.author} property="article:author" />
-			<meta content={articleDate} property="article:published_time" />
-		</>
-	)
+  articleDate && (
+    <>
+      <meta content={siteConfig.author} property="article:author" />
+      <meta content={articleDate} property="article:published_time" />
+    </>
+  )
 }
 
 {/* Twitter */}
@@ -71,16 +78,23 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 
 {/* RSS auto-discovery */}
 <link href="/rss.xml" title="Blog" rel="alternate" type="application/rss+xml" />
-<link href="/notes/rss.xml" title="Notes" rel="alternate" type="application/rss+xml" />
+<link
+  href="/notes/rss.xml"
+  title="Notes"
+  rel="alternate"
+  type="application/rss+xml"
+/>
 
 {/* Webmentions */}
 {
-	WEBMENTION_URL && (
-		<>
-			<link href={WEBMENTION_URL} rel="webmention" />
-			{WEBMENTION_PINGBACK && <link href={WEBMENTION_PINGBACK} rel="pingback" />}
-		</>
-	)
+  WEBMENTION_URL && (
+    <>
+      <link href={WEBMENTION_URL} rel="webmention" />
+      {WEBMENTION_PINGBACK && (
+        <link href={WEBMENTION_PINGBACK} rel="pingback" />
+      )}
+    </>
+  )
 }
 
 <meta content={Astro.generator} name="generator" />

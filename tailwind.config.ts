@@ -6,7 +6,7 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: { DEFAULT: "1rem", lg: "2rem", xl: "3rem" },
+			padding: { DEFAULT: ".25rem", lg: ".5rem", xl: "1rem" },
 			screens: { sm: "640px", md: "768px", lg: "1024px", xl: "1280px", "2xl": "1440px" }
 		},
 		extend: {
@@ -16,7 +16,8 @@ export default {
 				accent: "#E10600"
 			},
 			fontFamily: {
-				sans: ["InterVariable", "Inter", "system-ui", "Helvetica Neue", "Arial", "sans-serif"]
+				sans: ["aktiv-grotesk", "system-ui", "sans-serif"],
+				mono: ["bc-sklonar", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"]
 			},
 			// 4px baseline system (keeps spacing predictable)
 			spacing: {

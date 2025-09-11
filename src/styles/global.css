@@ -5,6 +5,7 @@
 
 :root {
 	color-scheme: light;
+	--font-fallback-sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
 }
 
 /* use a selector-based strategy for dark mode */
@@ -47,6 +48,7 @@
 
 	body {
 		@apply bg-paper text-ink antialiased;
+		font-family: var(--font-fallback-sans), var(--font-sans), var(--font-fallback-sans);
 	}
 
 	:target {
