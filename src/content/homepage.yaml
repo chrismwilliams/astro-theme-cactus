@@ -9,14 +9,17 @@ mainProblemDescription: >-
   Every day feels like trying to stay afloat instead of building the future.
 problemCards:
   - title: Product Velocity Has Tanked
-differentiatorTitle: We're Built Different
-differentiators:
-  - title: Product Velocity Has Tanked
   - title: Leadership Firefighting
   - title: AI Adoption Chaos
+differentiatorTitle: We're Built Different
+differentiators:
+  - title: Full-Stack Operators
+  - title: Fundamentals Before Features
+  - title: Embedded Execution Model
 servicesTitle: Sprint to get unstuck
 servicesSubtitle: How we work with you to get your groove back
 servicesDescription: >-
   Strategy clarity first, then systematic transformation. No wasted effort
   optimizing the wrong things.
-services: []
+services:
+  - title: The Problem-Solution-Gap Audit
