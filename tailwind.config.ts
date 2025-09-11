@@ -1,9 +1,52 @@
 import type { Config } from "tailwindcss";
 
 export default {
+	content: ["./src/**/*.{astro,html,js,jsx,ts,tsx,md,mdx}"],
 	plugins: [require("@tailwindcss/typography")],
 	theme: {
+		container: {
+			center: true,
+			padding: { DEFAULT: "1rem", lg: "2rem", xl: "3rem" },
+			screens: { sm: "640px", md: "768px", lg: "1024px", xl: "1280px", "2xl": "1440px" }
+		},
 		extend: {
+			colors: {
+				paper: "#ffffff",
+				ink: "#111111",
+				accent: "#E10600"
+			},
+			fontFamily: {
+				sans: ["InterVariable", "Inter", "system-ui", "Helvetica Neue", "Arial", "sans-serif"]
+			},
+			// 4px baseline system (keeps spacing predictable)
+			spacing: {
+				px: "1px", 1: "4px", 1.5: "6px", 2: "8px", 3: "12px", 4: "16px",
+				5: "20px", 6: "24px", 7: "28px", 8: "32px", 10: "40px", 12: "48px",
+				14: "56px", 16: "64px", 18: "72px", 20: "80px"
+			},
+			lineHeight: {
+				snug: "1.25",
+				normal: "1.5",
+				loose: "1.65"
+			},
+			fontSize: {
+				xs:   ["0.75rem", { lineHeight: "1.5" }],
+				sm:   ["0.875rem", { lineHeight: "1.5" }],
+				base: ["1rem", { lineHeight: "1.5" }],
+				lg:   ["1.125rem", { lineHeight: "1.5" }],
+				xl:   ["1.25rem", { lineHeight: "1.5" }],
+				"2xl":["1.5rem", { lineHeight: "1.25" }],
+				"3xl":["1.875rem", { lineHeight: "1.25" }],
+				"4xl":["2.25rem", { lineHeight: "1.2" }],
+				"5xl":["3rem", { lineHeight: "1.1" }],
+				"6xl":["3.75rem", { lineHeight: "1.1" }]
+			},
+			maxWidth: {
+				measure: "72ch"
+			},
+			gridTemplateColumns: {
+				"12": "repeat(12, minmax(0, 1fr))"
+			},
 			typography: () => ({
 				DEFAULT: {
 					css: {

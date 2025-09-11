@@ -1,79 +1,81 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
-import SocialList from "@/components/SocialList.astro";
-import PostPreview from "@/components/blog/PostPreview.astro";
-import Note from "@/components/note/Note.astro";
-import { getAllPosts } from "@/data/post";
+import Grid from "@/components/Grid.astro";
 import PageLayout from "@/layouts/Base.astro";
-import { collectionDateSort } from "@/utils/date";
-
-// Posts
-const MAX_POSTS = 10;
-const allPosts = await getAllPosts();
-const allPostsByDate = allPosts
-	.sort(collectionDateSort)
-	.slice(0, MAX_POSTS) as CollectionEntry<"post">[];
-
-// Pinned Posts, set to a max of 3;
-const MAX_PINNED_POSTS = 3;
-const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned).slice(0, MAX_PINNED_POSTS);
-
-// Notes
-const MAX_NOTES = 5;
-const allNotes = await getCollection("note");
-const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 ---
 
-<PageLayout meta={{ title: "Home" }}>
-	<section>
-		<h1 class="title mb-12">Hello World!</h1>
-		<p class="mb-4">
-			Hi, I’m a theme for Astro, a simple starter that you can use to create your website or blog.
-			If you want to know more about how you can customise me, add more posts, and make it your own,
-			click on the GitHub icon link below and it will take you to my repo.
-		</p>
-		<SocialList />
-	</section>
-	{
-		pinnedPosts.length > 0 && (
-			<section class="mt-16">
-				<h2 class="title mb-6 text-xl">Pinned Posts</h2>
-				<ul class="space-y-4" role="list">
-					{pinnedPosts.map((p) => (
-						<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-							<PostPreview post={p} />
-						</li>
-					))}
-				</ul>
-			</section>
-		)
-	}
-	<section class="mt-16">
-		<h2 class="title text-accent mb-6 text-xl"><a href="/posts/">Posts</a></h2>
-		<ul class="space-y-4" role="list">
-			{
-				allPostsByDate.map((p) => (
-					<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-						<PostPreview post={p} />
-					</li>
-				))
-			}
-		</ul>
-	</section>
-	{
-		latestNotes.length > 0 && (
-			<section class="mt-16">
-				<h2 class="title text-accent mb-6 text-xl">
-					<a href="/notes/">Notes</a>
-				</h2>
-				<ul class="space-y-6" role="list">
-					{latestNotes.map((note) => (
-						<li>
-							<Note note={note} as="h3" isPreview />
-						</li>
-					))}
-				</ul>
-			</section>
-		)
-	}
+<PageLayout meta={{ title: "Astro Swiss" }}>
+  <Grid class="mb-12">
+    <!-- Hero statement -->
+    <section class="col-span-12 md:col-span-8">
+      <h2 class="text-3xl md:text-4xl leading-snug mb-6">
+        Design with a <span class="text-accent">system</span>, not vibes.
+      </h2>
+      <p class="prose">
+        Set a 4px baseline. Constrain measure to ~72ch. Use asymmetric spans to
+        create rhythm. Keep copy flush-left, ragged-right. Let whitespace do the
+        work.
+      </p>
+    </section>
+
+    <aside class="col-span-12 md:col-span-4 md:pl-4">
+      <div class="border-t border-ink/10 pt-4 text-sm leading-normal">
+        <div class="font-medium uppercase tracking-wide mb-2">Contents</div>
+        <ul class="space-y-1">
+          <li>Grid & rhythm</li>
+          <li>Type & hierarchy</li>
+          <li>Asymmetry & tension</li>
+        </ul>
+      </div>
+    </aside>
+  </Grid>
+
+  <!-- Two-column editorial with asymmetric spans -->
+  <Grid class="pt-12">
+    <article class="col-span-12 md:col-span-7">
+      <h3 class="text-xl mb-3">Grid & Rhythm</h3>
+      <p class="prose">
+        Work on a 4px baseline. Headlines use tighter leading (<code
+          >leading-snug</code
+        >), body uses 1.5 (<code>leading-normal</code>). Don’t improvise
+        line-heights.
+      </p>
+    </article>
+    <aside class="col-span-12 md:col-span-5 md:self-start">
+      <div class="p-6 border border-ink/10">
+        <p class="text-sm leading-normal">
+          Use <code class="font-mono">gap-6</code> for gutters, and consistent vertical
+          spacing.
+        </p>
+      </div>
+    </aside>
+  </Grid>
+
+  <!-- Poster-like block for contrast -->
+  <section class="pt-16">
+    <div class="grid grid-cols-12 gap-6 items-end">
+      <div class="col-span-12 md:col-span-9">
+        <div
+          class="text-6xl leading-tight md:leading-snug font-medium tracking-tight"
+        >
+          SYSTEM <span class="text-accent">/</span> STRUCTURE <span
+            class="text-accent">/</span
+          > SPACE
+        </div>
+      </div>
+      <div
+        class="col-span-12 md:col-span-3 md:text-right text-sm uppercase tracking-wide"
+      >
+        Swiss method, web-native execution
+      </div>
+    </div>
+  </section>
 </PageLayout>
+<!-- Footer -->
+<footer class="py-16">
+  <div class="grid grid-cols-12 gap-6">
+    <div class="col-span-12 md:col-span-6 text-sm">© Your Studio</div>
+    <div class="col-span-12 md:col-span-6 md:text-right text-sm">
+      Typeset in Inter. Colors: ink / accent.
+    </div>
+  </div>
+</footer>

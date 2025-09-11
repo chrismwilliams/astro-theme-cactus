@@ -4,24 +4,35 @@ import { menuLinks, siteConfig } from "@/site.config";
 const year = new Date().getFullYear();
 ---
 
-<footer
-	class="mt-auto flex w-full flex-col items-center justify-center gap-y-2 pt-20 pb-4 text-center align-top font-semibold text-gray-600 sm:flex-row sm:justify-between sm:text-xs dark:text-gray-400"
->
-	<div class="me-0 sm:me-4">
-		&copy; {siteConfig.author}
-		{year}.<span class="inline-block">&nbsp;🚀&nbsp;{siteConfig.title}</span>
-	</div>
-	<nav
-		aria-labelledby="footer_links"
-		class="flex gap-x-2 sm:gap-x-0 sm:divide-x sm:divide-gray-500"
-	>
-		<p id="footer_links" class="sr-only">More on this site</p>
-		{
-			menuLinks.map((link) => (
-				<a class="hover:text-global-text px-4 py-2 hover:underline sm:py-0" href={link.path}>
-					{link.title}
-				</a>
-			))
-		}
-	</nav>
+<footer class="py-16 container">
+  <div class="grid grid-cols-12 gap-6">
+    <div class="me-0 sm:me-4">
+      &copy; {siteConfig.author}
+      {year}.<span class="inline-block">&nbsp;🚀&nbsp;{siteConfig.title}</span>
+    </div>
+    <nav
+      aria-labelledby="footer_links"
+      class="flex gap-x-2 sm:gap-x-0 sm:divide-x sm:divide-gray-500"
+    >
+      <p id="footer_links" class="sr-only">More on this site</p>
+      {
+        menuLinks.map((link) => (
+          <a
+            class="hover:text-global-text px-4 py-2 hover:underline sm:py-0"
+            href={link.path}
+          >
+            {link.title}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
 </footer>
+<!-- <footer class="py-16">
+	<div class="grid grid-cols-12 gap-6">
+	  <div class="col-span-12 md:col-span-6 text-sm">© Your Studio</div>
+	  <div class="col-span-12 md:col-span-6 md:text-right text-sm">
+		Typeset in Inter. Colors: ink / accent.
+	  </div>
+	</div>
+  </footer>-->

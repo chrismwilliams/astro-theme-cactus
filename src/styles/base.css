@@ -1,0 +1,17 @@
+/* Base styles for Swiss-modern design system */
+@import url('./global.css');
+
+/* Swiss typography system */
+.container {
+  @apply mx-auto px-6 max-w-7xl;
+}
+
+/* Typography hierarchy for Swiss design */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-medium tracking-tight;
+}
+
+/* Ensure consistent baseline alignment */
+body {
+  font-feature-settings: "kern" 1, "liga" 1;
+}

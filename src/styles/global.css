@@ -3,6 +3,10 @@
 /* config for tailwindcss-typography plugin */
 @config "../../tailwind.config.ts";
 
+:root {
+	color-scheme: light;
+}
+
 /* use a selector-based strategy for dark mode */
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -17,6 +21,10 @@
 }
 
 @layer base {
+	html, body {
+		height: 100%;
+	}
+
 	html {
 		color-scheme: light dark;
 		accent-color: var(--color-accent);
@@ -35,6 +43,10 @@
 			--color-accent-2: oklch(94.66% 0 0);
 			--color-quote: oklch(94.8% 0.106 136.49);
 		}
+	}
+
+	body {
+		@apply bg-paper text-ink antialiased;
 	}
 
 	:target {
@@ -68,6 +80,15 @@
 
 	.title {
 		@apply text-accent-2 text-2xl font-semibold;
+	}
+
+	/* typographic defaults */
+	.prose {
+		@apply leading-normal max-w-measure;
+	}
+
+	h1, h2, h3, h4 {
+		@apply tracking-tight;
 	}
 }
 

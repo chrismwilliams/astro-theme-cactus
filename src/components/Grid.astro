@@ -1,0 +1,8 @@
+---
+/** Simple API so pages read like a layout spec instead of utility soup */
+const { class: cls = "" } = Astro.props;
+---
+
+<div class={`grid grid-cols-12 gap-6 ${cls}`}>
+  <slot />
+</div>
