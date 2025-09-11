@@ -77,23 +77,32 @@
 /* Essential grid helpers that coordinate with CSS variables */
 .grid-local {
 	display: grid;
-	grid-template-columns: subgrid;
+	grid-template-columns: repeat(var(--cols), 1fr);
 	grid-auto-rows: var(--row);
 	column-gap: var(--gutter-x);
 	row-gap: var(--gutter-y);
 }
 
-/* Column spans that adapt to our responsive column count */
+/* Responsive grid column utilities */
 .gc-full { grid-column: 1 / -1; }
 
-/* Only create responsive variants - no mobile defaults */
-  .lg\:gc-half { grid-column: span 3; }
-  .lg\:gc-third { grid-column: span 2; }
+/* Mobile-first approach: 3 columns base */
+.gc-third { grid-column: span 1; }
+.gc-two-thirds { grid-column: span 2; }
 
-
-/* Column start positions for header layout */
-  
+/* Tablet: 6 columns */
+@media (min-width: 768px) {
+  .md\:gc-half { grid-column: span 3; }
   .md\:gc-third { grid-column: span 2; }
+  .md\:gc-two-thirds { grid-column: span 4; }
+}
+
+/* Desktop: 9 columns */
+@media (min-width: 1024px) {
+  .lg\:gc-half { grid-column: span 4; }
+  .lg\:gc-third { grid-column: span 3; }
+  .lg\:gc-two-thirds { grid-column: span 6; }
+}
 
 /* Row span utilities following Tailwind naming */
 .grid-row-2 { grid-row: span 2; }
@@ -119,10 +128,7 @@
 		}
 	}
 
-	body {
-		@apply bg-paper text-ink antialiased;
-		font-family: var(--font-fallback-sans), var(--font-sans), var(--font-fallback-sans);
-	}
+	/* Body styles consolidated above in the first body rule */
 
 	:target {
 		scroll-margin-block: 5ex;

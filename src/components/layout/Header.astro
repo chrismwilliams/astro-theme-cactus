@@ -3,51 +3,49 @@ import { menuLinks } from "@/site.config";
 import { siteConfig } from "../../site.config";
 ---
 
-<header class="group gc-full grid-local" id="main-header">
-  <!-- Logo/Brand - Left -->
-  <div class="gc-third md:gc-third md:gc-start-1">
+<header class="grid-local gc-full" id="main-header">
+  <!-- Logo/Brand - Left side -->
+  <div class="gc-two-thirds md:gc-half lg:gc-third">
     <a
       aria-current={Astro.url.pathname === "/" ? "page" : false}
-      class="inline-block hover:text-accent transition-colors"
+      class="inline-flex items-baseline gap-3 hover:text-accent transition-colors"
       href="/"
     >
-      <img
-        src="/logo.svg"
-        alt="Setpiece Logo"
-        class="w-8 h-8 inline-block align-middle"
-      />
-      <span class="text-lg font-medium tracking-tight ml-2 align-middle"
+      <img src="/logo.svg" alt="Setpiece Logo" class="w-8 h-8 flex-shrink-0" />
+      <span class="text-lg font-medium tracking-tight whitespace-nowrap"
         >{siteConfig.title}</span
       >
     </a>
   </div>
 
-  <!-- Navigation - Center -->
+  <!-- Navigation - Center/right aligned -->
   <nav
     aria-label="Main menu"
-    class="gc-third md:gc-third md:gc-start-3"
+    class="gc-third md:gc-half lg:gc-two-thirds"
     id="navigation-menu"
   >
-    {
-      menuLinks.map((link) => (
-        <a
-          aria-current={Astro.url.pathname === link.path ? "page" : false}
-          class="text-sm uppercase tracking-wide hover:text-accent transition-colors leading-none"
-          href={link.path}
-        >
-          {link.title}
-        </a>
-      ))
-    }
+    <div class="hidden md:flex items-baseline space-x-8 leading-none">
+      {
+        menuLinks.map((link) => (
+          <a
+            aria-current={Astro.url.pathname === link.path ? "page" : false}
+            class="text-sm uppercase tracking-wide hover:text-accent transition-colors leading-none"
+            href={link.path}
+          >
+            {link.title}
+          </a>
+        ))
+      }
+    </div>
 
     <!-- Mobile navigation -->
-    <div class="md:hidden hidden group-[.menu-open]:block">
-      <div class="pt-4 border-t border-ink/10">
+    <div class="md:hidden group-[.menu-open]:block hidden">
+      <div class="flex flex-col space-y-2 pt-4 border-t border-ink/10">
         {
           menuLinks.map((link) => (
             <a
               aria-current={Astro.url.pathname === link.path ? "page" : false}
-              class="block text-sm uppercase tracking-wide hover:text-accent transition-colors mb-2"
+              class="text-sm uppercase tracking-wide hover:text-accent transition-colors"
               href={link.path}
             >
               {link.title}
@@ -58,14 +56,16 @@ import { siteConfig } from "../../site.config";
     </div>
   </nav>
 
-  <!-- Controls - Right -->
-  <div class="md:gc-third md:gc-start-5">
+  <!-- Controls - Right side (mobile menu button) -->
+  <div
+    class="gc-full md:gc-full lg:gc-full flex items-center justify-end space-x-3 md:hidden"
+  >
     <!-- Mobile menu button -->
     <mobile-button>
       <button
         aria-expanded="false"
         aria-haspopup="menu"
-        class="group relative h-6 w-6 md:hidden ml-auto"
+        class="group relative h-6 w-6 md:hidden"
         id="toggle-navigation-menu"
         type="button"
       >
