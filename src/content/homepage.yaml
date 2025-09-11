@@ -10,7 +10,8 @@ mainProblemDescription: >-
 problemCards:
   - title: Product Velocity Has Tanked
 differentiatorTitle: We're Built Different
-differentiators: []
+differentiators:
+  - title: Leadership Firefighting
 servicesTitle: Sprint to get unstuck
 servicesSubtitle: How we work with you to get your groove back
 servicesDescription: >-
