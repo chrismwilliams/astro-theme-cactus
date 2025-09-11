@@ -42,7 +42,6 @@
 
 	body {
 		margin: 0;
-		background: var(--bg);
 		color: #111;
 		font-family: system-ui, sans-serif;
 		/* if you want the poster centered vertically: */
@@ -66,10 +65,24 @@
 	row-gap: var(--gutter-y);
 	}
 	
-	/* Optional: a thin keyline around the grid frame (like the poster border) */
+	/* Optional: a thin keyline artound the grid frame (like the poster border) */
 	.grid-frame {
 	outline: 2px solid rgba(255,255,255,.85);
 	outline-offset: -2px; /* inside the padding */
+	background:
+    /* vertical lines every (track + gutter-x) */
+    repeating-linear-gradient(
+      to right,
+      var(--line) 0 1px,
+      transparent 1px calc(var(--track) + var(--gutter-x))
+    ),
+    /* horizontal lines every (row + gutter-y) */
+    repeating-linear-gradient(
+      to bottom,
+      var(--line) 0 1px,
+      transparent 1px calc(var(--row) + var(--gutter-y))
+    );
+  background-clip: content-box; /* keep lines inside the padded area */
 	}
 
 	/* ---- Grid system using Tailwind patterns ---- */

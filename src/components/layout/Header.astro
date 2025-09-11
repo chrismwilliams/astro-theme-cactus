@@ -3,9 +3,12 @@ import { menuLinks } from "@/site.config";
 import { siteConfig } from "../../site.config";
 ---
 
-<header class="grid-local gc-full" id="main-header">
+<header
+  class="col-span-3 md:col-span-6 lg:col-span-9 grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 items-center gap-4 z-90 bg-global-bg"
+  id="main-header"
+>
   <!-- Logo/Brand - Left side -->
-  <div class="gc-two-thirds md:gc-half lg:gc-third">
+  <div class="col-span-2 md:col-span-3 lg:col-span-3">
     <a
       aria-current={Astro.url.pathname === "/" ? "page" : false}
       class="inline-flex items-baseline gap-3 hover:text-accent transition-colors"
@@ -18,10 +21,10 @@ import { siteConfig } from "../../site.config";
     </a>
   </div>
 
-  <!-- Navigation - Center/right aligned -->
+  <!-- Navigation - desktop only while debugging -->
   <nav
     aria-label="Main menu"
-    class="gc-third md:gc-half lg:gc-two-thirds"
+    class="col-span-1 md:col-span-3 lg:col-span-6"
     id="navigation-menu"
   >
     <div class="hidden md:flex items-baseline space-x-8 leading-none">
@@ -37,74 +40,9 @@ import { siteConfig } from "../../site.config";
         ))
       }
     </div>
-
-    <!-- Mobile navigation -->
-    <div class="md:hidden group-[.menu-open]:block hidden">
-      <div class="flex flex-col space-y-2 pt-4 border-t border-ink/10">
-        {
-          menuLinks.map((link) => (
-            <a
-              aria-current={Astro.url.pathname === link.path ? "page" : false}
-              class="text-sm uppercase tracking-wide hover:text-accent transition-colors"
-              href={link.path}
-            >
-              {link.title}
-            </a>
-          ))
-        }
-      </div>
-    </div>
   </nav>
 
-  <!-- Controls - Right side (mobile menu button) -->
-  <div
-    class="gc-full md:gc-full lg:gc-full flex items-center justify-end space-x-3 md:hidden"
-  >
-    <!-- Mobile menu button -->
-    <mobile-button>
-      <button
-        aria-expanded="false"
-        aria-haspopup="menu"
-        class="group relative h-6 w-6 md:hidden"
-        id="toggle-navigation-menu"
-        type="button"
-      >
-        <span class="sr-only">Open main menu</span>
-        <svg
-          aria-hidden="true"
-          class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transition-all group-aria-expanded:scale-0 group-aria-expanded:opacity-0"
-          fill="none"
-          focusable="false"
-          id="line-svg"
-          stroke="currentColor"
-          stroke-width="1.5"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M3.75 9h16.5m-16.5 6.75h16.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-        </svg>
-        <svg
-          aria-hidden="true"
-          class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 scale-0 opacity-0 transition-all group-aria-expanded:scale-100 group-aria-expanded:opacity-100"
-          fill="none"
-          focusable="false"
-          id="cross-svg"
-          stroke="currentColor"
-          stroke-width="1.5"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M6 18L18 6M6 6l12 12"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-        </svg>
-      </button>
-    </mobile-button>
-  </div>
+  <!-- Mobile controls removed during debugging -->
 </header>
 
 <script>

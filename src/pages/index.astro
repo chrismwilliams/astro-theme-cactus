@@ -7,7 +7,9 @@ import hills from "@/content/images/hills.jpg";
 <PageLayout meta={{ title: "Home Page" }}>
   <!-- Hero image -->
 
-  <section class="gc-full md:gc-half lg:gc-half grid-row-2">
+  <section
+    class="gc-full md:col-span-3 md:col-start-4 lg:col-span-5 lg:col-start-5 grid-row-2"
+  >
     <h2 class="text-3xl md:text-4xl leading-snug mb-4">
       When you hit a wall, we transform everything.
     </h2>
@@ -16,38 +18,45 @@ import hills from "@/content/images/hills.jpg";
       Get unstuck and go fast (again).
     </p>
   </section>
-  <div class="gc-full grid-row-2">
-    <Image
-      src={hills}
-      alt="Rolling hills landscape"
-      class="w-full h-full object-cover object-top"
-    />
-  </div>
+  <section class="gc-full grid-local row-span-5">
+    <div class="gc-full grid-row-4">
+      <Image
+        src={hills}
+        alt="Rolling hills landscape"
+        class="w-full h-full object-cover object-top"
+      />
+    </div>
+  </section>
 
   <!-- Hero statement -->
 
   <!-- Two-column editorial with asymmetric spans -->
-  <article class="gc-full md:gc-half lg:gc-half grid-row-2">
-    <h3 class="text-3xl md:text-4xl leading-snug mb-4">
-      What got you here stopped working
-    </h3>
-    <p class="text-sm leading-normal">
-      Whether you're finding product-market fit, scaling past early success, or
-      managing explosive growth - what used to work is now making things worse.
-      Every day feels like trying to stay afloat instead of building the future.
-    </p>
-  </article>
-
-  <!-- Three-column problem sections -->
-  <article class="grid-local gc-full grid-row-2">
-    <section class="gc-third md:gc-third lg:gc-third">
+  <section class="gc-full grid-local row-span-6 border-t-[5px] border-black">
+    <section class="gc-full grid-local row-span-3 border-t-[5px">
+      <article class="col-span-3 md:col-span-4 lg:col-span-4">
+        <h3 class="text-3xl md:text-4xl leading-snug mb-4">
+          What got you here stopped working
+        </h3>
+        <p class="text-sm leading-normal">
+          Whether you're finding product-market fit, scaling past early success,
+          or managing explosive growth - what used to work is now making things
+          worse. Every day feels like trying to stay afloat instead of building
+          the future.
+        </p>
+      </article>
+    </section>
+    <section
+      class="col-span-1 md:col-span-2 lg:col-span-3 border-t-[5px] border-black p-3"
+    >
       <h4 class="text-xl mb-3">Product Velocity Has Tanked</h4>
       <p class="text-sm leading-normal">
         Long lead times, clogged backlogs, spending more time fixing bugs than
         shipping features. Your product got you here, now it's holding you back.
       </p>
     </section>
-    <section class="gc-third md:gc-third lg:gc-third">
+    <section
+      class="col-span-1 md:col-span-2 lg:col-span-3 border-t-[5px] border-black p-3"
+    >
       <h4 class="text-lg mb-10">Leadership Firefighting</h4>
       <p class="text-sm leading-normal">
         Strategic decisions delayed by operational inefficiency. Too much
@@ -55,7 +64,9 @@ import hills from "@/content/images/hills.jpg";
         customer value creation.
       </p>
     </section>
-    <section class="gc-third md:gc-third lg:gc-third">
+    <section
+      class="col-span-1 md:col-span-2 lg:col-span-3 border-t-[5px] border-black p-3"
+    >
       <h4 class="text-xl mb-10">AI Adoption Chaos</h4>
       <p class="text-sm leading-normal">
         Technical teams experiment aimlessly while business teams fall behind.
@@ -63,5 +74,7 @@ import hills from "@/content/images/hills.jpg";
         implementation.
       </p>
     </section>
-  </article>
+  </section>
 </PageLayout>
+
+<!-- Three-column problem sections -->
