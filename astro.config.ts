@@ -22,11 +22,13 @@ import { expressiveCodeOptions, siteConfig } from "./src/site.config";
 import keystatic from '@keystatic/astro';
 import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
+import vercel from '@astrojs/vercel';
 
 
 // https://astro.build/config
 export default defineConfig({
-    output: "static",
+    output: "hybrid",
+    adapter: vercel(),
     site: siteConfig.url,
     image: {
         domains: ["webmention.io"],
