@@ -45,8 +45,6 @@
 		color: #111;
 		font-family: system-ui, sans-serif;
 		/* if you want the poster centered vertically: */
-		display: grid;
-		place-items: center;
 	  }
 	.grid-frame {
 	/* size the "poster" area; adjust as you like */
@@ -118,9 +116,15 @@
 }
 
 /* Row span utilities following Tailwind naming */
-.grid-row-2 { grid-row: span 2; }
-.grid-row-3 { grid-row: span 3; }
-.grid-row-4 { grid-row: span 4; }
+/* Row spans (apply to grid items) */
+.gr-span-1{ grid-row: span 1; }
+.gr-span-2{ grid-row: span 2; }
+.gr-span-3{ grid-row: span 3; }
+.gr-span-4{ grid-row: span 4; }
+.gr-span-5{ grid-row: span 5; }
+.gr-span-6{ grid-row: span 6; }
+.gr-span-8{ grid-row: span 8; }
+.gr-span-12{ grid-row: span 12; }
 	html {
 		color-scheme: light dark;
 		accent-color: var(--color-accent);
