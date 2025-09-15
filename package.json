@@ -1,7 +1,7 @@
 {
 	"name": "astro-cactus",
 	"type": "module",
-	"version": "6.8.0",
+	"version": "6.9.0",
 	"private": false,
 	"scripts": {
 		"dev": "astro dev",
@@ -63,11 +63,6 @@
 		"overrides": {
 			"sharp": "^0.34.2"
 		},
-		"onlyBuiltDependencies": [
-			"@biomejs/biome",
-			"@tailwindcss/oxide",
-			"esbuild",
-			"sharp"
-		]
+		"onlyBuiltDependencies": ["@biomejs/biome", "@tailwindcss/oxide", "esbuild", "sharp"]
 	}
 }
