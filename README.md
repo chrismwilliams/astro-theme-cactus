@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Astro Cactus logo" src="https://github.com/chrismwilliams/astro-theme-cactus/assets/12715988/85aa0d3c-ef6a-44e2-954d-ef035b4f4315" width="70" />
+  <img alt="Astro Cactus logo" src="https://github.com/user-attachments/assets/397c194f-0c12-430a-8a4d-fd369e194725" width="70" />
 </div>
 <h1 align="center">
   Astro Cactus
@@ -118,7 +118,7 @@ Adding a post/note/tag is as simple as adding your .md(x) files to either `src/c
 
 The Tag collection allows you to override the content for generated tag pages. For example the template includes `src/content/tag/test.md` which overrides the content shown in `your-domain.com/tags/test`.
 
-> **Note**  
+> **Note**
 > For a tag page to work, the file name (`src/content/tag/*`) must also be in a post's [tags frontmatter.](#post-frontmatter)
 
 The posts/notes/tags included with this template are there as an example of how to structure your frontmatter. Additionally, the [Astro docs](https://docs.astro.build/en/guides/markdown-content/) has a detailed section on markdown pages.
