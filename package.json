@@ -47,7 +47,7 @@
 		"@iconify-json/mdi": "^1.2.2",
 		"@pagefind/default-ui": "^1.4.0",
 		"@resvg/resvg-js": "^2.6.2",
-		"@tailwindcss/typography": "^0.5.16",
+		"@tailwindcss/typography": "^0.5.19",
 		"@types/hast": "^3.0.4",
 		"@types/mdast": "^4.0.4",
 		"autoprefixer": "^10.4.21",
