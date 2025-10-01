@@ -19,7 +19,7 @@
 		"@astrojs/markdown-remark": "^6.3.6",
 		"@astrojs/mdx": "4.3.5",
 		"@astrojs/rss": "4.0.12",
-		"@astrojs/sitemap": "3.5.1",
+		"@astrojs/sitemap": "3.6.0",
 		"@tailwindcss/vite": "4.1.13",
 		"astro": "5.13.7",
 		"astro-expressive-code": "^0.41.3",
