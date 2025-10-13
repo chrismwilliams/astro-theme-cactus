@@ -33,6 +33,7 @@ const post = defineCollection({
 				.string()
 				.optional()
 				.transform((str) => (str ? new Date(str) : undefined)),
+			pinned: z.boolean().default(false),
 		}),
 });
 

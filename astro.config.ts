@@ -86,8 +86,6 @@ export default defineConfig({
 			},
 		},
 	},
-	// https://docs.astro.build/en/guides/prefetch/
-	prefetch: true,
 	vite: {
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],

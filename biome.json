@@ -1,12 +1,31 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	"files": {
+		"includes": [
+			"**",
+			"!**/build",
+			"!**/dist",
+			"!**/node_modules",
+			"!**/.vercel",
+			"!**/.netlify",
+			"!**/.vscode",
+			"!**/.astro"
+		]
+	},
 	"formatter": {
+		"enabled": true,
 		"indentStyle": "tab",
-		"indentWidth": 2,
+		"lineEnding": "lf",
 		"lineWidth": 100,
-		"formatWithErrors": true,
-		"includes": ["**", "!**/*.astro"]
+		"expand": "auto"
+	},
+	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
 	},
 	"linter": {
 		"enabled": true,
@@ -14,9 +33,6 @@
 			"recommended": true,
 			"a11y": {
 				"noSvgWithoutTitle": "off"
-			},
-			"suspicious": {
-				"noExplicitAny": "warn"
 			},
 			"style": {
 				"noParameterAssign": "error",
@@ -28,26 +44,29 @@
 				"noUnusedTemplateLiteral": "error",
 				"useNumberNamespace": "error",
 				"noInferrableTypes": "error",
-				"noUselessElse": "error"
-			}
+				"noUselessElse": "error",
+				"useImportType": "error"
+			},
+			"suspicious": { "noExplicitAny": "warn" }
 		}
 	},
 	"javascript": {
 		"formatter": {
 			"trailingCommas": "all",
-			"semicolons": "always"
+			"semicolons": "always",
+			"bracketSameLine": false
 		}
 	},
-	"vcs": {
-		"clientKind": "git",
-		"enabled": true,
-		"useIgnoreFile": true
-	},
+	"html": { "formatter": { "selfCloseVoidElements": "always" } },
 	"overrides": [
 		{
 			"includes": ["**/*.astro"],
 			"linter": {
 				"rules": {
+					"style": {
+						"useConst": "off",
+						"useImportType": "off"
+					},
 					"correctness": {
 						"noUnusedVariables": "off",
 						"noUnusedImports": "off"

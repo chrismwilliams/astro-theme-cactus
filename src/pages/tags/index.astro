@@ -13,13 +13,12 @@ const meta = {
 
 <PageLayout meta={meta}>
 	<h1 class="title mb-6">Tags</h1>
-	<ul class="space-y-6">
+	<ul class="space-y-4">
 		{
 			allTags.map(([tag, val]) => (
 				<li class="flex items-center gap-x-2">
 					<a
 						class="cactus-link inline-block"
-						data-astro-prefetch
 						href={`/tags/${tag}/`}
 						title={`View posts with the tag: ${tag}`}
 					>
