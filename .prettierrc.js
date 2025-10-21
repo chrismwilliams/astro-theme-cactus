@@ -1,5 +1,5 @@
 /** @type {import("@types/prettier").Options} */
-module.exports = {
+export default {
 	printWidth: 100,
 	semi: true,
 	singleQuote: false,
