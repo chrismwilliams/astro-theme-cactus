@@ -1,7 +1,7 @@
 {
 	"name": "astro-cactus",
 	"type": "module",
-	"version": "6.9.0",
+	"version": "6.10.0",
 	"private": false,
 	"scripts": {
 		"dev": "astro dev",
