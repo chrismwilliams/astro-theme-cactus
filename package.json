@@ -26,7 +26,7 @@
 		"astro-icon": "^1.1.5",
 		"astro-robots-txt": "^1.0.0",
 		"astro-webmanifest": "^1.0.0",
-		"cssnano": "^7.1.1",
+		"cssnano": "^7.1.2",
 		"hastscript": "^9.0.0",
 		"mdast-util-directive": "^3.0.0",
 		"mdast-util-to-markdown": "^2.1.2",
