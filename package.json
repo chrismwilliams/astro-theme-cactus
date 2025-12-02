@@ -4,6 +4,7 @@
 	"version": "6.10.0",
 	"private": false,
 	"scripts": {
+		"postinstall": "npm rebuild sharp --force",
 		"dev": "astro dev",
 		"start": "astro dev",
 		"build": "astro build",
@@ -37,7 +38,7 @@
 		"remark-directive": "^4.0.0",
 		"satori": "0.18.3",
 		"satori-html": "^0.3.2",
-		"sharp": "^0.34.4",
+		"sharp": "^0.34.5",
 		"unified": "^11.0.5",
 		"unist-util-visit": "^5.0.0"
 	},
@@ -60,6 +61,12 @@
 		"typescript": "^5.9.3"
 	},
 	"pnpm": {
-		"onlyBuiltDependencies": ["@biomejs/biome", "@tailwindcss/oxide", "esbuild", "sharp"]
+		"onlyBuiltDependencies": ["@biomejs/biome", "@tailwindcss/oxide", "esbuild", "sharp"],
+		"overrides": {
+			"sharp": "^0.34.5"
+		}
+	},
+	"overrides": {
+		"sharp": "^0.34.5"
 	}
 }
