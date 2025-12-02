@@ -5,10 +5,18 @@
 
 version: 2
 updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: monthly
+    groups:
+      actions-deps:
+        patterns:
+          - "*"
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "monthly"
-    allow:
-      - dependency-type: "direct"
-    open-pull-requests-limit: 20
+    groups:
+      patch-minor:
+        update-types: ["patch", "minor"]
