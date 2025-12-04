@@ -1,5 +1,5 @@
 ---
-title: "5 herramientas que mejoraron mi productividad como desarrollador"
+title: "5 herramientas para mejorar tu productividad"
 description: "Una lista de herramientas esenciales que uso a diario y que han transformado mi flujo de trabajo"
 lang: es
 publishDate: "28 November 2024"
