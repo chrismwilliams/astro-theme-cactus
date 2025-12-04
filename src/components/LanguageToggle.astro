@@ -1,0 +1,104 @@
+---
+import { languages } from "@/i18n";
+import GlobeIcon from "@/components/icons/globe.svg?raw";
+---
+
+<div class="relative ms-2 sm:ms-4">
+	<button
+		id="language-toggle"
+		class="hover:text-accent flex h-9 w-9 cursor-pointer items-center justify-center rounded-md"
+		type="button"
+		aria-label="Select language"
+		aria-expanded="false"
+		aria-haspopup="true"
+	>
+		<Fragment set:html={GlobeIcon} />
+	</button>
+	<div
+		id="language-menu"
+		class="bg-global-bg border-accent absolute right-0 top-full z-50 mt-1 hidden min-w-[120px] rounded-md border py-1 shadow-lg"
+		role="menu"
+		aria-orientation="vertical"
+	>
+		{
+			Object.entries(languages).map(([code, label]) => (
+				<button
+					type="button"
+					data-lang={code}
+					class="lang-option block w-full cursor-pointer px-4 py-2 text-left text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800"
+					role="menuitem"
+				>
+					{label}
+				</button>
+			))
+		}
+	</div>
+</div>
+
+<script>
+	import { getLang, setLang, initI18n, languages, type Lang } from "@/i18n/client";
+
+	function setupLanguageToggle() {
+		const toggle = document.getElementById("language-toggle");
+		const menu = document.getElementById("language-menu");
+		const langOptions = document.querySelectorAll(".lang-option");
+
+		if (!toggle || !menu) return;
+
+		// Initialize i18n and apply translations
+		initI18n();
+
+		// Mark current language as active
+		const currentLang = getLang();
+		langOptions.forEach((option) => {
+			const lang = (option as HTMLButtonElement).dataset.lang;
+			if (lang === currentLang) {
+				option.classList.add("text-accent", "font-semibold");
+			} else {
+				option.classList.remove("text-accent", "font-semibold");
+			}
+		});
+
+		// Toggle menu visibility
+		toggle.addEventListener("click", (e) => {
+			e.stopPropagation();
+			const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+			toggle.setAttribute("aria-expanded", String(!isExpanded));
+			menu.classList.toggle("hidden");
+		});
+
+		// Handle language selection
+		langOptions.forEach((option) => {
+			option.addEventListener("click", () => {
+				const lang = (option as HTMLButtonElement).dataset.lang as Lang;
+				if (lang && lang in languages) {
+					setLang(lang);
+					// Reload to apply changes everywhere
+					window.location.reload();
+				}
+			});
+		});
+
+		// Close menu when clicking outside
+		document.addEventListener("click", (e) => {
+			if (!toggle.contains(e.target as Node) && !menu.contains(e.target as Node)) {
+				toggle.setAttribute("aria-expanded", "false");
+				menu.classList.add("hidden");
+			}
+		});
+
+		// Close menu on escape key
+		document.addEventListener("keydown", (e) => {
+			if (e.key === "Escape") {
+				toggle.setAttribute("aria-expanded", "false");
+				menu.classList.add("hidden");
+			}
+		});
+	}
+
+	// Run on page load
+	setupLanguageToggle();
+
+	// Run on Astro view transitions
+	document.addEventListener("astro:page-load", setupLanguageToggle);
+</script>
