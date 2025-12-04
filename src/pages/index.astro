@@ -4,77 +4,139 @@ import PostPreview from "@/components/blog/PostPreview.astro";
 import Note from "@/components/note/Note.astro";
 import SocialList from "@/components/SocialList.astro";
 import { getAllPosts } from "@/data/post";
+import { t } from "@/i18n";
 import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
 
-// Posts
-const MAX_POSTS = 10;
+// All posts (will be filtered by language on client side)
 const allPosts = await getAllPosts();
 const allPostsByDate = allPosts.sort(collectionDateSort) as CollectionEntry<"post">[];
-const latestPosts = allPostsByDate.slice(0, MAX_POSTS);
 
-// Pinned Posts, set to a max of 3;
-const MAX_PINNED_POSTS = 3;
-const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned).slice(0, MAX_PINNED_POSTS);
+// Pinned Posts (will be filtered by language on client side)
+const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned);
 
-// Notes
-const MAX_NOTES = 5;
+// Notes (will be filtered by language on client side)
 const allNotes = await getCollection("note");
-const latestNotes = allNotes
-	.sort(collectionDateSort)
-	.slice(0, MAX_NOTES) as CollectionEntry<"note">[];
+const sortedNotes = allNotes.sort(collectionDateSort);
 ---
 
-<PageLayout meta={{ title: "Home" }}>
-	<section>
-		<h1 class="title mb-12">Hello World!</h1>
-		<p class="mb-4">
-			Hi, I’m a theme for Astro, a simple starter that you can use to create your website or blog.
-			If you want to know more about how you can customise me, add more posts, and make it your own,
-			click on the GitHub icon link below and it will take you to my repo.
-		</p>
-		<SocialList />
-	</section>
-	{
-		pinnedPosts.length > 0 && (
-			<section class="mt-16">
-				<h2 class="title mb-6 text-xl">Pinned Posts</h2>
-				<ul class="space-y-4" role="list">
-					{pinnedPosts.map((p) => (
-						<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-							<PostPreview post={p} />
-						</li>
-					))}
-				</ul>
-			</section>
-		)
-	}
-	<section class="mt-16">
-		<h2 class="title text-accent mb-6 text-xl"><a href="/posts/">Posts</a></h2>
-		<ul class="space-y-4" role="list">
-			{
-				latestPosts.map((p) => (
-					<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-						<PostPreview post={p} />
-					</li>
-				))
-			}
-		</ul>
-	</section>
-	{
-		latestNotes.length > 0 && (
-			<section class="mt-16">
-				<h2 class="title text-accent mb-6 text-xl">
-					<a href="/notes/">Notes</a>
-				</h2>
-				<ul class="space-y-6" role="list">
-					{latestNotes.map((note) => (
-						<li>
-							<Note note={note} as="h3" isPreview />
-						</li>
-					))}
-				</ul>
-			</section>
-		)
-	}
+<PageLayout meta={{ title: t.home.title }}>
+  <section>
+    <h1 class="title mb-12" data-i18n="home.greeting">{t.home.greeting}</h1>
+    <p class="mb-4" data-i18n="home.intro">
+      {t.home.intro}
+    </p>
+    <SocialList />
+  </section>
+  {
+    pinnedPosts.length > 0 && (
+      <section class="mt-16" id="pinned-posts-section">
+        <h2 class="title mb-6 text-xl" data-i18n="home.pinnedPosts">
+          {t.home.pinnedPosts}
+        </h2>
+        <ul class="space-y-4" role="list" id="pinned-posts-list">
+          {pinnedPosts.map((p) => (
+            <li
+              class="grid gap-1 sm:grid-cols-[auto_1fr] lang-item"
+              data-lang={p.data.lang}
+            >
+              <PostPreview post={p} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+  <section class="mt-16">
+    <h2 class="title text-accent mb-6 text-xl">
+      <a href="/posts/" data-i18n="home.posts">{t.home.posts}</a>
+    </h2>
+    <ul class="space-y-4" role="list" id="posts-list">
+      {
+        allPostsByDate.map((p) => (
+          <li
+            class="grid gap-1 sm:grid-cols-[auto_1fr] lang-item"
+            data-lang={p.data.lang}
+          >
+            <PostPreview post={p} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+  {
+    sortedNotes.length > 0 && (
+      <section class="mt-16">
+        <h2 class="title text-accent mb-6 text-xl">
+          <a href="/notes/" data-i18n="home.notes">
+            {t.home.notes}
+          </a>
+        </h2>
+        <ul class="space-y-6" role="list" id="notes-list">
+          {sortedNotes.map((note) => (
+            <li class="lang-item" data-lang={note.data.lang}>
+              <Note note={note} as="h3" isPreview />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 </PageLayout>
+
+<script>
+  // Filter content by language
+  const MAX_POSTS = 10;
+  const MAX_PINNED = 3;
+  const MAX_NOTES = 5;
+
+  function filterByLanguage() {
+    const lang = localStorage.getItem("lang") || "en";
+    const items = document.querySelectorAll(".lang-item");
+
+    let postsShown = 0;
+    let pinnedShown = 0;
+    let notesShown = 0;
+
+    items.forEach((item) => {
+      const itemLang = item.getAttribute("data-lang");
+      const parent = item.closest("ul");
+      const parentId = parent?.id;
+
+      if (itemLang !== lang) {
+        (item as HTMLElement).style.display = "none";
+        return;
+      }
+
+      // Apply limits based on section
+      if (parentId === "posts-list" && postsShown >= MAX_POSTS) {
+        (item as HTMLElement).style.display = "none";
+        return;
+      }
+      if (parentId === "pinned-posts-list" && pinnedShown >= MAX_PINNED) {
+        (item as HTMLElement).style.display = "none";
+        return;
+      }
+      if (parentId === "notes-list" && notesShown >= MAX_NOTES) {
+        (item as HTMLElement).style.display = "none";
+        return;
+      }
+
+      (item as HTMLElement).style.display = "";
+
+      if (parentId === "posts-list") postsShown++;
+      if (parentId === "pinned-posts-list") pinnedShown++;
+      if (parentId === "notes-list") notesShown++;
+    });
+
+    // Hide pinned section if no pinned posts visible
+    const pinnedSection = document.getElementById("pinned-posts-section");
+    if (pinnedSection && pinnedShown === 0) {
+      pinnedSection.style.display = "none";
+    } else if (pinnedSection) {
+      pinnedSection.style.display = "";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", filterByLanguage);
+</script>

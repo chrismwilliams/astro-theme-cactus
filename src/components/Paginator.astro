@@ -1,5 +1,6 @@
 ---
 import type { PaginationLink } from "@/types";
+import { t } from "@/i18n";
 
 interface Props {
 	nextUrl?: PaginationLink;
@@ -15,13 +16,13 @@ const { nextUrl, prevUrl } = Astro.props;
 			{prevUrl && (
 				<a class="hover:text-accent me-auto py-2" href={prevUrl.url}>
 					{prevUrl.srLabel && <span class="sr-only">{prevUrl.srLabel}</span>}
-					{prevUrl.text ? prevUrl.text : "Previous"}
+					{prevUrl.text ? prevUrl.text : t.pagination.previous}
 				</a>
 			)}
 			{nextUrl && (
 				<a class="hover:text-accent ms-auto py-2" href={nextUrl.url}>
 					{nextUrl.srLabel && <span class="sr-only">{nextUrl.srLabel}</span>}
-					{nextUrl.text ? nextUrl.text : "Next"}
+					{nextUrl.text ? nextUrl.text : t.pagination.next}
 				</a>
 			)}
 		</nav>

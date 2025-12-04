@@ -4,6 +4,7 @@ import { type CollectionEntry, render } from "astro:content";
 import Masthead from "@/components/blog/Masthead.astro";
 import TOC from "@/components/blog/TOC.astro";
 import WebMentions from "@/components/blog/webmentions/index.astro";
+import { t } from "@/i18n";
 
 import BaseLayout from "./Base.astro";
 
@@ -44,7 +45,7 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 		data-show="false"
 		id="to-top-btn"
 	>
-		<span class="sr-only">Back to top</span>
+		<span class="sr-only">{t.blog.backToTop}</span>
 		<svg
 			aria-hidden="true"
 			class="h-6 w-6"

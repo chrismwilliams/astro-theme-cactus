@@ -1,34 +1,67 @@
 ---
-import { getAllPosts, getUniqueTagsWithCount } from "@/data/post";
+import { getAllPosts } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
+import { t } from "@/i18n";
 
 const allPosts = await getAllPosts();
-const allTags = getUniqueTagsWithCount(allPosts);
 
 const meta = {
-	description: "A list of all the topics I've written about in my posts",
-	title: "All Tags",
+	description: t.tags.description,
+	title: t.tags.allTags,
 };
+
+// Create a map of tags with their posts and language info
+const tagPostsMap: Record<string, { lang: string }[]> = {};
+allPosts.forEach((post) => {
+	post.data.tags.forEach((tag) => {
+		if (!tagPostsMap[tag]) tagPostsMap[tag] = [];
+		tagPostsMap[tag].push({ lang: post.data.lang });
+	});
+});
 ---
 
 <PageLayout meta={meta}>
-	<h1 class="title mb-6">Tags</h1>
-	<ul class="space-y-4">
+	<h1 class="title mb-6" data-i18n="tags.title">{t.tags.title}</h1>
+	<ul class="space-y-4" id="tags-list">
 		{
-			allTags.map(([tag, val]) => (
-				<li class="flex items-center gap-x-2">
+			Object.entries(tagPostsMap).map(([tag, posts]) => (
+				<li class="flex items-center gap-x-2 tag-item" data-tag-posts={JSON.stringify(posts)}>
 					<a
 						class="cactus-link inline-block"
 						href={`/tags/${tag}/`}
-						title={`View posts with the tag: ${tag}`}
+						title={`${t.tags.viewPostsWithTag}: ${tag}`}
 					>
 						&#35;{tag}
 					</a>
-					<span class="inline-block">
-						- {val} Post{val > 1 && "s"}
+					<span class="inline-block tag-count">
+						- <span class="count-value"></span> <span class="count-label"></span>
 					</span>
 				</li>
 			))
 		}
 	</ul>
 </PageLayout>
+
+<script>
+	function filterTagsByLanguage() {
+		const lang = localStorage.getItem("lang") || "en";
+		const postLabel = lang === "es" ? "post" : "post";
+		const postsLabel = lang === "es" ? "posts" : "posts";
+
+		document.querySelectorAll(".tag-item").forEach((item) => {
+			const postsData = JSON.parse(item.getAttribute("data-tag-posts") || "[]");
+			const filteredCount = postsData.filter((p: { lang: string }) => p.lang === lang).length;
+			
+			const countValue = item.querySelector(".count-value");
+			const countLabel = item.querySelector(".count-label");
+			
+			if (countValue) countValue.textContent = filteredCount.toString();
+			if (countLabel) countLabel.textContent = filteredCount > 1 ? postsLabel : postLabel;
+			
+			// Hide tags with no posts in current language
+			(item as HTMLElement).style.display = filteredCount > 0 ? "" : "none";
+		});
+	}
+
+	document.addEventListener("DOMContentLoaded", filterTagsByLanguage);
+</script>

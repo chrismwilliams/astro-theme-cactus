@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { WebmentionsChildren } from "@/types";
+import { t } from "@/i18n";
 
 interface Props {
 	mentions: WebmentionsChildren[];
@@ -20,7 +21,7 @@ const likesToShow = likes
 		<div>
 			<p class="text-accent-2 mb-0">
 				<strong>{likes.length}</strong>
-				{likes.length > 1 ? " People" : " Person"} liked this
+				{likes.length > 1 ? ` ${t.webmentions.peopleLiked}` : ` ${t.webmentions.personLiked}`}
 			</p>
 			{!!likesToShow.length && (
 				<ul class="flex list-none flex-wrap overflow-hidden ps-2" role="list">

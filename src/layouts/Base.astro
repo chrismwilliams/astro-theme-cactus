@@ -1,54 +1,114 @@
 ---
 import BaseHead from "@/components/BaseHead.astro";
-import SkipLink from "@/components/SkipLink.astro";
-import ThemeProvider from "@/components/ThemeProvider.astro";
 import Footer from "@/components/layout/Footer.astro";
 import Header from "@/components/layout/Header.astro";
-import { siteConfig } from "@/site.config";
+import SkipLink from "@/components/SkipLink.astro";
+import ThemeProvider from "@/components/ThemeProvider.astro";
+import { defaultLang, t, getTranslations } from "@/i18n";
 import type { SiteMeta } from "@/types";
 
 interface Props {
-	meta: SiteMeta;
+  meta: SiteMeta;
 }
 
 const {
-	meta: { articleDate, description = siteConfig.description, ogImage, title },
+  meta: { articleDate, description = t.global.description, ogImage, title },
 } = Astro.props;
+
+// Serialize translations for client-side use
+const clientTranslations = {
+  en: getTranslations("en"),
+  es: getTranslations("es"),
+};
 ---
 
-<html class="scroll-smooth" lang={siteConfig.lang}>
-	<head>
-		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
-	</head>
-	<body
-		class="bg-global-bg text-global-text mx-auto flex min-h-screen max-w-3xl flex-col px-4 pt-16 font-mono text-sm font-normal antialiased sm:px-8"
-	>
-		<ThemeProvider />
-		<SkipLink />
-		<Header />
-		<main id="main">
-			<slot />
-		</main>
-		<Footer />
-		<script is:inline type="speculationrules">
-			{
-				"prefetch": [
-					{
-						"where": {
-							"href_matches": "/*"
-						},
-						"eagerness": "immediate"
-					}
-				],
-				"prerender": [
-					{
-						"where": {
-							"href_matches": "/*"
-						},
-						"eagerness": "moderate"
-					}
-				]
-			}
-		</script>
-	</body>
+<html class="scroll-smooth" lang={defaultLang}>
+  <head>
+    <BaseHead
+      articleDate={articleDate}
+      description={description}
+      ogImage={ogImage}
+      title={title}
+    />
+    <!-- Prevent flash of untranslated content -->
+    <style>
+      html:not(.i18n-ready) { visibility: hidden; }
+      html.i18n-ready { visibility: visible; }
+    </style>
+    <script is:inline define:vars={{ clientTranslations, defaultLang }}>
+      (function() {
+        const STORAGE_KEY = 'lang';
+        const translations = clientTranslations;
+        
+        function getLang() {
+          try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored === 'es' || stored === 'en') return stored;
+          } catch (e) {}
+          return defaultLang;
+        }
+        
+        function applyTranslations() {
+          const lang = getLang();
+          const t = translations[lang];
+          
+          document.documentElement.lang = lang;
+          
+          document.querySelectorAll('[data-i18n]').forEach(function(el) {
+            const key = el.getAttribute('data-i18n');
+            if (key) {
+              const keys = key.split('.');
+              let value = t;
+              for (let i = 0; i < keys.length; i++) {
+                value = value ? value[keys[i]] : undefined;
+              }
+              if (typeof value === 'string') {
+                el.textContent = value;
+              }
+            }
+          });
+          
+          document.documentElement.classList.add('i18n-ready');
+        }
+        
+        // Apply translations when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', applyTranslations);
+        } else {
+          applyTranslations();
+        }
+      })();
+    </script>
+  </head>
+  <body
+    class="bg-global-bg text-global-text mx-auto flex min-h-screen max-w-3xl flex-col px-4 pt-16 font-mono text-sm font-normal antialiased sm:px-8"
+  >
+    <ThemeProvider />
+    <SkipLink />
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline type="speculationrules">
+      {
+        "prefetch": [
+          {
+            "where": {
+              "href_matches": "/*"
+            },
+            "eagerness": "immediate"
+          }
+        ],
+        "prerender": [
+          {
+            "where": {
+              "href_matches": "/*"
+            },
+            "eagerness": "moderate"
+          }
+        ]
+      }
+    </script>
+  </body>
 </html>
