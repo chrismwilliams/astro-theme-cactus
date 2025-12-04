@@ -10,9 +10,7 @@ import { collectionDateSort } from "@/utils/date";
 
 // All posts (will be filtered by language on client side)
 const allPosts = await getAllPosts();
-const allPostsByDate = allPosts.sort(
-  collectionDateSort
-) as CollectionEntry<"post">[];
+const allPostsByDate = allPosts.sort(collectionDateSort) as CollectionEntry<"post">[];
 
 // Pinned Posts (will be filtered by language on client side)
 const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned);
