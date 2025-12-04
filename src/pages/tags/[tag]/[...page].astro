@@ -1,10 +1,10 @@
 ---
 import { render } from "astro:content";
-import Pagination from "@/components/Paginator.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import { getAllPosts, getTagMeta, getUniqueTags } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
+import { t } from "@/i18n";
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { Icon } from "astro-icon/components";
 
@@ -31,23 +31,8 @@ const tagMeta = await getTagMeta(tag);
 const TagContent = tagMeta ? (await render(tagMeta)).Content : null;
 
 const meta = {
-	description: tagMeta?.data.description ?? `View all posts with the tag - ${tag}`,
-	title: tagMeta?.data.title ?? `Posts about ${tag}`,
-};
-
-const paginationProps = {
-	...(page.url.prev && {
-		prevUrl: {
-			text: "← Previous Tags",
-			url: page.url.prev,
-		},
-	}),
-	...(page.url.next && {
-		nextUrl: {
-			text: "Next Tags →",
-			url: page.url.next,
-		},
-	}),
+	description: tagMeta?.data.description ?? `${t.tags.viewPostsWithTag} - ${tag}`,
+	title: tagMeta?.data.title ?? `${t.tags.postsAbout} ${tag}`,
 };
 ---
 
@@ -55,25 +40,38 @@ const paginationProps = {
 	<nav class="mb-8" aria-label="Breadcrumbs">
 		<ul class="flex items-center">
 			<li class="flex items-center">
-				<a class="text-accent" href="/tags/">Tags</a>
+				<a class="text-accent" href="/tags/">{t.tags.title}</a>
 				<Icon aria-hidden="true" name="mdi:chevron-right" class="mx-1.5" />
 			</li>
 			<li aria-current="page" class=""><span aria-hidden="true">#</span>{tag}</li>
 		</ul>
 	</nav>
-	<h1 class="title capitalize">{tagMeta?.data.title ?? `Posts about ${tag}`}</h1>
+	<h1 class="title capitalize">{tagMeta?.data.title ?? `${t.tags.postsAbout} ${tag}`}</h1>
 	<div class="prose prose-sm prose-cactus mb-16 max-w-none">
 		{tagMeta?.data.description && <p>{tagMeta.data.description}</p>}
 		{TagContent && <TagContent />}
 	</div>
-	<ul class="space-y-4">
+	<ul class="space-y-4" id="posts-list">
 		{
 			page.data.map((p) => (
-				<li class="gap-1 sm:grid-cols-[auto_1fr] grid">
+				<li class="gap-1 sm:grid-cols-[auto_1fr] grid lang-item" data-lang={p.data.lang}>
 					<PostPreview as="h2" post={p} />
 				</li>
 			))
 		}
 	</ul>
-	<Pagination {...paginationProps} />
 </PageLayout>
+
+<script>
+	function filterByLanguage() {
+		const lang = localStorage.getItem("lang") || "en";
+		const items = document.querySelectorAll(".lang-item");
+
+		items.forEach((item) => {
+			const itemLang = item.getAttribute("data-lang");
+			(item as HTMLElement).style.display = itemLang === lang ? "" : "none";
+		});
+	}
+
+	document.addEventListener("DOMContentLoaded", filterByLanguage);
+</script>

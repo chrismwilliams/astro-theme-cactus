@@ -1,8 +1,9 @@
 ---
 import Search from "@/components/Search.astro";
 import ThemeToggle from "@/components/ThemeToggle.astro";
-import { menuLinks } from "@/site.config";
-import {siteConfig} from "../../site.config";
+import LanguageToggle from "@/components/LanguageToggle.astro";
+import { t } from "@/i18n";
+import { menuLinks, siteConfig } from "@/site.config";
 ---
 
 <header class="group relative mb-28 flex items-center sm:ps-18" id="main-header">
@@ -33,7 +34,11 @@ import {siteConfig} from "../../site.config";
 			{
 				menuLinks.map((link) => (
 					<a
-						aria-current={Astro.url.pathname === link.path ? "page" : false}
+						aria-current={
+							link.path === "/"
+								? Astro.url.pathname === "/" ? "page" : false
+								: Astro.url.pathname.startsWith(link.path) ? "page" : false
+						}
 						class="px-4 py-4 underline-offset-2 hover:underline sm:py-0"
 						href={link.path}
 					>
@@ -45,6 +50,7 @@ import {siteConfig} from "../../site.config";
 	</div>
 	<Search />
 	<ThemeToggle />
+	<LanguageToggle />
 	<mobile-button>
 		<button
 			aria-expanded="false"
@@ -53,7 +59,7 @@ import {siteConfig} from "../../site.config";
 			id="toggle-navigation-menu"
 			type="button"
 		>
-			<span class="sr-only">Open main menu</span>
+			<span class="sr-only" data-i18n="global.openMenu">{t.global.openMenu}</span>
 			<svg
 				aria-hidden="true"
 				class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transition-all group-aria-expanded:scale-0 group-aria-expanded:opacity-0"

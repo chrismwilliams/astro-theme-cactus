@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import type { WebmentionsChildren } from "@/types";
 import { Icon } from "astro-icon/components";
+import { t } from "@/i18n";
 
 interface Props {
 	mentions: WebmentionsChildren[];
@@ -20,7 +21,7 @@ const comments = mentions.filter(
 	!!comments.length && (
 		<div>
 			<p class="text-accent-2 mb-0">
-				<strong>{comments.length}</strong> Mention{comments.length > 1 ? "s" : ""}
+				<strong>{comments.length}</strong> {comments.length > 1 ? t.webmentions.mentions : t.webmentions.mention}
 			</p>
 			<ul class="divide-global-text/20 mt-0 divide-y ps-0" role="list">
 				{comments.map((mention) => (
@@ -65,8 +66,8 @@ const comments = mentions.filter(
 									target="_blank"
 								>
 									<span class="hidden" id="cmt-source">
-										Visit the source of this webmention
-									</span>
+									{t.webmentions.visitSource}
+								</span>
 									<Icon
 										aria-hidden="true"
 										class="h-5 w-5"
