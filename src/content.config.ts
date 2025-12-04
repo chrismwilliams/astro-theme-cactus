@@ -12,7 +12,7 @@ const baseSchema = z.object({
 });
 
 // Supported languages for posts
-const langSchema = z.enum(["es", "en"]).default("es");
+const langSchema = z.enum(["es", "en"]).default("en");
 
 const post = defineCollection({
 	loader: glob({ base: "./src/content/post", pattern: "**/*.{md,mdx}" }),

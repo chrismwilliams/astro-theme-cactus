@@ -49,6 +49,7 @@ import { menuLinks, siteConfig } from "@/site.config";
 								: Astro.url.pathname.startsWith(link.path) ? "page" : false
 						}
 						class="text-accent px-2 py-4 font-semibold sm:px-4 sm:py-0 sm:underline-offset-2 sm:hover:underline"
+						data-i18n={link.i18nKey}
 						href={link.path}
 					>
 						{link.title}

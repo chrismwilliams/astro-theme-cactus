@@ -21,6 +21,7 @@ const year = new Date().getFullYear();
 			menuLinks.map((link) => (
 				<a
 					class="hover:text-global-text px-4 py-2 hover:underline sm:py-0"
+					data-i18n={link.i18nKey}
 					href={link.path}
 				>
 					{link.title}
