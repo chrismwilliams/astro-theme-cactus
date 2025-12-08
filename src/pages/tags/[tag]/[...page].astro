@@ -1,12 +1,12 @@
 ---
 import { render } from "astro:content";
-import Pagination from "@/components/Paginator.astro";
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import { Icon } from "astro-icon/components";
 import PostPreview from "@/components/blog/PostPreview.astro";
+import Pagination from "@/components/Paginator.astro";
 import { getAllPosts, getTagMeta, getUniqueTags } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
-import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
-import { Icon } from "astro-icon/components";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const allPosts = await getAllPosts();
@@ -69,7 +69,7 @@ const paginationProps = {
 	<ul class="space-y-4">
 		{
 			page.data.map((p) => (
-				<li class="gap-1 sm:grid-cols-[auto_1fr] grid">
+				<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
 					<PostPreview as="h2" post={p} />
 				</li>
 			))

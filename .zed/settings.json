@@ -1,4 +1,15 @@
 {
+	"lsp": {
+		"vscode-css-language-server": {
+			"settings": {
+				"css": {
+					"lint": {
+						"unknownAtRules": "ignore"
+					}
+				}
+			}
+		}
+	},
 	"languages": {
 		"JavaScript": {
 			"formatter": { "language_server": { "name": "biome" } },
