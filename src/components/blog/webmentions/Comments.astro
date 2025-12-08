@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import type { WebmentionsChildren } from "@/types";
 import { Icon } from "astro-icon/components";
+import type { WebmentionsChildren } from "@/types";
 
 interface Props {
 	mentions: WebmentionsChildren[];
@@ -75,7 +75,7 @@ const comments = mentions.filter(
 									/>
 								</a>
 							</div>
-							<p class="comment-content mt-1 mb-0 break-words [word-break:break-word]">
+							<p class="comment-content mt-1 mb-0 [word-break:break-word] whitespace-pre-wrap">
 								{mention.content?.text}
 							</p>
 						</div>
