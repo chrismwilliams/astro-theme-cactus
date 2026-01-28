@@ -132,7 +132,7 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 			let cursor = tocFloorPage;
 			let maxBottom = 0;
 
-			const items = Array.from(footnotes.querySelectorAll("ol > li[id^='fn']")) as HTMLElement[];
+			const items = Array.from(footnotes.querySelectorAll("ol > li[id*='fn']")) as HTMLElement[];
 
 			for (const li of items) {
 				li.style.marginTop = "0px";
@@ -175,7 +175,7 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 			footnoteRail.style.minHeight = "";
 			footnotes.style.position = "";
 			footnotes.style.minHeight = "";
-			const items = Array.from(footnotes.querySelectorAll("ol > li[id^='fn']")) as HTMLElement[];
+			const items = Array.from(footnotes.querySelectorAll("ol > li[id*='fn']")) as HTMLElement[];
 			for (const li of items) {
 				li.style.position = "";
 				li.style.top = "";
