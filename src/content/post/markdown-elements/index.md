@@ -5,6 +5,8 @@ publishDate: "22 Feb 2023"
 updatedDate: 22 Jan 2024
 tags: ["test", "markdown"]
 pinned: true
+footnotesSidebar: true
+tocSidebar: true
 ---
 
 ## This is a H2 Heading

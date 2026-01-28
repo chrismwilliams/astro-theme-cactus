@@ -69,6 +69,47 @@
 	.title {
 		@apply text-accent-2 text-2xl font-semibold;
 	}
+
+	.toc-block {
+		order: 0;
+	}
+
+	.footnote-rail {
+		padding-inline-start: 0;
+		order: 1;
+	}
+
+	.footnote-rail[hidden] {
+		display: none;
+	}
+
+	.footnote-rail .footnotes {
+		margin: 0;
+	}
+
+	.footnote-rail h2 {
+		margin: 0 0 0.25rem;
+		font-size: var(--text-sm);
+		color: var(--color-accent-2);
+		font-weight: 600;
+	}
+
+	.footnote-rail ol {
+		list-style: none;
+		padding-inline-start: 0;
+		margin: 0;
+	}
+
+	.footnotes--rail {
+		margin-top: 0;
+	}
+
+	.footnotes--rail li {
+		list-style: none;
+		margin: 0;
+		border-left: 1px dashed oklch(from currentColor l c h / 0.4);
+		padding-inline-start: 0.75rem;
+	}
 }
 
 @utility prose {
