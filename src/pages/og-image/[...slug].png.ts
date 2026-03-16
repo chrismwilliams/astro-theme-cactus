@@ -1,32 +1,11 @@
+import { fontData } from "astro:assets";
 import { Resvg } from "@resvg/resvg-js";
 import type { APIContext, InferGetStaticPropsType } from "astro";
 import satori, { type SatoriOptions } from "satori";
 import { html } from "satori-html";
-import RobotoMonoBold from "@/assets/roboto-mono-700.ttf";
-import RobotoMono from "@/assets/roboto-mono-regular.ttf";
 import { getAllPosts } from "@/data/post";
 import { siteConfig } from "@/site.config";
 import { getFormattedDate } from "@/utils/date";
-
-const ogOptions: SatoriOptions = {
-	// debug: true,
-	fonts: [
-		{
-			data: Buffer.from(RobotoMono),
-			name: "Roboto Mono",
-			style: "normal",
-			weight: 400,
-		},
-		{
-			data: Buffer.from(RobotoMonoBold),
-			name: "Roboto Mono",
-			style: "normal",
-			weight: 700,
-		},
-	],
-	height: 630,
-	width: 1200,
-};
 
 const markup = (title: string, pubDate: string) =>
 	html`<div tw="flex flex-col w-full h-full bg-[#1d1f21] text-[#c9cacc]">
@@ -56,16 +35,55 @@ const markup = (title: string, pubDate: string) =>
 		</div>
 	</div>`;
 
+// font cache
+let fontBuffers: { robotoMonoRegular: ArrayBuffer; robotoMonoBold: ArrayBuffer } | null = null;
+
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 export async function GET(context: APIContext) {
 	const { pubDate, title } = context.props as Props;
 
-	const postDate = getFormattedDate(pubDate, {
+	// add fonts to cache
+	if (!fontBuffers) {
+		const { origin } = context.url;
+		const robotoMonoFonts = fontData["--font-roboto-mono"];
+		// biome-ignore-start  lint/style/noNonNullAssertion: fonts added via Astro config
+		const [robotoMonoRegular, robotoMonoBold] = await Promise.all([
+			fetch(new URL(robotoMonoFonts.find((f) => f.weight === "400")!.src[0]!.url, origin)).then(
+				(r) => r.arrayBuffer(),
+			),
+			fetch(new URL(robotoMonoFonts.find((f) => f.weight === "700")!.src[0]!.url, origin)).then(
+				(r) => r.arrayBuffer(),
+			),
+		]);
+		// biome-ignore-end  lint/style/noNonNullAssertion: fonts added via Astro config
+		fontBuffers = { robotoMonoRegular, robotoMonoBold };
+	}
+
+	const postDateFormat = getFormattedDate(pubDate, {
 		month: "long",
 		weekday: "long",
 	});
-	const svg = await satori(markup(title, postDate), ogOptions);
+	const ogOptions: SatoriOptions = {
+		// debug: true,
+		fonts: [
+			{
+				data: fontBuffers.robotoMonoRegular,
+				name: "Roboto Mono",
+				style: "normal",
+				weight: 400,
+			},
+			{
+				data: fontBuffers.robotoMonoBold,
+				name: "Roboto Mono",
+				style: "normal",
+				weight: 700,
+			},
+		],
+		height: 630,
+		width: 1200,
+	};
+	const svg = await satori(markup(title, postDateFormat), ogOptions);
 	const pngBuffer = new Resvg(svg).render().asPng();
 	const png = new Uint8Array(pngBuffer);
 	return new Response(png, {
