@@ -9,4 +9,4 @@ tags: ["blog", "blog", "Blog", "test", "bloG", "Test", "BLOG"]
 
 If you open the file `src/content/post/unique-tags.md`, the tags array has a number of duplicate blog strings of various cases.
 
-These are removed as part of the removeDupsAndLowercase function found in `src/content/config.ts`.
+These are removed as part of the removeDupsAndLowercase function found in `src/content.config.ts`.
