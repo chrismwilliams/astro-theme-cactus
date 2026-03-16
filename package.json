@@ -15,12 +15,12 @@
 		"format": "prettier -w . --cache"
 	},
 	"dependencies": {
-		"@astrojs/markdown-remark": "^6.3.9",
-		"@astrojs/mdx": "4.3.12",
-		"@astrojs/rss": "4.0.14",
-		"@astrojs/sitemap": "3.6.0",
+		"@astrojs/markdown-remark": "^7.0.0",
+		"@astrojs/mdx": "5.0.0",
+		"@astrojs/rss": "4.0.17",
+		"@astrojs/sitemap": "3.7.1",
 		"@tailwindcss/vite": "4.1.17",
-		"astro": "5.16.3",
+		"astro": "6.0.4",
 		"astro-expressive-code": "^0.41.3",
 		"astro-icon": "^1.1.5",
 		"astro-robots-txt": "^1.0.0",
@@ -41,7 +41,7 @@
 		"unist-util-visit": "^5.0.0"
 	},
 	"devDependencies": {
-		"@astrojs/check": "^0.9.6",
+		"@astrojs/check": "^0.9.7",
 		"@biomejs/biome": "^2.3.8",
 		"@iconify-json/mdi": "^1.2.2",
 		"@pagefind/default-ui": "^1.4.0",
