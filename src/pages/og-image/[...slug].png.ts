@@ -79,6 +79,7 @@ export async function GET(context: APIContext) {
 export async function getStaticPaths() {
 	const posts = await getAllPosts();
 	return posts
+		.values()
 		.filter(({ data }) => !data.ogImage)
 		.map((post) => ({
 			params: { slug: post.id },
@@ -86,5 +87,6 @@ export async function getStaticPaths() {
 				pubDate: post.data.updatedDate ?? post.data.publishDate,
 				title: post.data.title,
 			},
-		}));
+		}))
+		.toArray();
 }
