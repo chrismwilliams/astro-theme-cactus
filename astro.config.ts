@@ -1,8 +1,10 @@
+import fs from "node:fs";
+// Rehype plugins
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@tailwindcss/vite";
-import { defineConfig, envField, fontProviders } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import robotsTxt from "astro-robots-txt";
@@ -10,6 +12,7 @@ import webmanifest from "astro-webmanifest";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeUnwrapImages from "rehype-unwrap-images";
+// Remark plugins
 import remarkDirective from "remark-directive"; /* Handle ::: directives as nodes */
 import { remarkAdmonitions } from "./src/plugins/remark-admonitions"; /* Add admonitions */
 import { remarkGithubCard } from "./src/plugins/remark-github-card";
@@ -19,17 +22,6 @@ import { expressiveCodeOptions, siteConfig } from "./src/site.config";
 // https://astro.build/config
 export default defineConfig({
 	site: siteConfig.url,
-	fonts: [
-		// fonts for og:image creation -> src/pages/og-image/[slug].png.ts
-		{
-			provider: fontProviders.fontsource(),
-			name: "Roboto Mono",
-			cssVariable: "--font-roboto-mono",
-			weights: ["400", "700"],
-			formats: ["woff"],
-			styles: ["normal"],
-		},
-	],
 	image: {
 		domains: ["webmention.io"],
 	},
@@ -98,7 +90,7 @@ export default defineConfig({
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},
-		plugins: [tailwind()],
+		plugins: [tailwind(), rawFonts([".ttf", ".woff"])],
 	},
 	env: {
 		schema: {
@@ -108,3 +100,19 @@ export default defineConfig({
 		},
 	},
 });
+
+function rawFonts(ext: string[]) {
+	return {
+		name: "vite-plugin-raw-fonts",
+		// @ts-expect-error:next-line
+		transform(_, id) {
+			if (ext.some((e) => id.endsWith(e))) {
+				const buffer = fs.readFileSync(id);
+				return {
+					code: `export default ${JSON.stringify(buffer)}`,
+					map: null,
+				};
+			}
+		},
+	};
+}
