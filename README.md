@@ -28,7 +28,7 @@ Astro Cactus is a simple opinionated starter built with [Astro](https://astro.bu
 
 ## Key Features
 
-- Astro v5 Fast 🚀
+- Astro v6 Fast 🚀
 - Tailwind v4
 - Accessible, semantic HTML markup
 - Responsive & SEO-friendly
