@@ -104,13 +104,12 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 		{
 			!!uniqueTags.length && (
 				<aside>
-					<h2 class="title mb-4 flex items-center gap-2 text-lg">
-						Tags
+					<h2 class="title mb-4 flex items-center gap-1 text-lg">
 						<svg
 							aria-hidden="true"
 							class="h-6 w-6"
 							fill="none"
-							stroke="currentColor"
+							stroke="var(--color-muted)"
 							stroke-linecap="round"
 							stroke-linejoin="round"
 							stroke-width="1.5"
@@ -122,6 +121,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 							<path d="M17.573 18.407l2.834 -2.834a2.025 2.025 0 0 0 0 -2.864l-7.117 -7.116" />
 							<path d="M6 9h-.01" />
 						</svg>
+						Tags
 					</h2>
 					<ul class="flex flex-wrap gap-2">
 						{uniqueTags.map((tag) => (
