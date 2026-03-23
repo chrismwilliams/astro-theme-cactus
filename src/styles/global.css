@@ -1,5 +1,6 @@
-/* would like to ignore ./src/pages/og-image/[slug].png.ts */
 @import "tailwindcss";
+/* tailwind to ignore satori generated og-image */
+@source not "../pages/og-image";
 /* config for tailwindcss-typography plugin */
 @config "../../tailwind.config.ts";
 
