@@ -1,6 +1,6 @@
-import { Resvg } from "@resvg/resvg-js";
 import type { APIContext, InferGetStaticPropsType } from "astro";
 import satori, { type SatoriOptions } from "satori";
+import sharp from "sharp";
 import RobotoMonoBold from "@/assets/roboto-mono-700.ttf";
 import RobotoMono from "@/assets/roboto-mono-regular.ttf";
 import { getAllPosts } from "@/data/post";
@@ -37,9 +37,8 @@ export async function GET(context: APIContext) {
 		weekday: "long",
 	});
 	const svg = await satori(ogMarkup(title, postDate), ogOptions);
-	const pngBuffer = new Resvg(svg).render().asPng();
-	const png = new Uint8Array(pngBuffer);
-	return new Response(png, {
+	const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
+	return new Response(new Uint8Array(pngBuffer), {
 		headers: {
 			"Cache-Control": "public, max-age=31536000, immutable",
 			"Content-Type": "image/png",
