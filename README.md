@@ -63,6 +63,7 @@ pnpm dlx create-astro --template chrismwilliams/astro-theme-cactus
 ```
 
 [![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/chrismwilliams/astro-theme-cactus) [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fchrismwilliams%2Fastro-theme-cactus&project-name=astro-theme-cactus)
+[![Deploy to PandaStack](https://dashboard.pandastack.io/deploy-button.svg)](https://dashboard.pandastack.io/deploy?repo=chrismwilliams/astro-theme-cactus&type=static&buildCmd=npm+run+build&outputDir=dist)
 
 ## Preview
 
