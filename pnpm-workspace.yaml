@@ -1,0 +1,7 @@
+overrides:
+  sharp: ^0.34.5
+allowBuilds:
+  "@biomejs/biome": true
+  "@tailwindcss/oxide": true
+  esbuild: true
+  sharp: true
