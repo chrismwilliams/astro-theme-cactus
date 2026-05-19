@@ -1,7 +1,7 @@
 {
 	"name": "astro-cactus",
 	"type": "module",
-	"version": "7.1.0",
+	"version": "7.2.0",
 	"private": false,
 	"scripts": {
 		"postinstall": "npm rebuild sharp --force",
