@@ -1,10 +1,14 @@
+import { cacheDir } from "astro:config/server";
 import { WEBMENTION_API_KEY } from "astro:env/server";
-import * as fs from "node:fs";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
 import type { WebmentionsCache, WebmentionsChildren, WebmentionsFeed } from "@/types";
 
 const DOMAIN = import.meta.env.SITE;
-const CACHE_DIR = ".data";
-const filePath = `${CACHE_DIR}/webmentions.json`;
+const CACHE_DIR = fileURLToPath(cacheDir);
+const filePath = path.join(CACHE_DIR, "webmentions.json");
 const validWebmentionTypes = ["like-of", "mention-of", "in-reply-to"];
 
 const hostName = new URL(DOMAIN).hostname;
@@ -71,16 +75,18 @@ function writeToCache(data: WebmentionsCache) {
 	// write data to cache json file
 	fs.writeFile(filePath, fileContent, (err) => {
 		if (err) throw err;
-		console.log(`Webmentions saved to ${filePath}`);
+		console.log("Webmentions saved to cache");
 	});
 }
 
 function getFromCache(): WebmentionsCache {
 	if (fs.existsSync(filePath)) {
 		const data = fs.readFileSync(filePath, "utf-8");
+		console.log("Webmentions retrieved from cache");
 		return JSON.parse(data);
 	}
 	// no cache found
+	console.log("No Webmentions cache found");
 	return {
 		lastFetched: null,
 		children: [],
