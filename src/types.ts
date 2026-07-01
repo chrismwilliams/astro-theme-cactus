@@ -8,7 +8,6 @@ export interface SiteConfig {
 	ogLocale: string;
 	title: string;
 	url: string;
-	withHeaderLogo: boolean;
 }
 
 export interface PaginationLink {
