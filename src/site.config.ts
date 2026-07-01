@@ -21,7 +21,6 @@ export const siteConfig: SiteConfig = {
 	ogLocale: "en_GB",
 	// Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.
 	date: {
-		locale: "en-GB",
 		options: {
 			day: "numeric",
 			month: "short",
