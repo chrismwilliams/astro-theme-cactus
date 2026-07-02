@@ -19,7 +19,7 @@ const { Content } = await render(note);
 	<Tag class="title" class:list={{ "text-base": isPreview }}>
 		{
 			isPreview ? (
-				<a class="cactus-link" href={`/notes/${note.id}/`}>
+				<a class="cactus-link" href={`${import.meta.env.BASE_URL}notes/${note.id}/`}>
 					{note.data.title}
 				</a>
 			) : (

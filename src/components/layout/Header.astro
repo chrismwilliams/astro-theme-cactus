@@ -40,15 +40,18 @@ import { siteConfig } from "../../site.config";
 			id="navigation-menu"
 		>
 			{
-				menuLinks.map((link) => (
+				menuLinks.map((link) => {
+					const safePath = link.path === "/" ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}${link.path.slice(1)}`;
+					const isCurrentPage = Astro.url.pathname === safePath || {link.path !== "/" && Astro.url.pathname.endsWith(linkPath)};
+					return(
 					<a
-						aria-current={Astro.url.pathname === link.path ? "page" : false}
+						aria-current={isCurrentPage === link.path ? "page" : false}
 						class="text-accent px-2 py-4 font-semibold sm:px-4 sm:py-0 sm:underline-offset-2 sm:hover:underline"
-						href={link.path}
+						href={safePath}
 					>
 						{link.title}
-					</a>
-				))
+					</a>);
+				})
 			}
 		</nav>
 	</div>
