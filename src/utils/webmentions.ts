@@ -1,3 +1,10 @@
+// NOTE: this cache assumes a filesystem that (a) is writable and (b) persists
+// across requests/builds. True for static builds (cacheDir survives via
+// node_modules caching) and for a persistent SSR server. NOT true for
+// serverless/edge SSR (e.g. Netlify Functions) — ephemeral + often read-only
+// filesystem. If migrating to serverless SSR, swap this for Blobs,
+// Redis, or similar durable KV store.
+
 import { cacheDir } from "astro:config/server";
 import { WEBMENTION_API_KEY } from "astro:env/server";
 import fs from "node:fs";
@@ -67,16 +74,20 @@ export function filterWebmentions(webmentions: WebmentionsChildren[]) {
 function writeToCache(data: WebmentionsCache) {
 	const fileContent = JSON.stringify(data, null, 2);
 
-	// create cache folder if it doesn't exist already
-	if (!fs.existsSync(CACHE_DIR)) {
-		fs.mkdirSync(CACHE_DIR);
-	}
-
-	// write data to cache json file
-	fs.writeFile(filePath, fileContent, (err) => {
-		if (err) throw err;
+	try {
+		// create cache folder if it doesn't exist already
+		if (!fs.existsSync(CACHE_DIR)) {
+			fs.mkdirSync(CACHE_DIR, { recursive: true });
+		}
+		// write data to cache json file
+		fs.writeFileSync(filePath, fileContent);
 		console.log("Webmentions saved to cache");
-	});
+	} catch (err) {
+		console.warn(
+			"Webmentions cache write failed — if you're running SSR on a serverless/ephemeral filesystem, this cache strategy probably won't work.",
+			err,
+		);
+	}
 }
 
 function getFromCache(): WebmentionsCache {
@@ -112,10 +123,10 @@ async function getAndCacheWebmentions() {
 	return cache;
 }
 
-let webMentions: WebmentionsCache;
+let webMentionsPromise: Promise<WebmentionsCache> | null = null;
 
 export async function getWebmentionsForUrl(url: string) {
-	if (!webMentions) webMentions = await getAndCacheWebmentions();
-
+	if (!webMentionsPromise) webMentionsPromise = getAndCacheWebmentions();
+	const webMentions = await webMentionsPromise;
 	return webMentions.children.filter((entry) => entry["wm-target"] === url);
 }
