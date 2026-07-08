@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { rehypeHeadingIds, unified } from "@astrojs/markdown-remark";
+import { satteri, satteriHeadingIdsPlugin } from "@astrojs/markdown-satteri";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@tailwindcss/vite";
@@ -8,13 +8,15 @@ import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import robotsTxt from "astro-robots-txt";
 import webmanifest from "astro-webmanifest";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeExternalLinks from "rehype-external-links";
-import rehypeUnwrapImages from "rehype-unwrap-images";
-import remarkDirective from "remark-directive"; /* Handle ::: directives as nodes */
-import { remarkAdmonitions } from "./src/plugins/remark-admonitions";
-import { remarkGithubCard } from "./src/plugins/remark-github-card";
-import { remarkReadingTime } from "./src/plugins/remark-reading-time";
+import { satteriAdmonitionsPlugin } from "./src/plugins/admonitions";
+import { satteriGithubCardPlugin } from "./src/plugins/github-cards";
+import {
+	satteriAutolinkHeadingsPlugin,
+	satteriExternalLinksPlugin,
+	satteriFootnoteLabelPlugin,
+	satteriReadingTimePlugin,
+	satteriUnwrapImagesPlugin,
+} from "./src/plugins/satteri";
 import { expressiveCodeOptions, siteConfig } from "./src/site.config";
 
 // https://astro.build/config
@@ -64,25 +66,20 @@ export default defineConfig({
 		}),
 	],
 	markdown: {
-		processor: unified({
-			rehypePlugins: [
-				rehypeHeadingIds,
-				[rehypeAutolinkHeadings, { behavior: "wrap", properties: { className: ["not-prose"] } }],
-				[
-					rehypeExternalLinks,
-					{
-						rel: ["noreferrer", "noopener"],
-						target: "_blank",
-					},
-				],
-				rehypeUnwrapImages,
+		processor: satteri({
+			features: { directive: true },
+			mdastPlugins: [
+				satteriUnwrapImagesPlugin(),
+				satteriReadingTimePlugin(),
+				satteriGithubCardPlugin(),
+				satteriAdmonitionsPlugin(),
 			],
-			remarkPlugins: [remarkReadingTime, remarkDirective, remarkGithubCard, remarkAdmonitions],
-			remarkRehype: {
-				footnoteLabelProperties: {
-					className: [""],
-				},
-			},
+			hastPlugins: [
+				satteriHeadingIdsPlugin(),
+				satteriAutolinkHeadingsPlugin(),
+				satteriFootnoteLabelPlugin(),
+				satteriExternalLinksPlugin(),
+			],
 		}),
 	},
 	vite: {
