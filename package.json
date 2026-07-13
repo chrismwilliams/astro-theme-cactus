@@ -1,7 +1,7 @@
 {
 	"name": "astro-cactus",
 	"type": "module",
-	"version": "8.0.0",
+	"version": "8.1.0",
 	"private": false,
 	"scripts": {
 		"postinstall": "npm rebuild sharp --force",
@@ -15,7 +15,7 @@
 		"format": "prettier -w . --cache"
 	},
 	"dependencies": {
-		"@astrojs/markdown-remark": "^7.2.0",
+		"@astrojs/markdown-satteri": "^0.3.3",
 		"@astrojs/mdx": "7.0.0",
 		"@astrojs/rss": "4.0.18",
 		"@astrojs/sitemap": "3.7.3",
@@ -31,16 +31,11 @@
 		"mdast-util-directive": "^3.0.0",
 		"mdast-util-to-markdown": "^2.1.2",
 		"mdast-util-to-string": "^4.0.0",
-		"rehype-autolink-headings": "^7.1.0",
-		"rehype-external-links": "^3.0.0",
-		"rehype-unwrap-images": "^1.0.0",
-		"remark-directive": "^4.0.0",
 		"satori": "0.26.0",
 		"satori-html": "^0.3.2",
+		"satteri": "^0.9.4",
 		"sharp": "^0.34.5",
-		"tailwindcss": "^4.3.2",
-		"unified": "^11.0.5",
-		"unist-util-visit": "^5.1.0"
+		"tailwindcss": "^4.3.2"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.9",

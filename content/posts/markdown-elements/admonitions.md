@@ -35,8 +35,8 @@ The following admonitions are currently supported:
 - `note`
 - `tip`
 - `important`
-- `warning`
 - `caution`
+- `warning`
 
 ### Note
 
@@ -126,10 +126,10 @@ You can also link a Github user:
 
 To use this feature you just use the "Github" directive:
 
-```markdown title="Linking a repo"
+```md title="Linking a repo"
 ::github{repo="chrismwilliams/astro-theme-cactus"}
 ```
 
-```markdown title="Linking a user"
+```md title="Linking a user"
 ::github{user="withastro"}
 ```
