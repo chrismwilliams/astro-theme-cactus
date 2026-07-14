@@ -18,7 +18,9 @@ export const siteConfig: SiteConfig = {
 	// HTML lang property, found in src/layouts/Base.astro L:18 & astro.config.ts L:48
 	lang: "en-GB",
 	// Meta property, found in src/components/BaseHead.astro L:42
-	ogLocale: "en_GB",
+  ogLocale: "en_GB",
+  // Determines whether to show the logo in the templates header
+	showLogo: true,
 	// Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.
 	date: {
 		options: {
