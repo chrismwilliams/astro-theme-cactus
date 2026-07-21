@@ -17,7 +17,7 @@
 	"dependencies": {
 		"@astrojs/markdown-satteri": "^0.3.3",
 		"@astrojs/mdx": "7.0.0",
-		"@astrojs/rss": "4.0.18",
+		"@astrojs/rss": "4.0.19",
 		"@astrojs/sitemap": "3.7.3",
 		"@pagefind/component-ui": "^1.5.2",
 		"@tailwindcss/vite": "4.3.2",
