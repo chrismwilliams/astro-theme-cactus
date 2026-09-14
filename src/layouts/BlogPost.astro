@@ -28,7 +28,7 @@ const { headings } = await post.render();
 		</div>
 		{
 			!!headings.length && (
-				<aside class="order-first border-b border-line pb-5 lg:order-last lg:sticky lg:top-24 lg:border-b-0 lg:border-l lg:pl-4">
+				<aside class="hidden lg:block lg:sticky lg:top-24 lg:self-start lg:border-l lg:pl-4">
 					<h2 class="meta-text">Table of Contents</h2>
 					<ul class="mt-4 space-y-2 text-sm">
 						{headings.map(({ depth, slug: headingSlug, text }) => (

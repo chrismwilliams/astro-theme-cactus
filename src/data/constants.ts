@@ -8,11 +8,11 @@ export const MENU_LINKS = [
 		path: "/publications",
 	},
 	{
-		title: "Work",
+		title: "Research",
 		path: "/posts",
 	},
 	{
-		title: "Resume",
+		title: "CV",
 		path: "/resume",
 	},
 ];

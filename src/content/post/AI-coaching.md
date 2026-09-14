@@ -1,34 +1,43 @@
 ---
-title: "Can AI Become a Thinking Partner For Entrepreneurs and Coaches?"
-description: "A human-AI coaching system from an entrepreneurship incubator that helps founders think deeper and helps mentors prepare through adaptive questions, risk diagnosis, and tailored guidance."
-publishDate: "11 Nov 2024"
+title: "Making Expertise Usable with AI"
+description: "How can AI help people articulate tacit reasoning and make expertise available to one another? This stream connects studies of coaching, a proactive AI system, workplace learning, and early work on human judgment."
+publishDate: "2026-09-14"
+status: "Published research · CHI and CSCW"
+researchArea: "expertise"
+order: 1
 featured: true
 coverImage: "/4-ai-coach.png"
-tags: ["Human-AI Collaboration", "Entrepreneurship", "Coaching"]
+tags: ["Human-AI Collaboration", "Distributed Expertise", "Entrepreneurship", "Workplace Learning", "Tacit Knowledge"]
 ---
 
-Imagine a first-time founder walking into her weekly mentor meeting with a scattered update, twenty minutes of context-setting, and five minutes left to tackle the real problem. Meanwhile, her mentor is doing rapid-fire diagnosis on the fly, listening, analyzing, and strategizing all at once, with no time to pause and think. This is the norm in entrepreneurship coaching. It's exhausting, and it leaves the most important conversations on the table.
+Useful expertise is often difficult to articulate and distributed across people working on different problems. I study the interactional work that makes this knowledge available, and design AI that helps collaborators prepare to learn from and support one another.
 
-I set out to redesign this dynamic.
+## Understanding coaching expertise
 
-![](public/AI-coaching-infographic.png)
+**CSCW 2023 · Empirical study.** In a university incubator, novices often struggled to recognize whose experience was relevant, ask for useful help, or translate advice from another venture to their own. Through analysis of 24 coaching sessions involving three coaches and 30 novices, supplemented by coach interviews and communication observations, my coauthors and I developed a cognitive model of one-to-many coaching.
 
-**The insight that changed my approach**: Early on, I assumed the goal was efficiency: shorter meetings, faster updates, less friction. What I discovered through interviews and prototype testing with mentors and entrepreneurs was different. The problem wasn't the meeting itself. It was that neither person had done the hard cognitive work before walking in the door.
+Coaches translated project-specific experiences into transferable lessons, connected novices to relevant people, questioned assumptions, and helped articulate requests for assistance. The study identifies the practices that make distributed expertise usable across a learning community.
 
-**That realization led to a different design question**: not "how can AI make coaching faster?" but "how can AI help both sides think deeper before they meet?"
-What I built: Using a Research through Design methodology, I went through five rounds of iterative design and testing before building a human-AI coaching system grounded in a cognitive model of expert mentoring practice. The system has two sides. For entrepreneurs, it's a conversational AI that asks adaptive, diagnostic questions before each meeting, not generic prompts like a business model canvas, but context-specific questions tailored to their actual project and the specific risks they may be avoiding. When a founder was building a fantasy sports app for pickleball players, the system didn't ask "*have you validated your assumptions?*", it asked "*how do you know pickleball players want a fantasy league, and what evidence do you have?*"
+Evey Huang, Daniel Rees Lewis, Shubhanshi Gaudani, Matthew Easterday, and Elizabeth Gerber. [Intelligent Coaching Systems: Understanding One-to-many Coaching for Ill-defined Problem Solving](https://doi.org/10.1145/3579614).
 
-For mentors, the system surfaces a rich dashboard: what the entrepreneur shared, what risks the AI diagnosed, and crucially, what the entrepreneur chose not to prioritize — a window into fear, overconfidence, and avoidance that normally stays invisible. The system then suggests tailored coaching strategies, and mentors can edit the underlying risk model directly in natural language when new patterns emerge.
+## AI that helps us help each other
 
-**What happened in deployment**: I deployed the system with one mentor and eleven novice entrepreneurs across real coaching meetings at a university incubator. The meetings didn't get shorter — but they got fundamentally better. Both sides arrived prepared. Entrepreneurs had already confronted their blind spots. Mentors could skip basic diagnosis and go straight to root causes, including emotional ones. One mentor identified that a founder's reluctance to test his idea stemmed from a previous experience of idea theft — and navigated that conversation with intention rather than stumbling into it.
+**CSCW 2025 · System design and exploratory deployment.** Building on this model of coaching expertise, I designed a proactive AI system that helps entrepreneurs surface assumptions and neglected risks before meetings. Mentors receive project context and suggested coaching strategies, and can revise the expert model guiding the AI’s questions.
 
-One entrepreneur described it as being "*called out, but in a good way.*" Another said it helped them go "*a layer deeper*" than any template had before.
+After iterative prototyping, we deployed the system with one mentor and 11 novices, each preparing for one real coaching meeting. Novices reported identifying overlooked risks and reconsidering their priorities; participants described subsequent conversations as more focused, intentional, and in-depth. Incomplete context sometimes required additional verification. The contribution is situated evidence about preparing people to collaborate, with long-term effects on learning still to be studied.
 
-**The bigger argument**: This project challenges a widespread assumption in AI design that value equals speed. In domains that require judgment, reflection, and trust, the opportunity is different: AI that slows you down in the right moments, scaffolds thinking rather than replacing it, and amplifies what humans can do together. That principle applies well beyond entrepreneurship, to teaching, research advising, clinical supervision, and anywhere that human development is the goal.
+Evey Huang, Matthew Easterday, and Elizabeth Gerber. [AI That Helps Us Help Each Other: A Proactive System for Scaffolding Mentor-Novice Collaboration in Entrepreneurship Coaching](https://doi.org/10.1145/3757549). [Open-access paper](https://arxiv.org/abs/2508.11052) · [System code](https://github.com/eveyhuang/coaching_assistant).
 
-Collaborators for this project: Elizabeth Gerber, PhD; Matthew Easterday, Phd; Brylan Donaldson; Mike Raab
+## Learning to collaborate
 
-**Cite this work**: *AI That Helps Us Help Each Other: A Proactive System for Scaffolding Mentor-Novice Collaboration in Entrepreneurship Coaching*
-Evey Huang, Matthew Easterday, Elizabeth Gerber. 2025. Proc. ACM Hum.-Comput. Interact., Vol. 9, №7, Article CSCW368 (November 2025) https://doi.org/10.1145/3757549
+**CSCW Companion 2023 · Workshop proposal and research agenda.** With an interdisciplinary group of collaborators, I developed an agenda for helping people build collaboration skills through complex work. The paper considers how organizational routines, relationships, and technologies support seeking help, articulating needs, and coordinating expertise. It motivates a continuing question across this stream: how does technological scaffolding affect the capabilities people develop over time?
 
-[Github repo for the coaching system](https://github.com/eveyhuang/coaching_assistant)
+[Supporting Workers in Developing Effective Collaboration Skills for Complex Work](https://doi.org/10.1145/3584931.3611290).
+
+## Early work on tacit judgment
+
+**CHI 2020 · Computational representations and interactive tools.** With Sarah Sterman, Vivian Liu, and Eric Paulos, I studied how people interpret literary style, using crowdsourced comparisons to model aspects of difficult-to-articulate judgments. Interactive tools helped users explore patterns and reflect on their interpretations. This early work established my interest in making tacit judgments available for inspection while preserving a role for human interpretation.
+
+[Interacting with Literary Style through Computational Tools](https://doi.org/10.1145/3313831.3376730).
+
+[All research](/posts) · [Publications](/publications)

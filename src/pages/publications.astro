@@ -1,14 +1,33 @@
 ---
 import PageLayout from "@/layouts/Base";
 
-const conferenceAndJournalPapers = [
+type Paper = {
+	title: string;
+	authors: string;
+	venue: string;
+	year: string;
+	link?: string;
+	project?: string;
+	status?: string;
+};
+
+const conferenceAndJournalPapers: Paper[] = [
+	{
+		title: "Measuring What Matters in Teams with Multimodal AI",
+		authors: "Evey Huang, Brian Uzzi, Matt Groh",
+		venue: "Journal of Organization Design",
+		year: "2026",
+		status: "To appear · Perspective article",
+		project: "/posts/ai-team-science",
+	},
 	{
 		title:
 			"AI That Helps Us Help Each Other: A Proactive System for Scaffolding Mentor-Novice Collaboration in Entrepreneurship Coaching",
 		authors: "Evey Huang, Matthew Easterday, Elizabeth Gerber",
-		venue: "Proc. ACM Hum.-Comput. Interact., CSCW368",
+		venue: "Proceedings of the ACM on Human-Computer Interaction, 9(7), CSCW368",
 		year: "2025",
-		link: "http://arxiv.org/abs/2508.11052",
+		link: "https://doi.org/10.1145/3757549",
+		project: "/posts/ai-coaching",
 	},
 	{
 		title:
@@ -16,7 +35,8 @@ const conferenceAndJournalPapers = [
 		authors: "Evey Huang, Abhraneel Sarma, Sohyeon Hwang, Eshwar Chandrasekharan, Stevie Chancellor",
 		venue: "Designing Interactive Systems Conference (DIS)",
 		year: "2024",
-		link: "https://dl.acm.org/doi/abs/10.1145/3643834.3661623",
+		link: "https://doi.org/10.1145/3643834.3661623",
+		project: "/posts/double-compression#whose-judgments-shape-the-response",
 	},
 	{
 		title:
@@ -25,6 +45,7 @@ const conferenceAndJournalPapers = [
 		venue: "Proc. ACM Hum.-Comput. Interact. 7, CSCW",
 		year: "2023",
 		link: "https://doi.org/10.1145/3579614",
+		project: "/posts/ai-coaching#understanding-coaching-expertise",
 	},
 	{
 		title: "Designing a Model for Deliberation-based Learning",
@@ -38,7 +59,8 @@ const conferenceAndJournalPapers = [
 		authors: "Sarah Sterman, Evey Huang, Vivian Liu, Eric Paulos",
 		venue: "CHI Conference on Human Factors in Computing Systems",
 		year: "2020",
-		link: "https://dl.acm.org/doi/10.1145/3313831.3376730",
+		link: "https://doi.org/10.1145/3313831.3376730",
+		project: "/posts/ai-coaching#early-work-on-tacit-judgment",
 	},
 	{
 		title: "No More One Liners: Bringing Context into Emoji Recommendations",
@@ -50,12 +72,23 @@ const conferenceAndJournalPapers = [
 	},
 ];
 
-const workshopsAndPresentations = [
+const workshopsAndPresentations: Paper[] = [
 	{
 		title: "Evaluating Multimodal Language Models for Annotating Team Behaviors in Videos",
 		authors: "Evey Huang, Matt Groh, Danny Abrams, Brian Uzzi",
-		venue: "11th International Conference on Computational Social Science (IC2S2 ‘2025)",
+		venue: "11th International Conference on Computational Social Science (IC2S2 2025)",
+		project: "/posts/ai-team-science#scientific-teams",
 		year: "2025",
+	},
+
+	{
+		title: "Supporting Workers in Developing Effective Collaboration Skills for Complex Work",
+		authors: "Evey Huang, K. Garg, D. Gómez-Zará, J. Hui, C. Kulkarni, M. Massimi, E. F. Churchill, Elizabeth Gerber",
+		venue: "CSCW Companion, 486–489",
+		year: "2023",
+		status: "Workshop proposal",
+		link: "https://doi.org/10.1145/3584931.3611290",
+		project: "/posts/ai-coaching#learning-to-collaborate",
 	},
 
 	{
@@ -73,6 +106,31 @@ const workshopsAndPresentations = [
 	},
 ];
 
+
+const workInProgress: Paper[] = [
+	{
+		title: "Double Compression: How AI Narrows Both the Generation and the Gatekeeping of Scientific Ideas",
+		authors: "Evey Huang, Matt Groh, Brian Uzzi",
+		venue: "Working manuscript",
+		year: "In preparation",
+		project: "/posts/double-compression",
+	},
+	{
+		title: "Multimodal AI for Large-Scale Scientific Team Behavior Analysis",
+		authors: "Evey Huang, Max Chalekson, Matt Groh, D. Abrams, Brian Uzzi",
+		venue: "Working manuscript",
+		year: "In preparation",
+		project: "/posts/ai-team-science#scientific-teams",
+	},
+	{
+		title: "Revealed Preparedness: Measuring Entrepreneur–Investor Interaction at Scale with Multimodal AI",
+		authors: "Evey Huang, A. Grey, Brian Uzzi, Matt Groh",
+		venue: "Entrepreneur–investor interaction",
+		year: "Ongoing study",
+		project: "/posts/ai-team-science#entrepreneurinvestor-interaction",
+	},
+];
+
 const dissertation = {
 	title:
 		"Human-AI Collaboration For Entrepreneurship Coaching: Leveraging a Cognitive Model and an LLM to Provide Proactive, Adaptive, and Differentiated Support",
@@ -84,7 +142,7 @@ const dissertation = {
 
 const meta = {
 	title: "Publications",
-	description: "Selected publications, workshop papers, and dissertation",
+	description: "Publications, forthcoming work, research in progress, workshop papers, and dissertation",
 };
 ---
 
@@ -95,14 +153,14 @@ const meta = {
 			<p class="section-label">Research Output</p>
 		</div>
 		<p class="max-w-3xl text-[1.03rem] text-muted">
-			Selected papers and presentations acros HCI, human-AI collaboration, and computational social science.
+			Papers and ongoing studies on AI and collective work, spanning human-computer interaction, computational social science, and organizational research.
 		</p>
 	</section>
 
 	<section class="section-block">
 		<div class="section-head">
-			<h2>Conference & Journal Papers</h2>
-			<p class="section-label">Peer-reviewed</p>
+			<h2>Journal & Conference Papers</h2>
+			<p class="section-label">Published and forthcoming</p>
 		</div>
 		<ul class="space-y-5">
 			{
@@ -113,6 +171,8 @@ const meta = {
 						</p>
 						<p class="text-sm text-muted">{paper.authors}</p>
 						<p class="text-sm text-muted">{paper.year}. {paper.venue}</p>
+						{paper.status && <p class="text-sm text-muted">{paper.status}</p>}
+						{paper.project && <a class="cactus-link mr-4 text-sm" href={paper.project}>Project overview</a>}
 						{
 							paper.link && (
 								<a class="cactus-link text-sm" href={paper.link} target="_blank" rel="noopener noreferrer">
@@ -126,10 +186,29 @@ const meta = {
 		</ul>
 	</section>
 
+
+	<section class="section-block">
+		<div class="section-head">
+			<h2>Research in Progress</h2>
+			<p class="section-label">Manuscripts and ongoing studies</p>
+		</div>
+		<ul class="space-y-5">
+			{workInProgress.map((paper) => (
+				<li class="border-t border-dashed border-line pt-4">
+					<p><strong>{paper.title}</strong></p>
+					<p class="text-sm text-muted">{paper.authors}</p>
+					<p class="text-sm text-muted">{paper.venue} · {paper.year}</p>
+					<a class="cactus-link text-sm" href={paper.project}>Project overview</a>
+				</li>
+			))}
+		</ul>
+		<p class="mt-5 text-sm text-muted">I also study <a class="cactus-link" href="/posts/ai-team-science#professional-volleyball">cohesion in professional volleyball teams</a> as part of my ongoing work on team interaction.</p>
+	</section>
+
 	<section class="section-block">
 		<div class="section-head">
 			<h2>Workshop & Conference Presentations</h2>
-			<p class="section-label">Invited and workshop</p>
+			<p class="section-label">Workshops and presentations</p>
 		</div>
 		<ul class="space-y-5">
 			{
@@ -140,6 +219,8 @@ const meta = {
 						</p>
 						<p class="text-sm text-muted">{paper.authors}</p>
 						<p class="text-sm text-muted">{paper.year}. {paper.venue}</p>
+						{paper.status && <p class="text-sm text-muted">{paper.status}</p>}
+						{paper.project && <a class="cactus-link mr-4 text-sm" href={paper.project}>Project overview</a>}
 						{
 							paper.link && (
 								<a class="cactus-link text-sm" href={paper.link} target="_blank" rel="noopener noreferrer">

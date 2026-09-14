@@ -2,15 +2,22 @@
 import PageLayout from "@/layouts/Base";
 import SocialList from "@/components/SocialList";
 import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
-import { sortMDByDate } from "@/utils";
+import { RESEARCH_AREAS } from "@/data/research";
 import profileImg from "../assets/evey-profile.png";
 
 const newsItems = [
 	{
-		date: "Feb 11, 2026",
+		date: "2026",
+		text: "I won my first grant! My project, ‘Building Behavioral Process Models from Real Teams with Multimodal AI,’ received $75,000 from Microsoft’s AI and the New Future of Work program. ",
+		link: "/posts/ai-team-science",
+		linkLabel: "About the research",
+	},
+	{
+		date: "May 12, 2026",
 		location: "Evanston, USA",
-		text: "Our grant proposal on using Multimodal LLMs for surfacing team collaboration in real time won the finalist (top 10% out of 250+ proposals from the world) of the AI for Organizations Grand Challenge organized by Google Deepmind and Stanford HAI.",
+		text: "TeamLens, our proposal on using multimodal AI to study team collaboration, was recognized as a finalist in the AI for Organizations Grand Challenge organized by Stanford HAI and Google DeepMind.",
+		link: "https://hai.stanford.edu/industry/ai-for-organizations-grand-challenge",
+		linkLabel: "Meet the finalists",
 		
 	},
 	{
@@ -46,35 +53,21 @@ const newsItems = [
 	},
 ];
 
-const artImages = ["/1.png", "/2.png", "/3.png"];
-const allPosts = sortMDByDate(await getCollection("post", ({ data }) => !data.draft));
-
-const featuredPosts = allPosts.filter((post) => post.data.featured);
-const selectedPosts = [...featuredPosts];
-if (selectedPosts.length < 3) {
-	const remainingPosts = allPosts.filter((post) => !post.data.featured);
-	selectedPosts.push(...remainingPosts.slice(0, 3 - selectedPosts.length));
-}
-
-const projects = selectedPosts.slice(0, 3).map((post, index) => ({
-	href: `/posts/${post.slug}`,
-	label: "Work",
-	title: post.data.title,
-	image: post.data.coverImage ?? artImages[index] ?? artImages[0],
-	imageAlt: post.data.coverAlt || `Artwork for ${post.data.title}`,
+const projects = RESEARCH_AREAS.map((area) => ({
+	...area,
+	href: `/posts/${area.featuredSlug}`,
 }));
 ---
 
-<PageLayout meta={{ title: "Home", description: "Human-AI collaboration research and engineering portfolio" }}>
+<PageLayout meta={{ title: "Home", description: "How AI changes collective work: research on distributed expertise, team interaction, and the diversity of ideas and judgments." }}>
 	<section class="grid gap-10 lg:grid-cols-[1.35fr_1fr]">
 		<div>
 			<h1 class="display-title">hi.</h1>
 			<p class="mt-8 serif-note">
-				My name is Evey. I have been designing, researching, and building AI technologies that collaborate 
-				with humans to tackle challenges in real-world, complex domains like science, innovation, and business. 
-				I incorporate design research and computational social science methods to understand people's needs and 
-				behaviors, build generative or agentic AI systems to support them, and evaluate these technologies in real-world settings for impact.
-			</p>
+				My name is Evey. I study human–AI collaboration where the human is part of a team or organization—working with others to tackle complex problems in science, entrepreneurship, and knowledge work domains.
+				I ask how AI can make distributed & tacit expertise usable by teams, reveal how collaboration unfolds,
+				and shape the ideas and judgments that groups produce. 
+				</p>
 		</div>
 		<div class="hero-frame">
 			<div class="hero-frame-content">
@@ -84,7 +77,7 @@ const projects = selectedPosts.slice(0, 3).map((post, index) => ({
 					alt="Portrait of Evey Huang"
 					class="hero-portrait"
 				/>
-				<p class="meta-text">Designer, Researcher, Engineer.</p>
+				<p class="meta-text">HCI · Computational Social Science</p>
 				<p class="mt-2 text-3xl font-medium tracking-tight hero-name">Evey Huang, PhD.</p>
 			</div>
 		</div>
@@ -93,49 +86,56 @@ const projects = selectedPosts.slice(0, 3).map((post, index) => ({
 	<section class="section-block">
 		<div class="max-w-4xl space-y-5">
 			<p>
-				Currently, I am a postdoctoral researcher at Kellogg School of Management and the Northwestern
-				Institute on Complex Systems (NICO), working on few strings of research: 
-				(1) building and evaluating multimodal AI pipelines to decode real-world team dynamics in life sciences and business domains. 
-				(2) investigating AI's capabilities and limitations in producing novel and impactful research.
-				(3) developing a rigorous evalutaion framework for using AI in scientific discovery.
+				I am a Research Assistant Professor at Northwestern University’s Kellogg School of Management. 
+				I bring methods from HCI, Design, and Computational Social Science to organizational questions, 
+				while using advances in AI both to study collective work and to be part of designed systems that change how work happens.
+			
 			</p>
-			<p>	
-				I earned my PhD from the Technology and Social Behavior program (joint degree between Computer Science and Communication Studies) 
-				at Northwestern University, where I worked with an innovation incubator on desigining and building proactive AI systems that serve as a thinking partner for 
-				tackling real-world challenges. During my PhD, I also coached extensively undergraduate engineering students
-				on human-centered design and engineering practices. 
-			</p>
-			<p>
-				Besides academic research, I am also invovled with two separate startups as an AI technical advisor and engineer.
-				I am designing and building agentic AI systems for (1) personalized learning in K-12 classrooms and (2) team-level collaboration in complex business workflows. 	
-			</p>
-			<p>
-				Outside of work, you most likely will find me playing guitar, doing film and digital photography, playing tennis, reading, doodling, and cooking spicy food. 
-			</p>
-
-			<p> If you also have been poundering on similar questions, and suspect that the improvements of foundational models 
-				alone won't be enough to tackle real-world challenges, let's chat!</p>
 			<SocialList />
 		</div>
 	</section>
 
 	<section class="section-block">
 		<div class="section-head">
-			<h2>What I have been trying to tackle</h2>
-			<p class="section-label">Selected research and projects</p>
+			<h2>Research</h2>
+			<p class="section-label">Three connected directions</p>
 		</div>
 		<div class="projects-grid">
 			{
 				projects.map((project) => (
-					<a class="project-card" href={project.href} aria-label={`${project.title} (${project.label})`}>
+					<a class="project-card" href={project.href} aria-label={`Explore ${project.title.toLowerCase()}`}>
 						<div class="project-art">
-							<img class="project-image" src={project.image} alt={project.imageAlt} />
+							<img class="project-image" src={project.image} alt="" />
 							
 							<h3 class="project-title">{project.title}</h3>
 						</div>
+						<p class="mt-3 px-3 text-sm text-muted">{project.description}</p>
 					</a>
 				))
 			}
+		</div>
+	</section>
+
+
+	<section class="section-block">
+		<div class="section-head">
+			<h2>A little more about me</h2>
+			<p class="section-label">Background</p>
+		</div>
+		<div class="max-w-4xl space-y-5">
+			<p>
+				I earned my PhD in Technology and Social Behavior, a joint program in Computer Science
+				and Communication Studies at Northwestern. My doctoral work grew out of a sustained
+				partnership with an entrepreneurship incubator. I also coached undergraduate engineering
+				students in human-centered design and engineering practices.
+			</p>
+			<p>
+				Alongside my research, I work on AI design and engineering in industry, including
+				<a class="cactus-link" href="/posts/ai-business">shared workflows for business teams</a>
+				and learning technologies. Outside work, I play guitar and tennis, take film and digital
+				photographs, read, doodle, and cook spicy food. If you are thinking about similar research
+				questions, I would love to connect.
+			</p>
 		</div>
 	</section>
 
@@ -148,7 +148,7 @@ const projects = selectedPosts.slice(0, 3).map((post, index) => ({
 			{
 				newsItems.map((item) => (
 					<li>
-						<p class="meta-text">{item.date} · {item.location}</p>
+						<p class="meta-text">{item.date}{item.location && ` · ${item.location}`}</p>
 						<p class="mt-1 text-[0.98rem]">
 							{item.text}
 							{item.link && (

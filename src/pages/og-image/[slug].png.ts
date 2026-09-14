@@ -5,7 +5,6 @@ import satori from "satori";
 import { html } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
 import { siteConfig } from "@/site-config";
-import { getFormattedDate } from "@/utils";
 
 async function fetchFont(url: string) {
 	try {
@@ -97,13 +96,10 @@ export async function GET({ params: { slug } }: APIContext) {
 		});
 	}
 
-	const post = await getEntryBySlug("post", slug!);
-	const title = post?.data.title ?? siteConfig.title;
-	const postDate = getFormattedDate(post?.data.publishDate ?? Date.now(), {
-		weekday: "long",
-		month: "long",
-	});
-	const svg = await satori(markup(title, postDate), ogOptions);
+	const post = slug === "research" ? undefined : await getEntryBySlug("post", slug!);
+	const title = post?.data.title ?? "AI and collective work";
+	const status = post?.data.status ?? "Human-computer interaction and computational social science";
+	const svg = await satori(markup(title, status), ogOptions);
 	const png = new Resvg(svg).render().asPng();
 	return new Response(png, {
 		headers: {
@@ -115,7 +111,8 @@ export async function GET({ params: { slug } }: APIContext) {
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 	const posts = await getCollection("post", ({ data }) => !data.draft);
-	return posts
-		.filter((post) => !post.data.ogImage)
-		.map((post) => ({ params: { slug: post.slug } }));
+	return [
+		{ params: { slug: "research" } },
+		...posts.filter((post) => !post.data.ogImage).map((post) => ({ params: { slug: post.slug } })),
+	];
 }

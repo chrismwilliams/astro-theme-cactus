@@ -6,12 +6,12 @@ import "../styles/global.css";
 type Props = SiteMeta;
 
 
-const { title, description, ogImage, articleDate } = Astro.props;
+const { title, description = siteConfig.description, ogImage, articleDate } = Astro.props;
 
 const titleSeparator = "•";
 const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url).href;
+const socialImageURL = new URL(ogImage ?? "/og-image/research.png", Astro.url).href;
 ---
 
 <meta charset="utf-8" />
@@ -20,8 +20,7 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 
 <!-- Icons / Favicon -->
 <link rel="icon" href="/favicon.ico" sizes="any" />
-<link rel="icon" href="/icon.svg" type="image/svg+xml" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="apple-touch-icon" href="/192x192.png" />
 <link rel="manifest" href="/manifest.webmanifest" />
 <link rel="canonical" href={canonicalURL} />
 

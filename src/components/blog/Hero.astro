@@ -13,7 +13,7 @@ const postDate = getFormattedDate(content.data.publishDate, { month: "long" });
 ---
 
 <header class="border-b border-line pb-6">
-	<p class="meta-text">{postDate}</p>
+	<p class="meta-text">{content.data.status ?? postDate}</p>
 	<h1 class="mt-3 text-4xl font-semibold tracking-tight text-accent-2 sm:text-5xl">{content.data.title}</h1>
 	<p class="mt-5 max-w-3xl text-lg text-muted">{content.data.description}</p>
 
@@ -23,7 +23,7 @@ const postDate = getFormattedDate(content.data.publishDate, { month: "long" });
 				{content.data.tags.map((tag) => (
 					<a
 						class="button-pill"
-						aria-label={`View more blogs with the tag ${tag}`}
+							aria-label={`View more projects with the tag ${tag}`}
 						href={`/tags/${tag}`}
 					>
 						#{tag}
@@ -32,5 +32,5 @@ const postDate = getFormattedDate(content.data.publishDate, { month: "long" });
 			</div>
 		)
 	}
-	<time datetime={datetime} class="sr-only">{postDate}</time>
+	<p class="mt-5 text-sm text-muted">Page updated <time datetime={datetime}>{postDate}</time></p>
 </header>

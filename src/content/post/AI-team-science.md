@@ -1,37 +1,41 @@
 ---
-title: "Can Multimodal AI Decode and Support How Real-World Teams Collaborate?"
-description: "We use multimodal AI to decode how teams actually collaborate — moving organizations from gut feelings and annual surveys to real-time, evidence-based insights about what makes teams succeed or fail."
-publishDate: "25 Feb 2025"
+title: "Understanding Collaboration with Multimodal AI"
+description: "A methodological agenda and studies of scientific teams, entrepreneur–investor exchanges, and professional volleyball examine how collaboration unfolds through language, audio, and visible behavior."
+publishDate: "2026-09-14"
+status: "JOD perspective forthcoming · Empirical studies ongoing"
+researchArea: "interaction"
+order: 2
 featured: true
 coverImage: "/2-ai-team.png"
-tags: ["Multimodal AI", "Team Science", "Evaluation Framework"]
+tags: ["Multimodal AI", "Team Science", "Knowledge Integration", "Entrepreneurship", "Cohesion"]
 ---
-Every organization talks about psychological safety and open collaboration. Almost none can tell you whether those values actually show up in Monday's meeting.
 
-That gap is the problem my team and I set out to solve.
+How do teams integrate expertise, respond to disagreement, and coordinate as their work unfolds? I use multimodal AI to study these processes across more than 1,000 hours of recorded interaction in scientific, entrepreneurial, and sports settings. My collaborators and I develop behavioral codebooks grounded in organizational theory, validate AI annotations against human judgments, examine errors, and relate interaction patterns to collective outcomes.
 
-Research consistently shows that team failures trace back to interpersonal dynamics, not technical skill gaps. Google's Project Aristotle found psychological safety, not talent predicts team performance. Yet the micro-moments that create or erode safety (a dismissive response, an ignored idea, an imbalance in who speaks) are nearly impossible to observe and measure at scale. Traditional methods require ten hours of expert human coding for every hour of team interaction. That makes large-scale research prohibitively expensive and leaves practitioners flying blind.
+## Measuring what matters in teams
 
-We recognized this as both a scientific bottleneck and a design opportunity.
+**Journal of Organization Design · To appear, 2026.** With Brian Uzzi and Matt Groh, I develop a methodological agenda for studying team interaction at greater scale, resolution, and temporal continuity. Linking language, vocal cues, and visible behavior could help researchers connect organizational constructs to enacted behavior, trace sequences of coordination and repair, and test which patterns generalize across settings.
 
-![](public/AI-team-infographic.png)
+This perspective article establishes the research agenda. The empirical projects below develop and test applications, with measurement validity assessed for each behavior and setting.
 
-**The approach**: We built a multimodal AI pipeline that uses multimodal AI to simultaneously analyze video, audio, and language from real team interactions — at roughly $1 per hour of footage, compared to hundreds of dollars in expert labor. The system extracts behavioral signals like participation dynamics, turn-taking patterns, idea-building versus blocking behaviors, and emotional trajectories across a conversation.
+Evey Huang, Brian Uzzi, and Matt Groh. *Measuring What Matters in Teams with Multimodal AI.*
 
-**The dataset** is deliberately ambitious: 300+ hours of scientific research teams, 2,000+ hours of B2B sales calls, and 300+ hours of entrepreneurial pitch negotiations.  This breadth lets us ask not just "what works?" but "what generalizes?", separating universal collaboration principles from context-specific patterns.
+## Scientific teams
 
-**The technical pipeline** is grounded in organizational theory. We synthesized decades of team science research to create a behavior coding framework and designed prompts around these validated constructs: transactive memory, shared mental models, Tuckman's team development stages etc. so the AI extracts features that map onto decades of team science, not just surface-level sentiment.
+**Manuscript in preparation.** We examine integration behavior: how members build on, connect, evaluate, and extend one another’s contributions. Current analyses suggest that effective teamwork is distinguished by what the team does with its members’ ideas, alongside the ideas they contribute. We study how these patterns relate to collective outcomes, providing an empirical foundation for AI that can help people integrate existing knowledge.
 
-**Rigor and responsibility by design**: We designed thorough and comprehensive evalutaion pipeline to assess and improve AI annotations. They are benchmarked against expert human coders with systematic audits. Privacy protection is built into the pipeline from the start: data is processed under strict access controls and behavioral insights are reported at the team level rather than targeting individuals.
+Evey Huang, Max Chalekson, Matt Groh, D. Abrams, and Brian Uzzi. *Multimodal AI for Large-Scale Scientific Team Behavior Analysis.*
 
-**What it reveals**: Early results show that specific behavioral patterns (like how often teams ask clarifying questions, or how quickly they recover after disagreement) predict outcomes weeks later with meaningful accuracy. The goal is an early-warning system: flag a team showing fragmentation signals before a missed deadline, not after.
+## Entrepreneur–investor interaction
 
-**Why it matters beyond academia**: Organizations are already deploying AI to assess teams, but without empirical grounding or ethical guardrails. I'm building the research infrastructure that should have come first: validated methods, open-source tools, and a framework that keeps human judgment central while making behavioral intelligence scalable.
+**Ongoing study.** I extend the approach to the back-and-forth between entrepreneurs and investors. We investigate how questions, challenges, and responses reveal preparedness, build rapport, and relate to evaluators’ judgments. The focal interaction is the exchange between founders and evaluators, which allows us to study evaluation beyond a prepared presentation. Findings and their boundary conditions remain to be established.
 
-This project sits at the intersection of organizational science, AI systems design, and responsible technology, which is exactly where I want to work. The technical challenge is building reliable AI measurement. The harder, more interesting challenge is building it in a way that surfaces human collaboration without reducing people to data points.
+Evey Huang, Ava Grey, Brian Uzzi, and Matt Groh. *Revealed Preparedness: Measuring Entrepreneur–Investor Interaction at Scale with Multimodal AI.*
 
-**Collaborators**: Dr. Matt Groh; Dr. Brian Uzzi; Max Chalekson
+## Professional volleyball
 
-* This project has won the finalist (top 10% of 250+ proposals from scholars across the world) for the *AI for Organizations Grand Challenge* organized by Google DeepMind and Stanford HAI in 2025.
+**Ongoing study.** We use team huddles to examine how cohesion is enacted through observable interaction and how those dynamics relate to subsequent performance. Professional volleyball provides a setting where actions are tightly interdependent and coordination takes place under time pressure. Together with the science and entrepreneurship studies, it helps us ask which patterns of collaboration carry across settings and which depend on the demands of the work.
 
-* [IN REVIEW]: A Point of View article for the *Journal of Organizational Design* 2026
+This stream received **$75,000 from Microsoft’s AI and the New Future of Work program** for *Building Behavioral Process Models from Real Teams with Multimodal AI*. I independently wrote the proposal, with Brian Uzzi as PI. Our related **TeamLens** proposal was also recognized as a [finalist in the Stanford HAI and Google DeepMind AI for Organizations Grand Challenge](https://hai.stanford.edu/industry/ai-for-organizations-grand-challenge).
+
+[All research](/posts) · [Publications](/publications)

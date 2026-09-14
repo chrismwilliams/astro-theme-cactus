@@ -16,9 +16,9 @@ export const siteConfig: SiteConfig = {
 	// Used as both a meta property (src/components/BaseHead.astro L:31 + L:49) & the generated satori png (src/pages/og-image/[slug].png.ts)
 	author: "Evey Huang",
 	// Meta property used to construct the meta title property, found in src/components/BaseHead.astro L:11
-	title: "Evey Huang personal website",
+	title: "Evey Huang",
 	// Meta property used as a default description meta property
-	description: "personal website",
+	description: "Evey Huang studies how AI changes collective work, combining human-computer interaction and computational social science across teams and organizations.",
 	// HTML lang property, found in src/layouts/Base.astro L:18
 	lang: "en-GB",
 	// Meta property, found in src/components/BaseHead.astro L:42

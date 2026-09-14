@@ -1,29 +1,44 @@
 ---
 import PageLayout from "@/layouts/Base";
 
-const resumePdfPath = "/Evey%20Huang-CV.pdf";
+const resumePdfPath = "/Evey%20Huang-CV.pdf?v=2026-08";
 
 const experience = [
 	{
-		role: "Postdoctoral Researcher and Engineer",
-		org: "Northwestern University (NICO & Kellogg School of Management)",
-		period: "Feb 2025 - Present",
+		role: "Research Assistant Professor",
+		org: "Northwestern University, Kellogg School of Management",
+		period: "Jul 2026 - Present",
 		summary:
-			"I design and build multimodal and agentic AI systems to analyze how research and business teams collaborate in real work settings. I run end-to-end evaluations across 500+ hours of team data and turn the findings into practical guidance for partners.",
+			"I study how AI changes collective work. My research uses multimodal AI to examine team interaction and computational methods to investigate diversity in scientific ideas and evaluations, informing the design of AI that supports collaboration.",
 	},
+	{
+		role: "Postdoctoral Researcher",
+		org: "Northwestern University, Kellogg School of Management",
+		period: "Feb 2025 - Jun 2026",
+		summary:
+			"I developed multimodal approaches to studying team interaction and computational experiments on AI in scientific knowledge production, working with Brian Uzzi and Matthew Groh.",
+	},
+	{
+		role: "AI Advisor & Forward Deployment Engineer",
+		org: "Novohaven",
+		period: "Oct 2025 - Present",
+		summary:
+			"I design and build shared AI workflows with domain experts, translating organizational knowledge and coordination needs into systems that teams can use and revise together.",
+	},
+
 	{
 		role: "Graduate Researcher",
 		org: "Delta Lab, Northwestern University",
 		period: "Sep 2019 - Dec 2024",
 		summary:
-			"I designed, built, and evaluated proactive human-AI coaching systems for entrepreneurship, design, and learning contexts. This included live deployment, iterative studies, and mixed-method evaluation with users and partner organizations.",
+			"I studied how coaches make distributed expertise usable and designed a proactive AI system to prepare entrepreneurs and mentors for collaboration. This work connected field observation, a cognitive model of coaching expertise, iterative system design, and an exploratory field deployment.",
 	},
 	{
 		role: "AI Technical Advisor",
 		org: "Spark AI (EdTech), China",
-		period: "Dec 2024 - 2025",
+		period: "Dec 2024 - Dec 2025",
 		summary:
-			"I advised product and engineering teams on AI feature design, model integration, and deployment strategy for K-12 learning products. My focuswas balancing capability with responsible AI and safety for real users.",
+			"I advised product and engineering teams on AI feature design, model integration, and deployment strategy for K-12 learning products. My focus was balancing capability with responsible AI and safety for real users.",
 	},
 	{
 		role: "UX Researcher",
@@ -41,6 +56,11 @@ const education = [
 		year: "2024",
 	},
 	{
+		degree: "MS, Technology and Social Behavior",
+		school: "Northwestern University",
+		year: "2023",
+	},
+	{
 		degree: "BA, Economics",
 		school: "University of California, Berkeley",
 		year: "2017",
@@ -48,18 +68,18 @@ const education = [
 ];
 
 const highlights = [
-	"Human-AI collaboration",
-	"Design research",
+	"AI and collective work",
+	"Distributed expertise",
+	"Team interaction",
+	"Collective judgment",
+	"Human-computer interaction",
 	"Computational social science",
-	"Mixed-method Research",
-	"Multimodal AI for behavior analysis",
-	"Agentic and generative AI System",
 ];
 
 const skills = [
 	{
 		area: "AI & ML",
-		items: "Multimodal AI, agentic systems, Machine Learning, LLM evaluation, machine learning, statistical modeling",
+		items: "Multimodal AI, agentic systems, machine learning, LLM evaluation, statistical modeling",
 	},
 	{
 		area: "Engineering",
@@ -76,15 +96,16 @@ const skills = [
 ];
 
 const meta = {
-	title: "Resume",
-	description: "Resume and CV in web format with embedded PDF",
+	title: "CV",
+	description: "Evey Huang’s research experience, education, and CV: human–AI collaboration in teams and organizations.",
 };
 ---
 
 <PageLayout meta={meta}>
 	<section>
 		<div class="section-head">
-			<h1>Resume / CV</h1>
+			<h1>Curriculum vitae</h1>
+			<a class="cactus-link text-sm" href={resumePdfPath} download>Download full CV</a>
 			
 		</div>
 		
@@ -147,7 +168,7 @@ const meta = {
 
 		<article class="surface-card self-start overflow-hidden p-0 lg:sticky lg:top-24">
 			<div class="flex items-center justify-between border-b border-line bg-[#ebece7] px-4 py-3">
-				<p class="meta-text">Full CV (last updated on Mar 2026)</p>
+				<p class="meta-text">Full CV (August 2026)</p>
 				
 			</div>
 			<object

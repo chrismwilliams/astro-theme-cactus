@@ -1,95 +1,39 @@
 ---
-import type { Page, GetStaticPathsOptions } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
-import Pagination from "@/components/Paginator";
-import { getUniqueTags, sortMDByDate } from "@/utils";
 
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-	const allPosts = await getCollection("post", ({ data }) => !data.draft);
-	const allPostsByDate = sortMDByDate(allPosts);
-	const uniqueTags = getUniqueTags(allPosts);
-	return paginate(allPostsByDate, { props: { uniqueTags }, pageSize: 10 });
+export async function getStaticPaths() {
+	const posts = await getCollection("post", ({ data }) => !data.draft);
+	return [{ params: { page: undefined }, props: { posts } }];
 }
 
 interface Props {
-	page: Page<CollectionEntry<"post">>;
-	uniqueTags: string[];
+	posts: CollectionEntry<"post">[];
 }
 
-const { page, uniqueTags } = Astro.props;
-
-const meta = {
-	title: "Work",
-	description: "Research notes and engineering project posts",
-};
-
-const paginationProps = {
-	...(page.url.prev && {
-		prevUrl: {
-			url: page.url.prev,
-			text: "Previous Posts",
-		},
-	}),
-	...(page.url.next && {
-		nextUrl: {
-			url: page.url.next,
-			text: "Next Posts",
-		},
-	}),
-};
+const { posts } = Astro.props;
+const orderedPosts = [...posts].sort((a, b) => a.data.order - b.data.order);
 ---
 
-<PageLayout meta={meta}>
+<PageLayout meta={{ title: "Research", description: "Research on AI and collective work: making expertise usable, understanding collaboration, and evaluating collective outcomes." }}>
 	<section>
 		<div class="section-head">
-			<h1>Research and Industry Projects</h1>
-			<p class="section-label">Human-AI Design, Research, Engineering</p>
+			<h1>Research and projects</h1>
+			<p class="section-label">AI and collective work</p>
 		</div>
 		<p class="max-w-3xl text-[1.02rem] text-muted">
-			Learn more about my research and industry projects that designs and builds human-AI systems and evaluates them in real-world settings.
+			I bring methods from human-computer interaction (HCI) and computational social science (CSS) to these organizational questions, while using advances in AI both to study collective work and to change how it happens. My approach connects field observation of how people work, computational analysis of the patterns of work that emerge at scale, and design of new systems that allow me to intervene in those same processes. Together, these methods allow me to move from uncovering organizational processes that are difficult to capture in conventional data, to measuring and modeling them at scale, to designing and testing interventions that change how people collaborate. 
 		</p>
 	</section>
 
-	<div class="section-block grid gap-8 lg:grid-cols-[2fr_1fr] lg:gap-10">
-		<section aria-label="Work post list">
-			<ul class="post-list text-start">
-				{
-					page.data.map((p) => (
-						<li class="post-list-item">
-							<PostPreview post={p} as="h2" withDesc />
-						</li>
-					))
-				}
-			</ul>
-			<div class="mt-8">
-				<Pagination {...paginationProps} />
-			</div>
-		</section>
-		{
-			uniqueTags.length > 0 && (
-				<aside class="surface-panel h-fit">
-					<h2 class="text-lg font-medium text-accent-2">Browse by tag</h2>
-					<ul class="mt-4 flex flex-wrap gap-2">
-						{uniqueTags.map((tag) => (
-							<li>
-								<a
-									class="button-pill button-pill-soft"
-									href={`/tags/${tag}`}
-									aria-label={`View all posts with the tag: ${tag}`}
-								>
-									#{tag}
-								</a>
-							</li>
-						))}
-					</ul>
-					<a class="mt-5 inline-flex text-sm text-accent hover:text-accent-2" href="/tags" aria-label="View all work categories">
-						View all tags
-					</a>
-				</aside>
-			)
-		}
-	</div>
+	<section class="section-block max-w-4xl" aria-label="Research streams and industry work">
+		<ul class="post-list text-start">
+			{orderedPosts.map((post) => (
+				<li class="post-list-item"><PostPreview post={post} as="h2" withDesc /></li>
+			))}
+		</ul>
+		<p class="mt-6 text-sm"><a class="cactus-link" href="/publications">View all publications and manuscripts</a></p>
+	</section>
 </PageLayout>
