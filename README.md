@@ -183,6 +183,12 @@ By default, the theme prerenders all pages and endpoints, with the [`'static'` o
 
 You do not need to add any adapter to use this theme.
 
+### Wasmer Edge
+
+Import this repository into Wasmer Edge to build it and serve the static `dist/` output, or import your own copy to deploy your customized site:
+
+[![Deploy to Wasmer](https://img.shields.io/badge/Deploy%20to-Wasmer-171717?logo=wasmer&logoColor=white)](https://wasmer.io/apps/create?github=chrismwilliams%2Fastro-theme-cactus)
+
 ### Cloudflare Workers
 
 If deploying via Cloudflare Workers, you may have [issues](https://github.com/chrismwilliams/astro-theme-cactus/issues/454) with regards to the OG image endpoints and it requiring a Node environment. To solve this, you will need to add a [Wrangler configuration file](https://developers.cloudflare.com/workers/framework-guides/web-apps/astro/#if-you-have-a-static-site) for a static build.
