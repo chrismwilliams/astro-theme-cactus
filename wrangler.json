@@ -1,6 +1,8 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "blog",
+	"workers_dev": false,
+	"preview_urls": false,
 	"compatibility_date": "2026-09-14",
 	"main": "functions/api/summarize.ts",
 	"assets": {
@@ -25,7 +27,8 @@
 	},
 	"kv_namespaces": [
 		{
-			"binding": "BLOG_KV"
+			"binding": "BLOG_KV",
+			"id": "72f3bbee88b4414b8839b2a7bd7fad11"
 		}
 	],
 	"keep_vars": true
