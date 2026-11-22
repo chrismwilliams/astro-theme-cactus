@@ -214,6 +214,8 @@ const railBtn =
 			if (pct >= (mark === 100 ? 97 : mark) && !sentDepth.has(mark)) {
 				sentDepth.add(mark);
 				gtag("event", "read_depth", { percent: mark, post_id: postId });
+				// separate event name so the CMS can count completions per page without a custom dimension
+				if (mark === 100) gtag("event", "read_complete", { post_id: postId });
 			}
 		}
 	}

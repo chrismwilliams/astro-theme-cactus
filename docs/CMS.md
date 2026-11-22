@@ -45,6 +45,17 @@ CMS nhỏ chạy trên chính Worker của blog: viết và sửa bài markdown,
 - Bản đang gõ được tự lưu trên trình duyệt. Mở lại trang sẽ có nút khôi phục.
 - Component MDX (ví dụ `<Quiz>`) không hiện trong phần xem trước của CMS, chỉ hiện trên site.
 
-## Phase 2
+## Dashboard (phase 2)
 
-Dashboard GA4 (traffic, nguồn, thiết bị, sự kiện `read_depth` đã được gửi từ blog), Search Console (clicks, impressions, CTR, vị trí theo từ khoá, trang chưa index), PageSpeed/CrUX (Core Web Vitals), YouTube, và tác vụ hằng ngày lưu lại số liệu để vẽ biểu đồ thứ hạng dài hạn.
+| Trang | Nguồn | Nội dung |
+|---|---|---|
+| Tổng quan | GA4, GSC, PageSpeed, URL Inspection, nội dung repo | KPI so với kỳ trước, người dùng/clicks mỗi ngày, tốc độ tải trang chủ, trạng thái index, AI gợi ý tuần này, sức khoẻ SEO, hiệu suất từng bài, bảng chất lượng nội dung, lỗi SEO phổ biến, nhịp xuất bản, top truy vấn, CTR thấp, từ khoá vị trí 8–20, nguồn truy cập, thiết bị, quốc gia |
+| Traffic | GA4 | người online, người dùng/phiên/lượt xem/thời gian đọc, trang xem nhiều + tỉ lệ đọc hết (sự kiện `read_complete`), nguồn, thiết bị, quốc gia |
+| Search & thứ hạng | Search Console | clicks/impressions/CTR/vị trí, theo dõi thứ hạng 90 ngày, bảng truy vấn có lọc, trang CTR thấp, cannibalization, trạng thái index |
+| Core Web Vitals | PageSpeed Insights + CrUX | điểm Lighthouse, LCP/INP/CLS của người dùng thật, đo từng bài |
+| YouTube | YouTube Data API | subscribers, lượt xem, video mới nhất |
+
+- Mọi số liệu được cache trong KV: GA4 1 giờ, GSC 3 giờ, thứ hạng 6 giờ, PageSpeed và index 24 giờ. Nút "Làm mới" bỏ qua cache.
+- Search Console trễ khoảng 3 ngày, nên khoảng thời gian kết thúc ở 3 ngày trước.
+- "Thứ hạng" là vị trí trung bình theo ngày lấy từ Search Console (lưu 16 tháng), không cần cron.
+- Cấu hình nằm trong Cài đặt → Google: service account (quyền Viewer GA4, Restricted Search Console), property GA4, site GSC, PageSpeed API key (không bắt buộc, giúp tránh giới hạn), YouTube Data API key.

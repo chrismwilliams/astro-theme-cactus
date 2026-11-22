@@ -1,0 +1,241 @@
+---
+import AdminLayout from "@/layouts/Admin.astro";
+import { FILTERS_HTML } from "@/lib/dashboard";
+---
+
+<AdminLayout active="search" title="Search & thứ hạng">
+	<div class="cms-top">
+		<h1>Search & thứ hạng <span class="cms-src align-middle">GSC</span></h1>
+		<span class="sp"></span>
+		<span class="cms-help" data-range></span>
+	</div>
+	<div data-filters set:html={FILTERS_HTML} />
+
+	<div class="cms-kpis" data-kpis>
+		<div class="cms-card cms-kpi" data-kpi="clicks"><small>Clicks</small><b>–</b><span></span></div>
+		<div class="cms-card cms-kpi" data-kpi="impressions"><small>Impressions</small><b>–</b><span></span></div>
+		<div class="cms-card cms-kpi" data-kpi="ctr"><small>CTR</small><b>–</b><span></span></div>
+		<div class="cms-card cms-kpi" data-kpi="position"><small>Vị trí TB</small><b>–</b><span></span></div>
+		<div class="cms-card cms-kpi" data-kpi="top10"><small>Truy vấn top 10</small><b>–</b><span></span></div>
+	</div>
+
+	<div class="cms-grid mb-4 grid-cols-1 md:grid-cols-2">
+		<section class="cms-card"><h2>Clicks mỗi ngày</h2><div data-chart="clicks"></div></section>
+		<section class="cms-card"><h2>Impressions mỗi ngày</h2><div data-chart="impressions"></div></section>
+	</div>
+
+	<section class="cms-card mb-4">
+		<h2>Theo dõi thứ hạng <small>vị trí TB theo ngày · 90 ngày</small></h2>
+		<p class="cms-help mb-2">Chọn tối đa 5 truy vấn để so sánh (vị trí 1 ở trên cùng).</p>
+		<div class="mb-3 flex flex-wrap gap-1.5" data-rank-picks></div>
+		<div data-chart="rank"><div class="cms-skeleton"></div></div>
+	</section>
+
+	<section class="cms-card mb-4 overflow-x-auto">
+		<h2>Truy vấn
+			<span class="cms-seg ms-2 align-middle" data-qfilter role="group" aria-label="Lọc truy vấn">
+				<button aria-pressed="true" data-f="all" type="button">tất cả</button><button aria-pressed="false" data-f="striking" type="button">vị trí 8–20</button><button aria-pressed="false" data-f="ctr" type="button">CTR thấp</button>
+			</span>
+			<small data-qcount></small>
+		</h2>
+		<input aria-label="Tìm truy vấn" class="cms-input mb-3 max-w-xs" data-qsearch placeholder="Tìm truy vấn…" type="search" />
+		<table class="cms-table">
+			<thead><tr><th>Truy vấn</th><th class="num">Clicks</th><th class="num">Impr.</th><th class="num cms-hide-sm">CTR</th><th class="num">Vị trí</th></tr></thead>
+			<tbody data-queries><tr><td colspan="5"><div class="cms-skeleton"></div></td></tr></tbody>
+		</table>
+	</section>
+
+	<div class="cms-grid mb-4 grid-cols-1 lg:grid-cols-2">
+		<section class="cms-card overflow-x-auto">
+			<h2>Trang có CTR thấp hơn kỳ vọng <small>→ viết lại tiêu đề/meta</small></h2>
+			<table class="cms-table">
+				<thead><tr><th>Trang</th><th class="num">Impr.</th><th class="num">CTR</th><th class="num">Vị trí</th></tr></thead>
+				<tbody data-lowctr></tbody>
+			</table>
+		</section>
+		<section class="cms-card">
+			<h2>Cannibalization <small>nhiều trang cùng một truy vấn</small></h2>
+			<ul class="grid gap-3 text-[13px]" data-cannibal></ul>
+		</section>
+	</div>
+
+	<section class="cms-card overflow-x-auto">
+		<h2>Trạng thái index <small>URL Inspection API · cache 24h</small></h2>
+		<button class="btn btn-ghost mb-3" data-inspect type="button">Kiểm tra tất cả bài</button>
+		<table class="cms-table">
+			<thead><tr><th>URL</th><th>Trạng thái</th><th class="cms-hide-sm">Lần crawl gần nhất</th></tr></thead>
+			<tbody data-index><tr><td colspan="3" class="cms-empty">Bấm "Kiểm tra tất cả bài" để xem bài nào đã được Google index.</td></tr></tbody>
+		</table>
+	</section>
+</AdminLayout>
+
+<script>
+	import { api, type ContentFile, esc, toast, toRows } from "@/lib/cms-client";
+	import { delta, fmt, lineChart } from "@/lib/charts";
+	import { cachedNote, expectedCtr, type GscData, initFilters, pathOf, showError } from "@/lib/dashboard";
+
+	const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
+	let data: GscData | null = null;
+	let qfilter = "all";
+
+	const kpi = (id: string, v: string, d: HTMLElement | null) => {
+		const el = $(`[data-kpi="${id}"]`);
+		el.querySelector("b")!.textContent = v;
+		el.querySelector("span:last-child")!.replaceChildren(...(d ? [d] : []));
+	};
+
+	function renderQueries() {
+		if (!data) return;
+		const term = $<HTMLInputElement>("[data-qsearch]").value.trim().toLowerCase();
+		const list = data.queries
+			.filter((q) => (qfilter === "striking" ? q.position >= 8 && q.position <= 20 : qfilter === "ctr" ? q.impressions >= 50 && q.ctr < expectedCtr(q.position) * 0.5 : true))
+			.filter((q) => !term || q.query.toLowerCase().includes(term))
+			.sort((a, b) => b.clicks - a.clicks || b.impressions - a.impressions);
+		$("[data-qcount]").textContent = `${list.length} truy vấn`;
+		$("[data-queries]").innerHTML = list.length
+			? list
+					.slice(0, 150)
+					.map(
+						(q, i) => `<tr style="--i:${Math.min(i, 10)}"><td>${esc(q.query)}</td><td class="num">${fmt.int(q.clicks)}</td><td class="num">${fmt.int(q.impressions)}</td>
+						<td class="num cms-hide-sm">${fmt.pct(q.ctr)}</td><td class="num">${fmt.pos(q.position)}</td></tr>`,
+					)
+					.join("")
+			: '<tr><td colspan="5" class="cms-empty">Không có truy vấn khớp</td></tr>';
+	}
+
+	function render(d: GscData) {
+		data = d;
+		const { current: c, previous: p } = d.totals;
+		kpi("clicks", fmt.int(c.clicks), delta(c.clicks, p.clicks));
+		kpi("impressions", fmt.int(c.impressions), delta(c.impressions, p.impressions));
+		kpi("ctr", fmt.pct(c.ctr), delta(c.ctr, p.ctr, { format: (n) => `${(n * 100).toFixed(1)} điểm %` }));
+		kpi("position", c.position ? fmt.pos(c.position) : "–", delta(c.position, p.position, { format: (n) => n.toFixed(1), invert: true }));
+		kpi("top10", fmt.int(d.queries.filter((q) => q.position <= 10).length), null);
+		$("[data-range]").textContent = `${d.range.start} → ${d.range.end} (Search Console trễ ~3 ngày)`;
+		lineChart($("[data-chart='clicks']"), [{ name: "Clicks", points: d.daily.map((x) => ({ x: x.date, y: x.clicks })) }], { label: "Clicks mỗi ngày" });
+		lineChart($("[data-chart='impressions']"), [{ name: "Impressions", points: d.daily.map((x) => ({ x: x.date, y: x.impressions })) }], {
+			label: "Impressions mỗi ngày",
+		});
+		renderQueries();
+		const low = d.pages
+			.filter((pg) => pg.impressions >= 100 && pg.position <= 15 && pg.ctr < expectedCtr(pg.position) * 0.6)
+			.sort((a, b) => b.impressions - a.impressions)
+			.slice(0, 10);
+		$("[data-lowctr]").innerHTML = low.length
+			? low
+					.map(
+						(pg) => `<tr><td><a class="hover:underline" href="${esc(pg.page)}" target="_blank">${esc(pathOf(pg.page))}</a></td><td class="num">${fmt.int(pg.impressions)}</td>
+						<td class="num">${fmt.pct(pg.ctr)} <span class="text-muted">/ ${fmt.pct(expectedCtr(pg.position), 0)}</span></td><td class="num">${fmt.pos(pg.position)}</td></tr>`,
+					)
+					.join("")
+			: '<tr><td colspan="4" class="cms-empty">Không có trang nào CTR thấp bất thường</td></tr>';
+		$("[data-cannibal]").innerHTML = d.cannibalization.length
+			? d.cannibalization
+					.slice(0, 8)
+					.map(
+						(c2) => `<li><b class="text-accent-2">${esc(c2.query)}</b><ul class="text-muted mt-1 grid gap-0.5 font-mono text-[11.5px]">${c2.pages
+							.map((pg) => `<li>${esc(pathOf(pg.page))} · ${fmt.int(pg.impressions)} impr · vị trí ${fmt.pos(pg.position)}</li>`)
+							.join("")}</ul></li>`,
+					)
+					.join("")
+			: '<li class="cms-empty">Không phát hiện cannibalization</li>';
+		cachedNote(document.querySelector("[data-cached]"), d.cachedAt);
+	}
+
+	/* ---------- rank tracker ---------- */
+	type Rank = { series: { query: string; impressions: number; points: { date: string; position: number }[] }[] };
+	let rank: Rank | null = null;
+	let picked: string[] = [];
+	function renderRank() {
+		if (!rank) return;
+		const box = $("[data-rank-picks]");
+		box.replaceChildren(
+			...rank.series.slice(0, 15).map((s) => {
+				const b = document.createElement("button");
+				b.type = "button";
+				b.className = "chip";
+				b.textContent = s.query;
+				b.setAttribute("aria-pressed", String(picked.includes(s.query)));
+				b.addEventListener("click", () => {
+					picked = picked.includes(s.query) ? picked.filter((q) => q !== s.query) : [...picked, s.query].slice(-5);
+					renderRank();
+				});
+				return b;
+			}),
+		);
+		const series = picked
+			.map((q) => rank!.series.find((s) => s.query === q))
+			.filter((s): s is Rank["series"][number] => Boolean(s))
+			.map((s) => ({ name: s.query, points: s.points.map((p) => ({ x: p.date, y: p.position })) }));
+		if (!series.length) {
+			$("[data-chart='rank']").innerHTML = '<p class="cms-empty">Chọn truy vấn ở trên.</p>';
+			return;
+		}
+		lineChart($("[data-chart='rank']"), series, { height: 220, invert: true, label: "Vị trí trung bình theo ngày", yFormat: (n) => n.toFixed(1) });
+	}
+	api<Rank>("/analytics/rank?days=90")
+		.then((r) => {
+			rank = r;
+			picked = r.series.slice(0, 3).map((s) => s.query);
+			renderRank();
+		})
+		.catch((e) => showError($("[data-chart='rank']"), e));
+
+	/* ---------- index status ---------- */
+	$("[data-inspect]").addEventListener("click", async () => {
+		const btn = $<HTMLButtonElement>("[data-inspect]");
+		btn.disabled = true;
+		btn.textContent = "Đang hỏi Google…";
+		try {
+			const { files } = await api<{ files: ContentFile[] }>("/content");
+			const urls = toRows(files)
+				.filter((r) => !r.draft)
+				.map((r) => `https://blog.datnt.work/${r.kind === "note" ? "notes" : "posts"}/${r.slug}/`)
+				.slice(0, 40);
+			const res = await api<{ results: { url: string; verdict: string; coverageState: string; lastCrawlTime?: string; error?: string }[] }>(
+				"/analytics/inspect",
+				{ body: { urls }, method: "POST" },
+			);
+			const order = (v: string) => (v === "PASS" ? 2 : v === "ERROR" ? 0 : 1);
+			$("[data-index]").innerHTML = res.results
+				.sort((a, b) => order(a.verdict) - order(b.verdict))
+				.map((r) => {
+					const level = r.verdict === "PASS" ? "good" : r.verdict === "ERROR" ? "poor" : "warn";
+					const icon = { good: "✓", poor: "✕", warn: "!" }[level];
+					return `<tr><td class="font-mono text-xs">${esc(pathOf(r.url))}</td>
+					<td><span class="cms-status ${level}"><span>${icon}</span> ${esc(r.error ? r.error : r.coverageState || r.verdict)}</span></td>
+					<td class="cms-hide-sm font-mono text-xs">${r.lastCrawlTime ? esc(new Date(r.lastCrawlTime).toLocaleDateString("vi-VN")) : "–"}</td></tr>`;
+				})
+				.join("");
+			const indexed = res.results.filter((r) => r.verdict === "PASS").length;
+			toast(`${indexed}/${res.results.length} URL đã được index`);
+		} catch (e) {
+			toast((e as Error).message, "error");
+		} finally {
+			btn.disabled = false;
+			btn.textContent = "Kiểm tra lại";
+		}
+	});
+
+	document.querySelectorAll<HTMLButtonElement>("[data-qfilter] button").forEach((b) =>
+		b.addEventListener("click", () => {
+			qfilter = b.dataset.f!;
+			document.querySelectorAll("[data-qfilter] button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+			renderQueries();
+		}),
+	);
+	$("[data-qsearch]").addEventListener("input", renderQueries);
+
+	initFilters($("[data-filters]"), async (days, fresh) => {
+		const k = $("[data-kpis]");
+		k.dataset.loading = "true";
+		try {
+			render(await api<GscData>(`/analytics/gsc?days=${days}${fresh ? "&fresh=1" : ""}`));
+		} catch (e) {
+			for (const sel of ["[data-chart='clicks']", "[data-chart='impressions']"]) showError($(sel), e);
+			$("[data-queries]").innerHTML = "";
+		} finally {
+			k.dataset.loading = "false";
+		}
+	});
+</script>

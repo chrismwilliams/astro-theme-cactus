@@ -1,4 +1,14 @@
-import { reviewPost, testAi } from "./ai";
+import { reviewPost, testAi, weeklyInsights } from "./ai";
+import {
+	cached,
+	clampDays,
+	gaReport,
+	gscReport,
+	inspectUrls,
+	pagespeed,
+	rankHistory,
+	youtube,
+} from "./analytics";
 import { requireAdmin, requireSameOrigin } from "./auth";
 import { type AdminEnv, HttpError, json } from "./env";
 import { deleteFile, getFile, listContent, putFile, testGithub, uploadImage } from "./github";
@@ -118,6 +128,93 @@ export async function handleAdmin(request: Request, env: AdminEnv): Promise<Resp
 							: [],
 						title: str(b.title),
 					}),
+				);
+			}
+
+			case "GET /analytics/ga":
+				return json(
+					await gaReport(
+						env,
+						clampDays(url.searchParams.get("days")),
+						url.searchParams.has("fresh"),
+					),
+				);
+
+			case "GET /analytics/gsc":
+				return json(
+					await gscReport(
+						env,
+						clampDays(url.searchParams.get("days")),
+						url.searchParams.has("fresh"),
+					),
+				);
+
+			case "GET /analytics/rank":
+				return json(
+					await rankHistory(
+						env,
+						clampDays(url.searchParams.get("days") ?? "90"),
+						url.searchParams.has("fresh"),
+					),
+				);
+
+			case "POST /analytics/inspect": {
+				const b = await body<{ urls?: unknown; fresh?: boolean }>(request);
+				const urls = Array.isArray(b.urls)
+					? b.urls.filter((u): u is string => typeof u === "string")
+					: [];
+				return json(await inspectUrls(env, urls, b.fresh === true));
+			}
+
+			case "GET /analytics/psi": {
+				const target = url.searchParams.get("url") ?? "";
+				const strategy = url.searchParams.get("strategy") === "desktop" ? "desktop" : "mobile";
+				try {
+					new URL(target);
+				} catch {
+					throw new HttpError(400, "invalid_url");
+				}
+				return json(await pagespeed(env, target, strategy, url.searchParams.has("fresh")));
+			}
+
+			case "GET /analytics/youtube":
+				return json(await youtube(env, url.searchParams.has("fresh")));
+
+			case "POST /ai/insights": {
+				const b = await body<{ posts?: unknown; fresh?: boolean }>(request);
+				const posts = (Array.isArray(b.posts) ? b.posts : [])
+					.slice(0, 300)
+					.filter((p): p is Record<string, unknown> => Boolean(p) && typeof p === "object")
+					.map((p) => ({
+						issues: Number(p.issues) || 0,
+						path: String(p.path ?? "").slice(0, 200),
+						score: Number(p.score) || 0,
+						title: String(p.title ?? "").slice(0, 200),
+						words: Number(p.words) || 0,
+					}));
+				const [gsc, ga] = await Promise.all([
+					gscReport(env, 28).catch(() => null),
+					gaReport(env, 28).catch(() => null),
+				]);
+				const data = JSON.stringify({
+					ga: ga && { pages: ga.pages.slice(0, 40), totals: ga.totals },
+					gsc: gsc && {
+						cannibalization: gsc.cannibalization.slice(0, 10),
+						pages: gsc.pages.slice(0, 60),
+						queries: gsc.queries.slice(0, 150),
+						totals: gsc.totals,
+					},
+					posts,
+				});
+				const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(data));
+				const hash = [...new Uint8Array(digest)]
+					.slice(0, 12)
+					.map((x) => x.toString(16).padStart(2, "0"))
+					.join("");
+				return json(
+					await cached(env, `insights:${hash}`, 12 * 3600, b.fresh === true, () =>
+						weeklyInsights(env, data),
+					),
 				);
 			}
 

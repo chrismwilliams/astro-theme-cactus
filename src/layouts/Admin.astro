@@ -6,7 +6,7 @@ import "@/styles/admin.css";
 
 interface Props {
 	title: string;
-	active: "overview" | "posts" | "edit" | "settings";
+	active: "overview" | "posts" | "edit" | "settings" | "traffic" | "search" | "vitals" | "youtube";
 }
 
 const { title, active } = Astro.props;
@@ -16,12 +16,11 @@ const main = [
 	{ href: "/admin/edit/", icon: "＋", id: "edit", label: "Viết mới" },
 	{ href: "/admin/settings/", icon: "⚙", id: "settings", label: "Cài đặt" },
 ];
-const soon = [
-	{ icon: "↗", label: "Traffic", src: "GA4" },
-	{ icon: "⌕", label: "Search", src: "GSC" },
-	{ icon: "⇅", label: "Rank tracker", src: "" },
-	{ icon: "⚡", label: "Core Web Vitals", src: "" },
-	{ icon: "▶", label: "YouTube", src: "" },
+const analytics = [
+	{ href: "/admin/traffic/", icon: "↗", id: "traffic", label: "Traffic", src: "GA4" },
+	{ href: "/admin/search/", icon: "⌕", id: "search", label: "Search & thứ hạng", src: "GSC" },
+	{ href: "/admin/vitals/", icon: "⚡", id: "vitals", label: "Core Web Vitals", src: "PSI" },
+	{ href: "/admin/youtube/", icon: "▶", id: "youtube", label: "YouTube", src: "" },
 ];
 ---
 
@@ -51,14 +50,14 @@ const soon = [
 						))
 					}
 				</nav>
-				<p class="cms-grp">phân tích · phase 2</p>
+				<p class="cms-grp">phân tích</p>
 				<nav class="cms-nav" aria-label="Phân tích">
 					{
-						soon.map((l) => (
-							<a aria-disabled="true" href="/admin/settings/#google" title="Kết nối Google ở phase 2">
+						analytics.map((l) => (
+							<a aria-current={active === l.id ? "page" : undefined} href={l.href}>
 								<span aria-hidden="true">{l.icon}</span>
 								{l.label}
-								<span class="soon">{l.src || "sắp có"}</span>
+								{l.src && <span class="soon">{l.src}</span>}
 							</a>
 						))
 					}
