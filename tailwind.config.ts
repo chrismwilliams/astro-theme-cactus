@@ -20,8 +20,13 @@ export default {
 							borderLeftWidth: "0",
 						},
 						code: {
-							border: "1px dotted #666",
-							borderRadius: "2px",
+							background: "var(--color-surface-2)",
+							border: "1px solid var(--color-line)",
+							borderRadius: "5px",
+							padding: "0.1em 0.35em",
+							fontWeight: "500",
+							"&::before": { content: "none" },
+							"&::after": { content: "none" },
 						},
 						kbd: {
 							"&:where([data-theme='dark'], [data-theme='dark'] *)": {

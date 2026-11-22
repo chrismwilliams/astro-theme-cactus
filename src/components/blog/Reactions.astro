@@ -1,0 +1,108 @@
+---
+import { REACTIONS } from "@/utils/reader";
+
+interface Props {
+	postId: string;
+	variant: "rail" | "bar" | "dock";
+	/** how many reactions to show (rail/dock show fewer) */
+	limit?: number;
+}
+
+const { postId, variant, limit } = Astro.props;
+const list = REACTIONS.slice(0, limit ?? (variant === "bar" ? REACTIONS.length : 3));
+
+const btnClass = {
+	bar: "border-line bg-global-bg hover:border-accent aria-pressed:border-accent aria-pressed:bg-accent-soft flex items-center gap-1.5 rounded-full border px-3.5 py-2 font-mono text-sm transition",
+	dock: "text-muted aria-pressed:text-accent-strong flex flex-col items-center gap-0.5 px-2 font-mono text-[11px]",
+	rail: "border-line bg-surface text-muted hover:border-accent aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent-strong flex w-12 flex-col items-center gap-0.5 rounded-xl border py-2 font-mono text-[11px] transition",
+}[variant];
+---
+
+<post-reactions class:list={["contents"]} data-id={postId}>
+	{
+		list.map((r) => (
+			<button
+				aria-label={`${r.label} (${r.emoji})`}
+				aria-pressed="false"
+				class:list={[btnClass, "cursor-pointer active:scale-95"]}
+				data-reaction={r.key}
+				title={r.label}
+				type="button"
+			>
+				<span aria-hidden="true" class:list={[variant === "bar" ? "text-base" : "text-lg leading-tight"]}>
+					{r.emoji}
+				</span>
+				<span data-count>0</span>
+			</button>
+		))
+	}
+</post-reactions>
+
+<script>
+	import {
+		fetchReactions,
+		formatCount,
+		getMyReactions,
+		type ReactionCounts,
+		type ReactionKey,
+		sendReaction,
+		setMyReactions,
+	} from "@/utils/reader";
+
+	// shared across every <post-reactions> instance on the page
+	const state: { counts: ReactionCounts; mine: Set<ReactionKey>; loaded?: Promise<void> } = {
+		counts: {},
+		mine: new Set(),
+	};
+
+	function renderAll() {
+		document.querySelectorAll<HTMLButtonElement>("post-reactions [data-reaction]").forEach((btn) => {
+			const key = btn.dataset.reaction as ReactionKey;
+			btn.setAttribute("aria-pressed", String(state.mine.has(key)));
+			const count = btn.querySelector("[data-count]");
+			if (count) count.textContent = formatCount(state.counts[key]);
+		});
+	}
+
+	class PostReactions extends HTMLElement {
+		connectedCallback() {
+			const id = this.dataset.id!;
+			if (!state.loaded) {
+				state.mine = new Set(getMyReactions(id));
+				state.loaded = fetchReactions([id]).then((res) => {
+					state.counts = res[id] ?? {};
+					renderAll();
+				});
+				renderAll();
+			} else {
+				state.loaded.then(renderAll);
+			}
+
+			this.querySelectorAll<HTMLButtonElement>("[data-reaction]").forEach((btn) => {
+				btn.addEventListener("click", async () => {
+					const key = btn.dataset.reaction as ReactionKey;
+					const had = state.mine.has(key);
+					const delta = had ? -1 : 1;
+					// optimistic update
+					had ? state.mine.delete(key) : state.mine.add(key);
+					state.counts[key] = Math.max(0, (state.counts[key] ?? 0) + delta);
+					setMyReactions(id, [...state.mine]);
+					renderAll();
+					if (!had) {
+						btn.animate(
+							[{ transform: "scale(1)" }, { transform: "scale(1.25)" }, { transform: "scale(1)" }],
+							{ duration: 250, easing: "ease-out" },
+						);
+					}
+					const server = await sendReaction(id, key, delta);
+					if (server) {
+						state.counts = server;
+						renderAll();
+					}
+				});
+			});
+		}
+	}
+
+	customElements.define("post-reactions", PostReactions);
+</script>

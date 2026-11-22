@@ -9,10 +9,13 @@ import type { SiteMeta } from "@/types";
 
 interface Props {
 	meta: SiteMeta;
+	/** "narrow" for text pages, "wide" for home / listing / post pages */
+	width?: "narrow" | "wide";
 }
 
 const {
 	meta: { articleDate, description = siteConfig.description, ogImage, title },
+	width = "narrow",
 } = Astro.props;
 ---
 
@@ -22,11 +25,23 @@ const {
 		<ThemeProvider />
 	</head>
 	<body
-		class="bg-global-bg text-global-text mx-auto flex min-h-screen max-w-3xl flex-col px-4 pt-16 font-mono text-sm font-normal antialiased sm:px-8"
+		class="bg-global-bg text-global-text flex min-h-screen flex-col font-sans text-[15px] leading-relaxed font-normal antialiased"
 	>
 		<SkipLink />
+		<div
+			aria-hidden="true"
+			class="from-accent pointer-events-none fixed inset-x-0 top-0 z-50 h-[3px] origin-left scale-x-0 bg-gradient-to-r to-sky-500"
+			id="read-progress"
+		>
+		</div>
 		<Header />
-		<main id="main">
+		<main
+			id="main"
+			class:list={[
+				"mx-auto w-full grow px-4 pt-10 sm:px-8 sm:pt-14",
+				width === "wide" ? "max-w-6xl" : "max-w-3xl",
+			]}
+		>
 			<slot />
 		</main>
 		<Footer />

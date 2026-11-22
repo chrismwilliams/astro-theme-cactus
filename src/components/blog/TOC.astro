@@ -8,15 +8,21 @@ interface Props {
 }
 
 const { headings } = Astro.props;
-
-const toc = generateToc(headings);
+const toc = generateToc(headings, { maxHeadingLevel: 3 });
 ---
 
-<details open class="lg:sticky lg:top-12 lg:order-2 lg:-me-32 lg:basis-64">
-	<summary class="title hover:marker:text-accent cursor-pointer text-lg">Table of Contents</summary>
-	<nav class="ms-4 lg:w-full">
-		<ol class="mt-4">
-			{toc.map((heading) => <TOCHeading heading={heading} />)}
-		</ol>
-	</nav>
-</details>
+{
+	toc.length > 0 && (
+		<nav aria-label="Mục lục" class="toc-nav">
+			<div class="eyebrow mb-3 flex justify-between">
+				<span>mục lục</span>
+				<span data-read-pct>0%</span>
+			</div>
+			<ol class="border-line border-s">
+				{toc.map((heading) => (
+					<TOCHeading heading={heading} />
+				))}
+			</ol>
+		</nav>
+	)
+}

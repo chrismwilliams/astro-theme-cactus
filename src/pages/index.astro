@@ -1,103 +1,182 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
-import PostPreview from "@/components/blog/PostPreview.astro";
-import Note from "@/components/note/Note.astro";
-import SocialList from "@/components/SocialList.astro";
-import { getAllPosts } from "@/data/post";
+import { Image } from "astro:assets";
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import PostCard from "@/components/blog/PostCard.astro";
+import TagFilter from "@/components/blog/TagFilter.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
+import Newsletter from "@/components/Newsletter.astro";
+import Terminal from "@/components/Terminal.astro";
+import { getAllPosts, getUniqueTagsWithCount } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
 
-// Posts
 const MAX_POSTS = 10;
-const allPosts = await getAllPosts();
-const allPostsByDate = allPosts.sort(collectionDateSort) as CollectionEntry<"post">[];
-const latestPosts = allPostsByDate.slice(0, MAX_POSTS);
+const MAX_NOTES = 4;
+const allPosts = (await getAllPosts()).sort(collectionDateSort) as CollectionEntry<"post">[];
+const featured = allPosts.find((p) => p.data.pinned) ?? allPosts[0];
+const latestPosts = allPosts.filter((p) => p !== featured).slice(0, MAX_POSTS);
+const tagsWithCount = getUniqueTagsWithCount(allPosts);
+const filterTags = getUniqueTagsWithCount(latestPosts)
+	.slice(0, 6)
+	.map(([t]) => t);
 
-// Pinned Posts, set to a max of 3;
-const MAX_PINNED_POSTS = 3;
-const pinnedPosts = allPostsByDate
-	.values()
-	.filter((p) => p.data.pinned)
-	.take(MAX_PINNED_POSTS)
-	.toArray();
+const allNotes = (await getCollection("note")).sort(
+	collectionDateSort,
+) as CollectionEntry<"note">[];
+const latestNotes = allNotes.slice(0, MAX_NOTES);
 
-// Notes, set to a max of 5
-const MAX_NOTES = 5;
-const allNotes = await getCollection("note");
-const latestNotes = allNotes
-	.sort(collectionDateSort)
-	.slice(0, MAX_NOTES) as CollectionEntry<"note">[];
+const featuredReading = featured
+	? ((await render(featured)).remarkPluginFrontmatter.readingTime as string)
+	: "";
 ---
 
-<PageLayout meta={{ title: "Home" }}>
-	<section>
-		<h1 class="title mb-4">Dat's Blog</h1>
-		<p class="mb-2 text-lg italic text-muted">Just for note.</p>
-		<p class="mb-4">
-			Hi there! I'm Dat — a Security Engineer working in Application Security.
-			This is my personal corner on the internet where I jot down what I learn, explore, and tinker with.
-		</p>
-		<SocialList />
+<PageLayout meta={{ title: "Home" }} width="wide">
+	<section class="grid items-center gap-10 pb-14 lg:grid-cols-[1.15fr_1fr] lg:gap-12 lg:pt-6">
+		<div>
+			<p class="eyebrow">// security engineer · appsec</p>
+			<h1 class="text-accent-2 mt-3 mb-4 text-4xl leading-[1.1] font-extrabold tracking-tight sm:text-5xl">
+				Ghi chép về <span class="text-accent-strong">bảo mật ứng dụng</span>, những thứ mình học &amp; thử.
+			</h1>
+			<p class="text-muted max-w-lg text-base sm:text-lg">
+				Hi, mình là Dat — Security Engineer mảng Application Security. Đây là góc nhỏ để note lại
+				kiến thức AppSec, DevSecOps và những công cụ mình build.
+			</p>
+			<div class="mt-6 flex flex-wrap gap-2.5">
+				{featured && <a class="btn btn-primary" href={`/posts/${featured.id}/`}>Đọc bài nổi bật →</a>}
+				<a class="btn btn-ghost" href="#newsletter">Subscribe</a>
+			</div>
+			<dl class="mt-7 flex gap-8 [&>div]:flex [&>div]:flex-col-reverse">
+				<div>
+					<dt class="text-muted text-xs">bài viết</dt>
+					<dd class="text-accent-2 font-mono text-2xl font-bold">{allPosts.length}</dd>
+				</div>
+				<div>
+					<dt class="text-muted text-xs">notes</dt>
+					<dd class="text-accent-2 font-mono text-2xl font-bold">{allNotes.length}</dd>
+				</div>
+				<div>
+					<dt class="text-muted text-xs">tags</dt>
+					<dd class="text-accent-2 font-mono text-2xl font-bold">{tagsWithCount.length}</dd>
+				</div>
+			</dl>
+		</div>
+		<Terminal notes={allNotes} posts={allPosts} tags={tagsWithCount.map(([t]) => t)} />
 	</section>
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">📬 Newsletter</h2>
-		<p class="mb-4 text-sm text-muted">Subscribe to get notified when I publish new posts. No spam, unsubscribe anytime.</p>
-		<form class="flex flex-col gap-3 sm:flex-row sm:items-center" id="newsletter-form">
-			<input
-				type="email"
-				placeholder="your@email.com"
-				required
-				class="border-muted bg-global-bg text-global-text rounded-md border px-4 py-2 text-sm focus:border-accent focus:outline-none sm:flex-1"
-				id="newsletter-email"
-			/>
-			<button
-				type="submit"
-				class="bg-accent text-global-bg rounded-md px-6 py-2 text-sm font-semibold transition-colors hover:opacity-90"
-			>
-				Subscribe
-			</button>
-		</form>
-	</section>
+
 	{
-		pinnedPosts.length > 0 && (
-			<section class="mt-16">
-				<h2 class="title mb-6 text-xl">Pinned Posts</h2>
-				<ul class="space-y-4" role="list">
-					{pinnedPosts.map((p) => (
-						<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-							<PostPreview post={p} />
-						</li>
-					))}
-				</ul>
+		featured && (
+			<section class="mb-14" aria-labelledby="featured-h">
+				<div class="mb-5 flex items-end justify-between">
+					<h2 class="title" id="featured-h">Featured</h2>
+					<span class="eyebrow">{featured.data.pinned ? "pinned" : "latest"}</span>
+				</div>
+				<article class="card group hover:border-accent relative grid overflow-hidden transition md:grid-cols-[1.1fr_1fr]">
+					<div class="featured-cover relative min-h-52 md:min-h-72">
+						{featured.data.coverImage ? (
+							<Image
+								alt={featured.data.coverImage.alt}
+								class="absolute inset-0 h-full w-full object-cover"
+								height={600}
+								src={featured.data.coverImage.src}
+								width={800}
+							/>
+						) : (
+							<p aria-hidden="true" class="absolute inset-x-6 bottom-6 font-mono text-xs leading-relaxed text-teal-100/80">
+								$ cat {featured.id}.md | head -1
+								<br />
+								{featured.data.title}
+							</p>
+						)}
+					</div>
+					<div class="flex flex-col gap-3 p-6 sm:p-8">
+						<div class="flex flex-wrap gap-2">
+							{featured.data.tags.map((t) => (
+								<span class="text-accent-strong font-mono text-xs">#{t}</span>
+							))}
+						</div>
+						<h3 class="text-accent-2 text-2xl leading-tight font-bold tracking-tight">
+							<a class="after:absolute after:inset-0" href={`/posts/${featured.id}/`}>
+								{featured.data.title}
+							</a>
+						</h3>
+						<p class="text-muted">{featured.data.description}</p>
+						<p class="text-muted mt-auto font-mono text-xs">
+							<FormattedDate date={featured.data.publishDate} /> · {featuredReading}
+						</p>
+					</div>
+				</article>
 			</section>
 		)
 	}
-	<section class="mt-16">
-		<h2 class="title text-accent mb-6 text-xl"><a href="/posts/">Posts</a></h2>
-		<ul class="space-y-4" role="list">
-			{
-				latestPosts.map((p) => (
-					<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-						<PostPreview post={p} />
-					</li>
-				))
-			}
-		</ul>
-	</section>
-	{
-		latestNotes.length > 0 && (
-			<section class="mt-16">
-				<h2 class="title text-accent mb-6 text-xl">
-					<a href="/notes/">Notes</a>
-				</h2>
-				<ul class="space-y-6" role="list">
-					{latestNotes.map((note) => (
+
+	<div class="grid gap-10 lg:grid-cols-[1fr_320px]">
+		<section aria-labelledby="latest-h" id="latest-posts">
+			<div class="mb-4 flex items-end justify-between">
+				<h2 class="title" id="latest-h">Bài viết mới</h2>
+				<a class="eyebrow hover:text-accent-2" href="/posts/">xem tất cả →</a>
+			</div>
+			{filterTags.length > 1 && <TagFilter tags={filterTags} target="latest-posts" />}
+			<ul class="space-y-3.5" role="list">
+				{
+					latestPosts.map((p) => (
 						<li>
-							<Note note={note} as="h3" isPreview />
+							<PostCard post={p} />
 						</li>
-					))}
-				</ul>
-			</section>
-		)
-	}
+					))
+				}
+			</ul>
+			<p class="text-muted py-8 text-center" data-filter-empty hidden>Chưa có bài nào với tag này.</p>
+		</section>
+
+		<aside class="space-y-4">
+			<Newsletter />
+			{
+				latestNotes.length > 0 && (
+					<div class="card p-5">
+						<div class="mb-3 flex items-center justify-between">
+							<h2 class="text-accent-2 font-mono text-sm font-bold">// notes gần đây</h2>
+							<a class="text-muted hover:text-accent-2 font-mono text-xs" href="/notes/">
+								tất cả →
+							</a>
+						</div>
+						<ul class="divide-line divide-y divide-dashed">
+							{latestNotes.map((n) => (
+								<li class="py-3 first:pt-0 last:pb-0">
+									<a class="hover:text-accent-strong text-sm" href={`/notes/${n.id}/`}>
+										{n.data.title}
+									</a>
+									<FormattedDate class="text-muted block font-mono text-[11px]" date={n.data.publishDate} />
+								</li>
+							))}
+						</ul>
+					</div>
+				)
+			}
+			{
+				tagsWithCount.length > 0 && (
+					<div class="card p-5">
+						<h2 class="text-accent-2 mb-3 font-mono text-sm font-bold">// tags</h2>
+						<ul class="flex flex-wrap gap-1.5">
+							{tagsWithCount.slice(0, 12).map(([t, n]) => (
+								<li>
+									<a class="chip" href={`/tags/${t}/`}>
+										{t} <span class="opacity-60">{n}</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				)
+			}
+		</aside>
+	</div>
 </PageLayout>
+
+<style>
+	.featured-cover {
+		background:
+			radial-gradient(circle at 28% 32%, oklch(78% 0.16 170 / 0.55), transparent 55%),
+			radial-gradient(circle at 80% 70%, oklch(60% 0.18 260 / 0.5), transparent 55%),
+			oklch(22% 0.03 260);
+	}
+</style>

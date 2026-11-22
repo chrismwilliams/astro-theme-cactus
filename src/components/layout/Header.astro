@@ -1,108 +1,91 @@
 ---
 import Search from "@/components/Search.astro";
 import ThemeToggle from "@/components/ThemeToggle.astro";
-import { menuLinks } from "@/site.config";
-import { siteConfig } from "../../site.config";
+import { menuLinks, siteConfig } from "@/site.config";
+
+const isActive = (path: string) =>
+	path === "/" ? Astro.url.pathname === "/" : Astro.url.pathname.startsWith(path);
 ---
 
 <header
-	class:list={["group relative mb-28 flex items-center", siteConfig.showLogo && "sm:ps-18"]}
+	class="group border-line bg-global-bg/80 sticky top-0 z-40 border-b backdrop-blur-md"
 	id="main-header"
 >
-	<div class="flex sm:flex-col sm:items-start">
+	<div class="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:gap-6 sm:px-8">
 		<a
 			aria-current={Astro.url.pathname === "/" ? "page" : false}
-			class="inline-flex items-center sm:relative sm:inline-block sm:grayscale sm:hover:filter-none"
+			class="text-accent-2 flex items-center gap-2.5 font-mono text-base font-bold"
 			href="/"
 		>
 			{
 				siteConfig.showLogo && (
-					<svg
+					<span
 						aria-hidden="true"
-						class="me-3 h-10 w-10 sm:absolute sm:-inset-s-18 sm:me-0 sm:h-14 sm:w-14"
-						fill="none"
-						focusable="false"
-						viewBox="0 0 100 100"
-						xmlns="http://www.w3.org/2000/svg"
+						class="bg-accent-2 text-accent dark:bg-accent-soft grid h-8 w-8 place-items-center rounded-lg text-sm"
 					>
-						{/* D letter shape */}
-						<path
-							fill="#1a1f36"
-							d="M15 10h30c22 0 40 18 40 40s-18 40-40 40H15V10zm15 15v50h15c14 0 25-11 25-25S59 25 45 25H30z"
-						/>
-						{/* Shield outline */}
-						<path
-							fill="#00d4aa"
-							d="M50 30l18 8v14c0 12-8 22-18 26-10-4-18-14-18-26V38l18-8z"
-						/>
-						{/* Lock icon */}
-						<path
-							fill="#1a1f36"
-							d="M46 48h8v8h-8v-8zm1-4v4h6v-4a3 3 0 00-6 0z"
-						/>
-					</svg>
+						D
+					</span>
 				)
 			}
-			<span class="text-accent-2 text-xl font-bold sm:text-2xl">{siteConfig.title}</span>
+			<span>{siteConfig.title.toLowerCase()}</span>
 		</a>
 		<nav
 			aria-label="Main"
-			class="bg-global-bg absolute -inset-x-4 top-12 hidden flex-col divide-y px-2 py-4 group-[.menu-open]:z-50 group-[.menu-open]:flex sm:static sm:z-auto sm:-ms-4 sm:mt-1 sm:flex sm:flex-row sm:divide-x sm:divide-y-0 sm:bg-transparent sm:p-0"
+			class="bg-global-bg border-line absolute inset-x-0 top-16 hidden flex-col border-b px-4 py-2 font-mono text-sm group-[.menu-open]:flex sm:static sm:flex sm:flex-row sm:gap-1 sm:border-0 sm:bg-transparent sm:p-0"
 			id="navigation-menu"
 		>
 			{
 				menuLinks.map((link) => (
 					<a
-						aria-current={Astro.url.pathname === link.path ? "page" : false}
-						class="text-accent px-2 py-4 font-semibold sm:px-4 sm:py-0 sm:underline-offset-2 sm:hover:underline"
+						aria-current={isActive(link.path) ? "page" : false}
+						class="text-muted hover:text-accent-2 aria-[current=page]:text-accent-2 aria-[current=page]:bg-surface-2 rounded-lg px-3 py-3 sm:py-1.5"
 						href={link.path}
 					>
-						{link.title}
+						{link.title.toLowerCase()}
 					</a>
 				))
 			}
 		</nav>
+		<div class="ms-auto flex items-center gap-2">
+			<Search />
+			<ThemeToggle />
+			<a class="icon-btn hidden sm:inline-flex" href="/rss.xml" target="_blank">
+				<span class="sr-only">RSS feed</span>
+				<svg
+					aria-hidden="true"
+					class="h-[18px] w-[18px]"
+					fill="none"
+					stroke="currentColor"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="1.8"
+					viewBox="0 0 24 24"
+					><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"
+					></circle></svg
+				>
+			</a>
+			<mobile-button>
+				<button
+					aria-expanded="false"
+					aria-haspopup="menu"
+					class="icon-btn sm:hidden"
+					id="toggle-navigation-menu"
+					type="button"
+				>
+					<span class="sr-only">Open main menu</span>
+					<svg
+						aria-hidden="true"
+						class="h-[18px] w-[18px]"
+						fill="none"
+						stroke="currentColor"
+						stroke-linecap="round"
+						stroke-width="1.8"
+						viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"></path></svg
+					>
+				</button>
+			</mobile-button>
+		</div>
 	</div>
-	<Search />
-	<ThemeToggle />
-	<mobile-button>
-		<button
-			aria-expanded="false"
-			aria-haspopup="menu"
-			class="group relative ms-4 h-7 w-7 sm:invisible sm:hidden"
-			id="toggle-navigation-menu"
-			type="button"
-		>
-			<span class="sr-only">Open main menu</span>
-			<svg
-				aria-hidden="true"
-				class="absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transition-all group-aria-expanded:scale-0 group-aria-expanded:opacity-0"
-				fill="none"
-				focusable="false"
-				id="line-svg"
-				stroke="currentColor"
-				stroke-width="1.5"
-				viewBox="0 0 24 24"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path d="M3.75 9h16.5m-16.5 6.75h16.5" stroke-linecap="round" stroke-linejoin="round"
-				></path>
-			</svg>
-			<svg
-				aria-hidden="true"
-				class="text-accent absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 scale-0 opacity-0 transition-all group-aria-expanded:scale-100 group-aria-expanded:opacity-100"
-				fill="none"
-				focusable="false"
-				id="cross-svg"
-				stroke="currentColor"
-				stroke-width="1.5"
-				viewBox="0 0 24 24"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
-			</svg>
-		</button>
-	</mobile-button>
 </header>
 
 <script>

@@ -1,6 +1,17 @@
+import { handleQuiz, handleReactions, type KV } from "./reader";
+
+/** minimal shapes of the Cloudflare bindings used here (avoids a @cloudflare/workers-types dependency) */
+interface Ai {
+	run(model: string, inputs: Record<string, unknown>): Promise<unknown>;
+}
+interface Fetcher {
+	fetch(request: Request): Promise<Response>;
+}
+
 interface Env {
 	AI: Ai;
 	ASSETS: Fetcher;
+	READER_KV?: KV;
 }
 
 export default {
@@ -10,6 +21,14 @@ export default {
 		// Handle AI summarize API
 		if (url.pathname === "/api/summarize" && request.method === "POST") {
 			return handleSummarize(request, env);
+		}
+
+		if (url.pathname === "/api/reactions") {
+			return handleReactions(request, env.READER_KV);
+		}
+
+		if (url.pathname === "/api/quiz") {
+			return handleQuiz(request, env.READER_KV);
 		}
 
 		// Fallback to static assets

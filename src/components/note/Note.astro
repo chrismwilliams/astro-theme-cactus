@@ -13,7 +13,7 @@ const { Content } = await render(note);
 ---
 
 <article
-	class:list={[isPreview && "bg-global-text/5 inline-grid rounded-md px-4 py-3"]}
+	class:list={[isPreview && "card block p-5"]}
 	data-pagefind-body={isPreview ? false : true}
 >
 	<Tag class="title" class:list={{ "text-base": isPreview }}>
@@ -38,7 +38,7 @@ const { Content } = await render(note);
 		date={note.data.publishDate}
 	/>
 	<div
-		class="prose prose-sm prose-cactus mt-4 max-w-none [&>p:last-of-type]:mb-0"
+		class="prose prose-cactus mt-3 max-w-none [&>p:last-of-type]:mb-0"
 		class:list={{ "line-clamp-6": isPreview }}
 	>
 		<Content />

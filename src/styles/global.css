@@ -3,6 +3,8 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
 
 /* tailwind to ignore satori generated og-image */
 @source not "../pages/og-image";
@@ -49,6 +51,32 @@
 	initial-value: oklch(75% 0.17 170);
 }
 
+@property --color-surface {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(100% 0 0);
+}
+@property --color-surface-2 {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(96% 0.008 170);
+}
+@property --color-line {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(90% 0.01 250);
+}
+@property --color-accent-soft {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(94% 0.05 170);
+}
+@property --color-accent-strong {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: oklch(52% 0.12 170);
+}
+
 /* you could refactor below to use light-dark(), depending on your target audience */
 @theme {
 	--color-global-bg: oklch(98.5% 0.005 170);
@@ -57,7 +85,15 @@
 	--color-link: oklch(70% 0.14 170);
 	--color-accent: oklch(75% 0.17 170);
 	--color-accent-2: oklch(22% 0.03 260);
-	--color-quote: oklch(75% 0.17 170);
+	--color-quote: oklch(55% 0.13 170);
+	--color-surface: oklch(100% 0 0);
+	--color-surface-2: oklch(96% 0.008 170);
+	--color-line: oklch(90% 0.01 250);
+	--color-accent-soft: oklch(94% 0.05 170);
+	--color-accent-strong: oklch(52% 0.12 170);
+	--font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+	--shadow-card: 0 1px 2px oklch(0% 0 0 / 0.04), 0 8px 24px -12px oklch(0% 0 0 / 0.12);
 }
 
 @layer base {
@@ -79,6 +115,12 @@
 			--color-accent: oklch(75% 0.17 170);
 			--color-accent-2: oklch(95% 0 0);
 			--color-quote: oklch(80% 0.12 170);
+			--color-surface: oklch(19% 0.014 250);
+			--color-surface-2: oklch(22% 0.016 250);
+			--color-line: oklch(28% 0.02 250);
+			--color-accent-soft: oklch(30% 0.06 170);
+			--color-accent-strong: oklch(82% 0.15 170);
+			--shadow-card: 0 1px 2px oklch(0% 0 0 / 0.3), 0 12px 32px -16px oklch(0% 0 0 / 0.6);
 		}
 
 		--color-mode-transition-duration: 300ms;
@@ -91,11 +133,22 @@
 			--color-link var(--color-mode-transition-duration) var(--color-mode-transition-easing),
 			--color-accent var(--color-mode-transition-duration) var(--color-mode-transition-easing),
 			--color-accent-2 var(--color-mode-transition-duration) var(--color-mode-transition-easing),
-			--color-quote var(--color-mode-transition-duration) var(--color-mode-transition-easing);
+			--color-quote var(--color-mode-transition-duration) var(--color-mode-transition-easing),
+			--color-surface var(--color-mode-transition-duration) var(--color-mode-transition-easing),
+			--color-surface-2 var(--color-mode-transition-duration) var(--color-mode-transition-easing),
+			--color-line var(--color-mode-transition-duration) var(--color-mode-transition-easing),
+			--color-accent-soft var(--color-mode-transition-duration) var(--color-mode-transition-easing),
+			--color-accent-strong var(--color-mode-transition-duration)
+			var(--color-mode-transition-easing);
 	}
 
-	:target {
-		scroll-margin-block: 5ex;
+	:target,
+	.prose :is(h2, h3, h4) {
+		scroll-margin-top: 6rem;
+	}
+
+	::selection {
+		background: color-mix(in oklch, var(--color-accent) 35%, transparent);
 	}
 
 	@view-transition {
@@ -124,7 +177,55 @@
 	}
 
 	.title {
-		@apply text-accent-2 text-2xl font-semibold;
+		@apply text-accent-2 text-2xl font-bold tracking-tight;
+	}
+
+	.card {
+		@apply bg-surface border-line rounded-2xl border shadow-card;
+	}
+
+	.eyebrow {
+		@apply text-muted font-mono text-xs tracking-widest uppercase;
+	}
+
+	.chip {
+		@apply border-line bg-surface text-muted inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-xs transition-colors;
+		&:hover {
+			@apply text-accent-2 border-accent;
+		}
+		&[aria-pressed="true"] {
+			@apply bg-accent-2 border-accent-2 text-global-bg;
+		}
+	}
+
+	.tag-link {
+		@apply text-accent-strong font-mono text-xs hover:underline;
+	}
+
+	.btn {
+		@apply inline-flex h-10 cursor-pointer items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition;
+	}
+	.btn-primary {
+		@apply bg-accent text-zinc-900 hover:brightness-105;
+	}
+	.btn-ghost {
+		@apply border-line bg-surface border hover:border-accent;
+	}
+
+	.icon-btn {
+		@apply border-line bg-surface text-muted hover:text-accent-2 hover:border-accent inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl border transition;
+	}
+}
+
+/* focus mode: hide chrome around article (unlayered so it beats utility classes) */
+html[data-focus="true"] {
+	#main-header,
+	footer,
+	.post-rail,
+	.post-aside,
+	.post-after,
+	.post-dock {
+		display: none;
 	}
 }
 
@@ -138,4 +239,16 @@
 	--tw-prose-links: var(--color-global-text);
 	--tw-prose-quotes: var(--color-quote);
 	--tw-prose-th-borders: #666;
+}
+
+/* reader adjustable font size */
+.post-body {
+	font-size: calc(1.0625rem * var(--reader-scale, 1));
+	line-height: 1.75;
+}
+
+/* no decorative backticks around inline code */
+.prose :where(code)::before,
+.prose :where(code)::after {
+	content: none;
 }

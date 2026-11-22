@@ -6,7 +6,7 @@
 	--pf-border-focus: var(--color-accent-2);
 	--pf-outline-focus: var(--color-accent);
 	--pf-outline-offset: none;
-	--pf-font: var(--font-mono);
+	--pf-font: var(--font-sans);
 	--pf-text: var(--color-global-text);
 	--pf-text-secondary: var(--color-muted);
 	--pf-skeleton: var(--color-global-bg);
@@ -14,32 +14,36 @@
 }
 
 .pf-trigger-btn {
-	--pf-background: #0000;
-	--pf-border-focus: #0000;
-	--pf-hover: var(--color-accent);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: calc(var(--spacing) * 9);
+	--pf-background: var(--color-surface);
+	--pf-border: var(--color-line);
+	--pf-border-focus: var(--color-accent);
+	--pf-text-muted: var(--color-muted);
+	--pf-hover: var(--color-surface-2);
+	--pf-font: var(--font-sans);
 	height: calc(var(--spacing) * 9);
-	padding: 8px;
-	accent-color: var(--color-accent);
-	border: 0;
-	border-radius: 0;
+	border-radius: 0.75rem;
+	font-size: 13px;
+	cursor: pointer;
+	transition: border-color 150ms;
 
-	&:hover {
-		@media (hover: hover) {
-			--pf-text-muted: var(--color-accent);
-			color: var(--color-accent);
+	@media (min-width: 640px) {
+		width: 15rem;
+	}
+	@media (max-width: 639px) {
+		width: calc(var(--spacing) * 9);
+		padding: 0;
+		justify-content: center;
+		.pf-trigger-text,
+		.pf-trigger-shortcut {
+			display: none;
 		}
 	}
 	&:focus-visible {
 		outline: auto;
 	}
-
-	.pf-trigger-icon {
-		width: calc(var(--spacing) * 7);
-		height: calc(var(--spacing) * 7);
+	.pf-trigger-key {
+		font-family: var(--font-mono);
+		border: 1px solid var(--color-line);
 	}
 }
 

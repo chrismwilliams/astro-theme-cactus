@@ -1,0 +1,107 @@
+---
+/**
+ * Shows a small toolbar when the reader selects text inside the article body:
+ * copy as quote, copy a deep link (URL text fragment) and share on X.
+ */
+interface Props {
+	title: string;
+}
+const { title } = Astro.props;
+---
+
+<selection-popover data-title={title}>
+	<div
+		class="bg-accent-2 text-global-bg pointer-events-auto absolute z-50 hidden items-center gap-0.5 rounded-xl p-1 font-mono text-xs shadow-card dark:bg-zinc-700 dark:text-zinc-100"
+		data-popover
+		role="toolbar"
+		aria-label="Đoạn đã chọn"
+	>
+		<button class="cursor-pointer rounded-lg px-2.5 py-1.5 hover:bg-white/15" data-act="quote" type="button">
+			❝ Trích dẫn
+		</button>
+		<button class="cursor-pointer rounded-lg px-2.5 py-1.5 hover:bg-white/15" data-act="link" type="button">
+			🔗 Copy link
+		</button>
+		<button class="cursor-pointer rounded-lg px-2.5 py-1.5 hover:bg-white/15" data-act="x" type="button">
+			𝕏 Share
+		</button>
+	</div>
+</selection-popover>
+
+<script>
+	import { copyText } from "@/utils/reader";
+
+	class SelectionPopover extends HTMLElement {
+		#text = "";
+
+		connectedCallback() {
+			const pop = this.querySelector<HTMLElement>("[data-popover]")!;
+			const scope = document.querySelector<HTMLElement>("[data-post-body]");
+			if (!scope) return;
+			const title = this.dataset.title ?? document.title;
+
+			const hide = () => {
+				pop.classList.add("hidden");
+				pop.classList.remove("flex");
+			};
+
+			const show = () => {
+				const sel = window.getSelection();
+				const text = sel?.toString().trim() ?? "";
+				if (!sel || sel.rangeCount === 0 || text.length < 3) return hide();
+				const range = sel.getRangeAt(0);
+				if (!scope.contains(range.commonAncestorContainer)) return hide();
+				// skip code blocks: expressive-code already has its own copy button
+				const anchor = range.commonAncestorContainer.parentElement;
+				if (anchor?.closest("pre, .expressive-code")) return hide();
+
+				this.#text = text;
+				const rect = range.getBoundingClientRect();
+				pop.classList.remove("hidden");
+				pop.classList.add("flex");
+				const w = pop.offsetWidth;
+				const left = Math.max(8, Math.min(window.innerWidth - w - 8, rect.left + rect.width / 2 - w / 2));
+				pop.style.left = `${left + window.scrollX}px`;
+				pop.style.top = `${rect.top + window.scrollY - pop.offsetHeight - 10}px`;
+			};
+
+			const deepLink = () => {
+				const words = this.#text.replace(/\s+/g, " ").split(" ");
+				// short fragments are more robust to small edits than the whole selection
+				const fragment =
+					words.length > 8
+						? `${encodeURIComponent(words.slice(0, 4).join(" "))},${encodeURIComponent(words.slice(-4).join(" "))}`
+						: encodeURIComponent(words.join(" "));
+				return `${location.origin}${location.pathname}#:~:text=${fragment}`;
+			};
+
+			document.addEventListener("selectionchange", () => {
+				if (!window.getSelection()?.toString()) hide();
+			});
+			scope.addEventListener("mouseup", () => setTimeout(show, 0));
+			scope.addEventListener("keyup", (e) => {
+				if (e.shiftKey) show();
+			});
+			window.addEventListener("scroll", hide, { passive: true });
+
+			pop.addEventListener("mousedown", (e) => e.preventDefault()); // keep the selection
+			pop.addEventListener("click", (e) => {
+				const act = (e.target as HTMLElement).closest<HTMLElement>("[data-act]")?.dataset.act;
+				if (!act) return;
+				if (act === "quote") copyText(`> ${this.#text}\n\n— ${title} (${location.href})`, "Đã copy trích dẫn");
+				if (act === "link") copyText(deepLink(), "Đã copy link tới đoạn này");
+				if (act === "x") {
+					const text = `“${this.#text.slice(0, 200)}”`;
+					window.open(
+						`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(deepLink())}`,
+						"_blank",
+						"noopener,noreferrer",
+					);
+				}
+				hide();
+				window.getSelection()?.removeAllRanges();
+			});
+		}
+	}
+	customElements.define("selection-popover", SelectionPopover);
+</script>

@@ -4,20 +4,23 @@ import { menuLinks, siteConfig } from "@/site.config";
 const year = new Date().getFullYear();
 ---
 
-<footer
-	class="text-muted mt-auto flex w-full flex-col items-center justify-center gap-y-2 pt-20 pb-4 text-center align-top font-semibold sm:flex-row sm:justify-between sm:text-xs"
->
-	<div class="me-0 sm:me-4">
-		&copy; {siteConfig.author}
-		{year}.<span class="inline-block">&nbsp;✍️&nbsp;{siteConfig.title}&nbsp;</span>
+<footer class="border-line text-muted mt-24 border-t font-mono text-xs">
+	<div
+		class="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-8 sm:flex-row sm:justify-between sm:px-8"
+	>
+		<p>&copy; {siteConfig.author} {year} · {siteConfig.description.toLowerCase()}</p>
+		<nav aria-label="Footer" class="flex flex-wrap justify-center gap-x-4 gap-y-1">
+			{
+				menuLinks.map((link) => (
+					<a class="hover:text-accent-2" href={link.path}>
+						{link.title.toLowerCase()}
+					</a>
+				))
+			}
+			<a class="hover:text-accent-2" href="/rss.xml">rss</a>
+			<a class="hover:text-accent-2" href="https://github.com/datntpro" rel="noreferrer" target="_blank"
+				>github</a
+			>
+		</nav>
 	</div>
-	<nav aria-label="Footer" class="sm:divide-muted flex gap-x-2 sm:gap-x-0 sm:divide-x">
-		{
-			menuLinks.map((link) => (
-				<a class="hover:text-global-text px-4 py-2 hover:underline sm:py-0" href={link.path}>
-					{link.title}
-				</a>
-			))
-		}
-	</nav>
 </footer>
