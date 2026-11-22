@@ -2,7 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import type { GetStaticPaths, Page } from "astro";
 import { Icon } from "astro-icon/components";
-import PostPreview from "@/components/blog/PostPreview.astro";
+import PostCard from "@/components/blog/PostCard.astro";
 import Pagination from "@/components/Paginator.astro";
 import { getAllPosts, getUniqueTags, groupPostsByYear } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
@@ -58,7 +58,7 @@ const groupedByYear = groupPostsByYear(page.data);
 const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 ---
 
-<PageLayout meta={meta}>
+<PageLayout meta={meta} width="wide">
 	<div class="mb-12 flex items-center gap-3">
 		<h1 class="title">Posts</h1>
 		<a class="text-accent" href="/rss.xml" target="_blank">
@@ -66,16 +66,16 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 			<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:rss" />
 		</a>
 	</div>
-	<div class="grid sm:grid-cols-[3fr_1fr] sm:gap-x-8 sm:gap-y-16">
+	<div class="grid gap-10 lg:grid-cols-[1fr_280px]">
 		<div>
 			{
 				pinnedPosts.length > 0 && (
-					<section class="mb-16">
+					<section class="mb-12">
 						<h2 class="title mb-6 text-xl">Pinned Posts</h2>
-						<ul class="space-y-4" role="list">
+						<ul class="space-y-3.5" role="list">
 							{pinnedPosts.map((p) => (
-								<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
-									<PostPreview post={p} />
+								<li>
+									<PostCard post={p} />
 								</li>
 							))}
 						</ul>
@@ -84,15 +84,15 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 			}
 			{
 				descYearKeys.map((yearKey) => (
-					<section class="mb-16">
-						<h2 id={`year-${yearKey}`} class="title text-lg">
+					<section class="mb-12">
+						<h2 id={`year-${yearKey}`} class="eyebrow">
 							<span class="sr-only">Posts in</span>
 							{yearKey}
 						</h2>
-						<ul class="mt-5 space-y-4 text-start">
+						<ul class="mt-4 space-y-3.5 text-start">
 							{groupedByYear[yearKey]?.map((p) => (
-								<li class="grid gap-1 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
-									<PostPreview post={p} />
+								<li>
+									<PostCard headingLevel="h3" post={p} />
 								</li>
 							))}
 						</ul>
@@ -103,7 +103,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 		</div>
 		{
 			!!uniqueTags.length && (
-				<aside>
+				<aside class="card self-start p-5 lg:sticky lg:top-24">
 					<h2 class="title mb-4 flex items-center gap-1 text-lg">
 						<svg
 							aria-hidden="true"
@@ -126,7 +126,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 					<ul class="flex flex-wrap gap-2">
 						{uniqueTags.map((tag) => (
 							<li>
-								<a class="cactus-link flex items-center justify-center" href={`/tags/${tag}/`}>
+								<a class="chip" href={`/tags/${tag}/`}>
 									<span aria-hidden="true">#</span>
 									<span class="sr-only">View all posts with the tag</span>
 									{tag}

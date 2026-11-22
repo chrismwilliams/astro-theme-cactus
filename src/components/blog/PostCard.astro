@@ -1,0 +1,101 @@
+---
+import { Image } from "astro:assets";
+import { type CollectionEntry, render } from "astro:content";
+import FormattedDate from "@/components/FormattedDate.astro";
+
+interface Props {
+	post: CollectionEntry<"post">;
+	headingLevel?: "h2" | "h3";
+}
+
+const { post, headingLevel: Heading = "h3" } = Astro.props;
+const { remarkPluginFrontmatter } = await render(post);
+const readingTime: string = remarkPluginFrontmatter.readingTime;
+const { title, description, tags, publishDate, coverImage, draft } = post.data;
+const firstTag = tags[0] ?? "post";
+const thumbLabel = firstTag.slice(0, 4).toUpperCase();
+---
+
+<article
+	class="card group hover:border-accent relative grid grid-cols-[72px_1fr] gap-4 p-4 transition sm:grid-cols-[112px_1fr] sm:gap-5 sm:p-5 data-[read=true]:opacity-75"
+	data-post-card={post.id}
+	data-tags={tags.join(",")}
+>
+	<div
+		class="border-line bg-surface-2 text-accent-strong grid aspect-square place-items-center overflow-hidden rounded-xl border font-mono text-base font-bold sm:text-2xl"
+	>
+		{
+			coverImage ? (
+				<Image
+					alt=""
+					class="h-full w-full object-cover"
+					height={224}
+					src={coverImage.src}
+					width={224}
+				/>
+			) : (
+				<span aria-hidden="true">{thumbLabel}</span>
+			)
+		}
+	</div>
+	<div class="min-w-0">
+		<div class="text-muted flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs">
+			{tags.slice(0, 2).map((t) => <span class="text-accent-strong">#{t}</span>)}
+			{tags.length > 0 && <span aria-hidden="true">·</span>}
+			<FormattedDate date={publishDate} />
+			<span aria-hidden="true">·</span>
+			<span>{readingTime}</span>
+		</div>
+		<Heading class="text-accent-2 mt-1.5 text-base leading-snug font-semibold tracking-tight sm:text-lg">
+			{draft && <span class="text-red-500">(Draft) </span>}
+			<a class="after:absolute after:inset-0 after:rounded-2xl" href={`/posts/${post.id}/`}>{title}</a>
+		</Heading>
+		<p class="text-muted mt-1 line-clamp-2 text-sm">{description}</p>
+		<div class="mt-2.5 flex min-h-5 items-center gap-3 font-mono text-xs" data-card-status></div>
+	</div>
+</article>
+
+<script>
+	import { fetchReactions, formatCount, getProgress, REACTIONS } from "@/utils/reader";
+
+	async function hydrateCards() {
+		const cards = [...document.querySelectorAll<HTMLElement>("[data-post-card]")];
+		if (!cards.length) return;
+		const progress = getProgress();
+		const ids = cards.map((c) => c.dataset.postCard!);
+
+		for (const card of cards) {
+			const status = card.querySelector<HTMLElement>("[data-card-status]");
+			const pct = progress[card.dataset.postCard!] ?? 0;
+			if (!status) continue;
+			if (pct >= 90) {
+				card.dataset.read = "true";
+				status.insertAdjacentHTML(
+					"beforeend",
+					`<span class="bg-accent-soft text-accent-strong rounded-md px-2 py-0.5 font-semibold">✓ đã đọc</span>`,
+				);
+			} else if (pct >= 5) {
+				status.insertAdjacentHTML(
+					"beforeend",
+					`<span class="bg-surface-2 h-1 w-20 overflow-hidden rounded-full"><span class="bg-accent block h-full" style="width:${pct}%"></span></span><span class="text-muted">đang đọc ${pct}%</span>`,
+				);
+			}
+		}
+
+		const counts = await fetchReactions(ids);
+		for (const card of cards) {
+			const c = counts[card.dataset.postCard!];
+			if (!c) continue;
+			const parts = REACTIONS.filter((r) => (c[r.key] ?? 0) > 0)
+				.slice(0, 3)
+				.map((r) => `${r.emoji} ${formatCount(c[r.key])}`);
+			if (parts.length) {
+				card
+					.querySelector("[data-card-status]")
+					?.insertAdjacentHTML("beforeend", `<span class="text-muted">${parts.join(" · ")}</span>`);
+			}
+		}
+	}
+
+	hydrateCards();
+</script>

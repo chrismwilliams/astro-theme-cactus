@@ -1,0 +1,204 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+	posts: CollectionEntry<"post">[];
+	notes: CollectionEntry<"note">[];
+	tags: string[];
+}
+
+const { posts, notes, tags } = Astro.props;
+const ymd = (d: Date) => d.toISOString().slice(0, 7);
+const data = {
+	notes: notes.map((n) => ({ date: ymd(n.data.publishDate), id: n.id, title: n.data.title })),
+	posts: posts.map((p) => ({
+		date: ymd(p.data.publishDate),
+		id: p.id,
+		tags: p.data.tags,
+		title: p.data.title,
+	})),
+	tags,
+};
+const latest = data.posts.slice(0, 2);
+---
+
+<web-terminal class="card block overflow-hidden">
+	<div class="border-line bg-surface-2 flex items-center gap-1.5 border-b px-3.5 py-3">
+		<i class="bg-line h-2.5 w-2.5 rounded-full"></i>
+		<i class="bg-line h-2.5 w-2.5 rounded-full"></i>
+		<i class="bg-line h-2.5 w-2.5 rounded-full"></i>
+		<span class="text-muted ms-auto font-mono text-[11px]">gõ <b>help</b></span>
+	</div>
+	<div
+		class="h-72 overflow-y-auto px-5 py-4 font-mono text-[13px] leading-7"
+		data-term-body
+		tabindex="-1"
+	>
+		<div data-term-out>
+			<div><span class="text-accent-strong">dat@blog</span>:~$ whoami</div>
+			<div>Ngo Tien Dat — Security Engineer</div>
+			<div><span class="text-accent-strong">dat@blog</span>:~$ ls posts/ --latest</div>
+			{
+				latest.map((p) => (
+					<div class="text-muted">
+						{p.date} {p.id}
+					</div>
+				))
+			}
+		</div>
+		<form class="flex items-center" data-term-form>
+			<label class="text-accent-strong shrink-0" for="term-input">dat@blog<span class="text-global-text">:~$&nbsp;</span></label>
+			<input
+				autocapitalize="off"
+				autocomplete="off"
+				class="caret-accent min-w-0 flex-1 bg-transparent outline-none"
+				id="term-input"
+				spellcheck="false"
+				type="text"
+			/>
+		</form>
+	</div>
+	<script is:inline type="application/json" data-term-data set:html={JSON.stringify(data).replace(/</g, "\\u003c")} />
+</web-terminal>
+
+<script>
+	type Item = { id: string; title: string; date: string; tags?: string[] };
+	type Data = { posts: Item[]; notes: Item[]; tags: string[] };
+
+	class WebTerminal extends HTMLElement {
+		#history: string[] = [];
+		#cursor = -1;
+
+		connectedCallback() {
+			const data = JSON.parse(
+				this.querySelector("[data-term-data]")?.textContent ?? "{}",
+			) as Data;
+			const out = this.querySelector<HTMLElement>("[data-term-out]")!;
+			const body = this.querySelector<HTMLElement>("[data-term-body]")!;
+			const form = this.querySelector<HTMLFormElement>("[data-term-form]")!;
+			const input = this.querySelector<HTMLInputElement>("input")!;
+
+			const print = (text: string, cls = "") => {
+				const line = document.createElement("div");
+				line.textContent = text;
+				if (cls) line.className = cls;
+				out.append(line);
+			};
+			const echo = (cmd: string) => {
+				const line = document.createElement("div");
+				const p = document.createElement("span");
+				p.className = "text-accent-strong";
+				p.textContent = "dat@blog";
+				line.append(p, `:~$ ${cmd}`);
+				out.append(line);
+			};
+			const findPost = (q: string) =>
+				data.posts.find((p) => p.id === q || p.id.endsWith(`/${q}`)) ??
+				data.posts.find((p) => p.id.includes(q) || p.title.toLowerCase().includes(q.toLowerCase()));
+
+			const commands: Record<string, (args: string[]) => void> = {
+				help: () => {
+					[
+						"whoami            — mình là ai",
+						"ls [posts|notes|tags] — liệt kê",
+						"cat <post>        — mở bài viết",
+						"grep <từ khoá>    — tìm theo tiêu đề",
+						"tag <tên>         — bài theo tag",
+						"cd <about|posts|notes|tags> — chuyển trang",
+						"theme [light|dark] — đổi giao diện",
+						"clear             — xoá màn hình",
+					].forEach((l) => print(l, "text-muted"));
+				},
+				whoami: () => print("Ngo Tien Dat — Security Engineer · AppSec"),
+				ls: ([what = "posts"]) => {
+					if (what.startsWith("note")) data.notes.forEach((n) => print(`${n.date}  ${n.id}`, "text-muted"));
+					else if (what.startsWith("tag")) print(data.tags.map((t) => `#${t}`).join("  "), "text-muted");
+					else data.posts.forEach((p) => print(`${p.date}  ${p.id}`, "text-muted"));
+				},
+				cat: ([q]) => {
+					if (!q) return print("usage: cat <post>", "text-red-500");
+					const p = findPost(q);
+					if (!p) return print(`cat: ${q}: No such file`, "text-red-500");
+					print(`→ mở ${p.title}…`, "text-accent-strong");
+					window.location.href = `/posts/${p.id}/`;
+				},
+				grep: (args) => {
+					const q = args.join(" ").toLowerCase();
+					if (!q) return print("usage: grep <từ khoá>", "text-red-500");
+					const hits = data.posts.filter((p) => p.title.toLowerCase().includes(q));
+					if (!hits.length) return print("(không có kết quả)", "text-muted");
+					hits.forEach((p) => print(`${p.id}: ${p.title}`, "text-muted"));
+				},
+				tag: ([t]) => {
+					const hits = data.posts.filter((p) => p.tags?.includes((t ?? "").toLowerCase()));
+					if (!hits.length) return print(`tag: không có bài nào với #${t ?? ""}`, "text-muted");
+					hits.forEach((p) => print(`${p.id}: ${p.title}`, "text-muted"));
+				},
+				cd: ([dir = "~"]) => {
+					const map: Record<string, string> = {
+						"~": "/",
+						"/": "/",
+						about: "/about/",
+						blog: "/posts/",
+						notes: "/notes/",
+						posts: "/posts/",
+						tags: "/tags/",
+					};
+					const dest = map[dir.replace(/\/$/, "")];
+					if (!dest) return print(`cd: ${dir}: No such directory`, "text-red-500");
+					window.location.href = dest;
+				},
+				theme: ([mode]) => {
+					const current = document.documentElement.dataset.theme;
+					const next = mode === "light" || mode === "dark" ? mode : current === "dark" ? "light" : "dark";
+					document.dispatchEvent(new CustomEvent("theme-change", { detail: { theme: next } }));
+					print(`theme → ${next}`, "text-muted");
+				},
+				clear: () => out.replaceChildren(),
+				sudo: () => print("dat is not in the sudoers file. This incident will be reported. 🚨", "text-red-500"),
+				"rm": () => print("Nice try 😏", "text-red-500"),
+			};
+
+			form.addEventListener("submit", (e) => {
+				e.preventDefault();
+				const raw = input.value.trim();
+				input.value = "";
+				echo(raw);
+				if (raw) {
+					this.#history.unshift(raw);
+					this.#cursor = -1;
+					const [cmd = "", ...args] = raw.split(/\s+/);
+					const fn = commands[cmd.toLowerCase()];
+					if (fn) fn(args);
+					else print(`${cmd}: command not found. Gõ "help".`, "text-red-500");
+				}
+				body.scrollTop = body.scrollHeight;
+			});
+
+			input.addEventListener("keydown", (e) => {
+				if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+					e.preventDefault();
+					const dir = e.key === "ArrowUp" ? 1 : -1;
+					this.#cursor = Math.max(-1, Math.min(this.#history.length - 1, this.#cursor + dir));
+					input.value = this.#cursor >= 0 ? (this.#history[this.#cursor] ?? "") : "";
+				} else if (e.key === "Tab") {
+					e.preventDefault();
+					const [cmd, arg] = input.value.split(/\s+/);
+					if (arg !== undefined && (cmd === "cat" || cmd === "tag")) {
+						const pool = cmd === "cat" ? data.posts.map((p) => p.id.split("/").pop()!) : data.tags;
+						const match = pool.find((x) => x.startsWith(arg));
+						if (match) input.value = `${cmd} ${match}`;
+					} else {
+						const match = Object.keys(commands).find((c) => c.startsWith(cmd ?? ""));
+						if (match) input.value = `${match} `;
+					}
+				}
+			});
+
+			body.addEventListener("click", () => {
+				if (!window.getSelection()?.toString()) input.focus({ preventScroll: true });
+			});
+		}
+	}
+	customElements.define("web-terminal", WebTerminal);
+</script>

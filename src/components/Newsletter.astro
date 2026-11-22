@@ -1,0 +1,31 @@
+---
+interface Props {
+	variant?: "sidebar" | "inline";
+}
+const { variant = "sidebar" } = Astro.props;
+---
+
+<section
+	class:list={["card p-5", variant === "inline" && "sm:p-7"]}
+	id="newsletter"
+	aria-labelledby="newsletter-h"
+>
+	<h2 class="text-accent-2 font-mono text-sm font-bold" id="newsletter-h">📬 Newsletter</h2>
+	<p class="text-muted mt-1 text-sm">
+		{variant === "inline" ? "Thích bài này? Nhận email khi có bài mới." : "1 email mỗi bài mới. Không spam."}
+	</p>
+	<form
+		class:list={["mt-3 flex flex-col gap-2.5", variant === "inline" && "sm:flex-row"]}
+		data-newsletter-form
+	>
+		<label class="sr-only" for={`newsletter-email-${variant}`}>Email</label>
+		<input
+			class:list={["border-line bg-global-bg focus:border-accent h-10 rounded-xl border px-3 text-sm outline-none", variant === "inline" && "sm:flex-1"]}
+			id={`newsletter-email-${variant}`}
+			placeholder="you@email.com"
+			required
+			type="email"
+		/>
+		<button class="btn btn-primary" type="submit">Subscribe</button>
+	</form>
+</section>

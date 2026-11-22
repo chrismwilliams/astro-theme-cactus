@@ -3,8 +3,13 @@ import { type CollectionEntry, render } from "astro:content";
 
 import AiSummary from "@/components/blog/AiSummary.astro";
 import Masthead from "@/components/blog/Masthead.astro";
+import PostCard from "@/components/blog/PostCard.astro";
+import Reactions from "@/components/blog/Reactions.astro";
+import SelectionPopover from "@/components/blog/SelectionPopover.astro";
 import TOC from "@/components/blog/TOC.astro";
 import WebMentions from "@/components/blog/webmentions/index.astro";
+import Newsletter from "@/components/Newsletter.astro";
+import { getAllPosts } from "@/data/post";
 
 import BaseLayout from "./Base.astro";
 
@@ -13,70 +18,281 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { ogImage, title, description, updatedDate, publishDate } = post.data;
+const { ogImage, title, description, updatedDate, publishDate, tags } = post.data;
 const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
 const { headings, remarkPluginFrontmatter } = await render(post);
 const readingTime: string = remarkPluginFrontmatter.readingTime;
+const hasToc = headings.some((h) => h.depth >= 2 && h.depth <= 3);
+
+// related posts: most shared tags first, then most recent
+const related = (await getAllPosts())
+	.filter((p) => p.id !== post.id)
+	.map((p) => ({ p, score: p.data.tags.filter((t) => tags.includes(t)).length }))
+	.filter(({ score }) => score > 0)
+	.sort((a, b) => b.score - a.score || +b.p.data.publishDate - +a.p.data.publishDate)
+	.slice(0, 2)
+	.map(({ p }) => p);
+
+const iconProps = {
+	"aria-hidden": "true",
+	class: "h-[18px] w-[18px]",
+	fill: "none",
+	stroke: "currentColor",
+	"stroke-linecap": "round",
+	"stroke-linejoin": "round",
+	"stroke-width": "1.8",
+	viewBox: "0 0 24 24",
+} as const;
+const railBtn =
+	"border-line bg-surface text-muted hover:border-accent hover:text-accent-2 flex w-12 cursor-pointer flex-col items-center gap-0.5 rounded-xl border py-2 font-mono text-[11px] transition";
 ---
 
-<BaseLayout
-	meta={{
-		articleDate,
-		description,
-		ogImage: socialImage,
-		title,
-	}}
->
-	<article class="grow break-words" data-pagefind-body>
-		<div id="blog-hero" class="mb-6"><Masthead content={post} readingTime={readingTime} /></div>
-		<AiSummary />
-		<div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
-			{!!headings.length && <TOC headings={headings} />}
+<BaseLayout meta={{ articleDate, description, ogImage: socialImage, title }} width="wide">
+	<div
+		class="lg:grid lg:grid-cols-[48px_minmax(0,1fr)_200px] lg:gap-10 xl:grid-cols-[48px_minmax(0,720px)_220px] xl:justify-center xl:gap-14"
+		data-post-id={post.id}
+		id="post-root"
+	>
+		<!-- left rail: reactions + share -->
+		<aside aria-label="Tương tác" class="post-rail hidden lg:block">
+			<div class="sticky top-28 mt-40 flex flex-col items-center gap-2.5">
+				<Reactions postId={post.id} variant="rail" />
+				<hr class="border-line my-1 w-6" />
+				<button class={railBtn} data-share type="button">
+					<svg {...iconProps}
+						><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle
+							cx="18"
+							cy="19"
+							r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg
+					>
+					share
+				</button>
+				<button class={railBtn} data-to-top type="button">
+					<svg {...iconProps}><path d="M5 15l7-7 7 7"></path></svg>
+					top
+				</button>
+			</div>
+		</aside>
+
+		<article class="min-w-0 break-words" data-pagefind-body>
+			<div id="blog-hero"><Masthead content={post} readingTime={readingTime} /></div>
+			<AiSummary />
 			<div
-				class="prose prose-sm prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-muted prose-headings:hover:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none"
+				class="prose post-body prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-6 prose-headings:before:text-accent prose-headings:before:opacity-60 prose-headings:hover:before:opacity-100 sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none mt-8 max-w-none"
+				data-post-body
 			>
 				<slot />
-				<WebMentions />
 			</div>
-		</div>
-	</article>
-	<button
-		class="hover:border-link fixed end-4 bottom-8 z-90 flex h-10 w-10 translate-y-28 cursor-pointer items-center justify-center rounded-full border-2 border-transparent bg-zinc-200 text-3xl opacity-0 transition-all transition-discrete duration-300 data-[show=true]:translate-y-0 data-[show=true]:opacity-100 sm:end-8 sm:h-12 sm:w-12 dark:bg-zinc-700"
-		data-show="false"
-		id="to-top-btn"
+
+			<div class="post-after" data-pagefind-ignore>
+				<section aria-labelledby="react-h" class="card mt-14 p-6 text-center sm:p-8">
+					<h2 class="text-accent-2 text-lg font-bold" id="react-h">Bài này có giúp ích cho bạn?</h2>
+					<p class="text-muted mt-1 text-sm">Thả một reaction để mình biết nên viết tiếp chủ đề nào.</p>
+					<div class="mt-5 flex flex-wrap justify-center gap-2.5">
+						<Reactions postId={post.id} variant="bar" />
+					</div>
+					<button class="btn btn-ghost mt-5" data-share type="button">↗ Chia sẻ bài viết</button>
+				</section>
+
+				{
+					related.length > 0 && (
+						<section aria-labelledby="related-h" class="mt-12">
+							<div class="mb-4 flex items-end justify-between">
+								<h2 class="title text-xl" id="related-h">
+									Đọc tiếp
+								</h2>
+								<span class="eyebrow">cùng chủ đề</span>
+							</div>
+							<ul class="space-y-3.5" role="list">
+								{related.map((p) => (
+									<li>
+										<PostCard post={p} />
+									</li>
+								))}
+							</ul>
+						</section>
+					)
+				}
+
+				<div class="mt-12"><Newsletter variant="inline" /></div>
+				<div class="prose post-body mt-12 max-w-none"><WebMentions /></div>
+			</div>
+		</article>
+
+		<!-- right: sticky TOC + reader tools -->
+		<aside aria-label="Mục lục và công cụ đọc" class="post-aside hidden lg:block">
+			<div class="sticky top-28 mt-40 max-h-[calc(100vh-8rem)] overflow-y-auto pb-6">
+				{hasToc && <TOC headings={headings} />}
+				<div class="mt-6 flex gap-1.5" role="group" aria-label="Công cụ đọc">
+					<button aria-label="Giảm cỡ chữ" class="icon-btn font-mono text-xs font-semibold" data-font="-1" type="button">A−</button>
+					<button aria-label="Tăng cỡ chữ" class="icon-btn font-mono text-xs font-semibold" data-font="1" type="button">A+</button>
+					<button aria-label="Chế độ tập trung" class="icon-btn" data-focus-toggle title="Focus mode (F)" type="button">
+						<svg {...iconProps}><path d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4"></path></svg>
+					</button>
+				</div>
+			</div>
+		</aside>
+	</div>
+
+	<!-- mobile dock -->
+	<div
+		class="post-dock border-line bg-surface/90 shadow-card fixed inset-x-3 bottom-3 z-40 flex h-14 items-center justify-around rounded-2xl border backdrop-blur-md transition-transform duration-300 data-[hidden=true]:translate-y-24 lg:hidden"
+		data-dock
 	>
-		<span class="sr-only">Back to top</span>
-		<svg
-			aria-hidden="true"
-			class="h-6 w-6"
-			fill="none"
-			focusable="false"
-			stroke="currentColor"
-			stroke-width="2"
-			viewBox="0 0 24 24"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path d="M4.5 15.75l7.5-7.5 7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
-		</svg>
+		<Reactions limit={2} postId={post.id} variant="dock" />
+		{
+			hasToc && (
+				<button class="text-muted flex flex-col items-center gap-0.5 px-2 font-mono text-[11px]" data-toc-open type="button">
+					<span aria-hidden="true" class="text-lg leading-tight">☰</span>mục lục
+				</button>
+			)
+		}
+		<button class="text-muted flex flex-col items-center gap-0.5 px-2 font-mono text-[11px]" data-share type="button">
+			<span aria-hidden="true" class="text-lg leading-tight">↗</span>share
+		</button>
+		<button class="text-muted flex flex-col items-center gap-0.5 px-2 font-mono text-[11px]" data-to-top type="button">
+			<span aria-hidden="true" class="text-lg leading-tight">↑</span>top
+		</button>
+	</div>
+
+	{
+		hasToc && (
+			<dialog
+				aria-label="Mục lục"
+				class="toc-sheet bg-surface text-global-text border-line fixed inset-x-0 top-auto bottom-0 m-0 max-h-[70vh] w-full max-w-none overflow-y-auto rounded-t-3xl border-t p-5 pt-3 backdrop:bg-black/40 lg:hidden"
+				data-toc-sheet
+			>
+				<div aria-hidden="true" class="bg-line mx-auto mb-4 h-1 w-10 rounded-full" />
+				<TOC headings={headings} />
+				<div class="mt-5 flex gap-2">
+					<button class="icon-btn font-mono text-xs font-semibold" data-font="-1" type="button">A−</button>
+					<button class="icon-btn font-mono text-xs font-semibold" data-font="1" type="button">A+</button>
+					<button class="btn btn-ghost ms-auto h-9" data-toc-close type="button">Đóng</button>
+				</div>
+			</dialog>
+		)
+	}
+
+	<button
+		class="btn btn-ghost fixed end-4 top-4 z-50 hidden text-xs"
+		data-focus-exit
+		type="button"
+	>
+		✕ Thoát focus (Esc)
 	</button>
+
+	<SelectionPopover title={title} />
 </BaseLayout>
 
 <script>
-	const scrollBtn = document.getElementById("to-top-btn") as HTMLButtonElement;
-	const targetHeader = document.getElementById("blog-hero") as HTMLDivElement;
+	import { setProgress, sharePage } from "@/utils/reader";
 
-	function callback(entries: IntersectionObserverEntry[]) {
-		entries.forEach((entry) => {
-			// only show the scroll to top button when the heading is out of view
-			scrollBtn.dataset.show = (!entry.isIntersecting).toString();
+	const root = document.getElementById("post-root")!;
+	const postId = root.dataset.postId!;
+	const body = document.querySelector<HTMLElement>("[data-post-body]")!;
+	const bar = document.getElementById("read-progress");
+	const pctEls = document.querySelectorAll<HTMLElement>("[data-read-pct]");
+	const dock = document.querySelector<HTMLElement>("[data-dock]");
+
+	/* ---------- reading progress ---------- */
+	let ticking = false;
+	let lastY = window.scrollY;
+	function onScroll() {
+		if (ticking) return;
+		ticking = true;
+		requestAnimationFrame(() => {
+			const rect = body.getBoundingClientRect();
+			const total = rect.height - window.innerHeight * 0.6;
+			const pct = Math.max(0, Math.min(100, ((-rect.top + window.innerHeight * 0.2) / total) * 100));
+			if (bar) bar.style.transform = `scaleX(${pct / 100})`;
+			pctEls.forEach((el) => (el.textContent = `${Math.round(pct)}%`));
+			setProgress(postId, pct);
+			// hide the dock while scrolling down, show it when scrolling up
+			if (dock) dock.dataset.hidden = String(window.scrollY > lastY && window.scrollY > 200 && pct < 98);
+			lastY = window.scrollY;
+			ticking = false;
 		});
 	}
+	window.addEventListener("scroll", onScroll, { passive: true });
+	onScroll();
 
-	scrollBtn.addEventListener("click", () => {
-		document.documentElement.scrollTo({ behavior: "smooth", top: 0 });
+	/* ---------- TOC scrollspy ---------- */
+	const headings = [...body.querySelectorAll<HTMLElement>("h2[id], h3[id]")];
+	const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]")];
+	if (headings.length && links.length) {
+		const setActive = () => {
+			let current = headings[0]!.id;
+			for (const h of headings) {
+				if (h.getBoundingClientRect().top < 140) current = h.id;
+				else break;
+			}
+			const idx = headings.findIndex((h) => h.id === current);
+			links.forEach((l) => {
+				const i = headings.findIndex((h) => h.id === l.dataset.tocLink);
+				l.dataset.active = String(l.dataset.tocLink === current);
+				l.dataset.done = String(i < idx);
+			});
+		};
+		window.addEventListener("scroll", () => requestAnimationFrame(setActive), { passive: true });
+		setActive();
+	}
+
+	/* ---------- share / top ---------- */
+	document.querySelectorAll("[data-share]").forEach((b) =>
+		b.addEventListener("click", () => sharePage(document.title)),
+	);
+	document.querySelectorAll("[data-to-top]").forEach((b) =>
+		b.addEventListener("click", () => window.scrollTo({ behavior: "smooth", top: 0 })),
+	);
+
+	/* ---------- font size ---------- */
+	const SCALES = [0.9, 1, 1.1, 1.2, 1.3];
+	const readScale = () => {
+		try {
+			return Number(localStorage.getItem("reader:scale") ?? 1) || 1;
+		} catch {
+			return 1;
+		}
+	};
+	const applyScale = (s: number) => document.documentElement.style.setProperty("--reader-scale", String(s));
+	applyScale(readScale());
+	document.querySelectorAll<HTMLButtonElement>("[data-font]").forEach((b) =>
+		b.addEventListener("click", () => {
+			const i = SCALES.indexOf(readScale());
+			const next = SCALES[Math.max(0, Math.min(SCALES.length - 1, (i < 0 ? 1 : i) + Number(b.dataset.font)))]!;
+			applyScale(next);
+			try {
+				localStorage.setItem("reader:scale", String(next));
+			} catch {}
+		}),
+	);
+
+	/* ---------- focus mode ---------- */
+	const exitBtn = document.querySelector<HTMLElement>("[data-focus-exit]")!;
+	const setFocus = (on: boolean) => {
+		document.documentElement.dataset.focus = String(on);
+		exitBtn.classList.toggle("hidden", !on);
+		exitBtn.classList.toggle("inline-flex", on);
+	};
+	document.querySelector("[data-focus-toggle]")?.addEventListener("click", () => setFocus(true));
+	exitBtn.addEventListener("click", () => setFocus(false));
+	document.addEventListener("keydown", (e) => {
+		if (e.key === "Escape" && document.documentElement.dataset.focus === "true") setFocus(false);
+		const tag = (e.target as HTMLElement).tagName;
+		if (e.key === "f" && !e.metaKey && !e.ctrlKey && !["INPUT", "TEXTAREA"].includes(tag)) {
+			setFocus(document.documentElement.dataset.focus !== "true");
+		}
 	});
 
-	const observer = new IntersectionObserver(callback);
-	observer.observe(targetHeader);
+	/* ---------- mobile TOC sheet ---------- */
+	const sheet = document.querySelector<HTMLDialogElement>("[data-toc-sheet]");
+	if (sheet) {
+		document.querySelector("[data-toc-open]")?.addEventListener("click", () => sheet.showModal());
+		sheet.querySelector("[data-toc-close]")?.addEventListener("click", () => sheet.close());
+		sheet.addEventListener("click", (e) => {
+			if (e.target === sheet) sheet.close();
+			if ((e.target as HTMLElement).closest("a")) sheet.close();
+		});
+	}
 </script>

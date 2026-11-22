@@ -1,0 +1,46 @@
+---
+interface Props {
+	tags: string[];
+	/** id of the element containing the [data-post-card] items to filter */
+	target: string;
+}
+
+const { tags, target } = Astro.props;
+---
+
+<tag-filter class="mb-5 flex flex-wrap gap-2" data-target={target} role="toolbar" aria-label="Lọc theo tag">
+	<button aria-pressed="true" class="chip" data-tag="" type="button">all</button>
+	{
+		tags.map((t) => (
+			<button aria-pressed="false" class="chip" data-tag={t} type="button">
+				{t}
+			</button>
+		))
+	}
+</tag-filter>
+
+<script>
+	class TagFilter extends HTMLElement {
+		connectedCallback() {
+			const container = document.getElementById(this.dataset.target ?? "");
+			if (!container) return;
+			const buttons = [...this.querySelectorAll<HTMLButtonElement>("button[data-tag]")];
+			const empty = container.querySelector<HTMLElement>("[data-filter-empty]");
+
+			const apply = (tag: string) => {
+				buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tag === tag)));
+				let visible = 0;
+				container.querySelectorAll<HTMLElement>("[data-post-card]").forEach((card) => {
+					const match = !tag || (card.dataset.tags ?? "").split(",").includes(tag);
+					const item = card.closest("li") ?? card;
+					item.hidden = !match;
+					if (match) visible++;
+				});
+				if (empty) empty.hidden = visible > 0;
+			};
+
+			buttons.forEach((b) => b.addEventListener("click", () => apply(b.dataset.tag ?? "")));
+		}
+	}
+	customElements.define("tag-filter", TagFilter);
+</script>

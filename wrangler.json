@@ -11,16 +11,21 @@
 	"ai": {
 		"binding": "AI"
 	},
+	"kv_namespaces": [
+		{
+			"binding": "READER_KV"
+		}
+	],
 	"observability": {
-    "logs": {
-      "enabled": true,
-      "invocation_logs": true,
-      "persist": true
-    },
-	"traces": {
-      "enabled": false,
-      "head_sampling_rate": 1,
-      "persist": true
-    }
-  }
+		"logs": {
+			"enabled": true,
+			"invocation_logs": true,
+			"persist": true
+		},
+		"traces": {
+			"enabled": false,
+			"head_sampling_rate": 1,
+			"persist": true
+		}
+	}
 }

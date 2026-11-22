@@ -6,15 +6,17 @@
 ---
 
 <ai-summary>
-	<div class="mt-8 mb-4 border border-muted/30 rounded-lg overflow-hidden">
+	<div
+		class="border-accent/45 bg-accent-soft mt-8 mb-2 overflow-hidden rounded-2xl border"
+	>
 		<button
-			class="flex w-full cursor-pointer items-center gap-2 px-4 py-3 text-sm font-semibold transition-colors hover:bg-accent/10"
+			class="text-accent-strong flex w-full cursor-pointer items-center gap-2 px-5 py-3.5 font-mono text-[13px] font-semibold transition-colors hover:bg-accent/10"
 			id="ai-summary-btn"
 			type="button"
 		>
 			<svg
 				aria-hidden="true"
-				class="h-5 w-5 text-accent"
+				class="h-5 w-5"
 				fill="none"
 				stroke="currentColor"
 				stroke-width="2"
@@ -27,10 +29,11 @@
 					stroke-linejoin="round"
 				></path>
 			</svg>
-			<span id="ai-summary-label">Tóm tắt bằng AI</span>
+			<span id="ai-summary-label">TL;DR — tóm tắt bằng AI</span>
+			<span class="text-muted ms-auto font-normal" id="ai-summary-hint">bấm để tạo</span>
 			<svg
 				aria-hidden="true"
-				class="ml-auto h-4 w-4 animate-spin hidden"
+				class="ms-auto hidden h-4 w-4 animate-spin"
 				fill="none"
 				id="ai-summary-spinner"
 				viewBox="0 0 24 24"
@@ -41,7 +44,7 @@
 			</svg>
 		</button>
 		<div
-			class="hidden border-t border-muted/30 px-4 py-3 text-sm leading-relaxed"
+			class="border-accent/30 hidden border-t px-5 py-4 text-[15px] leading-relaxed"
 			id="ai-summary-result"
 		>
 		</div>
@@ -57,6 +60,7 @@
 			const label = this.querySelector<HTMLSpanElement>("#ai-summary-label")!;
 			const spinner = this.querySelector<SVGElement>("#ai-summary-spinner")!;
 			const result = this.querySelector<HTMLDivElement>("#ai-summary-result")!;
+			const hint = this.querySelector<HTMLSpanElement>("#ai-summary-hint")!;
 
 			btn.addEventListener("click", async () => {
 				// Toggle visibility if already generated
@@ -66,12 +70,13 @@
 				}
 
 				// Get article text content
-				const article = document.querySelector("article[data-pagefind-body]");
+				const article = document.querySelector("[data-post-body]");
 				if (!article) return;
 
 				const content = article.textContent?.trim() ?? "";
 				if (!content) return;
 
+				hint.classList.add("hidden");
 				// Show loading state
 				label.textContent = "Đang tóm tắt...";
 				spinner.classList.remove("hidden");
@@ -93,12 +98,12 @@
 					result.textContent = data.summary ?? "Không thể tạo tóm tắt.";
 					result.classList.remove("hidden");
 					this.#generated = true;
-					label.textContent = "Tóm tắt bằng AI";
+					label.textContent = "TL;DR — tóm tắt bằng AI";
 				} catch (err) {
 					result.textContent = "⚠️ Lỗi khi tóm tắt. Vui lòng thử lại sau.";
 					result.classList.remove("hidden");
 					console.error("AI Summary error:", err);
-					label.textContent = "Tóm tắt bằng AI";
+					label.textContent = "TL;DR — tóm tắt bằng AI";
 				} finally {
 					spinner.classList.add("hidden");
 					btn.disabled = false;
