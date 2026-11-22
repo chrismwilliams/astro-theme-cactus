@@ -11,11 +11,6 @@
 	"ai": {
 		"binding": "AI"
 	},
-	"kv_namespaces": [
-		{
-			"binding": "READER_KV"
-		}
-	],
 	"observability": {
 		"logs": {
 			"enabled": true,

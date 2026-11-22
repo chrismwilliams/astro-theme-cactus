@@ -3,6 +3,7 @@
 	"type": "module",
 	"version": "8.2.0",
 	"private": false,
+	"packageManager": "pnpm@10.28.0",
 	"scripts": {
 		"postinstall": "npm rebuild sharp --force",
 		"dev": "astro dev",
