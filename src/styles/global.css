@@ -240,6 +240,12 @@ html[data-focus="true"] {
 		display: none;
 	}
 }
+/* the post grid keeps its rail/TOC columns otherwise, squeezing the article into the 48px rail slot */
+html[data-focus="true"] #post-root {
+	grid-template-columns: minmax(0, 720px);
+	justify-content: center;
+	padding-top: 1rem;
+}
 
 @utility prose {
 	--tw-prose-body: var(--color-global-text);
