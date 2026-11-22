@@ -22,6 +22,10 @@ import { expressiveCodeOptions, siteConfig } from "./src/site.config";
 // https://astro.build/config
 export default defineConfig({
 	site: siteConfig.url,
+	// the About page was merged into the home page
+	redirects: {
+		"/about": "/",
+	},
 	image: {
 		domains: ["webmention.io"],
 	},

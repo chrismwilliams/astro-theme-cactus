@@ -26,10 +26,10 @@
 	cursor: pointer;
 	transition: border-color 150ms;
 
-	@media (min-width: 640px) {
+	@media (min-width: 1024px) {
 		width: 15rem;
 	}
-	@media (max-width: 639px) {
+	@media (max-width: 1023px) {
 		width: calc(var(--spacing) * 9);
 		padding: 0;
 		justify-content: center;

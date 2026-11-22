@@ -11,10 +11,10 @@ const isActive = (path: string) =>
 	class="group border-line bg-global-bg/80 sticky top-0 z-40 border-b backdrop-blur-md"
 	id="main-header"
 >
-	<div class="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:gap-6 sm:px-8">
+	<div class="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:px-6 md:gap-4 lg:gap-6 lg:px-8">
 		<a
 			aria-current={Astro.url.pathname === "/" ? "page" : false}
-			class="text-accent-2 flex items-center gap-2.5 font-mono text-base font-bold"
+			class="text-accent-2 flex shrink-0 items-center gap-2.5 font-mono text-base font-bold"
 			href="/"
 		>
 			{
@@ -27,18 +27,18 @@ const isActive = (path: string) =>
 					</span>
 				)
 			}
-			<span>{siteConfig.title.toLowerCase()}</span>
+			<span class="max-[339px]:sr-only">{siteConfig.title.toLowerCase()}</span>
 		</a>
 		<nav
 			aria-label="Main"
-			class="bg-global-bg border-line absolute inset-x-0 top-16 hidden flex-col border-b px-4 py-2 font-mono text-sm group-[.menu-open]:flex sm:static sm:flex sm:flex-row sm:gap-1 sm:border-0 sm:bg-transparent sm:p-0"
+			class="bg-global-bg border-line absolute inset-x-0 top-16 hidden flex-col border-b px-4 py-2 font-mono text-sm group-[.menu-open]:flex md:static md:flex md:flex-row md:gap-0.5 md:border-0 md:bg-transparent md:p-0"
 			id="navigation-menu"
 		>
 			{
 				menuLinks.map((link) => (
 					<a
 						aria-current={isActive(link.path) ? "page" : false}
-						class="text-muted hover:text-accent-2 aria-[current=page]:text-accent-2 aria-[current=page]:bg-surface-2 rounded-lg px-3 py-3 sm:py-1.5"
+						class="text-muted hover:text-accent-2 aria-[current=page]:text-accent-2 aria-[current=page]:bg-surface-2 rounded-lg px-3 py-3 md:px-2.5 md:py-1.5 lg:px-3"
 						href={link.path}
 					>
 						{link.title.toLowerCase()}
@@ -46,10 +46,10 @@ const isActive = (path: string) =>
 				))
 			}
 		</nav>
-		<div class="ms-auto flex items-center gap-2">
+		<div class="ms-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
 			<Search />
 			<ThemeToggle />
-			<a class="icon-btn hidden sm:inline-flex" href="/rss.xml" target="_blank">
+			<a class="icon-btn hidden lg:inline-flex" href="/rss.xml" target="_blank">
 				<span class="sr-only">RSS feed</span>
 				<svg
 					aria-hidden="true"
@@ -68,7 +68,7 @@ const isActive = (path: string) =>
 				<button
 					aria-expanded="false"
 					aria-haspopup="menu"
-					class="icon-btn sm:hidden"
+					class="icon-btn md:hidden"
 					id="toggle-navigation-menu"
 					type="button"
 				>

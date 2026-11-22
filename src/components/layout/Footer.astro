@@ -1,4 +1,5 @@
 ---
+import { socialLinks } from "@/data/profile";
 import { menuLinks, siteConfig } from "@/site.config";
 
 const year = new Date().getFullYear();
@@ -6,7 +7,7 @@ const year = new Date().getFullYear();
 
 <footer class="border-line text-muted mt-24 border-t font-mono text-xs">
 	<div
-		class="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-8 sm:flex-row sm:justify-between sm:px-8"
+		class="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-8 pb-[max(2rem,env(safe-area-inset-bottom))] text-center md:flex-row md:justify-between md:px-8"
 	>
 		<p>&copy; {siteConfig.author} {year} · {siteConfig.description.toLowerCase()}</p>
 		<nav aria-label="Footer" class="flex flex-wrap justify-center gap-x-4 gap-y-1">
@@ -18,9 +19,8 @@ const year = new Date().getFullYear();
 				))
 			}
 			<a class="hover:text-accent-2" href="/rss.xml">rss</a>
-			<a class="hover:text-accent-2" href="https://github.com/datntpro" rel="noreferrer" target="_blank"
-				>github</a
-			>
+			<a class="hover:text-accent-2" href={socialLinks.github.url} rel="noreferrer" target="_blank">github</a>
+			<a class="hover:text-accent-2" href={socialLinks.youtube.url} rel="noreferrer" target="_blank">youtube</a>
 		</nav>
 	</div>
 </footer>

@@ -1,15 +1,21 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { socialLinks } from "@/data/profile";
 
 interface Props {
 	posts: CollectionEntry<"post">[];
 	notes: CollectionEntry<"note">[];
 	tags: string[];
+	/** extra classes for the outer card */
+	class?: string;
+	/** height of the scrollable output area */
+	heightClass?: string;
 }
 
-const { posts, notes, tags } = Astro.props;
+const { posts, notes, tags, class: className, heightClass = "h-72" } = Astro.props;
 const ymd = (d: Date) => d.toISOString().slice(0, 7);
 const data = {
+	links: Object.fromEntries(Object.entries(socialLinks).map(([k, v]) => [k, v.url])),
 	notes: notes.map((n) => ({ date: ymd(n.data.publishDate), id: n.id, title: n.data.title })),
 	posts: posts.map((p) => ({
 		date: ymd(p.data.publishDate),
@@ -22,7 +28,7 @@ const data = {
 const latest = data.posts.slice(0, 2);
 ---
 
-<web-terminal class="card block overflow-hidden">
+<web-terminal class:list={["card block overflow-hidden", className]}>
 	<div class="border-line bg-surface-2 flex items-center gap-1.5 border-b px-3.5 py-3">
 		<i class="bg-line h-2.5 w-2.5 rounded-full"></i>
 		<i class="bg-line h-2.5 w-2.5 rounded-full"></i>
@@ -30,20 +36,30 @@ const latest = data.posts.slice(0, 2);
 		<span class="text-muted ms-auto font-mono text-[11px]">gõ <b>help</b></span>
 	</div>
 	<div
-		class="h-72 overflow-y-auto px-5 py-4 font-mono text-[13px] leading-7"
+		class:list={["overflow-y-auto px-4 py-4 font-mono text-[13px] leading-7 break-words sm:px-5", heightClass]}
 		data-term-body
 		tabindex="-1"
 	>
 		<div data-term-out>
-			<div><span class="text-accent-strong">dat@blog</span>:~$ whoami</div>
-			<div>Ngo Tien Dat — Security Engineer</div>
-			<div><span class="text-accent-strong">dat@blog</span>:~$ ls posts/ --latest</div>
 			{
-				latest.map((p) => (
-					<div class="text-muted">
-						{p.date} {p.id}
-					</div>
-				))
+				Astro.slots.has("default") ? (
+					<slot />
+				) : (
+					<>
+						<div>
+							<span class="text-accent-strong">dat@blog</span>:~$ whoami
+						</div>
+						<div>Ngo Tien Dat — Security Engineer</div>
+						<div>
+							<span class="text-accent-strong">dat@blog</span>:~$ ls posts/ --latest
+						</div>
+						{latest.map((p) => (
+							<div class="text-muted">
+								{p.date} {p.id}
+							</div>
+						))}
+					</>
+				)
 			}
 		</div>
 		<form class="flex items-center" data-term-form>
@@ -63,7 +79,7 @@ const latest = data.posts.slice(0, 2);
 
 <script>
 	type Item = { id: string; title: string; date: string; tags?: string[] };
-	type Data = { posts: Item[]; notes: Item[]; tags: string[] };
+	type Data = { posts: Item[]; notes: Item[]; tags: string[]; links: Record<string, string> };
 
 	class WebTerminal extends HTMLElement {
 		#history: string[] = [];
@@ -106,6 +122,7 @@ const latest = data.posts.slice(0, 2);
 						"tag <tên>         — bài theo tag",
 						"cd <about|posts|notes|tags> — chuyển trang",
 						"theme [light|dark] — đổi giao diện",
+						"github / youtube  — mở kênh của mình",
 						"clear             — xoá màn hình",
 					].forEach((l) => print(l, "text-muted"));
 				},
@@ -138,7 +155,7 @@ const latest = data.posts.slice(0, 2);
 					const map: Record<string, string> = {
 						"~": "/",
 						"/": "/",
-						about: "/about/",
+						about: "/",
 						blog: "/posts/",
 						notes: "/notes/",
 						posts: "/posts/",
@@ -155,6 +172,15 @@ const latest = data.posts.slice(0, 2);
 					print(`theme → ${next}`, "text-muted");
 				},
 				clear: () => out.replaceChildren(),
+				contact: () => Object.entries(data.links).forEach(([k, v]) => print(`${k.padEnd(8)}→ ${v}`)),
+				github: () => {
+					print("→ mở GitHub…", "text-accent-strong");
+					window.open(data.links.github, "_blank", "noopener");
+				},
+				youtube: () => {
+					print("→ mở YouTube…", "text-accent-strong");
+					window.open(data.links.youtube, "_blank", "noopener");
+				},
 				sudo: () => print("dat is not in the sudoers file. This incident will be reported. 🚨", "text-red-500"),
 				"rm": () => print("Nice try 😏", "text-red-500"),
 			};

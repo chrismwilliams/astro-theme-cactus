@@ -1,0 +1,113 @@
+---
+import { featuredVideo, socialLinks } from "@/data/profile";
+
+const { url, handle } = socialLinks.youtube;
+const subscribeUrl = `${url}?sub_confirmation=1`;
+const videoId = /^[\w-]{11}$/.test(featuredVideo.id) ? featuredVideo.id : "";
+---
+
+<section
+	aria-labelledby="yt-h"
+	class="yt-card card grid grid-cols-1 overflow-hidden md:grid-cols-[1fr_1.15fr] [&>*]:min-w-0"
+>
+	<div class="p-5 sm:p-9">
+		<span
+			aria-hidden="true"
+			class="grid h-10 w-14 place-items-center rounded-xl bg-[#ff0033] text-white shadow-[0_10px_30px_-8px_rgb(255_0_51/0.6)]"
+		>
+			<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+		</span>
+		<p class="eyebrow mt-5">youtube channel</p>
+		<h2 class="text-accent-2 mt-2 mb-3 text-[1.75rem] leading-tight font-bold tracking-tight sm:text-4xl" id="yt-h">
+			Xem mình làm,<br />không chỉ đọc.
+		</h2>
+		<p class="text-muted mb-6">
+			Demo tool, walkthrough lỗ hổng và ghi chú kỹ thuật dạng video trên kênh
+			<b class="text-accent-2">{handle}</b>.
+		</p>
+		<div class="flex flex-wrap gap-2.5">
+			<a class="btn bg-[#ff0033] text-white hover:brightness-110" href={subscribeUrl} rel="noreferrer" target="_blank">
+				▶ Subscribe
+			</a>
+			<a class="btn btn-ghost" href={url} rel="noreferrer" target="_blank">Xem kênh ↗</a>
+		</div>
+	</div>
+	<div class="grid place-items-center px-4 pb-4 md:p-6">
+		{
+			videoId ? (
+				<yt-lite
+					class="relative block aspect-video w-full overflow-hidden rounded-2xl bg-black"
+					data-id={videoId}
+					data-title={featuredVideo.title}
+				>
+					<button class="group absolute inset-0 h-full w-full cursor-pointer" type="button">
+						<img
+							alt=""
+							class="h-full w-full object-cover opacity-90 transition group-hover:opacity-100"
+							decoding="async"
+							loading="lazy"
+							src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+						/>
+						<span class="absolute inset-0 m-auto grid h-12 w-[68px] place-items-center rounded-2xl bg-[#ff0033] text-white transition group-hover:scale-110">
+							<svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+						</span>
+						<span class="sr-only">Phát video: {featuredVideo.title || "video nổi bật"}</span>
+						{featuredVideo.title && (
+							<span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-start text-sm font-semibold text-white">
+								{featuredVideo.title}
+							</span>
+						)}
+					</button>
+				</yt-lite>
+			) : (
+				<a
+					class="yt-placeholder border-line relative block aspect-video w-full overflow-hidden rounded-2xl border"
+					href={url}
+					rel="noreferrer"
+					target="_blank"
+				>
+					<span class="absolute inset-x-4 top-3 truncate font-mono text-[11px] text-teal-200/70 sm:start-5 sm:top-5 sm:text-[13px]">
+						$ open youtube.com/{handle}
+					</span>
+					<span class="absolute inset-0 m-auto grid h-12 w-[68px] place-items-center rounded-2xl bg-[#ff0033] text-white">
+						<svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+					</span>
+					<span class="absolute start-4 bottom-3.5 text-sm font-semibold text-white">{handle}</span>
+					<span class="sr-only">Mở kênh YouTube</span>
+				</a>
+			)
+		}
+	</div>
+</section>
+
+<style>
+	.yt-card {
+		background:
+			radial-gradient(500px circle at 0% 0%, rgb(255 0 51 / 0.1), transparent 60%),
+			var(--color-surface);
+	}
+	.yt-placeholder {
+		background: linear-gradient(135deg, oklch(25% 0.03 260), oklch(18% 0.02 260));
+	}
+</style>
+
+<script>
+	class YtLite extends HTMLElement {
+		connectedCallback() {
+			this.querySelector("button")?.addEventListener(
+				"click",
+				() => {
+					const iframe = document.createElement("iframe");
+					iframe.src = `https://www.youtube-nocookie.com/embed/${this.dataset.id}?autoplay=1&rel=0`;
+					iframe.title = this.dataset.title || "YouTube video";
+					iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+					iframe.allowFullscreen = true;
+					iframe.className = "absolute inset-0 h-full w-full";
+					this.replaceChildren(iframe);
+				},
+				{ once: true },
+			);
+		}
+	}
+	customElements.define("yt-lite", YtLite);
+</script>
