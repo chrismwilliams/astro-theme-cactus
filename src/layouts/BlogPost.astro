@@ -137,7 +137,7 @@ const railBtn =
 
 	<!-- mobile dock -->
 	<div
-		class="post-dock border-line bg-surface/90 shadow-card fixed inset-x-3 bottom-3 z-40 flex h-14 items-center justify-around rounded-2xl border backdrop-blur-md transition-transform duration-300 data-[hidden=true]:translate-y-24 lg:hidden"
+		class="post-dock border-line bg-surface/90 shadow-card fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 flex h-14 items-center justify-around rounded-2xl border backdrop-blur-md transition-transform duration-300 data-[hidden=true]:translate-y-24 lg:hidden"
 		data-dock
 	>
 		<Reactions limit={2} postId={post.id} variant="dock" />

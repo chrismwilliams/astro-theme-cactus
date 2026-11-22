@@ -147,6 +147,17 @@
 		scroll-margin-top: 6rem;
 	}
 
+	/* never allow sideways scrolling on phones; clip keeps position: sticky working */
+	html,
+	body {
+		overflow-x: clip;
+	}
+
+	/* keep content clear of notches / rounded corners (viewport-fit=cover) */
+	body {
+		padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+	}
+
 	::selection {
 		background: color-mix(in oklch, var(--color-accent) 35%, transparent);
 	}

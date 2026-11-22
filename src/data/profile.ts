@@ -8,6 +8,12 @@ export const socialLinks = {
 	youtube: { label: "YouTube", handle: "@datntwork", url: "https://www.youtube.com/@datntwork" },
 } as const;
 
+/**
+ * Featured video on the home page: the id from youtube.com/watch?v=<id>.
+ * Leave empty to show a channel card instead.
+ */
+export const featuredVideo: { id: string; title: string } = { id: "", title: "" };
+
 /** cycled by the typing effect under the name */
 export const roles = ["Security Engineer", "AppSec", "DevSecOps", "tool builder", "note-taker"];
 

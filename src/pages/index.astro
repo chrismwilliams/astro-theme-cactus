@@ -1,182 +1,528 @@
 ---
 import { Image } from "astro:assets";
 import { type CollectionEntry, getCollection, render } from "astro:content";
+import { Icon } from "astro-icon/components";
 import PostCard from "@/components/blog/PostCard.astro";
-import TagFilter from "@/components/blog/TagFilter.astro";
 import FormattedDate from "@/components/FormattedDate.astro";
-import Newsletter from "@/components/Newsletter.astro";
 import Terminal from "@/components/Terminal.astro";
+import YouTubeSection from "@/components/YouTubeSection.astro";
 import { getAllPosts, getUniqueTagsWithCount } from "@/data/post";
+import { focusAreas, roles, socialLinks, threatModel, toolbox } from "@/data/profile";
 import PageLayout from "@/layouts/Base.astro";
+import { siteConfig } from "@/site.config";
 import { collectionDateSort } from "@/utils/date";
 
-const MAX_POSTS = 10;
-const MAX_NOTES = 4;
-const allPosts = (await getAllPosts()).sort(collectionDateSort) as CollectionEntry<"post">[];
-const featured = allPosts.find((p) => p.data.pinned) ?? allPosts[0];
-const latestPosts = allPosts.filter((p) => p !== featured).slice(0, MAX_POSTS);
-const tagsWithCount = getUniqueTagsWithCount(allPosts);
-const filterTags = getUniqueTagsWithCount(latestPosts)
-	.slice(0, 6)
-	.map(([t]) => t);
+const meta = {
+	description:
+		"Ngo Tien Dat — Security Engineer (AppSec). Ghi chép về bảo mật ứng dụng, DevSecOps và tooling.",
+	title: "Home",
+};
 
-const allNotes = (await getCollection("note")).sort(
-	collectionDateSort,
-) as CollectionEntry<"note">[];
-const latestNotes = allNotes.slice(0, MAX_NOTES);
+const posts = (await getAllPosts()).sort(collectionDateSort) as CollectionEntry<"post">[];
+const notes = await getCollection("note");
+const tagCounts = new Map(getUniqueTagsWithCount(posts));
+const firstYear = Math.min(
+	...[...posts, ...notes].map((e) => e.data.publishDate.getFullYear()),
+	new Date().getFullYear(),
+);
+const years = Math.max(1, new Date().getFullYear() - firstYear + 1);
 
+const featured = posts.find((p) => p.data.pinned) ?? posts[0];
+const latest = posts.filter((p) => p !== featured).slice(0, 3);
 const featuredReading = featured
 	? ((await render(featured)).remarkPluginFrontmatter.readingTime as string)
 	: "";
+
+const stats = [
+	{ label: "bài viết", value: posts.length },
+	{ label: "notes", value: notes.length },
+	{ label: "chủ đề (tags)", value: tagCounts.size },
+	{ label: "năm viết blog", value: years },
+];
+
+// deterministic "barcode" built from the handle
+const barcode = [...`${socialLinks.github.handle}${siteConfig.author}`].map(
+	(c, i) => ((c.charCodeAt(0) + i) % 3) + 1,
+);
+const sevClass = {
+	HIGH: "bg-red-500/15 text-red-600 dark:text-red-400",
+	MED: "bg-amber-500/20 text-amber-700 dark:text-amber-300",
+};
 ---
 
-<PageLayout meta={{ title: "Home" }} width="wide">
-	<section class="grid items-center gap-10 pb-14 lg:grid-cols-[1.15fr_1fr] lg:gap-12 lg:pt-6">
+<PageLayout meta={meta} width="wide">
+	<!-- hero -->
+	<section class="hero relative grid grid-cols-1 items-center gap-10 pt-2 pb-12 sm:gap-12 sm:pb-14 md:grid-cols-[1.2fr_1fr] md:gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-14 lg:pt-8">
+		<div aria-hidden="true" class="about-grid pointer-events-none absolute -inset-x-40 -top-20 bottom-0 -z-10"></div>
 		<div>
-			<p class="eyebrow">// security engineer · appsec</p>
-			<h1 class="text-accent-2 mt-3 mb-4 text-4xl leading-[1.1] font-extrabold tracking-tight sm:text-5xl">
-				Ghi chép về <span class="text-accent-strong">bảo mật ứng dụng</span>, những thứ mình học &amp; thử.
+			<p class="eyebrow">// whoami</p>
+			<h1 class="text-accent-2 mt-3 text-[clamp(2.1rem,10vw,3.75rem)] md:text-[clamp(2.5rem,5.5vw,3.75rem)] leading-[1.05] font-extrabold tracking-[-0.035em]">
+				Xin chào, mình là<br />
+				<span class="text-accent-strong font-mono font-bold tracking-tight" data-decrypt>{siteConfig.author}</span>
 			</h1>
-			<p class="text-muted max-w-lg text-base sm:text-lg">
-				Hi, mình là Dat — Security Engineer mảng Application Security. Đây là góc nhỏ để note lại
-				kiến thức AppSec, DevSecOps và những công cụ mình build.
+			<p class="text-muted mt-3 mb-5 font-mono text-[clamp(0.95rem,4vw,1.25rem)]" aria-label={roles.join(", ")}>
+				&gt; <span aria-hidden="true" class="text-accent-2 border-accent border-e-2 pe-1 font-semibold" data-roles={JSON.stringify(roles)}>{roles[0]}</span>
 			</p>
-			<div class="mt-6 flex flex-wrap gap-2.5">
-				{featured && <a class="btn btn-primary" href={`/posts/${featured.id}/`}>Đọc bài nổi bật →</a>}
-				<a class="btn btn-ghost" href="#newsletter">Subscribe</a>
+			<p class="text-muted max-w-xl text-base sm:text-lg">
+				Security Engineer mảng Application Security. Blog này là nơi mình note lại những gì học được,
+				thử nghiệm và build. Đúng như cái tên, <em>just for note</em>.
+			</p>
+			<div class="mt-7 flex flex-wrap gap-2.5">
+				<a class="btn btn-primary" href="/posts/">Đọc blog →</a>
+				<a class="btn btn-ghost" href={socialLinks.github.url} rel="noreferrer" target="_blank">
+					<Icon aria-hidden="true" class="h-5 w-5" name="mdi:github" />
+					{socialLinks.github.handle}
+				</a>
+				<a class="btn btn-ghost" href={socialLinks.youtube.url} rel="noreferrer" target="_blank">
+					<Icon aria-hidden="true" class="h-5 w-5 text-red-500" name="mdi:youtube" />
+					YouTube
+				</a>
 			</div>
-			<dl class="mt-7 flex gap-8 [&>div]:flex [&>div]:flex-col-reverse">
-				<div>
-					<dt class="text-muted text-xs">bài viết</dt>
-					<dd class="text-accent-2 font-mono text-2xl font-bold">{allPosts.length}</dd>
-				</div>
-				<div>
-					<dt class="text-muted text-xs">notes</dt>
-					<dd class="text-accent-2 font-mono text-2xl font-bold">{allNotes.length}</dd>
-				</div>
-				<div>
-					<dt class="text-muted text-xs">tags</dt>
-					<dd class="text-accent-2 font-mono text-2xl font-bold">{tagsWithCount.length}</dd>
-				</div>
-			</dl>
 		</div>
-		<Terminal notes={allNotes} posts={allPosts} tags={tagsWithCount.map(([t]) => t)} />
-	</section>
 
-	{
-		featured && (
-			<section class="mb-14" aria-labelledby="featured-h">
-				<div class="mb-5 flex items-end justify-between">
-					<h2 class="title" id="featured-h">Featured</h2>
-					<span class="eyebrow">{featured.data.pinned ? "pinned" : "latest"}</span>
+		<!-- access badge -->
+		<div class="hero-badge flex justify-center [perspective:1200px]">
+			<div
+				class="badge bg-surface shadow-card relative w-full max-w-[380px] overflow-hidden rounded-[22px] ring-1 ring-[var(--color-line)]"
+				data-badge
+			>
+				<div class="badge-top relative h-28">
+					<span class="absolute start-[18px] top-3.5 font-mono text-[11px] font-semibold tracking-[0.18em] text-teal-100">
+						ACCESS BADGE
+					</span>
+					<span class="absolute end-[18px] top-3.5 font-mono text-[11px] text-teal-100/80">ID · DAT-0x01</span>
 				</div>
-				<article class="card group hover:border-accent relative grid overflow-hidden transition md:grid-cols-[1.1fr_1fr]">
-					<div class="featured-cover relative min-h-52 md:min-h-72">
-						{featured.data.coverImage ? (
-							<Image
-								alt={featured.data.coverImage.alt}
-								class="absolute inset-0 h-full w-full object-cover"
-								height={600}
-								src={featured.data.coverImage.src}
-								width={800}
-							/>
-						) : (
-							<p aria-hidden="true" class="absolute inset-x-6 bottom-6 font-mono text-xs leading-relaxed text-teal-100/80">
-								$ cat {featured.id}.md | head -1
-								<br />
-								{featured.data.title}
-							</p>
-						)}
-					</div>
-					<div class="flex flex-col gap-3 p-6 sm:p-8">
-						<div class="flex flex-wrap gap-2">
-							{featured.data.tags.map((t) => (
-								<span class="text-accent-strong font-mono text-xs">#{t}</span>
-							))}
+				<div
+					aria-hidden="true"
+					class="bg-accent-2 text-accent dark:bg-accent-soft border-surface absolute start-[22px] top-[70px] grid h-[78px] w-[78px] place-items-center rounded-[18px] border-4 font-mono text-[34px] font-extrabold"
+				>
+					D
+				</div>
+				<div class="px-[22px] pt-[52px] pb-5">
+					<p class="text-accent-2 text-xl font-bold">{siteConfig.author}</p>
+					<p class="text-muted font-mono text-[13px]">{socialLinks.github.handle}</p>
+					<dl class="mt-4 grid grid-cols-[auto_1fr] gap-x-3.5 gap-y-1.5 font-mono text-xs">
+						<dt class="text-muted tracking-wider">ROLE</dt><dd class="text-accent-2">Security Engineer</dd>
+						<dt class="text-muted tracking-wider">SCOPE</dt><dd class="text-accent-2">Application Security</dd>
+						<dt class="text-muted tracking-wider">STATUS</dt>
+						<dd class="text-accent-strong"><span class="animate-pulse">●</span> online, đang viết note</dd>
+						<dt class="text-muted tracking-wider">BLOG</dt><dd class="text-accent-2">since {firstYear}</dd>
+						<dt class="text-muted tracking-wider">VIDEO</dt>
+						<dd class="text-accent-2 break-all">youtube.com/{socialLinks.youtube.handle}</dd>
+					</dl>
+					<div class="border-line mt-[18px] flex items-end justify-between border-t border-dashed pt-3.5">
+						<div aria-hidden="true" class="flex h-[34px] gap-[2px]">
+							{barcode.map((w, i) => <i class:list={["block", i % 2 === 0 && "bg-accent-2"]} style={`width:${w}px`} />)}
 						</div>
-						<h3 class="text-accent-2 text-2xl leading-tight font-bold tracking-tight">
-							<a class="after:absolute after:inset-0" href={`/posts/${featured.id}/`}>
-								{featured.data.title}
-							</a>
-						</h3>
-						<p class="text-muted">{featured.data.description}</p>
-						<p class="text-muted mt-auto font-mono text-xs">
-							<FormattedDate date={featured.data.publishDate} /> · {featuredReading}
+						<p class="text-muted text-end font-mono text-[10px] leading-tight">
+							clearance<br /><b class="text-accent-strong">GRANTED ✓</b>
 						</p>
 					</div>
-				</article>
+				</div>
+				<div aria-hidden="true" class="badge-holo pointer-events-none absolute inset-0"></div>
+			</div>
+		</div>
+	</section>
+
+	<!-- stats -->
+	<dl class="border-line bg-surface mb-16 grid grid-cols-2 sm:mb-20 overflow-hidden rounded-2xl border sm:grid-cols-4">
+		{
+			stats.map((s, i) => (
+				<div
+					class:list={[
+						"border-line flex min-w-0 flex-col-reverse px-4 py-4 sm:px-6 sm:py-5",
+						i % 2 === 1 && "border-s",
+						i >= 2 && "border-t sm:border-t-0",
+						i === 2 && "sm:border-s",
+					]}
+				>
+					<dt class="text-muted text-[13px]">{s.label}</dt>
+					<dd class="text-accent-2 font-mono text-[clamp(1.6rem,7vw,2.125rem)] font-bold tracking-tight" data-count={s.value}>
+						{s.value}
+					</dd>
+				</div>
+			))
+		}
+	</dl>
+
+	<!-- latest posts -->
+	{
+		featured && (
+			<section aria-labelledby="latest-h" class="mb-16 sm:mb-20">
+				<div class="mb-5 flex flex-wrap items-end justify-between gap-x-4 gap-y-1">
+					<h2 class="text-accent-2 text-[clamp(1.5rem,6vw,1.9rem)] font-bold tracking-tight" id="latest-h">
+						Bài viết mới
+					</h2>
+					<a class="eyebrow hover:text-accent-2" href="/posts/">
+						xem tất cả →
+					</a>
+				</div>
+				<div class="grid grid-cols-1 gap-4 lg:grid-cols-[1.1fr_1fr]">
+					<article class="card group hover:border-accent relative flex flex-col overflow-hidden transition">
+						<div class="featured-cover relative h-40 sm:h-52">
+							{featured.data.coverImage && (
+								<Image
+									alt={featured.data.coverImage.alt}
+									class="absolute inset-0 h-full w-full object-cover"
+									height={420}
+									src={featured.data.coverImage.src}
+									width={760}
+								/>
+							)}
+						</div>
+						<div class="flex grow flex-col gap-2 p-5 sm:p-6">
+							<p class="flex flex-wrap gap-x-2 font-mono text-xs">
+								{featured.data.tags.map((t) => (
+									<span class="text-accent-strong">#{t}</span>
+								))}
+							</p>
+							<h3 class="text-accent-2 text-xl leading-snug font-bold tracking-tight sm:text-2xl">
+								<a class="after:absolute after:inset-0" href={`/posts/${featured.id}/`}>
+									{featured.data.title}
+								</a>
+							</h3>
+							<p class="text-muted text-sm">{featured.data.description}</p>
+							<p class="text-muted mt-auto pt-2 font-mono text-xs">
+								<FormattedDate date={featured.data.publishDate} /> · {featuredReading}
+							</p>
+						</div>
+					</article>
+					{latest.length > 0 && (
+						<ul class="flex flex-col gap-3" role="list">
+							{latest.map((p) => (
+								<li>
+									<PostCard post={p} />
+								</li>
+							))}
+						</ul>
+					)}
+				</div>
 			</section>
 		)
 	}
 
-	<div class="grid gap-10 lg:grid-cols-[1fr_320px]">
-		<section aria-labelledby="latest-h" id="latest-posts">
-			<div class="mb-4 flex items-end justify-between">
-				<h2 class="title" id="latest-h">Bài viết mới</h2>
-				<a class="eyebrow hover:text-accent-2" href="/posts/">xem tất cả →</a>
-			</div>
-			{filterTags.length > 1 && <TagFilter tags={filterTags} target="latest-posts" />}
-			<ul class="space-y-3.5" role="list">
-				{
-					latestPosts.map((p) => (
-						<li>
-							<PostCard post={p} />
-						</li>
-					))
-				}
-			</ul>
-			<p class="text-muted py-8 text-center" data-filter-empty hidden>Chưa có bài nào với tag này.</p>
-		</section>
+	<!-- focus areas -->
+	<section aria-labelledby="focus-h" class="mb-16 sm:mb-20">
+		<div class="mb-5 flex items-end justify-between gap-4">
+			<h2 class="text-accent-2 text-[clamp(1.5rem,6vw,1.9rem)] font-bold tracking-tight" id="focus-h">Mình đang tập trung vào</h2>
+			<span class="eyebrow hidden sm:inline">focus areas</span>
+		</div>
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 [&>*:last-child:nth-child(odd)]:sm:col-span-2 [&>*:last-child:nth-child(odd)]:lg:col-span-1">
+			{
+				focusAreas.map((f) => {
+					const n = tagCounts.get(f.tag) ?? 0;
+					return (
+						<a
+							class="spot card hover:border-accent relative block overflow-hidden p-6 transition"
+							href={n ? `/tags/${f.tag}/` : "/posts/"}
+						>
+							<span aria-hidden="true" class="bg-accent-soft mb-5 grid h-11 w-11 place-items-center rounded-xl text-xl">
+								{f.icon}
+							</span>
+							<h3 class="text-accent-2 mb-2 text-lg font-bold">{f.title}</h3>
+							<p class="text-muted text-sm">{f.text}</p>
+							<p class="text-accent-strong mt-5 font-mono text-xs">
+								#{f.tag}
+								{n > 0 && ` · ${n} bài`} →
+							</p>
+						</a>
+					);
+				})
+			}
+		</div>
+	</section>
 
-		<aside class="space-y-4">
-			<Newsletter />
+	<!-- youtube -->
+	<div class="mb-16 sm:mb-20"><YouTubeSection /></div>
+
+	<!-- threat model + toolbox -->
+	<div class="mb-16 grid grid-cols-1 gap-4 sm:mb-20 md:grid-cols-2">
+		<section aria-label="Threat model" class="card p-6">
+			<p class="eyebrow">threat model: me</p>
+			<table class="mt-2 w-full border-collapse text-sm">
+				<tbody>
+					{
+						threatModel.map((t) => (
+							<tr class="border-line border-t border-dashed first:border-t-0">
+								<th class="text-muted w-24 py-3 pt-3.5 pe-2 text-start align-top font-mono text-[11px] font-semibold tracking-[0.1em] sm:w-28" scope="row">
+									{t.kind}
+								</th>
+								<td class="py-3">
+									{t.text}
+									{t.severity && (
+										<span class:list={["ms-1.5 rounded px-1.5 py-0.5 font-mono text-[11px] font-semibold", sevClass[t.severity]]}>
+											{t.severity}
+										</span>
+									)}
+								</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
+		</section>
+		<section aria-label="Toolbox" class="card p-6">
+			<p class="eyebrow">toolbox</p>
 			{
-				latestNotes.length > 0 && (
-					<div class="card p-5">
-						<div class="mb-3 flex items-center justify-between">
-							<h2 class="text-accent-2 font-mono text-sm font-bold">// notes gần đây</h2>
-							<a class="text-muted hover:text-accent-2 font-mono text-xs" href="/notes/">
-								tất cả →
-							</a>
-						</div>
-						<ul class="divide-line divide-y divide-dashed">
-							{latestNotes.map((n) => (
-								<li class="py-3 first:pt-0 last:pb-0">
-									<a class="hover:text-accent-strong text-sm" href={`/notes/${n.id}/`}>
-										{n.data.title}
-									</a>
-									<FormattedDate class="text-muted block font-mono text-[11px]" date={n.data.publishDate} />
-								</li>
-							))}
-						</ul>
-					</div>
-				)
-			}
-			{
-				tagsWithCount.length > 0 && (
-					<div class="card p-5">
-						<h2 class="text-accent-2 mb-3 font-mono text-sm font-bold">// tags</h2>
+				toolbox.map((g) => (
+					<div class="mt-4">
+						<p class="text-muted mb-2 font-mono text-[11px] font-semibold tracking-[0.12em] uppercase">{g.group}</p>
 						<ul class="flex flex-wrap gap-1.5">
-							{tagsWithCount.slice(0, 12).map(([t, n]) => (
-								<li>
-									<a class="chip" href={`/tags/${t}/`}>
-										{t} <span class="opacity-60">{n}</span>
-									</a>
-								</li>
+							{g.items.map((t) => (
+								<li class="chip cursor-default">{t}</li>
 							))}
 						</ul>
 					</div>
-				)
+				))
 			}
-		</aside>
+		</section>
 	</div>
+
+	<!-- contact -->
+	<section aria-labelledby="contact-h" class="card grid grid-cols-1 overflow-hidden md:grid-cols-[1.2fr_1fr] [&>*]:min-w-0">
+		<div class="p-5 sm:p-10">
+			<p class="eyebrow">get in touch</p>
+			<h2 class="text-accent-2 mt-2.5 mb-3 text-[clamp(1.75rem,7vw,2.25rem)] leading-tight font-bold tracking-tight" id="contact-h">
+				Cùng nói chuyện<br />về security nhé.
+			</h2>
+			<p class="text-muted mb-6">Góp ý bài viết, trao đổi kiến thức hay chỉ để say hi, mình đều vui.</p>
+			<div class="flex flex-wrap gap-2.5">
+				<a class="btn btn-primary" href={socialLinks.github.url} rel="noreferrer" target="_blank">GitHub</a>
+				<a class="btn btn-ghost" href={socialLinks.youtube.url} rel="noreferrer" target="_blank">YouTube</a>
+				<a class="btn btn-ghost" href="/rss.xml">RSS</a>
+			</div>
+		</div>
+		<div class="contact-term">
+			<Terminal class="h-full rounded-none border-0 shadow-none" heightClass="h-80" notes={notes} posts={posts} tags={[...tagCounts.keys()]}>
+				<div><span class="text-accent-strong">dat@blog</span>:~$ contact</div>
+				<div>github&nbsp;&nbsp;→ <a class="term-link" href={socialLinks.github.url} rel="noreferrer" target="_blank">github.com/datntpro</a></div>
+				<div>youtube → <a class="term-link" href={socialLinks.youtube.url} rel="noreferrer" target="_blank">youtube.com/{socialLinks.youtube.handle}</a></div>
+				<div>rss&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ <a class="term-link" href="/rss.xml">/rss.xml</a></div>
+				<div class="text-muted"># gõ "help" để xem lệnh · psst… thử ↑↑↓↓←→←→BA</div>
+			</Terminal>
+		</div>
+	</section>
+
+	<canvas aria-hidden="true" class="pointer-events-none fixed inset-0 z-[90] hidden h-full w-full" data-matrix></canvas>
 </PageLayout>
 
 <style>
+	.about-grid {
+		background-image:
+			linear-gradient(var(--color-line) 1px, transparent 1px),
+			linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+		background-size: 44px 44px;
+		mask-image: radial-gradient(ellipse at 30% 35%, black 0%, transparent 62%);
+		opacity: 0.6;
+	}
+	.badge {
+		--rx: 6deg;
+		--ry: -12deg;
+		transform: rotateX(var(--rx)) rotateY(var(--ry));
+		transition: transform 0.2s ease-out;
+		box-shadow:
+			0 40px 80px -30px oklch(0% 0 0 / 0.45),
+			var(--shadow-card);
+	}
+	.badge-top {
+		background:
+			radial-gradient(circle at 20% 30%, oklch(78% 0.16 170 / 0.7), transparent 55%),
+			radial-gradient(circle at 85% 80%, oklch(60% 0.18 260 / 0.6), transparent 55%),
+			oklch(22% 0.03 260);
+	}
+	.badge-holo {
+		--hx: 50%;
+		background: linear-gradient(
+			115deg,
+			transparent calc(var(--hx) - 25%),
+			oklch(90% 0.12 170 / 0.22) calc(var(--hx) - 5%),
+			oklch(85% 0.12 260 / 0.18) calc(var(--hx) + 5%),
+			transparent calc(var(--hx) + 25%)
+		);
+		mix-blend-mode: plus-lighter;
+	}
+	.spot {
+		background:
+			radial-gradient(
+				260px circle at var(--mx, -999px) var(--my, -999px),
+				color-mix(in oklch, var(--color-accent) 18%, transparent),
+				transparent 70%
+			),
+			var(--color-surface);
+	}
 	.featured-cover {
 		background:
 			radial-gradient(circle at 28% 32%, oklch(78% 0.16 170 / 0.55), transparent 55%),
 			radial-gradient(circle at 80% 70%, oklch(60% 0.18 260 / 0.5), transparent 55%),
 			oklch(22% 0.03 260);
 	}
+	.term-link {
+		color: var(--color-accent-strong);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+	/* dual-screen / foldable held open with a visible hinge: text on one side, badge on the other */
+	@media (horizontal-viewport-segments: 2) {
+		.hero {
+			grid-template-columns: env(viewport-segment-width 0 0) env(viewport-segment-width 1 0);
+			column-gap: calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0) + 2rem);
+		}
+	}
+	@media (vertical-viewport-segments: 2) {
+		.hero {
+			grid-template-columns: 1fr;
+			row-gap: calc(env(viewport-segment-top 0 1) - env(viewport-segment-bottom 0 0) + 2rem);
+		}
+	}
+	@media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+		.badge {
+			--rx: 0deg;
+			--ry: 0deg;
+		}
+	}
 </style>
+
+<script>
+	const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	/* name "decrypts" from random glyphs */
+	const nameEl = document.querySelector<HTMLElement>("[data-decrypt]");
+	if (nameEl && !reduced) {
+		const target = nameEl.textContent ?? "";
+		const glyphs = "!<>-_\\/[]{}=+*^?#01ABCDEFX";
+		let frame = 0;
+		nameEl.setAttribute("aria-label", target);
+		const tick = () => {
+			nameEl.textContent = [...target]
+				.map((ch, i) =>
+					ch === " " || i < frame / 2 ? ch : glyphs[Math.floor(Math.random() * glyphs.length)],
+				)
+				.join("");
+			if (frame++ < target.length * 2) requestAnimationFrame(() => setTimeout(tick, 28));
+			else nameEl.textContent = target;
+		};
+		tick();
+	}
+
+	/* typing roles */
+	const roleEl = document.querySelector<HTMLElement>("[data-roles]");
+	if (roleEl && !reduced) {
+		const roles = JSON.parse(roleEl.dataset.roles ?? "[]") as string[];
+		let r = 0;
+		let i = roles[0]?.length ?? 0;
+		let deleting = true;
+		const step = () => {
+			const word = roles[r] ?? "";
+			roleEl.textContent = word.slice(0, i);
+			let delay = deleting ? 45 : 85;
+			if (deleting && i === 0) {
+				deleting = false;
+				r = (r + 1) % roles.length;
+			} else if (!deleting && i === (roles[r] ?? "").length) {
+				deleting = true;
+				delay = 1800;
+			} else {
+				i += deleting ? -1 : 1;
+			}
+			setTimeout(step, delay);
+		};
+		setTimeout(step, 2200);
+	}
+
+	/* badge tilt + holo sheen follow the pointer */
+	const badge = document.querySelector<HTMLElement>("[data-badge]");
+	const holo = badge?.querySelector<HTMLElement>(".badge-holo");
+	if (badge && !reduced && window.matchMedia("(pointer: fine) and (min-width: 1024px)").matches) {
+		badge.addEventListener("pointermove", (e) => {
+			const r = badge.getBoundingClientRect();
+			const x = (e.clientX - r.left) / r.width;
+			const y = (e.clientY - r.top) / r.height;
+			badge.style.setProperty("--ry", `${(x - 0.5) * 22}deg`);
+			badge.style.setProperty("--rx", `${(0.5 - y) * 16}deg`);
+			holo?.style.setProperty("--hx", `${x * 100}%`);
+		});
+		badge.addEventListener("pointerleave", () => {
+			badge.style.removeProperty("--ry");
+			badge.style.removeProperty("--rx");
+			holo?.style.removeProperty("--hx");
+		});
+	}
+
+	/* spotlight on focus cards */
+	document.querySelectorAll<HTMLElement>(".spot").forEach((card) => {
+		card.addEventListener("pointermove", (e) => {
+			const r = card.getBoundingClientRect();
+			card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+			card.style.setProperty("--my", `${e.clientY - r.top}px`);
+		});
+		card.addEventListener("pointerleave", () => {
+			card.style.removeProperty("--mx");
+			card.style.removeProperty("--my");
+		});
+	});
+
+	/* count-up stats when they scroll into view */
+	const counters = document.querySelectorAll<HTMLElement>("[data-count]");
+	if (!reduced && "IntersectionObserver" in window) {
+		const io = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (!entry.isIntersecting) continue;
+					io.unobserve(entry.target);
+					const el = entry.target as HTMLElement;
+					const end = Number(el.dataset.count);
+					const start = performance.now();
+					const run = (now: number) => {
+						const t = Math.min(1, (now - start) / 900);
+						el.textContent = String(Math.round(end * (1 - (1 - t) ** 3)));
+						if (t < 1) requestAnimationFrame(run);
+					};
+					requestAnimationFrame(run);
+				}
+			},
+			{ threshold: 0.6 },
+		);
+		counters.forEach((c) => io.observe(c));
+	}
+
+	/* Konami code easter egg: matrix rain */
+	const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+	let pos = 0;
+	const canvas = document.querySelector<HTMLCanvasElement>("[data-matrix]");
+	const rain = () => {
+		if (!canvas || reduced) return;
+		const ctx = canvas.getContext("2d");
+		if (!ctx) return;
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		canvas.classList.remove("hidden");
+		const size = 16;
+		const drops = Array.from({ length: Math.ceil(canvas.width / size) }, () => Math.random() * -50);
+		const chars = "01アイウエオカキクケコサシスセソDAT{}<>/";
+		const until = performance.now() + 4500;
+		const draw = (now: number) => {
+			ctx.fillStyle = "rgba(0,0,0,0.08)";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = "#2ee6b0";
+			ctx.font = `${size}px monospace`;
+			drops.forEach((y, i) => {
+				ctx.fillText(chars[Math.floor(Math.random() * chars.length)] ?? "0", i * size, y * size);
+				drops[i] = y * size > canvas.height && Math.random() > 0.975 ? 0 : y + 1;
+			});
+			if (now < until) requestAnimationFrame(draw);
+			else {
+				canvas.classList.add("hidden");
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+			}
+		};
+		requestAnimationFrame(draw);
+	};
+	document.addEventListener("keydown", (e) => {
+		const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+		pos = key === KONAMI[pos] ? pos + 1 : key === KONAMI[0] ? 1 : 0;
+		if (pos === KONAMI.length) {
+			pos = 0;
+			rain();
+		}
+	});
+</script>
