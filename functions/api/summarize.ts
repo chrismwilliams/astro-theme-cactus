@@ -1,3 +1,5 @@
+import type { AdminEnv } from "../admin/env";
+import { handleAdmin } from "../admin/router";
 import { handleQuiz, handleReactions, type KV } from "./reader";
 
 /** minimal shapes of the Cloudflare bindings used here (avoids a @cloudflare/workers-types dependency) */
@@ -8,10 +10,11 @@ interface Fetcher {
 	fetch(request: Request): Promise<Response>;
 }
 
-interface Env {
+interface Env extends AdminEnv {
 	AI: Ai;
 	ASSETS: Fetcher;
-	READER_KV?: KV;
+	/** one KV namespace for reactions, quiz votes and the CMS (key prefixes keep them apart) */
+	BLOG_KV?: KV & NonNullable<AdminEnv["BLOG_KV"]>;
 }
 
 export default {
@@ -24,11 +27,15 @@ export default {
 		}
 
 		if (url.pathname === "/api/reactions") {
-			return handleReactions(request, env.READER_KV);
+			return handleReactions(request, env.BLOG_KV);
 		}
 
 		if (url.pathname === "/api/quiz") {
-			return handleQuiz(request, env.READER_KV);
+			return handleQuiz(request, env.BLOG_KV);
+		}
+
+		if (url.pathname.startsWith("/api/admin/")) {
+			return handleAdmin(request, env);
 		}
 
 		// Fallback to static assets

@@ -1,0 +1,547 @@
+---
+import AdminLayout from "@/layouts/Admin.astro";
+---
+
+<AdminLayout active="edit" title="Soạn thảo">
+	<div class="cms-top">
+		<a class="text-muted hover:text-accent-2" href="/admin/posts/">← Bài viết</a>
+		<h1 class="min-w-0 truncate text-lg" data-heading>Bài mới</h1>
+		<span class="cms-pill" data-status>chưa lưu</span>
+		<span class="sp"></span>
+		<a class="btn btn-ghost hidden" data-view target="_blank">Xem trên site ↗</a>
+		<button class="btn btn-ghost" data-save="draft" type="button">Lưu nháp</button>
+		<button class="btn btn-primary" data-save="publish" type="button">Xuất bản</button>
+	</div>
+
+	<div class="cms-banner warn" data-restore hidden>
+		Có bản chưa lưu trên trình duyệt này. <button class="underline" data-restore-yes type="button">Khôi phục</button> ·
+		<button class="underline" data-restore-no type="button">Bỏ qua</button>
+	</div>
+
+	<section class="cms-form-grid mb-3">
+		<label class="cms-field" style="grid-column: 1 / -1"><span>Tiêu đề <em data-count="title"></em></span><input data-fm="title" maxlength="120" /></label>
+		<label class="cms-field" style="grid-column: 1 / -1"><span>Mô tả (meta description) <em data-count="description"></em></span><textarea class="font-sans" data-fm="description" rows="2" style="font-family: var(--font-sans); font-size: 14px"></textarea></label>
+		<label class="cms-field"><span>Loại</span><select data-kind><option value="post">Bài viết</option><option value="note">Note</option></select></label>
+		<label class="cms-field"><span>Slug <em data-slug-hint></em></span><input data-slug placeholder="vd: jwt-pitfalls" /></label>
+		<label class="cms-field"><span>Tags <em>phân cách bằng dấu phẩy</em></span><input data-fm="tags" placeholder="appsec, jwt" /></label>
+		<label class="cms-field"><span>Từ khoá chính (SEO)</span><input data-fm="keyword" placeholder="vd: jwt bypass" /></label>
+		<label class="cms-field"><span>Ngày đăng</span><input data-fm="publishDate" type="date" /></label>
+	</section>
+
+	<div class="cms-tabs mb-2 flex gap-1.5 xl:hidden" role="tablist">
+		<button aria-selected="true" class="chip" data-tab="write" role="tab" type="button">Viết</button>
+		<button aria-selected="false" class="chip" data-tab="preview" role="tab" type="button">Xem trước</button>
+		<button aria-selected="false" class="chip" data-tab="seo" role="tab" type="button">SEO & AI <span data-tab-score></span></button>
+	</div>
+
+	<div class="editor-grid">
+		<section class="cms-card flex min-w-0 flex-col p-0 sm:p-0" data-pane="write">
+			<div class="border-line flex flex-wrap gap-0.5 border-b p-1.5 font-mono text-xs" role="toolbar" aria-label="Định dạng">
+				<button class="tb" data-md="bold" title="Đậm (Ctrl+B)" type="button"><b>B</b></button>
+				<button class="tb" data-md="italic" title="Nghiêng (Ctrl+I)" type="button"><i>I</i></button>
+				<button class="tb" data-md="h2" type="button">H2</button>
+				<button class="tb" data-md="h3" type="button">H3</button>
+				<button class="tb" data-md="link" title="Link" type="button">🔗</button>
+				<button class="tb" data-md="code" type="button">`code`</button>
+				<button class="tb" data-md="block" type="button">```</button>
+				<button class="tb" data-md="quote" type="button">❝</button>
+				<button class="tb" data-md="list" type="button">• list</button>
+				<button class="tb" data-md="callout" type="button">:::tip</button>
+				<button class="tb" data-md="image" title="Tải ảnh lên" type="button">🖼 ảnh</button>
+				<input accept="image/png,image/jpeg,image/webp,image/gif,image/avif" class="hidden" data-file type="file" />
+			</div>
+			<textarea aria-label="Nội dung markdown" class="md-input" data-body spellcheck="false"></textarea>
+			<div class="text-muted border-line flex justify-between border-t px-3 py-1.5 font-mono text-[11px]">
+				<span data-stats></span><span>Ctrl+S lưu nháp</span>
+			</div>
+		</section>
+
+		<section class="cms-card md-preview min-w-0" data-pane="preview">
+			<p class="cms-ai-tag mb-1" data-pv-tags></p>
+			<h1 class="text-accent-2 mb-4 text-2xl leading-tight font-extrabold tracking-tight" data-pv-title></h1>
+			<div class="prose post-body max-w-none" data-preview></div>
+		</section>
+
+		<aside class="grid min-w-0 content-start gap-3" data-pane="seo">
+			<section class="cms-card">
+				<h2>Điểm SEO <small data-seo-score></small></h2>
+				<ul class="cms-checks" data-checks></ul>
+			</section>
+			<section class="cms-card">
+				<h2>Xem trước trên Google</h2>
+				<div class="cms-serp"><div class="u" data-serp-url></div><div class="t" data-serp-title></div><div class="d" data-serp-desc></div></div>
+			</section>
+			<section class="cms-card cms-ai">
+				<h2><span class="cms-ai-tag">✦ AI trợ lý</span><small data-ai-model></small></h2>
+				<p class="cms-help mb-3">Claude đánh giá search intent, cấu trúc, đề xuất tiêu đề, meta, tags, link nội bộ và FAQ.</p>
+				<button class="btn btn-primary w-full" data-ai type="button">✦ Phân tích bằng AI</button>
+				<div class="mt-3 grid gap-3 text-[13px]" data-ai-out></div>
+			</section>
+		</aside>
+	</div>
+
+	<div class="mt-6 flex justify-end">
+		<button class="text-[13px] text-red-500 underline hidden" data-delete type="button">Xoá bài này</button>
+	</div>
+</AdminLayout>
+
+<style>
+	.editor-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 320px;
+		gap: 14px;
+		align-items: start;
+	}
+	.md-input {
+		min-height: 62vh;
+		width: 100%;
+		resize: vertical;
+		padding: 14px 16px;
+		border: 0;
+		background: transparent;
+		color: var(--color-global-text);
+		font: 13px/1.75 var(--font-mono);
+		outline: none;
+		tab-size: 2;
+	}
+	.md-preview {
+		max-height: calc(62vh + 90px);
+		overflow-y: auto;
+	}
+	.tb {
+		padding: 4px 8px;
+		border-radius: 6px;
+		color: var(--color-muted);
+		cursor: pointer;
+	}
+	.tb:hover {
+		background: var(--color-surface-2);
+		color: var(--color-accent-2);
+	}
+	@media (max-width: 1279px) {
+		.editor-grid {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.editor-grid > [data-pane]:not(.on) {
+			display: none;
+		}
+		.md-preview {
+			max-height: none;
+		}
+	}
+</style>
+
+<script>
+	import DOMPurify from "dompurify";
+	import { marked } from "marked";
+	import { ApiError, api, type ContentFile, esc, toast } from "@/lib/cms-client";
+	import { analyze, type Frontmatter, parseDoc, serializeDoc, slugFromPath } from "@/lib/seo";
+
+	type Review = {
+		score: number;
+		summary: string;
+		primaryKeyword: string;
+		secondaryKeywords: string[];
+		searchIntent: string;
+		issues: { severity: string; area: string; problem: string; fix: string }[];
+		titleSuggestions: string[];
+		metaSuggestions: string[];
+		tagSuggestions: string[];
+		internalLinks: { anchorText: string; targetPath: string; reason: string }[];
+		faq: { question: string; answer: string }[];
+		tldr: string;
+	};
+
+	const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
+	const params = new URLSearchParams(location.search);
+	let path = params.get("path") ?? "";
+	let sha: string | undefined;
+	let extra: Frontmatter = {}; // frontmatter keys the form does not edit (coverImage, pinned, ogImage…)
+	let dirty = false;
+	let sitePosts: { path: string; title: string; tags: string[] }[] | null = null;
+
+	const body = $<HTMLTextAreaElement>("[data-body]");
+	const field = (k: string) => $<HTMLInputElement | HTMLTextAreaElement>(`[data-fm="${k}"]`);
+	const slugInput = $<HTMLInputElement>("[data-slug]");
+	const kindSelect = $<HTMLSelectElement>("[data-kind]");
+	const draftKey = () => `cms:autosave:${path || "new"}`;
+
+	const today = () => new Date().toISOString().slice(0, 10);
+	const slugify = (s: string) =>
+		s
+			.normalize("NFD")
+			.replace(/[̀-ͯ]/g, "")
+			.replace(/đ/gi, "d")
+			.toLowerCase()
+			.replace(/[^a-z0-9]+/g, "-")
+			.replace(/^-+|-+$/g, "")
+			.slice(0, 60);
+
+	function currentData(): Frontmatter {
+		const tags = field("tags")
+			.value.split(",")
+			.map((t) => t.trim().toLowerCase())
+			.filter(Boolean);
+		const date = field("publishDate").value || today();
+		const isNote = kindSelect.value === "note";
+		return {
+			...extra,
+			title: field("title").value.trim(),
+			description: field("description").value.trim(),
+			// notes need a full ISO datetime with offset (see src/content.config.ts)
+			publishDate: isNote ? (String(extra.publishDate ?? "").includes("T") && String(extra.publishDate).startsWith(date) ? String(extra.publishDate) : `${date}T08:00:00+07:00`) : date,
+			...(isNote ? {} : { tags }),
+			...(field("keyword").value.trim() ? { keyword: field("keyword").value.trim() } : { keyword: undefined }),
+		};
+	}
+
+	function currentPath(): string {
+		if (path) return path;
+		const slug = slugify(slugInput.value || field("title").value);
+		return slug ? `content/${kindSelect.value === "note" ? "notes" : "posts"}/${slug}.md` : "";
+	}
+
+	let timer = 0;
+	function schedule() {
+		dirty = true;
+		$("[data-status]").textContent = "chưa lưu";
+		clearTimeout(timer);
+		timer = window.setTimeout(refresh, 220);
+	}
+
+	function counter(el: HTMLElement, len: number, lo: number, hi: number) {
+		el.textContent = `${len}/${hi}`;
+		el.className = len >= lo && len <= hi ? "ok" : "warn";
+	}
+
+	function refresh() {
+		const data = currentData();
+		const p = currentPath();
+		const slug = p ? slugFromPath(p) : slugify(field("title").value);
+		counter($("[data-count='title']"), String(data.title).length, 40, 60);
+		counter($("[data-count='description']"), String(data.description).length, 120, 155);
+		if (!path) $("[data-slug-hint]").textContent = p ? p.replace("content/", "") : "";
+
+		$("[data-pv-title]").textContent = String(data.title || "Tiêu đề bài viết");
+		$("[data-pv-tags]").textContent = (data.tags ?? []).map((t) => `#${t}`).join(" ");
+		const html = marked.parse(body.value.replace(/^\s*(import|export) .*$/gm, ""), { async: false, gfm: true }) as string;
+		$("[data-preview]").innerHTML = DOMPurify.sanitize(html);
+
+		const res = analyze({ body: body.value, data, keyword: data.keyword, slug });
+		const cls = res.score >= 80 ? "good" : res.score >= 60 ? "mid" : "bad";
+		$("[data-seo-score]").innerHTML = `<span class="cms-score ${cls}">${res.score}</span>`;
+		$("[data-tab-score]").innerHTML = `<span class="cms-score ${cls}" style="height:18px;min-width:26px;font-size:11px">${res.score}</span>`;
+		$("[data-checks]").innerHTML = res.checks.map((c) => `<li class="${c.level}">${esc(c.label)}</li>`).join("");
+		$("[data-stats]").textContent = `${res.stats.words.toLocaleString("vi-VN")} từ · ~${res.stats.readingMinutes} phút đọc`;
+		$("[data-serp-url]").textContent = `blog.datnt.work › ${kindSelect.value === "note" ? "notes" : "posts"} › ${slug}`;
+		const t = String(data.title || "Tiêu đề bài viết");
+		$("[data-serp-title]").textContent = t.length > 60 ? `${t.slice(0, 58)}…` : t;
+		const d = String(data.description || "Mô tả sẽ hiện ở đây trên trang kết quả tìm kiếm.");
+		$("[data-serp-desc]").textContent = d.length > 158 ? `${d.slice(0, 155)}…` : d;
+		$("[data-heading]").textContent = path ? `Sửa: ${slugFromPath(path)}` : "Bài mới";
+
+		try {
+			localStorage.setItem(draftKey(), JSON.stringify({ body: body.value, data, at: Date.now(), kind: kindSelect.value, slug: slugInput.value }));
+		} catch {}
+	}
+
+	function fill(data: Frontmatter, md: string) {
+		const { title, description, tags, keyword, publishDate, ...rest } = data;
+		extra = rest;
+		extra.publishDate = publishDate;
+		field("title").value = String(title ?? "");
+		field("description").value = String(description ?? "");
+		field("tags").value = (tags ?? []).join(", ");
+		field("keyword").value = String(keyword ?? "");
+		const pd = publishDate ? new Date(String(publishDate)) : null;
+		field("publishDate").value = pd && !Number.isNaN(pd.getTime()) ? pd.toISOString().slice(0, 10) : today();
+		body.value = md;
+	}
+
+	async function load() {
+		if (path) {
+			// editing an existing post: highlight "Bài viết" instead of "Viết mới"
+			document.querySelector('.cms-nav-main a[href="/admin/edit/"]')?.removeAttribute("aria-current");
+			document.querySelector('.cms-nav-main a[href="/admin/posts/"]')?.setAttribute("aria-current", "page");
+			kindSelect.value = path.startsWith("content/notes/") ? "note" : "post";
+			kindSelect.disabled = true;
+			slugInput.value = slugFromPath(path);
+			slugInput.disabled = true;
+			$("[data-status]").textContent = "đang tải…";
+			const file = await api<ContentFile>(`/file?path=${encodeURIComponent(path)}`);
+			sha = file.sha;
+			const doc = parseDoc(file.content);
+			fill(doc.data, doc.body);
+			$("[data-status]").textContent = doc.data.draft ? "nháp" : "đã xuất bản";
+			$("[data-delete]").classList.remove("hidden");
+			if (!doc.data.draft) {
+				const view = $<HTMLAnchorElement>("[data-view]");
+				view.href = `/${kindSelect.value === "note" ? "notes" : "posts"}/${slugFromPath(path)}/`;
+				view.classList.remove("hidden");
+			}
+		} else {
+			fill({ publishDate: today(), tags: [] }, "## Mở đầu\n\nViết nội dung ở đây…\n");
+		}
+		dirty = false;
+		refresh();
+		$("[data-status]").textContent = path ? $("[data-status]").textContent : "chưa lưu";
+		offerRestore();
+	}
+
+	function offerRestore() {
+		let saved: { body: string; data: Frontmatter; at: number; kind?: string; slug?: string } | null = null;
+		try {
+			saved = JSON.parse(localStorage.getItem(draftKey()) ?? "null");
+		} catch {}
+		if (!saved || saved.body === body.value) return;
+		const box = $("[data-restore]");
+		box.hidden = false;
+		$("[data-restore-yes]").onclick = () => {
+			fill(saved!.data, saved!.body);
+			if (!path && saved!.kind) kindSelect.value = saved!.kind;
+			if (!path && saved!.slug) slugInput.value = saved!.slug;
+			box.hidden = true;
+			schedule();
+		};
+		$("[data-restore-no]").onclick = () => {
+			box.hidden = true;
+			try {
+				localStorage.removeItem(draftKey());
+			} catch {}
+		};
+	}
+
+	async function save(mode: "draft" | "publish") {
+		const data = currentData();
+		if (!data.title) return toast("Cần có tiêu đề", "error");
+		if (kindSelect.value === "post" && !data.description) return toast("Bài viết cần mô tả (meta description)", "error");
+		const target = currentPath();
+		if (!target) return toast("Cần có slug", "error");
+		data.draft = mode === "draft";
+		if (sha && mode === "publish" && !extra.draft && extra.publishDate) data.updatedDate = today();
+		const content = serializeDoc({ body: body.value, data });
+		const buttons = document.querySelectorAll<HTMLButtonElement>("[data-save]");
+		buttons.forEach((b) => (b.disabled = true));
+		try {
+			const res = await api<{ sha: string }>("/file", {
+				body: { content, message: `${mode === "publish" ? "docs" : "draft"}: ${data.title}`, path: target, sha },
+				method: "PUT",
+			});
+			const wasNew = !path;
+			try {
+				localStorage.removeItem(draftKey());
+			} catch {}
+			sha = res.sha;
+			path = target;
+			extra = { ...extra, draft: data.draft, publishDate: data.publishDate };
+			dirty = false;
+			$("[data-status]").textContent = mode === "publish" ? "đã xuất bản" : "nháp";
+			toast(mode === "publish" ? "Đã xuất bản · Cloudflare đang build lại site (~1 phút)" : "Đã lưu nháp vào GitHub");
+			if (wasNew) history.replaceState(null, "", `/admin/edit/?path=${encodeURIComponent(path)}`);
+			kindSelect.disabled = true;
+			slugInput.disabled = true;
+			$("[data-delete]").classList.remove("hidden");
+		} catch (e) {
+			const err = e as ApiError;
+			toast(err.code === "conflict" ? "Bài đã bị sửa ở nơi khác hoặc slug đã tồn tại. Tải lại trang để lấy bản mới." : err.message, "error");
+		} finally {
+			buttons.forEach((b) => (b.disabled = false));
+		}
+	}
+
+	/* ---------- toolbar ---------- */
+	function wrap(before: string, after = before, placeholder = "") {
+		const { selectionStart: s, selectionEnd: e, value } = body;
+		const sel = value.slice(s, e) || placeholder;
+		body.setRangeText(`${before}${sel}${after}`, s, e, "end");
+		body.focus();
+		body.setSelectionRange(s + before.length, s + before.length + sel.length);
+		schedule();
+	}
+	function linePrefix(prefix: string) {
+		const { selectionStart: s, value } = body;
+		const lineStart = value.lastIndexOf("\n", s - 1) + 1;
+		body.setRangeText(prefix, lineStart, lineStart, "end");
+		body.focus();
+		schedule();
+	}
+	const actions: Record<string, () => void> = {
+		block: () => wrap("\n```ts\n", "\n```\n", "code"),
+		bold: () => wrap("**", "**", "chữ đậm"),
+		callout: () => wrap("\n:::tip\n", "\n:::\n", "Ghi chú"),
+		code: () => wrap("`", "`", "code"),
+		h2: () => linePrefix("## "),
+		h3: () => linePrefix("### "),
+		image: () => $<HTMLInputElement>("[data-file]").click(),
+		italic: () => wrap("_", "_", "nghiêng"),
+		link: () => wrap("[", "](https://)", "văn bản"),
+		list: () => linePrefix("- "),
+		quote: () => linePrefix("> "),
+	};
+	document.querySelectorAll<HTMLButtonElement>("[data-md]").forEach((b) => b.addEventListener("click", () => actions[b.dataset.md!]?.()));
+
+	$<HTMLInputElement>("[data-file]").addEventListener("change", async (ev) => {
+		const input = ev.target as HTMLInputElement;
+		const file = input.files?.[0];
+		input.value = "";
+		if (!file) return;
+		if (file.size > 4 * 1024 * 1024) return toast("Ảnh tối đa 4 MB", "error");
+		const ext = (file.name.split(".").pop() ?? "png").toLowerCase().replace("jpeg", "jpg");
+		const name = `${slugify(file.name.replace(/\.[^.]+$/, "")) || "image"}-${Date.now().toString(36)}.${ext}`;
+		const base64 = await new Promise<string>((resolve, reject) => {
+			const r = new FileReader();
+			r.onload = () => resolve(String(r.result).split(",")[1] ?? "");
+			r.onerror = reject;
+			r.readAsDataURL(file);
+		});
+		toast("Đang tải ảnh lên…");
+		try {
+			const { url } = await api<{ url: string }>("/upload", { body: { base64, name }, method: "POST" });
+			wrap(`![`, `](${url})`, "mô tả ảnh (alt)");
+			toast("Đã tải ảnh, nhớ viết alt");
+		} catch (e) {
+			toast((e as Error).message, "error");
+		}
+	});
+
+	body.addEventListener("input", schedule);
+	body.addEventListener("keydown", (e) => {
+		if (!(e.ctrlKey || e.metaKey)) {
+			if (e.key === "Tab") {
+				e.preventDefault();
+				body.setRangeText("\t", body.selectionStart, body.selectionEnd, "end");
+				schedule();
+			}
+			return;
+		}
+		if (e.key === "b") (e.preventDefault(), actions.bold!());
+		if (e.key === "i") (e.preventDefault(), actions.italic!());
+		if (e.key === "s") (e.preventDefault(), save("draft"));
+	});
+	document.querySelectorAll("[data-fm], [data-slug], [data-kind]").forEach((el) => el.addEventListener("input", schedule));
+	document.querySelectorAll<HTMLButtonElement>("[data-save]").forEach((b) => b.addEventListener("click", () => save(b.dataset.save as "draft" | "publish")));
+	window.addEventListener("beforeunload", (e) => {
+		if (dirty) e.preventDefault();
+	});
+
+	$("[data-delete]").addEventListener("click", async () => {
+		if (!path || !sha || !confirm(`Xoá hẳn ${path}? Có thể khôi phục từ lịch sử git.`)) return;
+		try {
+			await api("/file", { body: { path, sha }, method: "DELETE" });
+			dirty = false;
+			toast("Đã xoá");
+			location.href = "/admin/posts/";
+		} catch (e) {
+			toast((e as Error).message, "error");
+		}
+	});
+
+	/* ---------- tabs (narrow screens) ---------- */
+	const panes = document.querySelectorAll<HTMLElement>("[data-pane]");
+	function showTab(id: string) {
+		panes.forEach((p) => p.classList.toggle("on", p.dataset.pane === id));
+		document.querySelectorAll("[data-tab]").forEach((t) => t.setAttribute("aria-selected", String((t as HTMLElement).dataset.tab === id)));
+	}
+	document.querySelectorAll<HTMLButtonElement>("[data-tab]").forEach((t) => t.addEventListener("click", () => showTab(t.dataset.tab!)));
+	showTab("write");
+
+	/* ---------- AI ---------- */
+	const out = $("[data-ai-out]");
+	const sev: Record<string, string> = { high: "error", low: "ok", medium: "warn" };
+	function renderReview(r: Review) {
+		const cls = r.score >= 80 ? "good" : r.score >= 60 ? "mid" : "bad";
+		const list = (items: string[], act: string, label: string) =>
+			items.map((s, i) => `<li class="flex items-start justify-between gap-2"><span>${esc(s)}</span><button class="cms-pill shrink-0 cursor-pointer" data-apply="${act}" data-i="${i}" type="button">${label}</button></li>`).join("");
+		out.innerHTML = `
+			<div class="flex items-center gap-2"><span class="cms-score ${cls}">${r.score}</span><b class="text-accent-2">Đánh giá của AI</b></div>
+			<p>${esc(r.summary)}</p>
+			<p class="cms-help"><b>Search intent:</b> ${esc(r.searchIntent)}<br><b>Từ khoá:</b> ${esc(r.primaryKeyword)}${r.secondaryKeywords.length ? ` · ${r.secondaryKeywords.map(esc).join(", ")}` : ""}
+			${r.primaryKeyword && !field("keyword").value ? ` <button class="cms-pill cursor-pointer" data-apply="keyword" type="button">dùng làm từ khoá</button>` : ""}</p>
+			${r.issues.length ? `<div><b class="text-accent-2">Vấn đề</b><ul class="cms-checks mt-1.5">${r.issues.map((x) => `<li class="${sev[x.severity] ?? "warn"}"><span><b>${esc(x.problem)}</b> ${esc(x.fix)}</span></li>`).join("")}</ul></div>` : ""}
+			${r.titleSuggestions.length ? `<div><b class="text-accent-2">Tiêu đề gợi ý</b><ul class="mt-1.5 grid gap-1.5">${list(r.titleSuggestions, "title", "dùng")}</ul></div>` : ""}
+			${r.metaSuggestions.length ? `<div><b class="text-accent-2">Meta description</b><ul class="mt-1.5 grid gap-1.5">${list(r.metaSuggestions, "meta", "dùng")}</ul></div>` : ""}
+			${r.tagSuggestions.length ? `<div><b class="text-accent-2">Tags</b> <button class="cms-pill cursor-pointer" data-apply="tags" type="button">thêm tất cả</button><p class="mt-1 font-mono text-xs">${r.tagSuggestions.map((t) => `#${esc(t)}`).join(" ")}</p></div>` : ""}
+			${r.internalLinks.length ? `<div><b class="text-accent-2">Link nội bộ</b><ul class="mt-1.5 grid gap-1.5">${r.internalLinks.map((l, i) => `<li class="flex items-start justify-between gap-2"><span>"${esc(l.anchorText)}" → <code class="text-xs">${esc(l.targetPath)}</code><br><span class="cms-help">${esc(l.reason)}</span></span><button class="cms-pill shrink-0 cursor-pointer" data-apply="link" data-i="${i}" type="button">chèn</button></li>`).join("")}</ul></div>` : ""}
+			${r.faq.length ? `<div><b class="text-accent-2">FAQ</b> <button class="cms-pill cursor-pointer" data-apply="faq" type="button">chèn cuối bài</button><ul class="mt-1.5 grid gap-1">${r.faq.map((f) => `<li><b>${esc(f.question)}</b> ${esc(f.answer)}</li>`).join("")}</ul></div>` : ""}
+			${r.tldr ? `<div><b class="text-accent-2">TL;DR</b> <button class="cms-pill cursor-pointer" data-apply="tldr" type="button">chèn đầu bài</button><pre class="mt-1 whitespace-pre-wrap font-sans">${esc(r.tldr)}</pre></div>` : ""}`;
+		out.querySelectorAll<HTMLButtonElement>("[data-apply]").forEach((b) =>
+			b.addEventListener("click", () => {
+				const i = Number(b.dataset.i ?? 0);
+				switch (b.dataset.apply) {
+					case "title":
+						field("title").value = r.titleSuggestions[i] ?? field("title").value;
+						break;
+					case "meta":
+						field("description").value = r.metaSuggestions[i] ?? field("description").value;
+						break;
+					case "keyword":
+						field("keyword").value = r.primaryKeyword;
+						break;
+					case "tags": {
+						const cur = new Set(field("tags").value.split(",").map((t) => t.trim()).filter(Boolean));
+						r.tagSuggestions.forEach((t) => cur.add(t.toLowerCase()));
+						field("tags").value = [...cur].join(", ");
+						break;
+					}
+					case "link": {
+						const l = r.internalLinks[i];
+						if (!l) break;
+						const at = body.value.indexOf(l.anchorText);
+						if (at < 0) {
+							toast("Không tìm thấy cụm từ trong bài", "error");
+							return;
+						}
+						body.setRangeText(`[${l.anchorText}](${l.targetPath})`, at, at + l.anchorText.length, "preserve");
+						break;
+					}
+					case "faq":
+						body.value = `${body.value.trimEnd()}\n\n## Câu hỏi thường gặp\n\n${r.faq.map((f) => `### ${f.question}\n\n${f.answer}`).join("\n\n")}\n`;
+						break;
+					case "tldr":
+						body.value = `:::tip[TL;DR]\n${r.tldr}\n:::\n\n${body.value}`;
+						break;
+				}
+				b.textContent = "✓";
+				b.disabled = true;
+				schedule();
+			}),
+		);
+	}
+
+	$("[data-ai]").addEventListener("click", async () => {
+		const btn = $<HTMLButtonElement>("[data-ai]");
+		btn.disabled = true;
+		btn.textContent = "Claude đang đọc bài… (~30s)";
+		out.innerHTML = '<div class="cms-skeleton"></div><div class="cms-skeleton"></div><div class="cms-skeleton" style="width:60%"></div>';
+		try {
+			if (!sitePosts) {
+				const { files } = await api<{ files: ContentFile[] }>("/content");
+				sitePosts = files
+					.map((f) => ({ doc: parseDoc(f.content), f }))
+					.filter(({ doc, f }) => !doc.data.draft && f.path !== path)
+					.map(({ doc, f }) => ({
+						path: `/${f.path.startsWith("content/notes/") ? "notes" : "posts"}/${slugFromPath(f.path)}/`,
+						tags: doc.data.tags ?? [],
+						title: String(doc.data.title ?? ""),
+					}));
+			}
+			const data = currentData();
+			const res = await api<{ review: Review; model: string; viaGateway: boolean }>("/ai/review", {
+				body: { body: body.value, description: data.description, keyword: data.keyword, path: currentPath(), sitePosts, tags: data.tags ?? [], title: data.title },
+				method: "POST",
+			});
+			$("[data-ai-model]").textContent = `${res.model}${res.viaGateway ? " · AI Gateway" : ""}`;
+			renderReview(res.review);
+		} catch (e) {
+			out.innerHTML = `<p class="text-red-500">${esc((e as Error).message)}</p>`;
+		} finally {
+			btn.disabled = false;
+			btn.textContent = "✦ Phân tích lại";
+		}
+	});
+
+	load().catch((e: Error) => {
+		$("[data-status]").textContent = "lỗi";
+		toast(e.message, "error");
+	});
+</script>

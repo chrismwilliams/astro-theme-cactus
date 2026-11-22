@@ -48,7 +48,16 @@ const railBtn =
 	"border-line bg-surface text-muted hover:border-accent hover:text-accent-2 flex w-12 cursor-pointer flex-col items-center gap-0.5 rounded-xl border py-2 font-mono text-[11px] transition";
 ---
 
-<BaseLayout meta={{ articleDate, description, ogImage: socialImage, title }} width="wide">
+<BaseLayout
+	meta={{
+		articleDate,
+		description,
+		ogImage: socialImage,
+		post: { description, image: socialImage, publishDate, tags, title, updatedDate },
+		title,
+	}}
+	width="wide"
+>
 	<div
 		class="lg:grid lg:grid-cols-[48px_minmax(0,1fr)_200px] lg:gap-10 xl:grid-cols-[48px_minmax(0,720px)_220px] xl:justify-center xl:gap-14"
 		data-post-id={post.id}
@@ -195,6 +204,19 @@ const railBtn =
 	const pctEls = document.querySelectorAll<HTMLElement>("[data-read-pct]");
 	const dock = document.querySelector<HTMLElement>("[data-dock]");
 
+	/* ---------- read-depth events for GA4 (25/50/75/100%) ---------- */
+	const sentDepth = new Set<number>();
+	function trackDepth(pct: number) {
+		const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
+		if (!gtag) return;
+		for (const mark of [25, 50, 75, 100]) {
+			if (pct >= (mark === 100 ? 97 : mark) && !sentDepth.has(mark)) {
+				sentDepth.add(mark);
+				gtag("event", "read_depth", { percent: mark, post_id: postId });
+			}
+		}
+	}
+
 	/* ---------- reading progress ---------- */
 	let ticking = false;
 	let lastY = window.scrollY;
@@ -208,6 +230,7 @@ const railBtn =
 			if (bar) bar.style.transform = `scaleX(${pct / 100})`;
 			pctEls.forEach((el) => (el.textContent = `${Math.round(pct)}%`));
 			setProgress(postId, pct);
+			trackDepth(pct);
 			// hide the dock while scrolling down, show it when scrolling up
 			if (dock) dock.dataset.hidden = String(window.scrollY > lastY && window.scrollY > 200 && pct < 98);
 			lastY = window.scrollY;

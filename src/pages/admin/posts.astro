@@ -1,0 +1,89 @@
+---
+import AdminLayout from "@/layouts/Admin.astro";
+---
+
+<AdminLayout active="posts" title="Bài viết">
+	<div class="cms-top">
+		<h1>Bài viết</h1>
+		<span class="sp"></span>
+		<a class="btn btn-primary" href="/admin/edit/">＋ Viết bài</a>
+	</div>
+	<div class="mb-3 flex flex-wrap items-center gap-2">
+		<input aria-label="Tìm bài" class="cms-input max-w-xs" data-q placeholder="Tìm theo tiêu đề, tag…" type="search" />
+		<div class="flex flex-wrap gap-1.5" data-filters role="toolbar" aria-label="Lọc">
+			<button aria-pressed="true" class="chip" data-f="all" type="button">tất cả</button>
+			<button aria-pressed="false" class="chip" data-f="post" type="button">bài viết</button>
+			<button aria-pressed="false" class="chip" data-f="note" type="button">notes</button>
+			<button aria-pressed="false" class="chip" data-f="draft" type="button">nháp</button>
+			<button aria-pressed="false" class="chip" data-f="low" type="button">SEO &lt; 70</button>
+		</div>
+	</div>
+	<section class="cms-card overflow-x-auto p-0 sm:p-0">
+		<table class="cms-table">
+			<thead>
+				<tr>
+					<th class="ps-4">Tiêu đề</th>
+					<th class="cms-hide-sm">Loại</th>
+					<th class="cms-hide-sm">Ngày</th>
+					<th class="num cms-hide-sm">Từ</th>
+					<th class="num pe-4">SEO</th>
+				</tr>
+			</thead>
+			<tbody data-rows><tr><td colspan="5" class="p-4"><div class="cms-skeleton"></div></td></tr></tbody>
+		</table>
+	</section>
+</AdminLayout>
+
+<script>
+	import { api, type ContentFile, esc, fmtDate, type PostRow, scoreBadge, siteUrlFor, toRows, ts } from "@/lib/cms-client";
+
+	let rows: PostRow[] = [];
+	let filter = "all";
+	const q = document.querySelector<HTMLInputElement>("[data-q]")!;
+	const body = document.querySelector<HTMLElement>("[data-rows]")!;
+
+	function render() {
+		const term = q.value.trim().toLowerCase();
+		const list = rows
+			.filter((r) =>
+				filter === "all" ? true : filter === "draft" ? r.draft : filter === "low" ? r.score < 70 : r.kind === filter,
+			)
+			.filter((r) => !term || `${r.title} ${(r.data.tags ?? []).join(" ")} ${r.slug}`.toLowerCase().includes(term))
+			.sort((a, b) => ts(b.date) - ts(a.date));
+		body.innerHTML = list.length
+			? list
+					.map(
+						(r) => `<tr data-href="/admin/edit/?path=${encodeURIComponent(r.path)}">
+				<td class="ps-4"><div class="text-accent-2 font-semibold">${esc(r.title)}</div>
+					<div class="text-muted mt-0.5 flex flex-wrap gap-x-2 font-mono text-[11px]">
+						${r.draft ? '<span class="cms-pill draft">nháp</span>' : `<a class="hover:underline" href="${esc(siteUrlFor(r))}" target="_blank" onclick="event.stopPropagation()">${esc(siteUrlFor(r))} ↗</a>`}
+						${(r.data.tags ?? []).map((t) => `<span>#${esc(t)}</span>`).join("")}
+					</div></td>
+				<td class="cms-hide-sm"><span class="cms-pill">${r.kind === "note" ? "note" : "bài"}</span></td>
+				<td class="cms-hide-sm font-mono text-xs">${esc(fmtDate(r.date))}</td>
+				<td class="num cms-hide-sm">${r.words.toLocaleString("vi-VN")}</td>
+				<td class="num pe-4">${scoreBadge(r.score)}</td></tr>`,
+					)
+					.join("")
+			: `<tr><td colspan="5" class="cms-empty">Không có bài nào khớp</td></tr>`;
+		body.querySelectorAll<HTMLElement>("tr[data-href]").forEach((tr) => tr.addEventListener("click", () => (location.href = tr.dataset.href!)));
+	}
+
+	document.querySelectorAll<HTMLButtonElement>("[data-f]").forEach((b) =>
+		b.addEventListener("click", () => {
+			filter = b.dataset.f!;
+			document.querySelectorAll("[data-f]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+			render();
+		}),
+	);
+	q.addEventListener("input", render);
+
+	api<{ files: ContentFile[] }>("/content")
+		.then(({ files }) => {
+			rows = toRows(files);
+			render();
+		})
+		.catch((e: Error) => {
+			body.innerHTML = `<tr><td colspan="5" class="cms-empty">${esc(e.message)} · <a class="underline" href="/admin/settings/">Cài đặt</a></td></tr>`;
+		});
+</script>

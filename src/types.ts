@@ -5,8 +5,8 @@ export interface SiteConfig {
 	};
 	description: string;
 	lang: string;
-  ogLocale: string;
-  showLogo: boolean;
+	ogLocale: string;
+	showLogo: boolean;
 	title: string;
 	url: string;
 }
@@ -19,6 +19,17 @@ export interface PaginationLink {
 
 export interface SiteMeta {
 	articleDate?: string | undefined;
+	/** blog post data for structured data (JSON-LD) */
+	post?:
+		| {
+				title: string;
+				description: string;
+				publishDate: Date;
+				updatedDate?: Date | undefined;
+				tags: string[];
+				image: string;
+		  }
+		| undefined;
 	description?: string;
 	ogImage?: string | undefined;
 	title: string;

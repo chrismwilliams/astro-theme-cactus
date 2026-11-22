@@ -1,0 +1,127 @@
+---
+import AdminLayout from "@/layouts/Admin.astro";
+---
+
+<AdminLayout active="overview" title="Tổng quan">
+	<div class="cms-top">
+		<h1>Tổng quan</h1>
+		<span class="sp"></span>
+		<a class="btn btn-primary" href="/admin/edit/">＋ Viết bài</a>
+	</div>
+
+	<section class="cms-card mb-4" data-setup hidden>
+		<h2>Thiết lập CMS <small data-setup-progress></small></h2>
+		<ul class="cms-checks" data-setup-list></ul>
+	</section>
+
+	<div class="cms-kpis">
+		<div class="cms-card cms-kpi"><small>Bài viết</small><b data-kpi="posts">–</b></div>
+		<div class="cms-card cms-kpi"><small>Notes</small><b data-kpi="notes">–</b></div>
+		<div class="cms-card cms-kpi"><small>Bản nháp</small><b data-kpi="drafts">–</b></div>
+		<div class="cms-card cms-kpi"><small>Điểm SEO trung bình</small><b data-kpi="avg">–</b></div>
+		<div class="cms-card cms-kpi"><small>Tổng số từ</small><b data-kpi="words">–</b></div>
+	</div>
+
+	<div class="cms-grid grid-cols-1 lg:grid-cols-[1.4fr_1fr]">
+		<section class="cms-card">
+			<h2>Cần cải thiện SEO <small>điểm thấp nhất</small></h2>
+			<table class="cms-table">
+				<thead><tr><th>Bài viết</th><th class="num cms-hide-sm">Từ</th><th class="num cms-hide-sm">Vấn đề</th><th class="num">SEO</th></tr></thead>
+				<tbody data-worst><tr><td colspan="4"><div class="cms-skeleton"></div></td></tr></tbody>
+			</table>
+		</section>
+		<section class="cms-card">
+			<h2>Mới cập nhật</h2>
+			<ul class="grid grid-cols-1 gap-3 text-[13px]" data-recent><li><div class="cms-skeleton"></div></li></ul>
+		</section>
+	</div>
+
+	<div class="cms-grid mt-4 grid-cols-1 md:grid-cols-3">
+		<section class="cms-card">
+			<h2>Traffic <span class="cms-pill">GA4</span><small>phase 2</small></h2>
+			<p class="cms-help" data-ga-status>Người dùng, lượt xem, thời gian đọc, nguồn truy cập, tỉ lệ đọc hết bài (sự kiện <code>read_depth</code> đã được gửi từ blog).</p>
+		</section>
+		<section class="cms-card">
+			<h2>Search Console <span class="cms-pill">GSC</span><small>phase 2</small></h2>
+			<p class="cms-help" data-gsc-status>Clicks, impressions, CTR, vị trí trung bình theo từ khoá; từ khoá sắp lên trang 1; trang chưa index.</p>
+		</section>
+		<section class="cms-card">
+			<h2>Core Web Vitals <span class="cms-pill">PSI</span><small>phase 2</small></h2>
+			<p class="cms-help">Điểm Lighthouse và LCP / INP / CLS đo từ người dùng thật (CrUX) cho từng trang.</p>
+		</section>
+	</div>
+</AdminLayout>
+
+<script>
+	import { api, type ContentFile, esc, fmtDate, scoreBadge, toRows, ts } from "@/lib/cms-client";
+
+	type Settings = {
+		config: { google: { ga4PropertyId: string; gscSiteUrl: string }; ai: { gatewayId: string } };
+		secrets: Record<string, { set: boolean }>;
+	};
+	type Me = { status: { kv: boolean; masterKey: boolean } };
+
+	async function setup() {
+		const [me, s] = await Promise.all([api<Me>("/me"), api<Settings>("/settings").catch(() => null)]);
+		const items: [boolean, string][] = [
+			[true, "Đăng nhập bằng Cloudflare Access"],
+			[me.status.kv, "KV namespace BLOG_KV"],
+			[me.status.masterKey, "Secret CMS_MASTER_KEY (mã hoá credential)"],
+			[Boolean(s?.secrets.githubToken?.set), "GitHub token (để lưu bài)"],
+			[Boolean(s?.secrets.anthropicApiKey?.set || s?.config.ai.gatewayId), "Claude API / AI Gateway"],
+			[Boolean(s?.secrets.googleServiceAccount?.set), "Google service account (phase 2)"],
+		];
+		const done = items.filter(([ok]) => ok).length;
+		const box = document.querySelector<HTMLElement>("[data-setup]")!;
+		if (done === items.length) return;
+		box.hidden = false;
+		document.querySelector("[data-setup-progress]")!.textContent = `${done}/${items.length}`;
+		document.querySelector("[data-setup-list]")!.innerHTML = items
+			.map(([ok, label]) => `<li class="${ok ? "ok" : "warn"}">${esc(label)}${ok ? "" : ' · <a class="underline" href="/admin/settings/">cài đặt</a>'}</li>`)
+			.join("");
+		if (s?.config.google.ga4PropertyId) {
+			document.querySelector("[data-ga-status]")!.insertAdjacentHTML("beforeend", ` <br><b>Đã chọn property ${esc(s.config.google.ga4PropertyId)}.</b>`);
+		}
+	}
+
+	async function content() {
+		const { files } = await api<{ files: ContentFile[] }>("/content");
+		const rows = toRows(files);
+		const posts = rows.filter((r) => r.kind === "post");
+		const set = (k: string, v: string | number) => {
+			document.querySelector(`[data-kpi="${k}"]`)!.textContent = String(v);
+		};
+		set("posts", posts.length);
+		set("notes", rows.length - posts.length);
+		set("drafts", rows.filter((r) => r.draft).length);
+		set("avg", posts.length ? Math.round(posts.reduce((s, r) => s + r.score, 0) / posts.length) : "–");
+		set("words", rows.reduce((s, r) => s + r.words, 0).toLocaleString("vi-VN"));
+
+		const worst = [...posts].sort((a, b) => a.score - b.score).slice(0, 6);
+		document.querySelector("[data-worst]")!.innerHTML = worst.length
+			? worst
+					.map(
+						(r) => `<tr data-href="/admin/edit/?path=${encodeURIComponent(r.path)}">
+							<td>${esc(r.title)}${r.draft ? ' <span class="cms-pill draft">nháp</span>' : ""}</td>
+							<td class="num cms-hide-sm">${r.words}</td><td class="num cms-hide-sm">${r.issues}</td><td class="num">${scoreBadge(r.score)}</td></tr>`,
+					)
+					.join("")
+			: `<tr><td colspan="4" class="cms-empty">Chưa có bài viết</td></tr>`;
+
+		const recent = [...rows].sort((a, b) => ts(b.data.updatedDate ?? b.date) - ts(a.data.updatedDate ?? a.date)).slice(0, 6);
+		document.querySelector("[data-recent]")!.innerHTML = recent
+			.map(
+				(r) => `<li class="flex items-center justify-between gap-3"><a class="hover:text-accent-strong min-w-0 truncate" href="/admin/edit/?path=${encodeURIComponent(r.path)}">${esc(r.title)}</a>
+				<span class="text-muted shrink-0 font-mono text-[11px]">${esc(fmtDate(String(r.data.updatedDate ?? r.date)))}</span></li>`,
+			)
+			.join("");
+		document.querySelectorAll<HTMLElement>("tr[data-href]").forEach((tr) => tr.addEventListener("click", () => (location.href = tr.dataset.href!)));
+	}
+
+	setup().catch(() => {});
+	content().catch((e: Error) => {
+		const msg = `<tr><td colspan="4" class="cms-empty">${esc(e.message)} · <a class="underline" href="/admin/settings/">Cài đặt</a></td></tr>`;
+		document.querySelector("[data-worst]")!.innerHTML = msg;
+		document.querySelector("[data-recent]")!.innerHTML = "";
+	});
+</script>

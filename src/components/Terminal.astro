@@ -122,7 +122,7 @@ const latest = data.posts.slice(0, 2);
 						"tag <tên>         — bài theo tag",
 						"cd <about|posts|notes|tags> — chuyển trang",
 						"theme [light|dark] — đổi giao diện",
-						"github / youtube  — mở kênh của mình",
+						"github / youtube / linkedin — mở trang của mình",
 						"clear             — xoá màn hình",
 					].forEach((l) => print(l, "text-muted"));
 				},
@@ -176,6 +176,10 @@ const latest = data.posts.slice(0, 2);
 				github: () => {
 					print("→ mở GitHub…", "text-accent-strong");
 					window.open(data.links.github, "_blank", "noopener");
+				},
+				linkedin: () => {
+					print("→ mở LinkedIn…", "text-accent-strong");
+					window.open(data.links.linkedin, "_blank", "noopener");
 				},
 				youtube: () => {
 					print("→ mở YouTube…", "text-accent-strong");
