@@ -70,42 +70,41 @@
 					return;
 				}
 
-				// Get article text content
-				const article = document.querySelector("[data-post-body]");
-				if (!article) return;
-
-				const content = article.textContent?.trim() ?? "";
-				if (!content) return;
-
 				hint.classList.add("hidden");
-				// Show loading state
 				label.textContent = "Đang tóm tắt...";
 				spinner.classList.remove("hidden");
 				btn.disabled = true;
 
 				try {
-					const res = await fetch("/api/summarize", {
-						method: "POST",
+					const path = location.pathname.endsWith("/") ? location.pathname : `${location.pathname}/`;
+					const res = await fetch("/api/summary", {
+						body: JSON.stringify({ path }),
 						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({ content: content.slice(0, 4000) }),
+						method: "POST",
 					});
+					const data = (await res.json().catch(() => ({}))) as { summary?: string; message?: string };
+					if (!res.ok || !data.summary) throw new Error(data.message ?? `HTTP ${res.status}`);
 
-					if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-					const data = await res.json() as { summary?: string; error?: string };
-
-					if (data.error) throw new Error(data.error);
-
-					result.textContent = data.summary ?? "Không thể tạo tóm tắt.";
+					// render "- item" lines as a list, as text only
+					const lines = data.summary
+						.split("\n")
+						.map((l) => l.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, "").trim())
+						.filter(Boolean);
+					const list = document.createElement("ul");
+					list.className = "list-disc space-y-1.5 ps-5";
+					for (const line of lines) {
+						const li = document.createElement("li");
+						li.textContent = line.replace(/\*\*(.+?)\*\*/g, "$1");
+						list.append(li);
+					}
+					result.replaceChildren(list);
 					acc.dataset.open = "true";
 					this.#generated = true;
-					label.textContent = "TL;DR — tóm tắt bằng AI";
 				} catch (err) {
-					result.textContent = "⚠️ Lỗi khi tóm tắt. Vui lòng thử lại sau.";
+					result.textContent = `⚠️ ${(err as Error).message || "Lỗi khi tóm tắt. Vui lòng thử lại sau."}`;
 					acc.dataset.open = "true";
-					console.error("AI Summary error:", err);
-					label.textContent = "TL;DR — tóm tắt bằng AI";
 				} finally {
+					label.textContent = "TL;DR — tóm tắt bằng AI";
 					spinner.classList.add("hidden");
 					btn.disabled = false;
 				}

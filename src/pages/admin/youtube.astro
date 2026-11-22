@@ -1,0 +1,68 @@
+---
+import AdminLayout from "@/layouts/Admin.astro";
+---
+
+<AdminLayout active="youtube" title="YouTube">
+	<div class="cms-top">
+		<h1>YouTube</h1>
+		<span class="sp"></span>
+		<button class="btn btn-ghost h-9 text-xs" data-refresh type="button">↻ Làm mới</button>
+		<span class="text-muted font-mono text-[11px]" data-cached></span>
+	</div>
+	<div class="cms-kpis" data-kpis>
+		<div class="cms-card cms-kpi"><small>Subscribers</small><b data-k="subs">–</b></div>
+		<div class="cms-card cms-kpi"><small>Tổng lượt xem</small><b data-k="views">–</b></div>
+		<div class="cms-card cms-kpi"><small>Số video</small><b data-k="videos">–</b></div>
+		<div class="cms-card cms-kpi"><small>Lượt xem TB / video gần đây</small><b data-k="avg">–</b></div>
+	</div>
+	<section class="cms-card mb-4">
+		<h2>Lượt xem video gần đây</h2>
+		<div data-bars><div class="cms-skeleton"></div></div>
+	</section>
+	<section class="cms-card overflow-x-auto">
+		<h2>Video mới nhất</h2>
+		<table class="cms-table">
+			<thead><tr><th>Video</th><th class="num">Lượt xem</th><th class="num cms-hide-sm">Thích</th><th class="num cms-hide-sm">Bình luận</th><th class="num cms-hide-sm">Ngày đăng</th></tr></thead>
+			<tbody data-rows></tbody>
+		</table>
+	</section>
+</AdminLayout>
+
+<script>
+	import { api, esc } from "@/lib/cms-client";
+	import { barList, fmt } from "@/lib/charts";
+	import { cachedNote, showError } from "@/lib/dashboard";
+
+	type Yt = {
+		cachedAt: string;
+		channel: { title: string; subscribers: number | null; views: number; videos: number };
+		videos: { id: string; title: string; publishedAt: string; views: number; likes: number; comments: number }[];
+	};
+	const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
+
+	async function load(fresh = false) {
+		$("[data-kpis]").dataset.loading = "true";
+		try {
+			const d = await api<Yt>(`/analytics/youtube${fresh ? "?fresh=1" : ""}`);
+			$("[data-k='subs']").textContent = d.channel.subscribers === null ? "ẩn" : fmt.int(d.channel.subscribers);
+			$("[data-k='views']").textContent = fmt.compact(d.channel.views);
+			$("[data-k='videos']").textContent = fmt.int(d.channel.videos);
+			$("[data-k='avg']").textContent = d.videos.length ? fmt.int(d.videos.reduce((s, v) => s + v.views, 0) / d.videos.length) : "–";
+			barList($("[data-bars]"), d.videos.map((v) => ({ label: v.title, value: v.views })), { label: "Lượt xem theo video" });
+			$("[data-rows]").innerHTML = d.videos
+				.map(
+					(v, i) => `<tr style="--i:${i}"><td><a class="hover:underline" href="https://www.youtube.com/watch?v=${encodeURIComponent(v.id)}" rel="noreferrer" target="_blank">${esc(v.title)}</a></td>
+					<td class="num">${fmt.int(v.views)}</td><td class="num cms-hide-sm">${fmt.int(v.likes)}</td><td class="num cms-hide-sm">${fmt.int(v.comments)}</td>
+					<td class="num cms-hide-sm">${esc(new Date(v.publishedAt).toLocaleDateString("vi-VN"))}</td></tr>`,
+				)
+				.join("");
+			cachedNote($("[data-cached]"), d.cachedAt);
+		} catch (e) {
+			showError($("[data-bars]"), e);
+		} finally {
+			$("[data-kpis]").dataset.loading = "false";
+		}
+	}
+	$("[data-refresh]").addEventListener("click", () => load(true));
+	load();
+</script>

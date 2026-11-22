@@ -1,0 +1,103 @@
+---
+import AdminLayout from "@/layouts/Admin.astro";
+---
+
+<AdminLayout active="vitals" title="Core Web Vitals">
+	<div class="cms-top">
+		<h1>Core Web Vitals <span class="cms-src align-middle">PageSpeed</span></h1>
+		<span class="sp"></span>
+		<div class="cms-seg" data-strategy role="group" aria-label="Thiết bị">
+			<button aria-pressed="true" data-s="mobile" type="button">Mobile</button><button aria-pressed="false" data-s="desktop" type="button">Desktop</button>
+		</div>
+	</div>
+	<p class="cms-help mb-4">
+		Mỗi lần đo mất 15–30 giây (Lighthouse chạy trên máy chủ Google); kết quả được cache 24 giờ. Ngưỡng tốt: LCP ≤ 2.5s, INP ≤ 200ms,
+		CLS ≤ 0.1.
+	</p>
+	<section class="cms-card mb-4">
+		<h2>Trang chủ <small data-home-meta></small></h2>
+		<div data-home><div class="cms-skeleton"></div></div>
+	</section>
+	<section class="cms-card overflow-x-auto">
+		<h2>Từng bài viết</h2>
+		<table class="cms-table">
+			<thead><tr><th>Trang</th><th class="num">Perf</th><th class="num">SEO</th><th class="num cms-hide-sm">LCP</th><th class="num cms-hide-sm">CLS</th><th></th></tr></thead>
+			<tbody data-rows><tr><td colspan="6"><div class="cms-skeleton"></div></td></tr></tbody>
+		</table>
+	</section>
+</AdminLayout>
+
+<script>
+	import { api, type ContentFile, esc, toRows } from "@/lib/cms-client";
+	import { cachedNote, type PsiResult, psiHtml, showError } from "@/lib/dashboard";
+
+	const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
+	const SITE = "https://blog.datnt.work";
+	let strategy: "mobile" | "desktop" = "mobile";
+	let urls: { url: string; title: string }[] = [];
+
+	const psi = (url: string, fresh = false) =>
+		api<PsiResult>(`/analytics/psi?url=${encodeURIComponent(url)}&strategy=${strategy}${fresh ? "&fresh=1" : ""}`);
+
+	async function home(fresh = false) {
+		$("[data-home]").dataset.loading = "true";
+		try {
+			const r = await psi(`${SITE}/`, fresh);
+			$("[data-home]").innerHTML = psiHtml(r);
+			cachedNote($("[data-home-meta]"), r.cachedAt);
+		} catch (e) {
+			showError($("[data-home]"), e);
+		} finally {
+			$("[data-home]").dataset.loading = "false";
+		}
+	}
+
+	function rowHtml(u: { url: string; title: string }, r?: PsiResult, err?: string) {
+		const cell = (v: number | undefined, fmtv: (n: number) => string) => (v === undefined ? "–" : fmtv(v));
+		return `<td><div class="text-accent-2">${esc(u.title)}</div><div class="text-muted font-mono text-[11px]">${esc(new URL(u.url).pathname)}</div>${err ? `<div class="text-xs text-red-500">${esc(err)}</div>` : ""}</td>
+			<td class="num">${cell(r?.scores.performance, String)}</td><td class="num">${cell(r?.scores.seo, String)}</td>
+			<td class="num cms-hide-sm">${cell(r ? (r.field.lcpMs ?? r.lab.lcpMs) : undefined, (n) => `${(n / 1000).toFixed(1)}s`)}</td>
+			<td class="num cms-hide-sm">${cell(r ? (r.field.cls ?? r.lab.cls) : undefined, (n) => n.toFixed(2))}</td>
+			<td class="num"><button class="btn btn-ghost h-8 px-3 text-xs" data-run="${esc(u.url)}" type="button">${r ? "Đo lại" : "Đo"}</button></td>`;
+	}
+
+	function renderRows() {
+		$("[data-rows]").innerHTML = urls.map((u) => `<tr data-url="${esc(u.url)}">${rowHtml(u)}</tr>`).join("");
+	}
+
+	$("[data-rows]").addEventListener("click", async (e) => {
+		const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("[data-run]");
+		if (!btn) return;
+		const url = btn.dataset.run!;
+		const u = urls.find((x) => x.url === url)!;
+		const tr = btn.closest("tr")!;
+		btn.disabled = true;
+		btn.textContent = "Đang đo…";
+		try {
+			tr.innerHTML = rowHtml(u, await psi(url, btn.textContent === "Đo lại"));
+		} catch (err) {
+			tr.innerHTML = rowHtml(u, undefined, (err as Error).message);
+		}
+	});
+
+	document.querySelectorAll<HTMLButtonElement>("[data-strategy] button").forEach((b) =>
+		b.addEventListener("click", () => {
+			strategy = b.dataset.s as "mobile" | "desktop";
+			document.querySelectorAll("[data-strategy] button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+			renderRows();
+			home();
+		}),
+	);
+
+	api<{ files: ContentFile[] }>("/content")
+		.then(({ files }) => {
+			urls = toRows(files)
+				.filter((r) => r.kind === "post" && !r.draft)
+				.map((r) => ({ title: r.title, url: `${SITE}/posts/${r.slug}/` }));
+			renderRows();
+		})
+		.catch((e) => {
+			$("[data-rows]").innerHTML = `<tr><td colspan="6" class="cms-empty">${esc((e as Error).message)}</td></tr>`;
+		});
+	home();
+</script>

@@ -65,7 +65,7 @@ export interface ReviewInput {
 	searchData?: string;
 }
 
-async function client(env: AdminEnv) {
+export async function claudeClient(env: AdminEnv) {
 	const [config, apiKey, gatewayToken] = await Promise.all([
 		getConfig(env),
 		getSecret(env, "anthropicApiKey"),
@@ -97,7 +97,7 @@ export async function reviewPost(
 ): Promise<{ review: SeoReview; model: string; viaGateway: boolean }> {
 	if (input.body.length > 120_000)
 		throw new HttpError(413, "too_large", "Bài quá dài để phân tích một lần");
-	const { anthropic, config, viaGateway } = await client(env);
+	const { anthropic, config, viaGateway } = await claudeClient(env);
 	const sitePosts = input.sitePosts
 		.slice(0, 200)
 		.map((p) => `- ${p.path} | ${p.title} | ${p.tags.join(", ")}`)
@@ -152,7 +152,7 @@ ${input.body}
 
 /** cheap round trip to check the key / gateway settings */
 export async function testAi(env: AdminEnv) {
-	const { anthropic, config, viaGateway } = await client(env);
+	const { anthropic, config, viaGateway } = await claudeClient(env);
 	try {
 		const res = await anthropic.messages.create({
 			max_tokens: 64,
@@ -162,6 +162,60 @@ export async function testAi(env: AdminEnv) {
 		});
 		return { model: res.model, viaGateway };
 	} catch (err) {
+		if (err instanceof Anthropic.APIError) {
+			throw new HttpError(
+				502,
+				"ai_error",
+				`AI lỗi ${err.status ?? ""}: ${err.message}`.slice(0, 300),
+			);
+		}
+		throw err;
+	}
+}
+
+/* ---------------- weekly insights for the dashboard ---------------- */
+
+export const Insights = z.object({
+	insights: z
+		.array(
+			z.object({
+				title: z.string().describe("short imperative action in Vietnamese"),
+				why: z.string().describe("the evidence from the data, with numbers"),
+				impact: z.enum(["high", "medium", "low"]),
+				page: z.string().describe("site path the action is about, or empty"),
+			}),
+		)
+		.describe("3 to 6 highest-impact actions, best first"),
+});
+export type Insights = z.infer<typeof Insights>;
+
+const INSIGHTS_SYSTEM = `Bạn là chuyên gia SEO và tăng trưởng nội dung cho blog kỹ thuật tiếng Việt blog.datnt.work (AppSec, DevSecOps).
+Từ dữ liệu Search Console, GA4 và điểm SEO on-page, đề xuất 3-6 việc có tác động lớn nhất cho tuần này.
+Ưu tiên: từ khoá vị trí 8-20 nhiều impressions, trang CTR thấp so với vị trí, bài traffic giảm, cannibalization, bài điểm SEO thấp nhưng có impressions, ý tưởng bài mới từ truy vấn chưa có bài.
+Mỗi đề xuất phải dẫn số liệu cụ thể từ dữ liệu được cung cấp; không bịa số. Viết tiếng Việt, giữ thuật ngữ kỹ thuật tiếng Anh.`;
+
+export async function weeklyInsights(
+	env: AdminEnv,
+	data: string,
+): Promise<{ insights: Insights; model: string }> {
+	if (data.length > 150_000) throw new HttpError(413, "too_large");
+	const { anthropic, config } = await claudeClient(env);
+	try {
+		const res = await anthropic.beta.messages.parse({
+			betas: ["server-side-fallback-2026-07-01"],
+			fallbacks: "default",
+			max_tokens: 16000,
+			messages: [{ content: `<data>\n${data}\n</data>`, role: "user" }],
+			model: config.ai.model || "claude-opus-5-5",
+			output_config: { effort: config.ai.effort, format: betaZodOutputFormat(Insights) },
+			system: INSIGHTS_SYSTEM,
+		});
+		if (res.stop_reason === "refusal" || !res.parsed_output) {
+			throw new HttpError(502, "ai_bad_output", "AI không trả về gợi ý hợp lệ");
+		}
+		return { insights: res.parsed_output, model: res.model };
+	} catch (err) {
+		if (err instanceof HttpError) throw err;
 		if (err instanceof Anthropic.APIError) {
 			throw new HttpError(
 				502,

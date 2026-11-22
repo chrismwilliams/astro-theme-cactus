@@ -1,5 +1,6 @@
 ---
 import AdminLayout from "@/layouts/Admin.astro";
+import { FILTERS_HTML } from "@/lib/dashboard";
 ---
 
 <AdminLayout active="overview" title="Tổng quan">
@@ -14,114 +15,578 @@ import AdminLayout from "@/layouts/Admin.astro";
 		<ul class="cms-checks" data-setup-list></ul>
 	</section>
 
-	<div class="cms-kpis">
-		<div class="cms-card cms-kpi"><small>Bài viết</small><b data-kpi="posts">–</b></div>
-		<div class="cms-card cms-kpi"><small>Notes</small><b data-kpi="notes">–</b></div>
-		<div class="cms-card cms-kpi"><small>Bản nháp</small><b data-kpi="drafts">–</b></div>
-		<div class="cms-card cms-kpi"><small>Điểm SEO trung bình</small><b data-kpi="avg">–</b></div>
-		<div class="cms-card cms-kpi"><small>Tổng số từ</small><b data-kpi="words">–</b></div>
+	<div data-filters set:html={FILTERS_HTML} />
+
+	<div class="cms-kpis" data-kpis>
+		<div class="cms-card cms-kpi" data-kpi="users"><small>Người dùng <span class="cms-src">GA4</span></small><b>–</b><span data-delta></span></div>
+		<div class="cms-card cms-kpi" data-kpi="views"><small>Lượt xem <span class="cms-src">GA4</span></small><b>–</b><span data-delta></span></div>
+		<div class="cms-card cms-kpi" data-kpi="engagement"><small>Thời gian đọc TB <span class="cms-src">GA4</span></small><b>–</b><span data-delta></span></div>
+		<div class="cms-card cms-kpi" data-kpi="clicks"><small>Clicks <span class="cms-src">GSC</span></small><b>–</b><span data-delta></span></div>
+		<div class="cms-card cms-kpi" data-kpi="impressions"><small>Impressions <span class="cms-src">GSC</span></small><b>–</b><span data-delta></span></div>
+		<div class="cms-card cms-kpi" data-kpi="position"><small>Vị trí TB <span class="cms-src">GSC</span></small><b>–</b><span data-delta></span></div>
 	</div>
 
-	<div class="cms-grid grid-cols-1 lg:grid-cols-[1.4fr_1fr]">
+	<div class="cms-grid mb-4 grid-cols-1 md:grid-cols-2">
 		<section class="cms-card">
-			<h2>Cần cải thiện SEO <small>điểm thấp nhất</small></h2>
+			<h2>Người dùng mỗi ngày <span class="cms-src">GA4</span><small data-realtime></small></h2>
+			<div data-chart="users"><div class="cms-skeleton"></div></div>
+		</section>
+		<section class="cms-card">
+			<h2>Clicks từ Google mỗi ngày <span class="cms-src">GSC</span><small>▲ ngày đăng bài</small></h2>
+			<div data-chart="clicks"><div class="cms-skeleton"></div></div>
+		</section>
+	</div>
+
+	<div class="cms-grid mb-4 grid-cols-1 lg:grid-cols-[1.6fr_1fr]">
+		<section class="cms-card">
+			<h2>Tốc độ tải trang chủ <span class="cms-src">PageSpeed</span><small data-psi-meta></small></h2>
+			<div class="cms-seg mb-3" data-psi-tabs role="group" aria-label="Thiết bị">
+				<button aria-pressed="true" data-s="mobile" type="button">Mobile</button><button aria-pressed="false" data-s="desktop" type="button">Desktop</button>
+			</div>
+			<div data-psi><div class="cms-skeleton"></div><p class="cms-help mt-2">Lighthouse đang chạy trên máy chủ Google (15–30 giây, sau đó cache 24 giờ)…</p></div>
+			<a class="cms-help mt-3 inline-block underline" href="/admin/vitals/">Đo từng bài →</a>
+		</section>
+		<section class="cms-card">
+			<h2>Google index <span class="cms-src">GSC</span><small data-index-meta></small></h2>
+			<div class="flex items-baseline gap-2"><b class="text-accent-2 font-mono text-4xl" data-index-count>–</b><span class="text-muted text-sm" data-index-total></span></div>
+			<ul class="mt-3 grid gap-1.5 text-[12.5px]" data-index-list><li class="text-muted">Đang hỏi Google trạng thái index của từng bài…</li></ul>
+			<a class="cms-help mt-3 inline-block underline" href="/admin/search/">Chi tiết →</a>
+		</section>
+	</div>
+
+	<div class="cms-grid mb-4 grid-cols-1 lg:grid-cols-[1fr_1.35fr]">
+		<section class="cms-card cms-ai">
+			<h2><span class="cms-ai-tag">✦ AI gợi ý tuần này</span><small data-ai-meta></small></h2>
+			<ol class="grid gap-3 ps-5 text-[13px]" data-insights>
+				<li class="list-none ps-0 text-muted -ms-5">Claude đọc dữ liệu Search Console, GA4 và điểm SEO từng bài để đề xuất việc nên làm.</li>
+			</ol>
+			<button class="btn btn-primary mt-4" data-insights-btn type="button">✦ Phân tích</button>
+		</section>
+		<section class="cms-card">
+			<h2>Sức khoẻ SEO <small data-seo-count></small></h2>
+			<div class="grid gap-4 sm:grid-cols-[auto_1fr]">
+				<div class="grid place-items-center">
+					<div class="text-accent-2 font-mono text-5xl font-extrabold" data-seo-avg>–</div>
+					<p class="text-muted text-xs">điểm on-page TB</p>
+				</div>
+				<div class="grid content-start gap-3">
+					<div class="grid gap-2" data-seo-dist></div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<section class="cms-card mb-4 overflow-x-auto">
+		<h2>Hiệu suất bài viết <small>sắp xếp theo lượt xem</small></h2>
+		<table class="cms-table">
+			<thead>
+				<tr>
+					<th>Bài viết</th>
+					<th class="num">Lượt xem</th>
+					<th class="num cms-hide-sm">Đọc hết</th>
+					<th class="num cms-hide-sm">Clicks</th>
+					<th class="num cms-hide-sm">Vị trí</th>
+					<th class="num">SEO</th>
+				</tr>
+			</thead>
+			<tbody data-perf><tr><td colspan="6"><div class="cms-skeleton"></div></td></tr></tbody>
+		</table>
+	</section>
+
+	<section class="cms-card mb-4 overflow-x-auto">
+		<h2>Chất lượng nội dung <small>bấm tiêu đề cột để sắp xếp</small></h2>
+		<table class="cms-table" data-quality-table>
+			<thead>
+				<tr>
+					<th data-sort="title">Bài viết</th>
+					<th class="num" data-sort="score" aria-sort="ascending">SEO</th>
+					<th class="num" data-sort="words">Số từ</th>
+					<th class="num cms-hide-sm" data-sort="internal">Link nội bộ</th>
+					<th class="num cms-hide-sm" data-sort="alt">Ảnh thiếu alt</th>
+					<th class="num cms-hide-sm" data-sort="age">Cập nhật</th>
+					<th class="num" data-sort="issues">Vấn đề</th>
+				</tr>
+			</thead>
+			<tbody data-quality><tr><td colspan="7"><div class="cms-skeleton"></div></td></tr></tbody>
+		</table>
+	</section>
+
+	<div class="cms-grid mb-4 grid-cols-1 lg:grid-cols-[1.2fr_1fr]">
+		<section class="cms-card">
+			<h2>Lỗi SEO phổ biến <small>số bài mắc phải</small></h2>
+			<div data-common-issues><div class="cms-skeleton"></div></div>
+		</section>
+		<section class="cms-card">
+			<h2>Nhịp xuất bản <small>12 tháng gần nhất</small></h2>
+			<div data-cadence><div class="cms-skeleton"></div></div>
+		</section>
+	</div>
+
+	<div class="cms-grid mb-4 grid-cols-1 lg:grid-cols-2">
+		<section class="cms-card overflow-x-auto">
+			<h2>Top truy vấn <span class="cms-src">GSC</span><small>theo clicks</small></h2>
 			<table class="cms-table">
-				<thead><tr><th>Bài viết</th><th class="num cms-hide-sm">Từ</th><th class="num cms-hide-sm">Vấn đề</th><th class="num">SEO</th></tr></thead>
-				<tbody data-worst><tr><td colspan="4"><div class="cms-skeleton"></div></td></tr></tbody>
+				<thead><tr><th>Truy vấn</th><th class="num">Clicks</th><th class="num cms-hide-sm">CTR</th><th class="num">Vị trí</th></tr></thead>
+				<tbody data-topq><tr><td colspan="4"><div class="cms-skeleton"></div></td></tr></tbody>
 			</table>
 		</section>
-		<section class="cms-card">
-			<h2>Mới cập nhật</h2>
-			<ul class="grid grid-cols-1 gap-3 text-[13px]" data-recent><li><div class="cms-skeleton"></div></li></ul>
+		<section class="cms-card overflow-x-auto">
+			<h2>CTR thấp hơn kỳ vọng <span class="cms-src">GSC</span><small>→ viết lại title/meta</small></h2>
+			<table class="cms-table">
+				<thead><tr><th>Trang</th><th class="num">Impr.</th><th class="num">CTR / kỳ vọng</th></tr></thead>
+				<tbody data-lowctr><tr><td colspan="3"><div class="cms-skeleton"></div></td></tr></tbody>
+			</table>
 		</section>
 	</div>
 
-	<div class="cms-grid mt-4 grid-cols-1 md:grid-cols-3">
+	<div class="cms-grid grid-cols-1 lg:grid-cols-3">
 		<section class="cms-card">
-			<h2>Traffic <span class="cms-pill">GA4</span><small>phase 2</small></h2>
-			<p class="cms-help" data-ga-status>Người dùng, lượt xem, thời gian đọc, nguồn truy cập, tỉ lệ đọc hết bài (sự kiện <code>read_depth</code> đã được gửi từ blog).</p>
+			<h2>Từ khoá sắp lên trang 1 <small>vị trí 8–20</small></h2>
+			<table class="cms-table">
+				<thead><tr><th>Truy vấn</th><th class="num">Impr.</th><th class="num">Vị trí</th></tr></thead>
+				<tbody data-striking><tr><td colspan="3"><div class="cms-skeleton"></div></td></tr></tbody>
+			</table>
+			<a class="cms-help mt-3 inline-block underline" href="/admin/search/">Xem tất cả truy vấn →</a>
 		</section>
 		<section class="cms-card">
-			<h2>Search Console <span class="cms-pill">GSC</span><small>phase 2</small></h2>
-			<p class="cms-help" data-gsc-status>Clicks, impressions, CTR, vị trí trung bình theo từ khoá; từ khoá sắp lên trang 1; trang chưa index.</p>
+			<h2>Nguồn truy cập <span class="cms-src">GA4</span></h2>
+			<div data-channels><div class="cms-skeleton"></div></div>
 		</section>
 		<section class="cms-card">
-			<h2>Core Web Vitals <span class="cms-pill">PSI</span><small>phase 2</small></h2>
-			<p class="cms-help">Điểm Lighthouse và LCP / INP / CLS đo từ người dùng thật (CrUX) cho từng trang.</p>
+			<h2>Thiết bị & quốc gia <span class="cms-src">GA4</span></h2>
+			<div data-devices><div class="cms-skeleton"></div></div>
+			<div class="mt-4" data-countries></div>
 		</section>
 	</div>
 </AdminLayout>
 
 <script>
-	import { api, type ContentFile, esc, fmtDate, scoreBadge, toRows, ts } from "@/lib/cms-client";
+	import { api, type ContentFile, esc, type PostRow, scoreBadge, toRows } from "@/lib/cms-client";
+	import { barList, columnChart, delta, fmt, lineChart, stackedBar } from "@/lib/charts";
+	import {
+		cachedNote,
+		expectedCtr,
+		type GaData,
+		type GscData,
+		initFilters,
+		pathOf,
+		type PsiResult,
+		psiHtml,
+		showError,
+	} from "@/lib/dashboard";
 
+	const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
+	let rows: PostRow[] = [];
+	let ga: GaData | null = null;
+	let gsc: GscData | null = null;
+
+	/* ---------- setup checklist ---------- */
 	type Settings = {
 		config: { google: { ga4PropertyId: string; gscSiteUrl: string }; ai: { gatewayId: string } };
 		secrets: Record<string, { set: boolean }>;
 	};
-	type Me = { status: { kv: boolean; masterKey: boolean } };
-
 	async function setup() {
-		const [me, s] = await Promise.all([api<Me>("/me"), api<Settings>("/settings").catch(() => null)]);
+		const [me, s] = await Promise.all([
+			api<{ status: { kv: boolean; masterKey: boolean } }>("/me"),
+			api<Settings>("/settings").catch(() => null),
+		]);
 		const items: [boolean, string][] = [
-			[true, "Đăng nhập bằng Cloudflare Access"],
 			[me.status.kv, "KV namespace BLOG_KV"],
-			[me.status.masterKey, "Secret CMS_MASTER_KEY (mã hoá credential)"],
+			[me.status.masterKey, "Secret CMS_MASTER_KEY"],
 			[Boolean(s?.secrets.githubToken?.set), "GitHub token (để lưu bài)"],
 			[Boolean(s?.secrets.anthropicApiKey?.set || s?.config.ai.gatewayId), "Claude API / AI Gateway"],
-			[Boolean(s?.secrets.googleServiceAccount?.set), "Google service account (phase 2)"],
+			[Boolean(s?.secrets.googleServiceAccount?.set), "Google service account"],
+			[Boolean(s?.config.google.ga4PropertyId), "GA4 property"],
+			[Boolean(s?.config.google.gscSiteUrl), "Search Console site"],
 		];
 		const done = items.filter(([ok]) => ok).length;
-		const box = document.querySelector<HTMLElement>("[data-setup]")!;
 		if (done === items.length) return;
-		box.hidden = false;
-		document.querySelector("[data-setup-progress]")!.textContent = `${done}/${items.length}`;
-		document.querySelector("[data-setup-list]")!.innerHTML = items
+		$("[data-setup]").hidden = false;
+		$("[data-setup-progress]").textContent = `${done}/${items.length}`;
+		$("[data-setup-list]").innerHTML = items
 			.map(([ok, label]) => `<li class="${ok ? "ok" : "warn"}">${esc(label)}${ok ? "" : ' · <a class="underline" href="/admin/settings/">cài đặt</a>'}</li>`)
 			.join("");
-		if (s?.config.google.ga4PropertyId) {
-			document.querySelector("[data-ga-status]")!.insertAdjacentHTML("beforeend", ` <br><b>Đã chọn property ${esc(s.config.google.ga4PropertyId)}.</b>`);
+	}
+
+	/* ---------- KPIs ---------- */
+	function kpi(id: string, value: string, d: HTMLElement | null) {
+		const el = $(`[data-kpi="${id}"]`);
+		el.querySelector("b")!.textContent = value;
+		el.querySelector("[data-delta]")!.replaceChildren(...(d ? [d] : []));
+	}
+
+	function renderGa(data: GaData) {
+		const { current: c, previous: p } = data.totals;
+		kpi("users", fmt.compact(c.users), delta(c.users, p.users));
+		kpi("views", fmt.compact(c.views), delta(c.views, p.views));
+		kpi("engagement", fmt.duration(c.avgEngagementSec), delta(c.avgEngagementSec, p.avgEngagementSec));
+		lineChart($("[data-chart='users']"), [{ name: "Người dùng", points: data.daily.map((d) => ({ x: d.date, y: d.users })) }], {
+			label: "Người dùng mỗi ngày",
+		});
+		$("[data-realtime]").textContent = data.realtimeUsers === null ? "" : `● ${data.realtimeUsers} đang online`;
+		barList(
+			$("[data-channels]"),
+			data.channels.slice(0, 6).map((ch) => ({ label: ch.name, value: ch.sessions })),
+			{ label: "Phiên theo nguồn" },
+		);
+		stackedBar(
+			$("[data-devices]"),
+			data.devices.map((d) => ({ label: { desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" }[d.name] ?? d.name, value: d.users })),
+			{ label: "Người dùng theo thiết bị" },
+		);
+		const total = data.countries.reduce((s, x) => s + x.users, 0) || 1;
+		barList(
+			$("[data-countries]"),
+			data.countries.slice(0, 5).map((x) => ({ display: fmt.pct(x.users / total, 0), label: x.name, value: x.users })),
+			{ label: "Người dùng theo quốc gia", max: total },
+		);
+	}
+
+	function renderGsc(data: GscData) {
+		const { current: c, previous: p } = data.totals;
+		kpi("clicks", fmt.compact(c.clicks), delta(c.clicks, p.clicks));
+		kpi("impressions", fmt.compact(c.impressions), delta(c.impressions, p.impressions));
+		kpi("position", c.position ? fmt.pos(c.position) : "–", delta(c.position, p.position, { format: (n) => n.toFixed(1), invert: true }));
+		const markers = rows
+			.filter((r) => r.kind === "post" && !r.draft)
+			.map((r) => ({ label: r.title, x: new Date(r.date).toISOString().slice(0, 10) }));
+		lineChart($("[data-chart='clicks']"), [{ name: "Clicks", points: data.daily.map((d) => ({ x: d.date, y: d.clicks })) }], {
+			label: "Clicks từ Google mỗi ngày",
+			markers,
+		});
+		const striking = data.queries
+			.filter((q) => q.position >= 8 && q.position <= 20)
+			.sort((a, b) => b.impressions - a.impressions)
+			.slice(0, 8);
+		$("[data-striking]").innerHTML = striking.length
+			? striking
+					.map(
+						(q, i) =>
+							`<tr style="--i:${i}"><td>${esc(q.query)}</td><td class="num">${fmt.int(q.impressions)}</td><td class="num">${fmt.pos(q.position)}</td></tr>`,
+					)
+					.join("")
+			: '<tr><td colspan="3" class="cms-empty">Chưa có từ khoá ở vị trí 8–20</td></tr>';
+		const top = [...data.queries].sort((a, b) => b.clicks - a.clicks).slice(0, 8);
+		$("[data-topq]").innerHTML = top.length
+			? top
+					.map(
+						(q, i) =>
+							`<tr style="--i:${i}"><td>${esc(q.query)}</td><td class="num">${fmt.int(q.clicks)}</td><td class="num cms-hide-sm">${fmt.pct(q.ctr)}</td><td class="num">${fmt.pos(q.position)}</td></tr>`,
+					)
+					.join("")
+			: '<tr><td colspan="4" class="cms-empty">Chưa có dữ liệu</td></tr>';
+		const low = data.pages
+			.filter((pg) => pg.impressions >= 100 && pg.position <= 15 && pg.ctr < expectedCtr(pg.position) * 0.6)
+			.sort((a, b) => b.impressions - a.impressions)
+			.slice(0, 8);
+		$("[data-lowctr]").innerHTML = low.length
+			? low
+					.map(
+						(pg, i) =>
+							`<tr style="--i:${i}"><td class="font-mono text-xs">${esc(pathOf(pg.page))}</td><td class="num">${fmt.int(pg.impressions)}</td><td class="num">${fmt.pct(pg.ctr)} / ${fmt.pct(expectedCtr(pg.position), 0)}</td></tr>`,
+					)
+					.join("")
+			: '<tr><td colspan="3" class="cms-empty">Không có trang nào CTR thấp bất thường</td></tr>';
+	}
+
+	function renderPerf() {
+		const posts = rows.filter((r) => r.kind === "post" && !r.draft);
+		const gaBy = new Map((ga?.pages ?? []).map((p) => [p.path, p]));
+		const gscBy = new Map((gsc?.pages ?? []).map((p) => [pathOf(p.page), p]));
+		const list = posts
+			.map((r) => {
+				const path = `/posts/${r.slug}/`;
+				return { g: gaBy.get(path), path, r, s: gscBy.get(path) };
+			})
+			.sort((a, b) => (b.g?.views ?? 0) - (a.g?.views ?? 0) || (b.s?.clicks ?? 0) - (a.s?.clicks ?? 0))
+			.slice(0, 12);
+		$("[data-perf]").innerHTML = list
+			.map(
+				({ g, r, s }, i) => `<tr style="--i:${i}" data-href="/admin/edit/?path=${encodeURIComponent(r.path)}">
+				<td>${esc(r.title)}</td>
+				<td class="num">${g ? fmt.int(g.views) : "–"}</td>
+				<td class="num cms-hide-sm">${g?.views ? fmt.pct(Math.min(1, g.readComplete / g.views), 0) : "–"}</td>
+				<td class="num cms-hide-sm">${s ? fmt.int(s.clicks) : "–"}</td>
+				<td class="num cms-hide-sm">${s ? fmt.pos(s.position) : "–"}</td>
+				<td class="num">${scoreBadge(r.score)}</td></tr>`,
+			)
+			.join("");
+		document.querySelectorAll<HTMLElement>("[data-perf] tr[data-href]").forEach((tr) =>
+			tr.addEventListener("click", () => {
+				location.href = tr.dataset.href!;
+			}),
+		);
+	}
+
+	function renderSeo() {
+		const posts = rows.filter((r) => r.kind === "post" && !r.draft);
+		$("[data-seo-count]").textContent = `${posts.length} bài`;
+		if (!posts.length) return;
+		$("[data-seo-avg]").textContent = String(Math.round(posts.reduce((s, r) => s + r.score, 0) / posts.length));
+		// ordinal quality bands: status badges (icon + text), not categorical colours
+		const band = (lo: number, hi: number) => posts.filter((r) => r.score >= lo && r.score < hi).length;
+		$("[data-seo-dist]").innerHTML = [
+			["good", "✓", "Tốt (≥ 80)", band(80, 101)],
+			["warn", "!", "Cần cải thiện (60–79)", band(60, 80)],
+			["poor", "✕", "Kém (< 60)", band(0, 60)],
+		]
+			.map(
+				([lvl, icon, label, n]) =>
+					`<div class="flex items-center justify-between gap-3 text-[13px]"><span class="cms-status ${lvl}"><span>${icon}</span> ${label}</span><b class="text-accent-2 font-mono">${n} bài</b></div>`,
+			)
+			.join("");
+	}
+
+	/* ---------- content quality ---------- */
+	const CHECK_LABELS: Record<string, string> = {
+		alt: "Ảnh thiếu alt",
+		cover: "Ảnh bìa thiếu alt",
+		density: "Nhồi từ khoá",
+		external: "Thiếu link tham khảo",
+		h1: "Có H1 trong nội dung",
+		headings: "Cấu trúc heading chưa tốt",
+		internal: "Thiếu link nội bộ",
+		kw: "Từ khoá chính chưa đặt / chưa phủ",
+		meta: "Meta description chưa tối ưu",
+		read: "Câu quá dài (khó đọc trên mobile)",
+		slug: "Slug chưa chuẩn",
+		tags: "Thiếu tag",
+		title: "Tiêu đề chưa tối ưu",
+		words: "Nội dung mỏng (< 800 từ)",
+	};
+	const monthsSince = (iso: string) => {
+		const t = Date.parse(iso);
+		return Number.isNaN(t) ? 0 : Math.max(0, Math.floor((Date.now() - t) / (30.44 * 86_400_000)));
+	};
+	let sortKey = "score";
+	let sortDir = 1;
+	function renderQuality() {
+		const posts = rows.filter((r) => r.kind === "post" && !r.draft);
+		const val = (r: PostRow): number | string =>
+			({
+				age: monthsSince(r.updated),
+				alt: r.stats.imagesWithoutAlt,
+				internal: r.stats.internalLinks,
+				issues: r.issues,
+				score: r.score,
+				title: r.title.toLowerCase(),
+				words: r.words,
+			})[sortKey] ?? 0;
+		const sorted = [...posts].sort((a, b) => {
+			const x = val(a);
+			const y = val(b);
+			return (x < y ? -1 : x > y ? 1 : 0) * sortDir;
+		});
+		$("[data-quality]").innerHTML = sorted
+			.map((r, i) => {
+				const age = monthsSince(r.updated);
+				const warn = (cond: boolean, text: string) => (cond ? `<span class="cms-status warn"><span>!</span> ${text}</span>` : text);
+				return `<tr style="--i:${Math.min(i, 10)}" data-href="/admin/edit/?path=${encodeURIComponent(r.path)}">
+					<td>${esc(r.title)}</td><td class="num">${scoreBadge(r.score)}</td>
+					<td class="num">${warn(r.words < 800, fmt.int(r.words))}</td>
+					<td class="num cms-hide-sm">${warn(r.stats.internalLinks === 0, String(r.stats.internalLinks))}</td>
+					<td class="num cms-hide-sm">${r.stats.imagesWithoutAlt ? `<span class="cms-status poor"><span>✕</span> ${r.stats.imagesWithoutAlt}</span>` : "0"}</td>
+					<td class="num cms-hide-sm">${warn(age >= 12, age ? `${age} tháng trước` : "tháng này")}</td>
+					<td class="num">${r.issues}</td></tr>`;
+			})
+			.join("");
+		document.querySelectorAll<HTMLElement>("[data-quality] tr[data-href]").forEach((tr) =>
+			tr.addEventListener("click", () => {
+				location.href = tr.dataset.href!;
+			}),
+		);
+		// most common issues across the site
+		const counts = new Map<string, { n: number; titles: string[] }>();
+		for (const r of posts) {
+			for (const c of r.checks) {
+				if (c.level === "ok") continue;
+				const e = counts.get(c.id) ?? { n: 0, titles: [] };
+				e.n++;
+				e.titles.push(r.title);
+				counts.set(c.id, e);
+			}
+		}
+		barList(
+			$("[data-common-issues]"),
+			[...counts.entries()]
+				.sort((a, b) => b[1].n - a[1].n)
+				.slice(0, 8)
+				.map(([id, e]) => ({ display: `${e.n}/${posts.length} bài`, label: CHECK_LABELS[id] ?? id, value: e.n })),
+			{ label: "Lỗi SEO phổ biến", max: posts.length || 1 },
+		);
+		// publishing cadence, last 12 months
+		const now = new Date();
+		const months = Array.from({ length: 12 }, (_, i) => {
+			const d = new Date(now.getFullYear(), now.getMonth() - 11 + i, 1);
+			return { key: `${d.getFullYear()}-${d.getMonth()}`, label: `${d.getMonth() + 1}/${String(d.getFullYear()).slice(2)}`, value: 0 };
+		});
+		for (const r of rows.filter((x) => !x.draft)) {
+			const d = new Date(r.date);
+			const m = months.find((x) => x.key === `${d.getFullYear()}-${d.getMonth()}`);
+			if (m) m.value++;
+		}
+		columnChart($("[data-cadence]"), months, { label: "Số bài xuất bản mỗi tháng" });
+	}
+	document.querySelectorAll<HTMLElement>("[data-quality-table] th[data-sort]").forEach((th) =>
+		th.addEventListener("click", () => {
+			const key = th.dataset.sort!;
+			sortDir = sortKey === key ? -sortDir : key === "title" || key === "score" ? 1 : -1;
+			sortKey = key;
+			document.querySelectorAll("[data-quality-table] th[data-sort]").forEach((x) => x.removeAttribute("aria-sort"));
+			th.setAttribute("aria-sort", sortDir === 1 ? "ascending" : "descending");
+			renderQuality();
+		}),
+	);
+
+	/* ---------- page speed (homepage) ---------- */
+	let psiStrategy: "mobile" | "desktop" = "mobile";
+	async function loadPsi() {
+		const box = $("[data-psi]");
+		box.dataset.loading = "true";
+		try {
+			const r = await api<PsiResult>(`/analytics/psi?url=${encodeURIComponent("https://blog.datnt.work/")}&strategy=${psiStrategy}`);
+			box.innerHTML = psiHtml(r);
+			cachedNote($("[data-psi-meta]"), r.cachedAt);
+		} catch (e) {
+			showError(box, e);
+		} finally {
+			box.dataset.loading = "false";
+		}
+	}
+	document.querySelectorAll<HTMLButtonElement>("[data-psi-tabs] button").forEach((b) =>
+		b.addEventListener("click", () => {
+			psiStrategy = b.dataset.s as "mobile" | "desktop";
+			document.querySelectorAll("[data-psi-tabs] button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+			loadPsi();
+		}),
+	);
+
+	/* ---------- Google index status ---------- */
+	async function loadIndex() {
+		await contentReady;
+		const urls = rows
+			.filter((r) => !r.draft)
+			.map((r) => `https://blog.datnt.work/${r.kind === "note" ? "notes" : "posts"}/${r.slug}/`)
+			.slice(0, 40);
+		if (!urls.length) return;
+		try {
+			const res = await api<{ results: { url: string; verdict: string; coverageState: string; error?: string }[] }>("/analytics/inspect", {
+				body: { urls },
+				method: "POST",
+			});
+			const ok = res.results.filter((r) => r.verdict === "PASS");
+			$("[data-index-count]").textContent = String(ok.length);
+			$("[data-index-total]").textContent = `/ ${res.results.length} URL đã được index`;
+			const bad = res.results.filter((r) => r.verdict !== "PASS");
+			$("[data-index-list]").innerHTML = bad.length
+				? bad
+						.slice(0, 6)
+						.map(
+							(r) => `<li class="flex items-start gap-2"><span class="cms-status ${r.verdict === "ERROR" ? "poor" : "warn"}"><span>${r.verdict === "ERROR" ? "✕" : "!"}</span></span>
+							<span><span class="font-mono">${esc(pathOf(r.url))}</span><br><span class="text-muted">${esc(r.error ?? r.coverageState ?? r.verdict)}</span></span></li>`,
+						)
+						.join("")
+				: '<li><span class="cms-status good"><span>✓</span> Tất cả bài đã được index</span></li>';
+		} catch (e) {
+			const li = document.createElement("li");
+			showError(li, e);
+			$("[data-index-list]").replaceChildren(li);
 		}
 	}
 
-	async function content() {
-		const { files } = await api<{ files: ContentFile[] }>("/content");
-		const rows = toRows(files);
-		const posts = rows.filter((r) => r.kind === "post");
-		const set = (k: string, v: string | number) => {
-			document.querySelector(`[data-kpi="${k}"]`)!.textContent = String(v);
-		};
-		set("posts", posts.length);
-		set("notes", rows.length - posts.length);
-		set("drafts", rows.filter((r) => r.draft).length);
-		set("avg", posts.length ? Math.round(posts.reduce((s, r) => s + r.score, 0) / posts.length) : "–");
-		set("words", rows.reduce((s, r) => s + r.words, 0).toLocaleString("vi-VN"));
-
-		const worst = [...posts].sort((a, b) => a.score - b.score).slice(0, 6);
-		document.querySelector("[data-worst]")!.innerHTML = worst.length
-			? worst
-					.map(
-						(r, i) => `<tr style="--i:${i}" data-href="/admin/edit/?path=${encodeURIComponent(r.path)}">
-							<td>${esc(r.title)}${r.draft ? ' <span class="cms-pill draft">nháp</span>' : ""}</td>
-							<td class="num cms-hide-sm">${r.words}</td><td class="num cms-hide-sm">${r.issues}</td><td class="num">${scoreBadge(r.score)}</td></tr>`,
-					)
-					.join("")
-			: `<tr><td colspan="4" class="cms-empty">Chưa có bài viết</td></tr>`;
-
-		const recent = [...rows].sort((a, b) => ts(b.data.updatedDate ?? b.date) - ts(a.data.updatedDate ?? a.date)).slice(0, 6);
-		document.querySelector("[data-recent]")!.innerHTML = recent
+	/* ---------- AI insights ---------- */
+	type Insight = { title: string; why: string; impact: "high" | "medium" | "low"; page: string };
+	function renderInsights(list: Insight[], meta: string) {
+		const impact = { high: "cao", low: "thấp", medium: "TB" };
+		$("[data-insights]").innerHTML = list
 			.map(
-				(r, i) => `<li style="--i:${i}" class="flex items-center justify-between gap-3"><a class="hover:text-accent-strong min-w-0 truncate" href="/admin/edit/?path=${encodeURIComponent(r.path)}">${esc(r.title)}</a>
-				<span class="text-muted shrink-0 font-mono text-[11px]">${esc(fmtDate(String(r.data.updatedDate ?? r.date)))}</span></li>`,
+				(x) => `<li><b class="text-accent-2">${esc(x.title)}</b> <span class="cms-pill">${impact[x.impact]}</span><br>
+				<span class="text-muted">${esc(x.why)}</span>${x.page ? ` <a class="cms-ai-tag underline" href="${esc(x.page)}" target="_blank">${esc(x.page)}</a>` : ""}</li>`,
 			)
 			.join("");
-		document.querySelectorAll<HTMLElement>("tr[data-href]").forEach((tr) => tr.addEventListener("click", () => (location.href = tr.dataset.href!)));
+		$("[data-ai-meta]").textContent = meta;
+	}
+	try {
+		const saved = JSON.parse(localStorage.getItem("cms:insights") ?? "null") as { list: Insight[]; meta: string } | null;
+		if (saved) renderInsights(saved.list, saved.meta);
+	} catch {}
+	$("[data-insights-btn]").addEventListener("click", async () => {
+		const btn = $<HTMLButtonElement>("[data-insights-btn]");
+		btn.disabled = true;
+		btn.textContent = "Claude đang phân tích… (~30s)";
+		try {
+			const res = await api<{ insights: { insights: Insight[] }; model: string; cachedAt: string }>("/ai/insights", {
+				body: {
+					posts: rows.map((r) => ({ issues: r.issues, path: `/${r.kind === "note" ? "notes" : "posts"}/${r.slug}/`, score: r.score, title: r.title, words: r.words })),
+				},
+				method: "POST",
+			});
+			const meta = `${res.model} · ${new Date(res.cachedAt).toLocaleString("vi-VN")}`;
+			renderInsights(res.insights.insights, meta);
+			try {
+				localStorage.setItem("cms:insights", JSON.stringify({ list: res.insights.insights, meta }));
+			} catch {}
+		} catch (e) {
+			$("[data-insights]").innerHTML = `<li class="list-none text-red-500 -ms-5">${esc((e as Error).message)}</li>`;
+		} finally {
+			btn.disabled = false;
+			btn.textContent = "✦ Phân tích lại";
+		}
+	});
+
+	/* ---------- load ---------- */
+	const contentReady = api<{ files: ContentFile[] }>("/content")
+		.then(({ files }) => {
+			rows = toRows(files);
+			renderSeo();
+			renderQuality();
+		})
+		.catch((e: Error) => {
+			$("[data-perf]").innerHTML = `<tr><td colspan="6" class="cms-empty">${esc(e.message)} · <a class="underline" href="/admin/settings/">Cài đặt</a></td></tr>`;
+		});
+
+	async function load(days: number, fresh: boolean) {
+		const kpis = $("[data-kpis]");
+		kpis.dataset.loading = "true";
+		const q = `days=${days}${fresh ? "&fresh=1" : ""}`;
+		const [gaRes, gscRes] = await Promise.allSettled([api<GaData>(`/analytics/ga?${q}`), api<GscData>(`/analytics/gsc?${q}`), contentReady]);
+		kpis.dataset.loading = "false";
+		if (gaRes.status === "fulfilled") {
+			ga = gaRes.value;
+			renderGa(ga);
+			cachedNote(document.querySelector("[data-cached]"), ga.cachedAt);
+		} else {
+			ga = null;
+			for (const sel of ["[data-chart='users']", "[data-channels]", "[data-devices]"]) showError($(sel), gaRes.reason);
+		}
+		if (gscRes.status === "fulfilled") {
+			gsc = gscRes.value;
+			renderGsc(gsc);
+		} else {
+			gsc = null;
+			showError($("[data-chart='clicks']"), gscRes.reason);
+			const cell = document.createElement("td");
+			cell.colSpan = 3;
+			showError(cell, gscRes.reason);
+			const tr = document.createElement("tr");
+			tr.append(cell);
+			$("[data-striking]").replaceChildren(tr);
+			for (const sel of ["[data-topq]", "[data-lowctr]"]) {
+				const c2 = document.createElement("td");
+				c2.colSpan = 4;
+				showError(c2, gscRes.reason);
+				const tr2 = document.createElement("tr");
+				tr2.append(c2);
+				$(sel).replaceChildren(tr2);
+			}
+		}
+		if (rows.length) renderPerf();
 	}
 
 	setup().catch(() => {});
-	content().catch((e: Error) => {
-		const msg = `<tr><td colspan="4" class="cms-empty">${esc(e.message)} · <a class="underline" href="/admin/settings/">Cài đặt</a></td></tr>`;
-		document.querySelector("[data-worst]")!.innerHTML = msg;
-		document.querySelector("[data-recent]")!.innerHTML = "";
+	loadPsi();
+	loadIndex();
+	initFilters($("[data-filters]"), (days, fresh) => {
+		load(days, fresh);
 	});
 </script>

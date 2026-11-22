@@ -1,0 +1,109 @@
+---
+import AdminLayout from "@/layouts/Admin.astro";
+import { FILTERS_HTML } from "@/lib/dashboard";
+---
+
+<AdminLayout active="traffic" title="Traffic">
+	<div class="cms-top">
+		<h1>Traffic <span class="cms-src align-middle">GA4</span></h1>
+		<span class="sp"></span>
+		<span class="cms-pill ok" data-realtime hidden></span>
+	</div>
+	<div data-filters set:html={FILTERS_HTML} />
+
+	<div class="cms-kpis" data-kpis>
+		<div class="cms-card cms-kpi" data-kpi="users"><small>Người dùng</small><b>–</b><span></span></div>
+		<div class="cms-card cms-kpi" data-kpi="sessions"><small>Phiên</small><b>–</b><span></span></div>
+		<div class="cms-card cms-kpi" data-kpi="views"><small>Lượt xem</small><b>–</b><span></span></div>
+		<div class="cms-card cms-kpi" data-kpi="engagement"><small>Thời gian đọc TB</small><b>–</b><span></span></div>
+		<div class="cms-card cms-kpi" data-kpi="pps"><small>Trang / phiên</small><b>–</b><span></span></div>
+	</div>
+
+	<div class="cms-grid mb-4 grid-cols-1 md:grid-cols-2">
+		<section class="cms-card"><h2>Người dùng mỗi ngày</h2><div data-chart="users"><div class="cms-skeleton"></div></div></section>
+		<section class="cms-card"><h2>Lượt xem mỗi ngày</h2><div data-chart="views"><div class="cms-skeleton"></div></div></section>
+	</div>
+
+	<section class="cms-card mb-4 overflow-x-auto">
+		<h2>Trang được xem nhiều <small>đọc hết = sự kiện read_complete / lượt xem</small></h2>
+		<table class="cms-table">
+			<thead>
+				<tr><th>Trang</th><th class="num">Lượt xem</th><th class="num cms-hide-sm">Người dùng</th><th class="num cms-hide-sm">Đọc TB</th><th class="num">Đọc hết</th></tr>
+			</thead>
+			<tbody data-pages><tr><td colspan="5"><div class="cms-skeleton"></div></td></tr></tbody>
+		</table>
+	</section>
+
+	<div class="cms-grid grid-cols-1 lg:grid-cols-3">
+		<section class="cms-card"><h2>Nguồn truy cập <small>phiên</small></h2><div data-channels></div></section>
+		<section class="cms-card"><h2>Thiết bị</h2><div data-devices></div></section>
+		<section class="cms-card"><h2>Quốc gia</h2><div data-countries></div></section>
+	</div>
+</AdminLayout>
+
+<script>
+	import { api, esc } from "@/lib/cms-client";
+	import { barList, delta, fmt, lineChart, stackedBar } from "@/lib/charts";
+	import { cachedNote, type GaData, initFilters, showError } from "@/lib/dashboard";
+
+	const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
+	const kpi = (id: string, v: string, d: HTMLElement) => {
+		const el = $(`[data-kpi="${id}"]`);
+		el.querySelector("b")!.textContent = v;
+		el.querySelector("span:last-child")!.replaceChildren(d);
+	};
+
+	function render(data: GaData) {
+		const { current: c, previous: p } = data.totals;
+		kpi("users", fmt.int(c.users), delta(c.users, p.users));
+		kpi("sessions", fmt.int(c.sessions), delta(c.sessions, p.sessions));
+		kpi("views", fmt.int(c.views), delta(c.views, p.views));
+		kpi("engagement", fmt.duration(c.avgEngagementSec), delta(c.avgEngagementSec, p.avgEngagementSec));
+		const pps = (t: typeof c) => (t.sessions ? t.views / t.sessions : 0);
+		kpi("pps", pps(c).toFixed(2), delta(pps(c), pps(p)));
+		if (data.realtimeUsers !== null) {
+			const rt = $("[data-realtime]");
+			rt.hidden = false;
+			rt.textContent = `● ${data.realtimeUsers} đang online`;
+		}
+		lineChart($("[data-chart='users']"), [{ name: "Người dùng", points: data.daily.map((d) => ({ x: d.date, y: d.users })) }], { label: "Người dùng mỗi ngày" });
+		lineChart($("[data-chart='views']"), [{ name: "Lượt xem", points: data.daily.map((d) => ({ x: d.date, y: d.views })) }], { label: "Lượt xem mỗi ngày" });
+		$("[data-pages]").innerHTML = data.pages.length
+			? data.pages
+					.slice(0, 40)
+					.map(
+						(pg, i) => `<tr style="--i:${i}"><td><a class="hover:underline" href="${esc(pg.path)}" target="_blank">${esc(pg.path)}</a></td>
+						<td class="num">${fmt.int(pg.views)}</td><td class="num cms-hide-sm">${fmt.int(pg.users)}</td>
+						<td class="num cms-hide-sm">${fmt.duration(pg.avgEngagementSec)}</td>
+						<td class="num">${pg.views && pg.path.startsWith("/posts/") ? fmt.pct(Math.min(1, pg.readComplete / pg.views), 0) : "–"}</td></tr>`,
+					)
+					.join("")
+			: '<tr><td colspan="5" class="cms-empty">Chưa có dữ liệu</td></tr>';
+		barList($("[data-channels]"), data.channels.map((ch) => ({ label: ch.name, value: ch.sessions })), { label: "Phiên theo nguồn" });
+		stackedBar(
+			$("[data-devices]"),
+			data.devices.map((d) => ({ label: { desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" }[d.name] ?? d.name, value: d.users })),
+			{ label: "Người dùng theo thiết bị" },
+		);
+		const total = data.countries.reduce((s, x) => s + x.users, 0) || 1;
+		barList(
+			$("[data-countries]"),
+			data.countries.map((x) => ({ display: `${fmt.int(x.users)} · ${fmt.pct(x.users / total, 0)}`, label: x.name, value: x.users })),
+			{ label: "Người dùng theo quốc gia" },
+		);
+		cachedNote(document.querySelector("[data-cached]"), data.cachedAt);
+	}
+
+	initFilters($("[data-filters]"), async (days, fresh) => {
+		const k = $("[data-kpis]");
+		k.dataset.loading = "true";
+		try {
+			render(await api<GaData>(`/analytics/ga?days=${days}${fresh ? "&fresh=1" : ""}`));
+		} catch (e) {
+			for (const sel of ["[data-chart='users']", "[data-chart='views']", "[data-channels]", "[data-devices]", "[data-countries]"]) showError($(sel), e);
+			$("[data-pages]").innerHTML = "";
+		} finally {
+			k.dataset.loading = "false";
+		}
+	});
+</script>

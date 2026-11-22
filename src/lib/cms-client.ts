@@ -1,6 +1,13 @@
 import { CHECK_SVG } from "@/utils/motion";
 /** Browser-side helpers for the CMS pages. */
-import { analyze, type Frontmatter, parseDoc, slugFromPath } from "./seo";
+import {
+	analyze,
+	type Check,
+	type Frontmatter,
+	parseDoc,
+	type SeoResult,
+	slugFromPath,
+} from "./seo";
 
 export class ApiError extends Error {
 	constructor(
@@ -109,6 +116,10 @@ export interface PostRow {
 	score: number;
 	words: number;
 	issues: number;
+	checks: Check[];
+	stats: SeoResult["stats"];
+	/** last change: updatedDate, else publishDate */
+	updated: string;
 }
 
 export function toRows(files: ContentFile[]): PostRow[] {
@@ -123,7 +134,10 @@ export function toRows(files: ContentFile[]): PostRow[] {
 			issues: result.checks.filter((c) => c.level !== "ok").length,
 			kind: f.path.startsWith("content/notes/") ? "note" : "post",
 			path: f.path,
+			checks: result.checks,
 			score: result.score,
+			stats: result.stats,
+			updated: String(doc.data.updatedDate ?? doc.data.publishDate ?? ""),
 			sha: f.sha,
 			slug,
 			title: String(doc.data.title ?? slug),
