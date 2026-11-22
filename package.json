@@ -16,6 +16,7 @@
 		"format": "prettier -w . --cache"
 	},
 	"dependencies": {
+		"@anthropic-ai/sdk": "^1.12.0",
 		"@astrojs/markdown-satteri": "^0.3.3",
 		"@astrojs/mdx": "7.0.0",
 		"@astrojs/rss": "4.0.18",
@@ -30,7 +31,9 @@
 		"astro-robots-txt": "^1.0.0",
 		"astro-webmanifest": "^1.0.0",
 		"cssnano": "^8.0.2",
+		"dompurify": "^3.4.18",
 		"hastscript": "^9.0.0",
+		"marked": "^18.2.1",
 		"mdast-util-directive": "^3.0.0",
 		"mdast-util-to-markdown": "^2.1.2",
 		"mdast-util-to-string": "^4.0.0",
@@ -38,7 +41,9 @@
 		"satori-html": "^0.3.2",
 		"satteri": "^0.9.4",
 		"sharp": "^0.34.5",
-		"tailwindcss": "^4.3.2"
+		"tailwindcss": "^4.3.2",
+		"yaml": "^2.9.1",
+		"zod": "^4.6.7"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.9",
@@ -46,6 +51,7 @@
 		"@iconify-json/mdi": "^1.2.2",
 		"@pagefind/default-ui": "^1.5.2",
 		"@tailwindcss/typography": "^0.5.20",
+		"@types/dompurify": "^3.2.0",
 		"@types/hast": "^3.0.4",
 		"@types/mdast": "^4.0.4",
 		"@types/node": "^26.0.1",
@@ -55,7 +61,8 @@
 		"prettier-plugin-astro": "0.14.1",
 		"prettier-plugin-tailwindcss": "^0.8.0",
 		"reading-time": "^1.5.0",
-		"typescript": "^6.0.3"
+		"typescript": "^6.0.3",
+		"wrangler": "4.166.0"
 	},
 	"overrides": {
 		"sharp": "^0.34.5"

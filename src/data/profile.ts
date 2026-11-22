@@ -6,6 +6,11 @@
 export const socialLinks = {
 	github: { label: "GitHub", handle: "@datntpro", url: "https://github.com/datntpro" },
 	youtube: { label: "YouTube", handle: "@datntwork", url: "https://www.youtube.com/@datntwork" },
+	linkedin: {
+		label: "LinkedIn",
+		handle: "datngotien",
+		url: "https://www.linkedin.com/in/datngotien",
+	},
 } as const;
 
 /**

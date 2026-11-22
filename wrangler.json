@@ -22,5 +22,11 @@
 			"head_sampling_rate": 1,
 			"persist": true
 		}
-	}
+	},
+	"kv_namespaces": [
+		{
+			"binding": "BLOG_KV"
+		}
+	],
+	"keep_vars": true
 }

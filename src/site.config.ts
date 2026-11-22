@@ -3,7 +3,7 @@ import type { SiteConfig } from "@/types";
 
 export const siteConfig: SiteConfig = {
 	// ! Please remember to replace the following site property with your own domain, used in astro.config.ts
-	url: "https://datntpro.dev/",
+	url: "https://blog.datnt.work/",
 	/*
 		- Used to construct the meta title property found in src/components/BaseHead.astro L:11
 		- The webmanifest name found in astro.config.ts L:42
@@ -16,9 +16,9 @@ export const siteConfig: SiteConfig = {
 	// Used as the default description meta property and webmanifest description
 	description: "Just for note.",
 	// HTML lang property, found in src/layouts/Base.astro L:18 & astro.config.ts L:48
-	lang: "en-US",
+	lang: "vi",
 	// Meta property, found in src/components/BaseHead.astro L:42
-	ogLocale: "en_US",
+	ogLocale: "vi_VN",
 	// Determines whether to show the logo in the templates header
 	showLogo: true,
 	// Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.

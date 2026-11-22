@@ -1,0 +1,82 @@
+---
+import { getImage } from "astro:assets";
+import avatar from "@/assets/avatar.jpg";
+import { socialLinks } from "@/data/profile";
+import { siteConfig } from "@/site.config";
+
+interface Props {
+	/** set on blog posts to emit a BlogPosting node */
+	post?:
+		| {
+				title: string;
+				description: string;
+				publishDate: Date;
+				updatedDate?: Date | undefined;
+				tags: string[];
+				image: string;
+		  }
+		| undefined;
+}
+
+const { post } = Astro.props;
+const site = new URL("/", Astro.site);
+const avatarImg = await getImage({ src: avatar, width: 400, height: 400, format: "jpg" });
+const personId = new URL("/#person", site).href;
+
+const person = {
+	"@id": personId,
+	"@type": "Person",
+	image: new URL(avatarImg.src, site).href,
+	jobTitle: "Security Engineer",
+	knowsAbout: ["Application Security", "DevSecOps", "Web Security"],
+	name: siteConfig.author,
+	sameAs: Object.values(socialLinks).map((l) => l.url),
+	url: site.href,
+};
+
+const graph: Record<string, unknown>[] = [
+	{
+		"@id": new URL("/#website", site).href,
+		"@type": "WebSite",
+		description: siteConfig.description,
+		inLanguage: siteConfig.lang,
+		name: siteConfig.title,
+		publisher: { "@id": personId },
+		url: site.href,
+	},
+	person,
+];
+
+if (post) {
+	const url = new URL(Astro.url.pathname, site).href;
+	graph.push({
+		"@type": "BlogPosting",
+		author: { "@id": personId },
+		dateModified: (post.updatedDate ?? post.publishDate).toISOString(),
+		datePublished: post.publishDate.toISOString(),
+		description: post.description,
+		headline: post.title,
+		image: new URL(post.image, site).href,
+		inLanguage: siteConfig.lang,
+		keywords: post.tags.join(", "),
+		mainEntityOfPage: url,
+		publisher: { "@id": personId },
+		url,
+	});
+	graph.push({
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{ "@type": "ListItem", item: site.href, name: "Home", position: 1 },
+			{ "@type": "ListItem", item: new URL("/posts/", site).href, name: "Blog", position: 2 },
+			{ "@type": "ListItem", item: url, name: post.title, position: 3 },
+		],
+	});
+}
+
+const json = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(
+	/</g,
+	"\\u003c",
+);
+---
+
+<script is:inline set:html={json} type="application/ld+json" />

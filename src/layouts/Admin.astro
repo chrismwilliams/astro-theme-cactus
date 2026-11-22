@@ -1,0 +1,91 @@
+---
+import ThemeProvider from "@/components/ThemeProvider.astro";
+import ThemeToggle from "@/components/ThemeToggle.astro";
+import "@/styles/global.css";
+import "@/styles/admin.css";
+
+interface Props {
+	title: string;
+	active: "overview" | "posts" | "edit" | "settings";
+}
+
+const { title, active } = Astro.props;
+const main = [
+	{ href: "/admin/", icon: "◧", id: "overview", label: "Tổng quan" },
+	{ href: "/admin/posts/", icon: "✎", id: "posts", label: "Bài viết" },
+	{ href: "/admin/edit/", icon: "＋", id: "edit", label: "Viết mới" },
+	{ href: "/admin/settings/", icon: "⚙", id: "settings", label: "Cài đặt" },
+];
+const soon = [
+	{ icon: "↗", label: "Traffic", src: "GA4" },
+	{ icon: "⌕", label: "Search", src: "GSC" },
+	{ icon: "⇅", label: "Rank tracker", src: "" },
+	{ icon: "⚡", label: "Core Web Vitals", src: "" },
+	{ icon: "▶", label: "YouTube", src: "" },
+];
+---
+
+<html lang="vi">
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport" />
+		<meta content="noindex, nofollow" name="robots" />
+		<meta content="no-referrer" name="referrer" />
+		<title>{title} · Dat's CMS</title>
+		<link href="/icon.svg" rel="icon" type="image/svg+xml" />
+		<ThemeProvider />
+	</head>
+	<body class="bg-global-bg text-global-text font-sans antialiased">
+		<div class="cms">
+			<aside class="cms-side" aria-label="CMS">
+				<a class="cms-logo" href="/admin/"><span class="mark">D</span>dat's cms<small>admin</small></a>
+				<nav class="cms-nav cms-nav-main" aria-label="Chính">
+					{
+						main.map((l) => (
+							<a aria-current={active === l.id ? "page" : undefined} href={l.href}>
+								<span aria-hidden="true" class="ic">
+									{l.icon}
+								</span>
+								{l.label}
+							</a>
+						))
+					}
+				</nav>
+				<p class="cms-grp">phân tích · phase 2</p>
+				<nav class="cms-nav" aria-label="Phân tích">
+					{
+						soon.map((l) => (
+							<a aria-disabled="true" href="/admin/settings/#google" title="Kết nối Google ở phase 2">
+								<span aria-hidden="true">{l.icon}</span>
+								{l.label}
+								<span class="soon">{l.src || "sắp có"}</span>
+							</a>
+						))
+					}
+				</nav>
+				<p class="cms-grp">site</p>
+				<nav class="cms-nav" aria-label="Site">
+					<a href="/" target="_blank">↗ Xem blog</a>
+				</nav>
+				<div class="cms-me">
+					<div class="flex items-center justify-between gap-2">
+						<span data-cms-email>…</span>
+						<ThemeToggle />
+					</div>
+					<a class="mt-1 block underline" href="/cdn-cgi/access/logout">Đăng xuất</a>
+				</div>
+			</aside>
+			<main class="cms-main" id="main">
+				<slot />
+			</main>
+		</div>
+		<script>
+			import { api } from "@/lib/cms-client";
+			api<{ email: string }>("/me")
+				.then((me) => {
+					document.querySelectorAll("[data-cms-email]").forEach((el) => (el.textContent = me.email));
+				})
+				.catch(() => {});
+		</script>
+	</body>
+</html>

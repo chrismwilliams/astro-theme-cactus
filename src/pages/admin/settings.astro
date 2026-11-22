@@ -1,0 +1,215 @@
+---
+import AdminLayout from "@/layouts/Admin.astro";
+
+const models = [
+	["claude-opus-5-5", "Claude Opus 5.5 (mặc định, chất lượng cao nhất trong giá)"],
+	["claude-sonnet-5-5", "Claude Sonnet 5.5 (nhanh, rẻ hơn)"],
+	["claude-haiku-5-5", "Claude Haiku 5.5 (rẻ nhất)"],
+];
+---
+
+<AdminLayout active="settings" title="Cài đặt">
+	<div class="cms-top">
+		<h1>Cài đặt</h1>
+		<span class="sp"></span>
+		<button class="btn btn-primary" data-save type="button">Lưu cài đặt</button>
+	</div>
+
+	<section class="cms-card mb-4">
+		<h2>Trạng thái hệ thống</h2>
+		<ul class="cms-checks" data-status-list><li class="warn">Đang kiểm tra…</li></ul>
+		<details class="cms-help mt-3" data-masterkey-help hidden>
+			<summary class="cursor-pointer font-semibold">Cách đặt CMS_MASTER_KEY</summary>
+			<p class="mt-2">Khoá này mã hoá mọi credential bạn nhập ở dưới. Nó phải là <b>Worker secret</b> (không lưu trong KV), nên cần đặt một lần ở Cloudflare:</p>
+			<ol class="mt-1 list-decimal ps-5">
+				<li>Cloudflare dashboard → Workers &amp; Pages → <code>blog</code> → Settings → Variables and Secrets → Add → loại <b>Secret</b>, tên <code>CMS_MASTER_KEY</code>.</li>
+				<li>Giá trị: <button class="underline" data-genkey type="button">tạo khoá ngẫu nhiên</button> <code class="break-all" data-genkey-out></code></li>
+				<li>Deploy lại, rồi tải lại trang này. Đừng đổi khoá sau đó: các credential đã lưu sẽ không giải mã được nữa.</li>
+			</ol>
+		</details>
+	</section>
+
+	<form class="grid grid-cols-1 gap-4" data-form>
+		<section class="cms-card">
+			<h2>Site</h2>
+			<div class="cms-form-grid">
+				<label class="cms-field"><span>Tên miền</span><input data-c="site.url" placeholder="https://blog.datnt.work" /></label>
+			</div>
+		</section>
+
+		<section class="cms-card">
+			<h2>GitHub <small>nơi lưu bài viết</small></h2>
+			<div class="cms-form-grid">
+				<label class="cms-field"><span>Owner</span><input data-c="github.owner" /></label>
+				<label class="cms-field"><span>Repo</span><input data-c="github.repo" /></label>
+				<label class="cms-field"><span>Branch</span><input data-c="github.branch" /></label>
+				<label class="cms-field" style="grid-column: 1 / -1"><span>Fine-grained token <em data-s-hint="githubToken"></em></span>
+					<input autocomplete="off" data-s="githubToken" placeholder="github_pat_…" type="password" /></label>
+			</div>
+			<p class="cms-help mt-2">GitHub → Settings → Developer settings → Fine-grained tokens → chỉ chọn repo <code>blog</code>, quyền <b>Contents: Read and write</b>.</p>
+			<div class="mt-3 flex flex-wrap gap-2"><button class="btn btn-ghost" data-test="github" type="button">Kiểm tra kết nối</button><button class="text-muted text-xs underline" data-clear="githubToken" type="button">xoá token</button></div>
+		</section>
+
+		<section class="cms-card">
+			<h2>AI · Claude qua Cloudflare AI Gateway</h2>
+			<div class="cms-form-grid">
+				<label class="cms-field"><span>Cloudflare Account ID</span><input data-c="ai.accountId" placeholder="32 ký tự" /></label>
+				<label class="cms-field"><span>Gateway ID</span><input data-c="ai.gatewayId" placeholder="vd: blog-ai" /></label>
+				<label class="cms-field"><span>Model</span><select data-c="ai.model">{models.map(([v, l]) => <option value={v}>{l}</option>)}</select></label>
+				<label class="cms-field"><span>Effort</span><select data-c="ai.effort"><option value="low">low · nhanh</option><option value="medium">medium · cân bằng</option><option value="high">high · kỹ nhất</option></select></label>
+				<label class="cms-field"><span>Anthropic API key <em data-s-hint="anthropicApiKey"></em></span>
+					<input autocomplete="off" data-s="anthropicApiKey" placeholder="sk-ant-… (bỏ trống nếu key lưu trong AI Gateway)" type="password" /></label>
+				<label class="cms-field"><span>AI Gateway token <em data-s-hint="aiGatewayToken"></em></span>
+					<input autocomplete="off" data-s="aiGatewayToken" placeholder="chỉ cần nếu gateway bật Authenticated" type="password" /></label>
+			</div>
+			<p class="cms-help mt-2">Cloudflare dashboard → AI → AI Gateway → Create gateway. Request sẽ đi qua <code>gateway.ai.cloudflare.com/v1/&lt;account&gt;/&lt;gateway&gt;/anthropic</code> để có log, cache và giới hạn chi phí.</p>
+			<div class="mt-3 flex flex-wrap gap-2"><button class="btn btn-ghost" data-test="ai" type="button">Gửi thử 1 request</button><button class="text-muted text-xs underline" data-clear="anthropicApiKey" type="button">xoá API key</button></div>
+		</section>
+
+		<section class="cms-card" id="google">
+			<h2>Google · GA4, Search Console, PageSpeed, YouTube <small>dữ liệu dashboard ở phase 2</small></h2>
+			<label class="cms-field"><span>Service account JSON <em data-s-hint="googleServiceAccount"></em></span>
+				<textarea autocomplete="off" data-s="googleServiceAccount" placeholder='Dán nội dung file JSON: {"type": "service_account", …}' rows="4"></textarea></label>
+			<details class="cms-help mt-2">
+				<summary class="cursor-pointer font-semibold">Cách tạo service account</summary>
+				<ol class="mt-1 list-decimal ps-5">
+					<li>Google Cloud Console → tạo project → bật <b>Google Analytics Admin API</b>, <b>Google Analytics Data API</b>, <b>Google Search Console API</b>.</li>
+					<li>IAM &amp; Admin → Service Accounts → Create → Keys → Add key → JSON, dán vào ô trên.</li>
+					<li>GA4 → Admin → Property access management → thêm email service account, quyền <b>Viewer</b>.</li>
+					<li>Search Console → Settings → Users and permissions → thêm email service account, quyền <b>Restricted</b>.</li>
+				</ol>
+			</details>
+			<div class="mt-3 flex flex-wrap items-center gap-2">
+				<button class="btn btn-ghost" data-test="google" type="button">↻ Tải danh sách từ Google</button>
+				<span class="cms-help" data-google-msg></span>
+			</div>
+			<div class="cms-form-grid mt-3">
+				<label class="cms-field"><span>GA4 property</span><select data-c="google.ga4PropertyId" data-pick="ga4"><option value="">— chưa chọn —</option></select></label>
+				<label class="cms-field"><span>Search Console site</span><select data-c="google.gscSiteUrl" data-pick="gsc"><option value="">— chưa chọn —</option></select></label>
+				<label class="cms-field"><span>PageSpeed API key <em data-s-hint="pagespeedApiKey"></em></span><input autocomplete="off" data-s="pagespeedApiKey" type="password" /></label>
+				<label class="cms-field"><span>YouTube Data API key <em data-s-hint="youtubeApiKey"></em></span><input autocomplete="off" data-s="youtubeApiKey" type="password" /></label>
+				<label class="cms-field"><span>Kênh YouTube</span><input data-c="google.youtubeChannel" /></label>
+			</div>
+		</section>
+	</form>
+
+	<p class="cms-help mt-4">Mọi khoá được mã hoá AES-256-GCM trước khi lưu vào Workers KV và không bao giờ gửi ngược về trình duyệt. Để trống một ô khoá nghĩa là giữ nguyên giá trị đã lưu.</p>
+</AdminLayout>
+
+<script>
+	import { api, esc, toast } from "@/lib/cms-client";
+
+	type Config = Record<string, Record<string, string>>;
+	type SecretStatus = Record<string, { set: boolean; hint?: string; updatedAt?: string }>;
+	type Settings = { config: Config; secrets: SecretStatus };
+	type Discovery = { serviceAccount: string; ga4: { property: string; name: string; account: string }[]; searchConsole: { siteUrl: string; permission: string }[]; errors: string[] };
+
+	const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
+	const cfgFields = () => [...document.querySelectorAll<HTMLInputElement | HTMLSelectElement>("[data-c]")];
+
+	function ensureOption(sel: HTMLSelectElement, value: string, label = value) {
+		if (!value || [...sel.options].some((o) => o.value === value)) return;
+		sel.add(new Option(label, value));
+	}
+
+	function applySettings(s: Settings) {
+		for (const el of cfgFields()) {
+			const [sec, key] = el.dataset.c!.split(".") as [string, string];
+			const v = s.config[sec]?.[key] ?? "";
+			if (el instanceof HTMLSelectElement) ensureOption(el, v);
+			el.value = v;
+		}
+		for (const [name, st] of Object.entries(s.secrets)) {
+			const hint = document.querySelector(`[data-s-hint="${name}"]`);
+			if (hint) {
+				hint.textContent = st.set ? `đã lưu ${st.hint ?? ""}` : "chưa có";
+				hint.className = st.set ? "ok" : "warn";
+			}
+			const input = document.querySelector<HTMLInputElement>(`[data-s="${name}"]`);
+			if (input) input.value = "";
+		}
+	}
+
+	async function status() {
+		const me = await api<{ email: string; status: { kv: boolean; masterKey: boolean } }>("/me");
+		const items: [boolean, string][] = [
+			[true, `Cloudflare Access: đăng nhập là ${me.email}`],
+			[me.status.kv, "KV namespace BLOG_KV"],
+			[me.status.masterKey, "Secret CMS_MASTER_KEY"],
+		];
+		$("[data-status-list]").innerHTML = items.map(([ok, l]) => `<li class="${ok ? "ok" : "error"}">${esc(l)}</li>`).join("");
+		$<HTMLDetailsElement>("[data-masterkey-help]").hidden = me.status.masterKey;
+		if (!me.status.masterKey) $<HTMLDetailsElement>("[data-masterkey-help]").open = true;
+	}
+
+	async function save() {
+		const config: Config = {};
+		for (const el of cfgFields()) {
+			const [sec, key] = el.dataset.c!.split(".") as [string, string];
+			(config[sec] ??= {})[key] = el.value;
+		}
+		const secrets: Record<string, string> = {};
+		document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-s]").forEach((el) => {
+			if (el.value.trim()) secrets[el.dataset.s!] = el.value.trim();
+		});
+		const res = await api<Settings>("/settings", { body: { config, secrets }, method: "PUT" });
+		applySettings(res);
+		toast("Đã lưu cài đặt");
+	}
+
+	function fillDiscovery(d: Discovery) {
+		const ga = $<HTMLSelectElement>("[data-pick='ga4']");
+		const gsc = $<HTMLSelectElement>("[data-pick='gsc']");
+		const keepGa = ga.value;
+		const keepGsc = gsc.value;
+		for (const p of d.ga4) ensureOption(ga, p.property, `${p.name} (${p.property}) · ${p.account}`);
+		for (const s of d.searchConsole) ensureOption(gsc, s.siteUrl, `${s.siteUrl} · ${s.permission}`);
+		ga.value = keepGa || d.ga4[0]?.property || "";
+		const auto = d.searchConsole.find((s) => s.siteUrl.includes("datnt.work"));
+		gsc.value = keepGsc && [...gsc.options].some((o) => o.value === keepGsc && o.value) ? keepGsc : auto?.siteUrl ?? d.searchConsole[0]?.siteUrl ?? "";
+		$("[data-google-msg]").innerHTML =
+			`${esc(d.serviceAccount)}: ${d.ga4.length} property GA4, ${d.searchConsole.length} site Search Console.` +
+			(d.errors.length ? `<br><span class="text-red-500">${d.errors.map(esc).join("<br>")}</span>` : "") +
+			(!d.ga4.length && !d.searchConsole.length ? "<br>Chưa thấy gì: nhớ thêm email service account vào GA4 và Search Console." : " Nhớ bấm Lưu cài đặt.");
+	}
+
+	async function test(target: string, btn: HTMLButtonElement) {
+		const label = btn.textContent;
+		btn.disabled = true;
+		btn.textContent = "Đang kiểm tra…";
+		try {
+			await save(); // test what is on screen
+			const res = await api<Record<string, unknown>>("/settings/test", { body: { target }, method: "POST" });
+			if (target === "github") toast(`GitHub OK: ${res.repo}`);
+			if (target === "ai") toast(`AI OK: ${res.model}${res.viaGateway ? " qua AI Gateway" : ""}`);
+			if (target === "google") fillDiscovery(res as unknown as Discovery);
+		} catch (e) {
+			toast((e as Error).message, "error");
+			if (target === "google") $("[data-google-msg]").innerHTML = `<span class="text-red-500">${esc((e as Error).message)}</span>`;
+		} finally {
+			btn.disabled = false;
+			btn.textContent = label;
+		}
+	}
+
+	$("[data-save]").addEventListener("click", () => save().catch((e: Error) => toast(e.message, "error")));
+	document.querySelectorAll<HTMLButtonElement>("[data-test]").forEach((b) => b.addEventListener("click", () => test(b.dataset.test!, b)));
+	document.querySelectorAll<HTMLButtonElement>("[data-clear]").forEach((b) =>
+		b.addEventListener("click", async () => {
+			if (!confirm("Xoá khoá này?")) return;
+			try {
+				applySettings(await api<Settings>("/settings", { body: { secrets: { [b.dataset.clear!]: null } }, method: "PUT" }));
+				toast("Đã xoá");
+			} catch (e) {
+				toast((e as Error).message, "error");
+			}
+		}),
+	);
+	$("[data-genkey]").addEventListener("click", () => {
+		const bytes = crypto.getRandomValues(new Uint8Array(32));
+		$("[data-genkey-out]").textContent = btoa(String.fromCharCode(...bytes));
+	});
+
+	status().catch(() => {});
+	api<Settings>("/settings").then(applySettings).catch((e: Error) => toast(e.message, "error"));
+</script>
