@@ -65,7 +65,7 @@ export interface ReviewInput {
 	searchData?: string;
 }
 
-async function client(env: AdminEnv) {
+export async function claudeClient(env: AdminEnv) {
 	const [config, apiKey, gatewayToken] = await Promise.all([
 		getConfig(env),
 		getSecret(env, "anthropicApiKey"),
@@ -97,7 +97,7 @@ export async function reviewPost(
 ): Promise<{ review: SeoReview; model: string; viaGateway: boolean }> {
 	if (input.body.length > 120_000)
 		throw new HttpError(413, "too_large", "Bài quá dài để phân tích một lần");
-	const { anthropic, config, viaGateway } = await client(env);
+	const { anthropic, config, viaGateway } = await claudeClient(env);
 	const sitePosts = input.sitePosts
 		.slice(0, 200)
 		.map((p) => `- ${p.path} | ${p.title} | ${p.tags.join(", ")}`)
@@ -152,7 +152,7 @@ ${input.body}
 
 /** cheap round trip to check the key / gateway settings */
 export async function testAi(env: AdminEnv) {
-	const { anthropic, config, viaGateway } = await client(env);
+	const { anthropic, config, viaGateway } = await claudeClient(env);
 	try {
 		const res = await anthropic.messages.create({
 			max_tokens: 64,
