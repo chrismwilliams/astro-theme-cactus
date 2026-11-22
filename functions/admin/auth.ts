@@ -36,11 +36,22 @@ function decodePart<T>(part: string): T {
 	return JSON.parse(new TextDecoder().decode(b64urlToBytes(part))) as T;
 }
 
+/** accepts "team", "team.cloudflareaccess.com" or "https://team.cloudflareaccess.com/..." */
 export function normalizeTeamDomain(domain: string): string {
-	return domain
+	const host = domain
+		.trim()
 		.replace(/^https?:\/\//, "")
-		.replace(/\/+$/, "")
+		.replace(/\/.*$/, "")
 		.toLowerCase();
+	return host.includes(".") ? host : `${host}.cloudflareaccess.com`;
+}
+
+/** ACCESS_AUD may list several application AUD tags separated by commas */
+export function parseAudiences(value: string): string[] {
+	return value
+		.split(/[\s,]+/)
+		.map((a) => a.trim())
+		.filter(Boolean);
 }
 
 async function getCerts(team: string, fetcher: typeof fetch, force = false): Promise<Jwk[]> {
@@ -77,7 +88,13 @@ export async function requireAdmin(
 		);
 	}
 	const token = readToken(request);
-	if (!token) throw new HttpError(401, "unauthenticated");
+	if (!token) {
+		throw new HttpError(
+			401,
+			"unauthenticated",
+			"Request tới /api/admin không mang token của Cloudflare Access: đường dẫn /api/admin chưa nằm trong Access application.",
+		);
+	}
 
 	const parts = token.split(".");
 	if (parts.length !== 3) throw new HttpError(401, "invalid_token");
@@ -101,7 +118,13 @@ export async function requireAdmin(
 		keys = await getCerts(team, fetcher, true);
 		jwk = keys.find((k) => k.kid === header.kid);
 	}
-	if (!jwk) throw new HttpError(401, "unknown_key");
+	if (!jwk) {
+		throw new HttpError(
+			401,
+			"unknown_key",
+			"Token được ký bởi team Access khác: kiểm tra ACCESS_TEAM_DOMAIN.",
+		);
+	}
 
 	const key = await crypto.subtle.importKey(
 		"jwk",
@@ -116,22 +139,44 @@ export async function requireAdmin(
 		b64urlToBytes(s),
 		new TextEncoder().encode(`${h}.${p}`),
 	);
-	if (!valid) throw new HttpError(401, "bad_signature");
+	if (!valid)
+		throw new HttpError(
+			401,
+			"bad_signature",
+			"Chữ ký token không hợp lệ: kiểm tra ACCESS_TEAM_DOMAIN.",
+		);
 
 	const nowSec = Math.floor(now / 1000);
 	const audiences = Array.isArray(claims.aud) ? claims.aud : [claims.aud];
-	if (!audiences.includes(env.ACCESS_AUD)) throw new HttpError(401, "wrong_audience");
-	if (claims.iss !== `https://${team}`) throw new HttpError(401, "wrong_issuer");
-	if (!claims.exp || claims.exp < nowSec) throw new HttpError(401, "expired");
+	const allowedAud = parseAudiences(env.ACCESS_AUD);
+	if (!audiences.some((a) => typeof a === "string" && allowedAud.includes(a))) {
+		throw new HttpError(
+			401,
+			"wrong_audience",
+			"Token thuộc Access application khác: ACCESS_AUD phải là Application Audience (AUD) Tag của application bảo vệ /admin và /api/admin (nhiều AUD thì phân cách bằng dấu phẩy).",
+		);
+	}
+	if (normalizeTeamDomain(claims.iss ?? "") !== team) {
+		throw new HttpError(
+			401,
+			"wrong_issuer",
+			"Token do team Access khác cấp: kiểm tra ACCESS_TEAM_DOMAIN.",
+		);
+	}
+	if (!claims.exp || claims.exp < nowSec)
+		throw new HttpError(401, "expired", "Phiên Cloudflare Access đã hết hạn.");
 	if (claims.nbf && claims.nbf > nowSec + 60) throw new HttpError(401, "not_yet_valid");
 
 	const email = (claims.email ?? "").toLowerCase();
-	if (!email) throw new HttpError(403, "no_email");
+	if (!email)
+		throw new HttpError(403, "no_email", "Token không có email (service token chưa được hỗ trợ).");
 	const allow = (env.ADMIN_EMAILS ?? "")
 		.split(",")
 		.map((e) => e.trim().toLowerCase())
 		.filter(Boolean);
-	if (allow.length && !allow.includes(email)) throw new HttpError(403, "not_allowed");
+	if (allow.length && !allow.includes(email)) {
+		throw new HttpError(403, "not_allowed", `${email} không có trong ADMIN_EMAILS.`);
+	}
 	return { email };
 }
 
