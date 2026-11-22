@@ -204,7 +204,7 @@ const sevClass = {
 						</div>
 					</article>
 					{latest.length > 0 && (
-						<ul class="flex flex-col gap-3" role="list">
+						<ul class="flex flex-col gap-3" data-reveal-stagger role="list">
 							{latest.map((p) => (
 								<li>
 									<PostCard post={p} />
@@ -223,7 +223,7 @@ const sevClass = {
 			<h2 class="text-accent-2 text-[clamp(1.5rem,6vw,1.9rem)] font-bold tracking-tight" id="focus-h">Mình đang tập trung vào</h2>
 			<span class="eyebrow hidden sm:inline">focus areas</span>
 		</div>
-		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 [&>*:last-child:nth-child(odd)]:sm:col-span-2 [&>*:last-child:nth-child(odd)]:lg:col-span-1">
+		<div data-reveal-stagger class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 [&>*:last-child:nth-child(odd)]:sm:col-span-2 [&>*:last-child:nth-child(odd)]:lg:col-span-1">
 			{
 				focusAreas.map((f) => {
 					const n = tagCounts.get(f.tag) ?? 0;
@@ -249,10 +249,10 @@ const sevClass = {
 	</section>
 
 	<!-- youtube -->
-	<div class="mb-16 sm:mb-20"><YouTubeSection /></div>
+	<div class="mb-16 sm:mb-20" data-reveal><YouTubeSection /></div>
 
 	<!-- threat model + toolbox -->
-	<div class="mb-16 grid grid-cols-1 gap-4 sm:mb-20 md:grid-cols-2">
+	<div class="mb-16 grid grid-cols-1 gap-4 sm:mb-20 md:grid-cols-2" data-reveal-stagger>
 		<section aria-label="Threat model" class="card p-6">
 			<p class="eyebrow">threat model: me</p>
 			<table class="mt-2 w-full border-collapse text-sm">
@@ -295,7 +295,7 @@ const sevClass = {
 	</div>
 
 	<!-- contact -->
-	<section aria-labelledby="contact-h" class="card grid grid-cols-1 overflow-hidden md:grid-cols-[1.2fr_1fr] [&>*]:min-w-0">
+	<section data-reveal aria-labelledby="contact-h" class="card grid grid-cols-1 overflow-hidden md:grid-cols-[1.2fr_1fr] [&>*]:min-w-0">
 		<div class="p-5 sm:p-10">
 			<p class="eyebrow">get in touch</p>
 			<h2 class="text-accent-2 mt-2.5 mb-3 text-[clamp(1.75rem,7vw,2.25rem)] leading-tight font-bold tracking-tight" id="contact-h">

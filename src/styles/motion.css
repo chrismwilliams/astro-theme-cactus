@@ -1,0 +1,213 @@
+/*
+ * Motion tokens and shared motion rules.
+ * Values follow the sourced specs at motion-ui.200lab.io (durations, curves,
+ * springs read from Material, Radix, Sonner, Ant Design, Motion...).
+ *
+ * Rules of thumb used across the site:
+ * - press / hover feedback 100-150 ms, small elements 150-250 ms,
+ *   panels 200-300 ms, large surfaces 300-400 ms
+ * - exits about 2/3 of the enter; entering = ease-out, leaving = ease-in,
+ *   moving within the screen = ease-in-out
+ * - scale from 0.9 or above, never from 0; transform-origin at the trigger
+ * - animate transform / opacity only; springs bounce <= 0.3
+ * - under prefers-reduced-motion: no movement, state changes stay visible
+ */
+:root {
+	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+	--ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+	--ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+	/* spring(duration 350 ms, bounce 0.3): stiffness 322.3, damping 25.13, settles in 550 ms, 4.6% overshoot */
+	--spring-pop: linear(
+		0,
+		0.0532,
+		0.1779,
+		0.334,
+		0.4941,
+		0.641,
+		0.7655,
+		0.8635,
+		0.9371,
+		0.9881,
+		1.0203,
+		1.038,
+		1.045,
+		1.0449,
+		1.0406,
+		1.0339,
+		1.0266,
+		1.0195,
+		1.0133,
+		1.0082,
+		1.0043,
+		1.0015,
+		0.9997,
+		0.9986,
+		0.998,
+		0.9979,
+		0.998,
+		0.9983,
+		1
+	);
+	--spring-pop-duration: 550ms;
+	/* spring(duration 500 ms, bounce 0.15): settles in 750 ms, used for sheets and number rolls */
+	--spring-soft: linear(
+		0,
+		0.0473,
+		0.1557,
+		0.2892,
+		0.4246,
+		0.5507,
+		0.6603,
+		0.7507,
+		0.8233,
+		0.8794,
+		0.9213,
+		0.9515,
+		0.9728,
+		0.9871,
+		0.9963,
+		1.0018,
+		1.0047,
+		1.006,
+		1.0062,
+		1.0057,
+		1.005,
+		1.0042,
+		1.0034,
+		1.0026,
+		1.0019,
+		1.0014,
+		1.001,
+		1.0007,
+		1
+	);
+	--spring-soft-duration: 750ms;
+	--dur-press: 120ms;
+	--dur-hover: 150ms;
+	--dur-enter: 220ms;
+	--dur-exit: 150ms;
+	--dur-panel: 300ms;
+	--dur-toast: 400ms;
+}
+
+/* ---------- press feedback: sink 0.97 in 120 ms, spring back on release ---------- */
+:where(.btn, .chip, .icon-btn, .press) {
+	transition:
+		transform var(--spring-pop-duration) var(--spring-pop),
+		background-color var(--dur-hover) var(--ease-out),
+		border-color var(--dur-hover) var(--ease-out),
+		color var(--dur-hover) var(--ease-out),
+		box-shadow var(--dur-hover) var(--ease-out);
+}
+:where(.btn, .chip, .icon-btn, .press):active:not(:disabled) {
+	transform: scale(0.97);
+	transition-duration: var(--dur-press);
+	transition-timing-function: var(--ease-out);
+}
+
+/* ---------- reveal on scroll (only for content that starts below the fold) ---------- */
+[data-reveal-pending] {
+	opacity: 0;
+	transform: translateY(12px);
+}
+[data-revealed] {
+	animation: motion-reveal 450ms var(--ease-out) both;
+	animation-delay: var(--reveal-delay, 0ms);
+}
+@keyframes motion-reveal {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* ---------- validation shake: 400 ms horizontal "no" ---------- */
+.motion-shake {
+	animation: motion-shake 400ms var(--ease-out);
+}
+@keyframes motion-shake {
+	0%,
+	100% {
+		transform: none;
+	}
+	15% {
+		transform: translateX(-6px);
+	}
+	35% {
+		transform: translateX(5px);
+	}
+	55% {
+		transform: translateX(-3px);
+	}
+	75% {
+		transform: translateX(2px);
+	}
+}
+
+/* ---------- popovers / menus: grow from 0.9 at the trigger, enter 220 ms, exit 150 ms ---------- */
+@keyframes motion-pop-in {
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+}
+@keyframes motion-pop-out {
+	to {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+}
+
+/* ---------- toasts: up from 100% of their height in 400 ms, out in 200 ms ---------- */
+@keyframes motion-toast-in {
+	from {
+		opacity: 0;
+		transform: translateY(100%);
+	}
+}
+@keyframes motion-toast-out {
+	to {
+		opacity: 0;
+		transform: translateY(8px) scale(0.95);
+	}
+}
+
+/* ---------- check mark: ring 300 ms, then tick 170 ms ---------- */
+.motion-check circle {
+	stroke-dasharray: 63;
+	stroke-dashoffset: 63;
+	animation: motion-draw 300ms var(--ease-out) forwards;
+}
+.motion-check path {
+	stroke-dasharray: 14;
+	stroke-dashoffset: 14;
+	animation: motion-draw 170ms var(--ease-out) 300ms forwards;
+}
+@keyframes motion-draw {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+/* ---------- reduced motion: replace movement with an instant change ---------- */
+@media (prefers-reduced-motion: reduce) {
+	/* biome-ignore-start lint/complexity/noImportantStyles: reduced motion must win over every other animation */
+	*,
+	*::before,
+	*::after {
+		animation-duration: 1ms !important;
+		animation-delay: 0ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 1ms !important;
+		scroll-behavior: auto !important;
+	}
+	/* biome-ignore-end lint/complexity/noImportantStyles: end */
+	[data-reveal-pending] {
+		opacity: 1;
+		transform: none;
+	}
+}

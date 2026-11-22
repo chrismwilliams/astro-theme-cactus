@@ -5,6 +5,7 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";
+@import "./motion.css";
 
 /* tailwind to ignore satori generated og-image */
 @source not "../pages/og-image";

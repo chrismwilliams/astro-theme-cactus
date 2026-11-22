@@ -53,7 +53,7 @@ import AdminLayout from "@/layouts/Admin.astro";
 		body.innerHTML = list.length
 			? list
 					.map(
-						(r) => `<tr data-href="/admin/edit/?path=${encodeURIComponent(r.path)}">
+						(r, i) => `<tr style="--i:${i}" data-href="/admin/edit/?path=${encodeURIComponent(r.path)}">
 				<td class="ps-4"><div class="text-accent-2 font-semibold">${esc(r.title)}</div>
 					<div class="text-muted mt-0.5 flex flex-wrap gap-x-2 font-mono text-[11px]">
 						${r.draft ? '<span class="cms-pill draft">nháp</span>' : `<a class="hover:underline" href="${esc(siteUrlFor(r))}" target="_blank" onclick="event.stopPropagation()">${esc(siteUrlFor(r))} ↗</a>`}

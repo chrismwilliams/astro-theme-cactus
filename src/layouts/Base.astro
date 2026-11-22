@@ -45,6 +45,10 @@ const {
 			<slot />
 		</main>
 		<Footer />
+		<script>
+			import { initReveal } from "@/utils/motion";
+			initReveal();
+		</script>
 		<script is:inline type="speculationrules">
 			{
 				"prefetch": [

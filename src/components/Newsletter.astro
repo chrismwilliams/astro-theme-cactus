@@ -29,3 +29,11 @@ const { variant = "sidebar" } = Astro.props;
 		<button class="btn btn-primary" type="submit">Subscribe</button>
 	</form>
 </section>
+
+<script>
+	import { shake } from "@/utils/motion";
+	// "no" shake on the field the browser rejected
+	document.querySelectorAll<HTMLFormElement>("[data-newsletter-form]").forEach((form) => {
+		form.querySelector("input")?.addEventListener("invalid", (e) => shake(e.target as Element));
+	});
+</script>

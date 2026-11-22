@@ -29,6 +29,7 @@ const { title } = Astro.props;
 </selection-popover>
 
 <script>
+	import { popIn, popOut } from "@/utils/motion";
 	import { copyText } from "@/utils/reader";
 
 	class SelectionPopover extends HTMLElement {
@@ -40,9 +41,15 @@ const { title } = Astro.props;
 			if (!scope) return;
 			const title = this.dataset.title ?? document.title;
 
+			let open = false;
 			const hide = () => {
-				pop.classList.add("hidden");
-				pop.classList.remove("flex");
+				if (!open) return;
+				open = false;
+				popOut(pop, () => {
+					if (open) return;
+					pop.classList.add("hidden");
+					pop.classList.remove("flex");
+				});
 			};
 
 			const show = () => {
@@ -59,10 +66,15 @@ const { title } = Astro.props;
 				const rect = range.getBoundingClientRect();
 				pop.classList.remove("hidden");
 				pop.classList.add("flex");
+				const wasOpen = open;
+				open = true;
 				const w = pop.offsetWidth;
 				const left = Math.max(8, Math.min(window.innerWidth - w - 8, rect.left + rect.width / 2 - w / 2));
 				pop.style.left = `${left + window.scrollX}px`;
-				pop.style.top = `${rect.top + window.scrollY - pop.offsetHeight - 10}px`;
+				// above the selection when there is room, otherwise below it
+				const above = rect.top - pop.offsetHeight - 10 > 8;
+				pop.style.top = `${(above ? rect.top - pop.offsetHeight - 10 : rect.bottom + 10) + window.scrollY}px`;
+				if (!wasOpen) popIn(pop, above ? "bottom center" : "top center");
 			};
 
 			const deepLink = () => {

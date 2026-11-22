@@ -113,7 +113,7 @@ const railBtn =
 								</h2>
 								<span class="eyebrow">cùng chủ đề</span>
 							</div>
-							<ul class="space-y-3.5" role="list">
+							<ul class="space-y-3.5" data-reveal-stagger role="list">
 								{related.map((p) => (
 									<li>
 										<PostCard post={p} />
@@ -146,7 +146,7 @@ const railBtn =
 
 	<!-- mobile dock -->
 	<div
-		class="post-dock border-line bg-surface/90 shadow-card fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 flex h-14 items-center justify-around rounded-2xl border backdrop-blur-md transition-transform duration-300 data-[hidden=true]:translate-y-24 lg:hidden"
+		class="post-dock border-line bg-surface/90 shadow-card fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 flex h-14 items-center justify-around rounded-2xl border backdrop-blur-md transition-transform duration-300 ease-[var(--ease-in-out)] data-[hidden=true]:translate-y-24 lg:hidden"
 		data-dock
 	>
 		<Reactions limit={2} postId={post.id} variant="dock" />
@@ -172,7 +172,7 @@ const railBtn =
 				class="toc-sheet bg-surface text-global-text border-line fixed inset-x-0 top-auto bottom-0 m-0 max-h-[70vh] w-full max-w-none overflow-y-auto rounded-t-3xl border-t p-5 pt-3 backdrop:bg-black/40 lg:hidden"
 				data-toc-sheet
 			>
-				<div aria-hidden="true" class="bg-line mx-auto mb-4 h-1 w-10 rounded-full" />
+				<div aria-hidden="true" class="-mx-5 -mt-3 mb-1 flex h-11 cursor-grab touch-none items-center justify-center"><span class="bg-line h-1.5 w-12 rounded-full"></span></div>
 				<TOC headings={headings} />
 				<div class="mt-5 flex gap-2">
 					<button class="icon-btn font-mono text-xs font-semibold" data-font="-1" type="button">A−</button>
@@ -195,6 +195,7 @@ const railBtn =
 </BaseLayout>
 
 <script>
+	import { sheetIn, sheetOut, springBack } from "@/utils/motion";
 	import { setProgress, sharePage } from "@/utils/reader";
 
 	const root = document.getElementById("post-root")!;
@@ -308,14 +309,68 @@ const railBtn =
 		}
 	});
 
-	/* ---------- mobile TOC sheet ---------- */
+	/* ---------- mobile TOC sheet: spring in, drag down to dismiss ---------- */
 	const sheet = document.querySelector<HTMLDialogElement>("[data-toc-sheet]");
 	if (sheet) {
-		document.querySelector("[data-toc-open]")?.addEventListener("click", () => sheet.showModal());
-		sheet.querySelector("[data-toc-close]")?.addEventListener("click", () => sheet.close());
-		sheet.addEventListener("click", (e) => {
-			if (e.target === sheet) sheet.close();
-			if ((e.target as HTMLElement).closest("a")) sheet.close();
+		let closing = false;
+		const close = (from = 0) => {
+			if (closing || !sheet.open) return;
+			closing = true;
+			sheetOut(sheet, from, () => {
+				sheet.close();
+				sheet.style.transform = "";
+				closing = false;
+			});
+		};
+		document.querySelector("[data-toc-open]")?.addEventListener("click", () => {
+			sheet.showModal();
+			sheetIn(sheet);
 		});
+		sheet.querySelector("[data-toc-close]")?.addEventListener("click", () => close());
+		sheet.addEventListener("cancel", (e) => {
+			e.preventDefault();
+			close();
+		});
+		sheet.addEventListener("click", (e) => {
+			if (e.target === sheet || (e.target as HTMLElement).closest("a")) close();
+		});
+
+		// drag the handle area down; decide by distance or by flick velocity
+		let startY = 0;
+		let lastY = 0;
+		let lastT = 0;
+		let velocity = 0;
+		let dragging = false;
+		sheet.addEventListener("pointerdown", (e) => {
+			const fromTop = e.clientY - sheet.getBoundingClientRect().top;
+			if (fromTop > 48 || e.pointerType === "mouse") return;
+			dragging = true;
+			startY = lastY = e.clientY;
+			lastT = e.timeStamp;
+			velocity = 0;
+			try {
+				sheet.setPointerCapture(e.pointerId);
+			} catch {
+				/* pointer already released */
+			}
+		});
+		sheet.addEventListener("pointermove", (e) => {
+			if (!dragging) return;
+			const dy = Math.max(0, e.clientY - startY);
+			velocity = (e.clientY - lastY) / Math.max(1, e.timeStamp - lastT);
+			lastY = e.clientY;
+			lastT = e.timeStamp;
+			sheet.style.transform = `translateY(${dy}px)`;
+		});
+		const endDrag = () => {
+			if (!dragging) return;
+			dragging = false;
+			const dy = Math.max(0, lastY - startY);
+			sheet.style.transform = "";
+			if (dy > sheet.offsetHeight * 0.3 || velocity > 0.5) close(dy);
+			else if (dy > 0) springBack(sheet, dy);
+		};
+		sheet.addEventListener("pointerup", endDrag);
+		sheet.addEventListener("pointercancel", endDrag);
 	}
 </script>

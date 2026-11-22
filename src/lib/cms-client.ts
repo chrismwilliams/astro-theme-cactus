@@ -1,3 +1,4 @@
+import { CHECK_SVG } from "@/utils/motion";
 /** Browser-side helpers for the CMS pages. */
 import { analyze, type Frontmatter, parseDoc, slugFromPath } from "./seo";
 
@@ -57,9 +58,16 @@ export function toast(message: string, kind: "ok" | "error" = "ok") {
 	}
 	const el = document.createElement("div");
 	el.className = `cms-toast-item ${kind}`;
-	el.textContent = message;
+	el.innerHTML = kind === "ok" ? CHECK_SVG : "";
+	el.append(message);
 	region.append(el);
-	setTimeout(() => el.remove(), kind === "error" ? 6000 : 2800);
+	setTimeout(
+		() => {
+			el.classList.add("leaving");
+			el.addEventListener("animationend", () => el.remove(), { once: true });
+		},
+		kind === "error" ? 6000 : 2800,
+	);
 }
 
 const AUTH_TITLES: Record<string, string> = {
