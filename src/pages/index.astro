@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import { Icon } from "astro-icon/components";
+import avatar from "@/assets/avatar.jpg";
 import PostCard from "@/components/blog/PostCard.astro";
 import FormattedDate from "@/components/FormattedDate.astro";
 import Terminal from "@/components/Terminal.astro";
@@ -90,15 +91,26 @@ const sevClass = {
 					<span class="absolute start-[18px] top-3.5 font-mono text-[11px] font-semibold tracking-[0.18em] text-teal-100">
 						ACCESS BADGE
 					</span>
-					<span class="absolute end-[18px] top-3.5 font-mono text-[11px] text-teal-100/80">ID · DAT-0x01</span>
+					<span class="absolute end-[18px] top-3.5 font-mono text-[11px] text-teal-100/80 max-[359px]:hidden">ID · DAT-0x01</span>
 				</div>
 				<div
-					aria-hidden="true"
-					class="bg-accent-2 text-accent dark:bg-accent-soft border-surface absolute start-[22px] top-[70px] grid h-[78px] w-[78px] place-items-center rounded-[18px] border-4 font-mono text-[34px] font-extrabold"
+					class="border-surface bg-surface-2 absolute start-[22px] top-[56px] h-[104px] w-[104px] overflow-hidden rounded-[22px] border-4 shadow-lg"
 				>
-					D
+					<Image
+						alt={`Ảnh chân dung ${siteConfig.author}`}
+						class="h-full w-full object-cover"
+						height={208}
+						loading="eager"
+						src={avatar}
+						width={208}
+					/>
+					<span
+						aria-hidden="true"
+						class="bg-accent border-surface absolute end-1 bottom-1 h-3.5 w-3.5 rounded-full border-2"
+						title="online"
+					></span>
 				</div>
-				<div class="px-[22px] pt-[52px] pb-5">
+				<div class="px-[22px] pt-[72px] pb-5">
 					<p class="text-accent-2 text-xl font-bold">{siteConfig.author}</p>
 					<p class="text-muted font-mono text-[13px]">{socialLinks.github.handle}</p>
 					<dl class="mt-4 grid grid-cols-[auto_1fr] gap-x-3.5 gap-y-1.5 font-mono text-xs">
