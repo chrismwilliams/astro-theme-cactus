@@ -101,7 +101,7 @@ import AdminLayout from "@/layouts/Admin.astro";
 		document.querySelector("[data-worst]")!.innerHTML = worst.length
 			? worst
 					.map(
-						(r) => `<tr data-href="/admin/edit/?path=${encodeURIComponent(r.path)}">
+						(r, i) => `<tr style="--i:${i}" data-href="/admin/edit/?path=${encodeURIComponent(r.path)}">
 							<td>${esc(r.title)}${r.draft ? ' <span class="cms-pill draft">nháp</span>' : ""}</td>
 							<td class="num cms-hide-sm">${r.words}</td><td class="num cms-hide-sm">${r.issues}</td><td class="num">${scoreBadge(r.score)}</td></tr>`,
 					)
@@ -111,7 +111,7 @@ import AdminLayout from "@/layouts/Admin.astro";
 		const recent = [...rows].sort((a, b) => ts(b.data.updatedDate ?? b.date) - ts(a.data.updatedDate ?? a.date)).slice(0, 6);
 		document.querySelector("[data-recent]")!.innerHTML = recent
 			.map(
-				(r) => `<li class="flex items-center justify-between gap-3"><a class="hover:text-accent-strong min-w-0 truncate" href="/admin/edit/?path=${encodeURIComponent(r.path)}">${esc(r.title)}</a>
+				(r, i) => `<li style="--i:${i}" class="flex items-center justify-between gap-3"><a class="hover:text-accent-strong min-w-0 truncate" href="/admin/edit/?path=${encodeURIComponent(r.path)}">${esc(r.title)}</a>
 				<span class="text-muted shrink-0 font-mono text-[11px]">${esc(fmtDate(String(r.data.updatedDate ?? r.date)))}</span></li>`,
 			)
 			.join("");

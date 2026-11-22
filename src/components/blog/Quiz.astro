@@ -35,11 +35,11 @@ const { id, question, options, answer, explain } = Astro.props;
 				>
 					<span
 						aria-hidden="true"
-						class="bg-accent/12 absolute inset-y-0 start-0 w-0 transition-[width] duration-500"
+						class="bg-accent/12 absolute inset-0 origin-left scale-x-0 transition-transform duration-500 ease-[var(--ease-out)] rtl:origin-right"
 						data-bar
 					/>
 					<span class="relative font-mono">{opt}</span>
-					<span class="text-muted relative shrink-0 font-mono text-xs" data-pct />
+					<span class="text-muted relative inline-block shrink-0 font-mono text-xs" data-pct />
 				</button>
 			))
 		}
@@ -52,6 +52,8 @@ const { id, question, options, answer, explain } = Astro.props;
 </blog-quiz>
 
 <script>
+	import { celebrate, shake } from "@/utils/motion";
+
 	class BlogQuiz extends HTMLElement {
 		connectedCallback() {
 			const id = this.dataset.quizId!;
@@ -73,7 +75,7 @@ const { id, question, options, answer, explain } = Astro.props;
 					const bar = b.querySelector<HTMLElement>("[data-bar]")!;
 					if (total > 0 && counts) {
 						const pct = Math.round(((counts[i] ?? 0) / total) * 100);
-						bar.style.width = `${pct}%`;
+						bar.style.transform = `scaleX(${pct / 100})`;
 						pctEl.textContent = `${i === answer ? "✓ " : ""}${pct}%`;
 					} else {
 						pctEl.textContent = i === answer ? "✓" : i === picked && answer !== null ? "✗" : "";
@@ -102,6 +104,10 @@ const { id, question, options, answer, explain } = Astro.props;
 						localStorage.setItem(storeKey, String(i));
 					} catch {}
 					reveal(i, null);
+					if (answer !== null) {
+						if (i === answer) celebrate(b.querySelector<HTMLElement>("[data-pct]") ?? b);
+						else shake(b);
+					}
 					try {
 						const res = await fetch("/api/quiz", {
 							body: JSON.stringify({ choice: i, id, options: buttons.length }),

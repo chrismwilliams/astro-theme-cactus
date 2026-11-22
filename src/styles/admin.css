@@ -381,6 +381,13 @@
 	}
 }
 .cms-toast-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	animation: motion-toast-in var(--dur-toast) ease both;
+	transition:
+		transform var(--dur-toast) var(--ease-out),
+		opacity var(--dur-toast) var(--ease-out);
 	padding: 9px 14px;
 	border-radius: 12px;
 	background: var(--color-accent-2);
@@ -453,4 +460,38 @@
 	.cms-hide-sm {
 		display: none;
 	}
+}
+
+/* ---------- motion ---------- */
+/* older toasts step back instead of vanishing */
+.cms-toast-item:not(:last-child) {
+	opacity: 0.75;
+	transform: translateY(-2px) scale(0.95);
+}
+.cms-toast-item.leaving {
+	animation: motion-toast-out 200ms var(--ease-in) forwards;
+}
+/* loaded rows replace the skeleton: fade in, 30 ms apart, capped at 300 ms */
+:is([data-rows], [data-worst], [data-recent]) > * {
+	animation: cms-row-in 250ms var(--ease-out) both;
+	animation-delay: min(calc(var(--i, 0) * 30ms), 300ms);
+}
+@keyframes cms-row-in {
+	from {
+		opacity: 0;
+		transform: translateY(4px);
+	}
+}
+[data-ai-out] > * {
+	animation: motion-reveal 450ms var(--ease-out) both;
+}
+[data-ai-out] > :nth-child(n + 2) {
+	animation-delay: 60ms;
+}
+[data-ai-out] > :nth-child(n + 4) {
+	animation-delay: 120ms;
+}
+.cms-banner {
+	animation: motion-pop-in var(--dur-enter) var(--ease-out);
+	transform-origin: top center;
 }

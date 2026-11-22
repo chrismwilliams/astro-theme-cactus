@@ -136,6 +136,7 @@ import AdminLayout from "@/layouts/Admin.astro";
 	import { marked } from "marked";
 	import { ApiError, api, type ContentFile, esc, toast } from "@/lib/cms-client";
 	import { analyze, type Frontmatter, parseDoc, serializeDoc, slugFromPath } from "@/lib/seo";
+	import { shake } from "@/utils/motion";
 
 	type Review = {
 		score: number;
@@ -313,10 +314,19 @@ import AdminLayout from "@/layouts/Admin.astro";
 
 	async function save(mode: "draft" | "publish") {
 		const data = currentData();
-		if (!data.title) return toast("Cần có tiêu đề", "error");
-		if (kindSelect.value === "post" && !data.description) return toast("Bài viết cần mô tả (meta description)", "error");
+		if (!data.title) {
+			shake(field("title"));
+			return toast("Cần có tiêu đề", "error");
+		}
+		if (kindSelect.value === "post" && !data.description) {
+			shake(field("description"));
+			return toast("Bài viết cần mô tả (meta description)", "error");
+		}
 		const target = currentPath();
-		if (!target) return toast("Cần có slug", "error");
+		if (!target) {
+			shake(slugInput);
+			return toast("Cần có slug", "error");
+		}
 		data.draft = mode === "draft";
 		if (sha && mode === "publish" && !extra.draft && extra.publishDate) data.updatedDate = today();
 		const content = serializeDoc({ body: body.value, data });

@@ -43,10 +43,10 @@
 				<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
 			</svg>
 		</button>
-		<div
-			class="border-accent/30 hidden border-t px-5 py-4 text-[15px] leading-relaxed"
-			id="ai-summary-result"
-		>
+		<div class="ai-acc" data-open="false">
+			<div class="min-h-0 overflow-hidden">
+				<div class="border-accent/30 border-t px-5 py-4 text-[15px] leading-relaxed" id="ai-summary-result"></div>
+			</div>
 		</div>
 	</div>
 </ai-summary>
@@ -60,12 +60,13 @@
 			const label = this.querySelector<HTMLSpanElement>("#ai-summary-label")!;
 			const spinner = this.querySelector<SVGElement>("#ai-summary-spinner")!;
 			const result = this.querySelector<HTMLDivElement>("#ai-summary-result")!;
+			const acc = this.querySelector<HTMLDivElement>(".ai-acc")!;
 			const hint = this.querySelector<HTMLSpanElement>("#ai-summary-hint")!;
 
 			btn.addEventListener("click", async () => {
 				// Toggle visibility if already generated
 				if (this.#generated) {
-					result.classList.toggle("hidden");
+					acc.dataset.open = String(acc.dataset.open !== "true");
 					return;
 				}
 
@@ -96,12 +97,12 @@
 					if (data.error) throw new Error(data.error);
 
 					result.textContent = data.summary ?? "Không thể tạo tóm tắt.";
-					result.classList.remove("hidden");
+					acc.dataset.open = "true";
 					this.#generated = true;
 					label.textContent = "TL;DR — tóm tắt bằng AI";
 				} catch (err) {
 					result.textContent = "⚠️ Lỗi khi tóm tắt. Vui lòng thử lại sau.";
-					result.classList.remove("hidden");
+					acc.dataset.open = "true";
 					console.error("AI Summary error:", err);
 					label.textContent = "TL;DR — tóm tắt bằng AI";
 				} finally {
@@ -114,3 +115,15 @@
 
 	customElements.define("ai-summary", AiSummary);
 </script>
+
+<style>
+	/* accordion: animate the grid row so the browser supplies the real height */
+	.ai-acc {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows var(--dur-panel) var(--ease-out);
+	}
+	.ai-acc[data-open="true"] {
+		grid-template-rows: 1fr;
+	}
+</style>

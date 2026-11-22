@@ -24,21 +24,22 @@ const btnClass = {
 			<button
 				aria-label={`${r.label} (${r.emoji})`}
 				aria-pressed="false"
-				class:list={[btnClass, "cursor-pointer active:scale-95"]}
+				class:list={[btnClass, "press cursor-pointer"]}
 				data-reaction={r.key}
 				title={r.label}
 				type="button"
 			>
-				<span aria-hidden="true" class:list={[variant === "bar" ? "text-base" : "text-lg leading-tight"]}>
+				<span aria-hidden="true" class:list={["inline-block", variant === "bar" ? "text-base" : "text-lg leading-tight"]} data-icon>
 					{r.emoji}
 				</span>
-				<span data-count>0</span>
+				<span class="inline-block tabular-nums" data-count>0</span>
 			</button>
 		))
 	}
 </post-reactions>
 
 <script>
+	import { celebrate, rollNumber } from "@/utils/motion";
 	import {
 		fetchReactions,
 		formatCount,
@@ -60,7 +61,7 @@ const btnClass = {
 			const key = btn.dataset.reaction as ReactionKey;
 			btn.setAttribute("aria-pressed", String(state.mine.has(key)));
 			const count = btn.querySelector("[data-count]");
-			if (count) count.textContent = formatCount(state.counts[key]);
+			if (count instanceof HTMLElement) rollNumber(count, formatCount(state.counts[key]));
 		});
 	}
 
@@ -89,10 +90,8 @@ const btnClass = {
 					setMyReactions(id, [...state.mine]);
 					renderAll();
 					if (!had) {
-						btn.animate(
-							[{ transform: "scale(1)" }, { transform: "scale(1.25)" }, { transform: "scale(1)" }],
-							{ duration: 250, easing: "ease-out" },
-						);
+						const icon = btn.querySelector<HTMLElement>("[data-icon]");
+						if (icon) celebrate(icon);
 					}
 					const server = await sendReaction(id, key, delta);
 					if (server) {

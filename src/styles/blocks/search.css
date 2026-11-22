@@ -1,3 +1,7 @@
+/* Declare the full layer order here too: this file can be bundled into a stylesheet
+   that loads before global.css, and the first declaration decides the order. */
+@layer theme, base, pagefind, components, utilities;
+
 @import "@pagefind/component-ui/css" layer(pagefind);
 
 :root {
@@ -49,6 +53,25 @@
 
 dialog.pf-modal::backdrop {
 	backdrop-filter: blur(8px);
+}
+
+/* modal enter: grow from 0.96 in 300 ms ease-out, backdrop fades in */
+dialog.pf-modal[open] {
+	animation: pf-modal-in var(--dur-panel) var(--ease-out);
+}
+dialog.pf-modal[open]::backdrop {
+	animation: pf-backdrop-in var(--dur-panel) linear;
+}
+@keyframes pf-modal-in {
+	from {
+		opacity: 0;
+		transform: scale(0.96);
+	}
+}
+@keyframes pf-backdrop-in {
+	from {
+		opacity: 0;
+	}
 }
 
 .pf-modal-body {

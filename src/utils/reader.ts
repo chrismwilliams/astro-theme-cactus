@@ -1,3 +1,5 @@
+import { CHECK_SVG, EASE_IN } from "./motion";
+
 /** Client-side helpers for reader interactions (progress, reactions). */
 
 export const REACTIONS = [
@@ -87,8 +89,8 @@ export function formatCount(n: number | undefined): string {
 	return n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, "")}k` : String(n);
 }
 
-/** small, accessible toast at the bottom of the screen */
-export function toast(message: string) {
+/** small, accessible toast at the bottom of the screen (enter 400 ms up from its own height, exit 200 ms) */
+export function toast(message: string, kind: "ok" | "error" = "ok") {
 	let region = document.getElementById("reader-toast");
 	if (!region) {
 		region = document.createElement("div");
@@ -99,14 +101,15 @@ export function toast(message: string) {
 		document.body.append(region);
 	}
 	const el = document.createElement("div");
-	el.className =
-		"bg-accent-2 text-global-bg rounded-xl px-4 py-2 font-mono text-xs shadow-card transition-opacity duration-300";
-	el.textContent = message;
+	el.className = `${kind === "error" ? "bg-red-600 text-white" : "bg-accent-2 text-global-bg"} flex items-center gap-2 rounded-xl px-4 py-2 font-mono text-xs shadow-card`;
+	el.innerHTML = kind === "ok" ? CHECK_SVG : "";
+	el.append(message);
+	el.style.animation = "motion-toast-in 400ms ease both";
 	region.replaceChildren(el);
 	setTimeout(() => {
-		el.style.opacity = "0";
-		setTimeout(() => el.remove(), 300);
-	}, 1800);
+		el.style.animation = `motion-toast-out 200ms ${EASE_IN} forwards`;
+		el.addEventListener("animationend", () => el.remove(), { once: true });
+	}, 2000);
 }
 
 export async function copyText(text: string, okMessage = "Đã copy!") {
@@ -114,7 +117,7 @@ export async function copyText(text: string, okMessage = "Đã copy!") {
 		await navigator.clipboard.writeText(text);
 		toast(okMessage);
 	} catch {
-		toast("Không copy được 😢");
+		toast("Không copy được 😢", "error");
 	}
 }
 

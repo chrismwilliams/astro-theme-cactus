@@ -1,3 +1,4 @@
+import { CHECK_SVG } from "@/utils/motion";
 /** Browser-side helpers for the CMS pages. */
 import { analyze, type Frontmatter, parseDoc, slugFromPath } from "./seo";
 
@@ -28,7 +29,13 @@ export async function api<T>(
 			data.error ?? "error",
 			data.message ?? `Lỗi ${res.status}`,
 		);
-		if (res.status === 401 || res.status === 503) showAuthBanner(err);
+		if (
+			res.status === 401 ||
+			res.status === 503 ||
+			(res.status === 403 && ["not_allowed", "no_email"].includes(err.code))
+		) {
+			showAuthBanner(err);
+		}
 		throw err;
 	}
 	return data as T;
@@ -51,22 +58,36 @@ export function toast(message: string, kind: "ok" | "error" = "ok") {
 	}
 	const el = document.createElement("div");
 	el.className = `cms-toast-item ${kind}`;
-	el.textContent = message;
+	el.innerHTML = kind === "ok" ? CHECK_SVG : "";
+	el.append(message);
 	region.append(el);
-	setTimeout(() => el.remove(), kind === "error" ? 6000 : 2800);
+	setTimeout(
+		() => {
+			el.classList.add("leaving");
+			el.addEventListener("animationend", () => el.remove(), { once: true });
+		},
+		kind === "error" ? 6000 : 2800,
+	);
 }
+
+const AUTH_TITLES: Record<string, string> = {
+	access_not_configured: "CMS đang khoá: chưa cấu hình Cloudflare Access.",
+	expired: "Phiên đăng nhập hết hạn.",
+	not_allowed: "Email này không được phép vào CMS.",
+	unauthenticated: "API chưa được Cloudflare Access bảo vệ.",
+	wrong_audience: "Sai ACCESS_AUD.",
+	wrong_issuer: "Sai ACCESS_TEAM_DOMAIN.",
+};
 
 function showAuthBanner(err: ApiError) {
 	if (document.getElementById("cms-auth-banner")) return;
 	const el = document.createElement("div");
 	el.id = "cms-auth-banner";
 	el.className = "cms-banner error";
-	el.innerHTML =
-		err.code === "access_not_configured"
-			? "<b>CMS đang khoá.</b> Cloudflare Access chưa được cấu hình (biến ACCESS_TEAM_DOMAIN / ACCESS_AUD). Xem hướng dẫn trong README của PR."
-			: err.status === 401
-				? `<b>Phiên đăng nhập hết hạn.</b> <a href="${esc(location.pathname)}">Tải lại trang</a> để đăng nhập lại qua Cloudflare Access.`
-				: `<b>${esc(err.message)}</b>`;
+	const title = AUTH_TITLES[err.code] ?? "Không xác thực được với Cloudflare Access.";
+	const relogin =
+		err.code === "expired" ? ` <a href="/cdn-cgi/access/logout">Đăng nhập lại</a>` : "";
+	el.innerHTML = `<b>${esc(title)}</b>${relogin}<br>${esc(err.message)} <code class="opacity-70">${esc(err.code)}</code>`;
 	document.querySelector(".cms-main")?.prepend(el);
 }
 

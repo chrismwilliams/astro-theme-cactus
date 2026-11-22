@@ -72,7 +72,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 				pinnedPosts.length > 0 && (
 					<section class="mb-12">
 						<h2 class="title mb-6 text-xl">Pinned Posts</h2>
-						<ul class="space-y-3.5" role="list">
+						<ul class="space-y-3.5" data-reveal-stagger role="list">
 							{pinnedPosts.map((p) => (
 								<li>
 									<PostCard post={p} />
@@ -89,7 +89,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 							<span class="sr-only">Posts in</span>
 							{yearKey}
 						</h2>
-						<ul class="mt-4 space-y-3.5 text-start">
+						<ul class="mt-4 space-y-3.5 text-start" data-reveal-stagger>
 							{groupedByYear[yearKey]?.map((p) => (
 								<li>
 									<PostCard headingLevel="h3" post={p} />
